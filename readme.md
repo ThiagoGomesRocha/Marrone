@@ -1,6 +1,8 @@
 <div align="center">
 
-# 🐝 Marrone
+<img src="assets/images/logo-transparent.png" alt="Marrone logo" width="120" />
+
+# Marrone
 
 **Cliente de API gratuito e open source — um fork do [Bruno](https://github.com/usebruno/bruno)**
 
