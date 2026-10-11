@@ -117,5 +117,20 @@
   "dependencies": {
     "ajv": "^8.18.0",
     "git-url-parse": "^14.1.0"
+  },
+  "allowScripts": {
+    "canvas": true,
+    "core-js@3.47.0": true,
+    "core-js-pure": true,
+    "electron": true,
+    "esbuild@0.28.2": true,
+    "native-reg": true,
+    "protobufjs": true,
+    "tree-sitter": true,
+    "tree-sitter-json": true,
+    "win-export-certificate-and-key@2.1.0": true,
+    "@parcel/watcher": true,
+    "@scarf/scarf": true,
+    "@tree-sitter-grammars/tree-sitter-yaml": true
   }
 }

@@ -23,6 +23,7 @@ const config = {
     }
   ],
   files: ['**/*'],
+  npmRebuild: false,
   afterSign: 'notarize.js',
   mac: {
     artifactName: '${name}_${version}_${arch}_${os}.${ext}',
@@ -106,7 +107,7 @@ const config = {
     target: [
       {
         target: 'nsis',
-        arch: ['x64', 'arm64']
+        arch: ['x64']
       }
     ],
     sign: null,
