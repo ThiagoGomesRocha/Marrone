@@ -1,5 +1,6 @@
 const { ipcMain, dialog } = require('electron');
 const path = require('node:path');
+const fs = require('node:fs');
 const { pathToFileURL } = require('node:url');
 
 const {
@@ -73,6 +74,58 @@ const registerFilesystemIpc = (mainWindow) => {
       return await findUniqueFolderName(baseName, location);
     } catch (error) {
       throw error;
+    }
+  });
+
+  ipcMain.handle('renderer:save-report', async (_, payload) => {
+    try {
+      const {
+        defaultDir = '',
+        suggestedName = 'report',
+        format = 'html',
+        html = '',
+        json = ''
+      } = payload || {};
+
+      const primaryExt = format === 'json' ? 'json' : 'html';
+      const baseName = String(suggestedName).replace(/\.(html|json)$/i, '');
+      const dialogOptions = {
+        title: 'Export report',
+        filters: [
+          { name: 'HTML report', extensions: ['html'] },
+          { name: 'JSON', extensions: ['json'] },
+          { name: 'All Files', extensions: ['*'] }
+        ]
+      };
+      dialogOptions.defaultPath = defaultDir
+        ? path.join(defaultDir, `${baseName}.${primaryExt}`)
+        : `${baseName}.${primaryExt}`;
+
+      const { canceled, filePath } = await dialog.showSaveDialog(mainWindow, dialogOptions);
+
+      if (canceled || !filePath) {
+        return { canceled: true, files: [] };
+      }
+
+      // Strip any chosen extension so "both" can write .html and .json with the same base name.
+      const base = filePath.replace(/\.(html|json)$/i, '');
+      const written = [];
+
+      if (format === 'both') {
+        fs.writeFileSync(`${base}.html`, html, 'utf8');
+        fs.writeFileSync(`${base}.json`, json, 'utf8');
+        written.push(`${base}.html`, `${base}.json`);
+      } else if (format === 'json') {
+        fs.writeFileSync(filePath, json, 'utf8');
+        written.push(filePath);
+      } else {
+        fs.writeFileSync(filePath, html, 'utf8');
+        written.push(filePath);
+      }
+
+      return { canceled: false, files: written };
+    } catch (error) {
+      return Promise.reject(error);
     }
   });
 };

@@ -1,14 +1,15 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import path from 'utils/common/path';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import useClearStoredRunnerExchanges from 'hooks/useClearStoredRunnerExchanges';
 import { get } from 'lodash';
 import { runCollectionFolder, cancelRunnerExecution, mountCollection, updateRunnerConfiguration } from 'providers/ReduxStore/slices/collections/actions';
 import { resetCollectionRunner } from 'providers/ReduxStore/slices/collections';
 import { findItemInCollection, getTotalRequestCountInCollection, areItemsLoading, getEffectiveTagsByItemUid } from 'utils/collections';
-import { IconRefresh, IconPlayerStop, IconCircleCheck, IconCircleX, IconCircleOff, IconCheck, IconX, IconRun, IconExternalLink, IconReload } from '@tabler/icons';
+import { IconRefresh, IconPlayerStop, IconCircleCheck, IconCircleX, IconCircleOff, IconCheck, IconX, IconRun, IconExternalLink, IconReload, IconDownload } from '@tabler/icons';
 import useOverflowCollapse from 'hooks/useOverflowCollapse';
 import ResponsePane from './ResponsePane';
+import { buildRunnerReport } from './exportReport';
 import StyledWrapper from './StyledWrapper';
 import RunnerTags from './RunnerTags/index';
 import RunnerFilter from './RunnerFilter';
@@ -71,6 +72,9 @@ const FILTERS = {
 
 export default function RunnerResults({ collection }) {
   const dispatch = useDispatch();
+  const reportPrefs = useSelector((state) => get(state.app.preferences, 'report', {}));
+  const [exportFormat, setExportFormat] = useState('html');
+  const [isExporting, setIsExporting] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [delay, setDelay] = useState(null);
   const [activeFilter, setActiveFilter] = useState('all');
@@ -231,6 +235,49 @@ export default function RunnerResults({ collection }) {
     dispatch(cancelRunnerExecution(runnerInfo.cancelTokenUid));
   };
 
+  const handleExport = async () => {
+    if (isExporting) return;
+    setIsExporting(true);
+    try {
+      const settled = items.filter((i) => i.status === 'completed' || i.status === 'error');
+      const entries = await Promise.all(
+        settled.map(async (item) => {
+          try {
+            const exchange = await window.ipcRenderer.invoke('datastore:runner_responses:get_runner_response', {
+              request_uid: item.requestUid
+            });
+            return [item.requestUid, exchange];
+          } catch (error) {
+            console.error('Failed to fetch runner exchange', error);
+            return [item.requestUid, null];
+          }
+        })
+      );
+      const exchanges = Object.fromEntries(entries);
+
+      const { html, json } = buildRunnerReport({
+        items,
+        exchanges,
+        environment: null,
+        logo: reportPrefs.logo || '',
+        includeSensitive: reportPrefs.includeSensitive === true,
+        runCompletionTime: runnerInfo.runCompletionTime || new Date().toISOString()
+      });
+
+      await window.ipcRenderer.invoke('renderer:save-report', {
+        defaultDir: reportPrefs.defaultDir || '',
+        suggestedName: `${get(collection, 'name', 'collection')}-report`,
+        format: exportFormat,
+        html,
+        json
+      });
+    } catch (error) {
+      console.error('Failed to export report', error);
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
   const totalRequestsInCollection = getTotalRequestCountInCollection(collectionCopy);
   const filterCounts = {
     all: items.length,
@@ -346,6 +393,30 @@ export default function RunnerResults({ collection }) {
           </div>
         ) : runnerInfo.status === 'ended' ? (
           <div className="runner-actions flex items-center gap-3 flex-shrink-0">
+            <select
+              value={exportFormat}
+              onChange={(e) => setExportFormat(e.target.value)}
+              className="select text-xs"
+              data-testid="runner-export-format"
+            >
+              <option value="html">HTML</option>
+              <option value="json">JSON</option>
+              <option value="both">Ambos</option>
+            </select>
+            <Button
+              type="button"
+              onClick={handleExport}
+              size="sm"
+              variant="filled"
+              color="secondary"
+              icon={<IconDownload />}
+              title="Export Report"
+              aria-label="Export Report"
+              data-testid="runner-export-button"
+              disabled={isExporting}
+            >
+              Export
+            </Button>
             <Button
               type="button"
               onClick={runAgain}
