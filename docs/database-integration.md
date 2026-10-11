@@ -316,3 +316,8 @@ precisa instalar os que vai usar.
 - **Os testes de integração com banco real são opt-in** e não rodam no `npm test` padrão.
 - **No CLI as credenciais só vêm do ambiente** (não há cofre fora do app), e o CLI depende do
   pacote `@marrone/database` construído — rode `npm run build` em `packages/marrone-database`.
+
+---
+
+**Ver também:** [`database-manual-test.md`](./database-manual-test.md) — o roteiro de teste
+manual com banco real, que é o aceite adotado no lugar do teste automatizado com Docker (D5).
