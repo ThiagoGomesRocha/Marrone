@@ -58,6 +58,8 @@ const registerAiIpc = require('./ipc/ai');
 const registerAiAutocompleteIpc = require('./ipc/ai/autocomplete');
 const { registerMountIpc } = require('./ipc/mount');
 const { registerSqliteIpc } = require('./ipc/sqlite');
+const { registerDatabaseIpc } = require('./ipc/database');
+const { credentialsStore } = require('./services/database');
 const sqliteService = require('./services/sqlite');
 const { clearAllRunnerResponses } = require('./services/runner-exchange');
 const { registerWsdlIpc } = require('./ipc/wsdl');
@@ -549,6 +551,15 @@ app.on('ready', async () => {
   sqliteService.openDatabase();
   clearAllRunnerResponses().catch((err) => console.warn('[runner] failed to clear stored responses', err));
   registerSqliteIpc();
+
+  registerDatabaseIpc();
+
+  // Migração única, idempotente: credenciais de banco gravadas em texto plano por uma
+  // versão anterior passam a ficar cifradas no cofre do sistema (safeStorage).
+  const migratedCredentials = credentialsStore.migratePlaintextCredentials();
+  if (migratedCredentials > 0) {
+    console.info(`[database] ${migratedCredentials} credencial(is) migradas para o cofre do sistema.`);
+  }
   appDocuments.handleProtocol();
   registerAppDocumentIpc(appDocuments, mainWindow);
   registerWsdlIpc();

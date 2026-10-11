@@ -75,3 +75,4 @@ packages/marrone-filestore/dist
 packages/marrone-requests/dist
 packages/marrone-schema-types/dist
 packages/marrone-converters/dist
+packages/marrone-database/dist

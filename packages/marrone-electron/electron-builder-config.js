@@ -24,6 +24,16 @@ const config = {
   ],
   files: ['**/*'],
   npmRebuild: false,
+  // O driver do DB2 (ibm_db) é N-API, então NÃO precisa de rebuild — mas o clidriver que
+  // ele baixa são DLLs, e DLL não carrega de dentro do app.asar.
+  // Ver: integracaoBD-v2.md §5 (gate G0) e packages/marrone-database/src/drivers/db2.ts.
+  // Sem isso, o DB2 funciona em desenvolvimento e falha no aplicativo empacotado.
+  //
+  // `bindings` TAMBEM precisa estar aqui: ibm_db/lib/odbc.js faz
+  // require('bindings')('odbc_bindings'), e o pacote `bindings` localiza o .node varrendo o
+  // sistema de arquivos - dentro do asar isso falha com "Invalid package config".
+  // Descoberto rodando o app EMPACOTADO (nao em desenvolvimento).
+  asarUnpack: ['**/node_modules/ibm_db/**', '**/node_modules/bindings/**'],
   afterSign: 'notarize.js',
   mac: {
     artifactName: '${name}_${version}_${arch}_${os}.${ext}',

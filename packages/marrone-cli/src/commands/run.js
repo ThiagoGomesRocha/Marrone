@@ -984,6 +984,11 @@ const handler = async function (argv) {
         results
       };
 
+      // Fecha as conexões de banco abertas pelos scripts antes de reportar/encerrar.
+      // Sem isto, o processo pode terminar com uma conexão nativa pendente — foi
+      // exatamente o que causou segmentation fault no gate G0 (ver integracaoBD-v2.md §5).
+      await require('../services/database').closeAllDatabaseConnections();
+
       const reporters = {
         json: (path) => fs.writeFileSync(path, JSON.stringify(outputJson, null, 2)),
         junit: (path) => makeJUnitOutput(results, path),

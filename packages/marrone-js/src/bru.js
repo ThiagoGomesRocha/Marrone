@@ -41,6 +41,10 @@ class Bru {
    * @property {object} [options.certsAndProxyConfig.systemProxyConfig] - System proxy configuration
    * @property {string} [options.requestUrl] - The URL of the current request (used for cookie access)
    * @property {function(string): void} [options.onUnresolved] - Called with each variable a script reads or interpolates that is not defined
+   * @property {function(function): object} [options.databaseFactory] - Receives a `record` callback and returns the
+   *   database capability object exposed to scripts as `bru.db`. Provided by the host (main process / CLI), which
+   *   resolves credentials from the OS vault and talks to @marrone/database. Absent => `bru.db` is null and the
+   *   sandbox does not expose database functions at all.
    */
   constructor({
     runtime,
@@ -57,7 +61,8 @@ class Bru {
     promptVariables,
     certsAndProxyConfig,
     requestUrl,
-    onUnresolved
+    onUnresolved,
+    databaseFactory
   }) {
     this.envVariables = envVariables || {};
     this.runtimeVariables = runtimeVariables || {};
@@ -74,6 +79,12 @@ class Bru {
     // Set by the host-side __bruSetScope global at the top of each segment's IIFE.
     this._currentScope = null;
     this.scriptedRequestEntries = [];
+    // Operações de banco executadas pelos scripts. Mesmo padrão de scriptedRequestEntries:
+    // acumula no resultado do runtime e é consumido pelo relatório HTML (P4).
+    this.databaseOperations = [];
+    this.db = typeof databaseFactory === 'function'
+      ? databaseFactory((entry) => this._recordDatabaseOperation(entry))
+      : null;
     this.sendRequest = (...args) => {
       const scopeSnapshot = this._currentScope ? { ...this._currentScope } : null;
       const send = createSendRequest(certsAndProxyConfig, {
@@ -200,6 +211,22 @@ class Bru {
       ? providedScope
       : (this._currentScope ? { ...this._currentScope } : null);
     this.scriptedRequestEntries.push({ ...rest, scope });
+  }
+
+  /**
+   * Registra uma operação de banco para o relatório.
+   *
+   * IMPORTANTE — o que é gravado aqui vai parar no relatório HTML, que é um artefato
+   * compartilhável. Por isso o host só passa metadados: SQL, parâmetros JÁ REDIGIDOS,
+   * tempo, status e SGBD. NUNCA a senha nem a string de conexão com credenciais —
+   * e a string do script já não tem credenciais por construção (ver connectionString.ts).
+   */
+  _recordDatabaseOperation(entry) {
+    const { scope: providedScope, ...rest } = entry;
+    const scope = providedScope !== undefined
+      ? providedScope
+      : (this._currentScope ? { ...this._currentScope } : null);
+    this.databaseOperations.push({ ...rest, scope });
   }
 
   getEnvName() {

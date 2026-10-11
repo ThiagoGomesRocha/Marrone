@@ -114,7 +114,8 @@ class GrpcScriptRuntime {
       nextRequestName: bru.nextRequest,
       skipRequest: bru.skipRequest,
       stopExecution: bru.stopExecution,
-      scriptedRequestEntries: cleanJson(bru.scriptedRequestEntries || [])
+      scriptedRequestEntries: cleanJson(bru.scriptedRequestEntries || []),
+      databaseOperations: cleanJson(bru.databaseOperations || [])
     });
 
     // Track script errors to attach partial results before re-throwing, so the variables the hook

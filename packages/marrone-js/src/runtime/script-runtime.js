@@ -13,6 +13,9 @@ const { bindRunRequest, createScopeSetter } = require('./scripted-entries');
 class ScriptRuntime {
   constructor(props) {
     this.runtime = props?.runtime || 'quickjs';
+    // Capacidade de banco fornecida pelo host: (record) => objeto bru.db.
+    // Ver marrone-electron/src/services/database.
+    this.databaseFactory = props?.databaseFactory;
   }
 
   // This approach is getting out of hand
@@ -53,7 +56,9 @@ class ScriptRuntime {
       promptVariables,
       certsAndProxyConfig,
       requestUrl: request?.url,
-      onUnresolved: getUnresolvedVariableCollector(request)
+      onUnresolved: getUnresolvedVariableCollector(request),
+      // Sem isto, bru.db é null e o sandbox não expõe as funções de banco.
+      databaseFactory: this.databaseFactory
     });
     const req = new MarroneRequest(request);
 
@@ -100,7 +105,8 @@ class ScriptRuntime {
       nextRequestName: bru.nextRequest,
       skipRequest: bru.skipRequest,
       stopExecution: bru.stopExecution,
-      scriptedRequestEntries: cleanJson(bru.scriptedRequestEntries || [])
+      scriptedRequestEntries: cleanJson(bru.scriptedRequestEntries || []),
+      databaseOperations: cleanJson(bru.databaseOperations || [])
     });
 
     const attachScriptResultToOnFailHandler = () => {
@@ -203,7 +209,9 @@ class ScriptRuntime {
       promptVariables,
       certsAndProxyConfig,
       requestUrl: request?.url,
-      onUnresolved: getUnresolvedVariableCollector(request)
+      onUnresolved: getUnresolvedVariableCollector(request),
+      // Sem isto, bru.db é null e o sandbox não expõe as funções de banco.
+      databaseFactory: this.databaseFactory
     });
     const req = new MarroneRequest(request);
     const res = new MarroneResponse(response);
@@ -252,7 +260,8 @@ class ScriptRuntime {
       nextRequestName: bru.nextRequest,
       skipRequest: bru.skipRequest,
       stopExecution: bru.stopExecution,
-      scriptedRequestEntries: cleanJson(bru.scriptedRequestEntries || [])
+      scriptedRequestEntries: cleanJson(bru.scriptedRequestEntries || []),
+      databaseOperations: cleanJson(bru.databaseOperations || [])
     });
 
     // Track script errors to attach partial results before re-throwing

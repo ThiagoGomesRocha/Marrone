@@ -7,6 +7,14 @@ const prepareRequest = require('./prepare-request');
 const interpolateVars = require('./interpolate-vars');
 const { interpolateString, interpolateObject } = require('./interpolate-string');
 const { ScriptRuntime, TestRuntime, VarsRuntime, AssertRuntime, formatErrorWithContext, SCRIPT_TYPES } = require('@marrone/js');
+const { databaseFactoryForBru } = require('../services/database');
+
+/**
+ * Operações de banco (`bru.db`) acumuladas nesta requisição, para a seção
+ * "Database Operations" do relatório HTML (RF08). Mesmo padrão de preRequestTestResults.
+ */
+const collectDatabaseOperations = (...sources) =>
+  sources.flatMap((source) => (Array.isArray(source?.databaseOperations) ? source.databaseOperations : []));
 const { stripExtension } = require('../utils/filesystem');
 const { getOptions } = require('../utils/bru');
 const { applyVariableUpdates, persistVariableUpdates } = require('../utils/persist-variables');
@@ -172,6 +180,11 @@ const runSingleRequest = async function (
     }
   };
 
+  // Declarado FORA do try de propósito: o bloco catch também o referencia. Uma requisição pode
+  // falhar DEPOIS de um script já ter operado no banco, e essas operações precisam aparecer no
+  // relatório — é justamente o caso em que elas são mais úteis para entender o que aconteceu.
+  let databaseOperations = [];
+
   try {
     let request;
     let nextRequestName;
@@ -261,7 +274,7 @@ const runSingleRequest = async function (
     const requestScriptFile = get(request, 'script.req');
     const collectionName = collection?.brunoConfig?.name;
     if (requestScriptFile?.length) {
-      const scriptRuntime = new ScriptRuntime({ runtime: scriptingConfig?.runtime });
+      const scriptRuntime = new ScriptRuntime({ runtime: scriptingConfig?.runtime, databaseFactory: databaseFactoryForBru });
       try {
         const result = await scriptRuntime.runRequestScript(decomment(requestScriptFile, { space: true }),
           request,
@@ -314,11 +327,13 @@ const runSingleRequest = async function (
             testResults: [],
             preRequestTestResults: result?.results || [],
             postResponseTestResults: [],
+            databaseOperations: collectDatabaseOperations(result),
             shouldStopRunnerExecution
           };
         }
 
         preRequestTestResults = result?.results || [];
+        databaseOperations.push(...collectDatabaseOperations(result));
       } catch (error) {
         // Pre-request errors are treated as request errors (we return early with status: 'error'), not as failures. Unlike post-response and test script errors, we do not add a synthetic fail and continue.
         console.error(chalk.red(`[${relativeItemPathname}] Pre-request script error:`));
@@ -326,6 +341,7 @@ const runSingleRequest = async function (
 
         // Extract partial results from the error (tests that passed before the error)
         preRequestTestResults = error?.partialResults?.results || [];
+        databaseOperations.push(...collectDatabaseOperations(error?.partialResults));
 
         // Persist any variable changes the script made before erroring
         syncVariableUpdates(error?.partialResults, request);
@@ -822,7 +838,7 @@ const runSingleRequest = async function (
     // run post-response vars
     const postResponseVars = get(item, 'request.vars.res');
     if (postResponseVars?.length) {
-      const varsRuntime = new VarsRuntime({ runtime: scriptingConfig?.runtime });
+      const varsRuntime = new VarsRuntime({ runtime: scriptingConfig?.runtime, databaseFactory: databaseFactoryForBru });
       const result = varsRuntime.runPostResponseVars(
         postResponseVars,
         request,
@@ -840,7 +856,7 @@ const runSingleRequest = async function (
     // run post response script
     const responseScriptFile = get(request, 'script.res');
     if (responseScriptFile?.length) {
-      const scriptRuntime = new ScriptRuntime({ runtime: scriptingConfig?.runtime });
+      const scriptRuntime = new ScriptRuntime({ runtime: scriptingConfig?.runtime, databaseFactory: databaseFactoryForBru });
       try {
         const result = await scriptRuntime.runResponseScript(
           decomment(responseScriptFile, { space: true }),
@@ -871,12 +887,14 @@ const runSingleRequest = async function (
         }
 
         postResponseTestResults = result?.results || [];
+        databaseOperations.push(...collectDatabaseOperations(result));
         logResults(postResponseTestResults, 'Post-Response Tests', SCRIPT_TYPES.POST_RESPONSE, request);
       } catch (error) {
         console.error(chalk.red(`[${relativeItemPathname}] Post-response script error:`));
         console.log('\n' + formatErrorWithContext(error, relativeItemPathname, SCRIPT_TYPES.POST_RESPONSE, 5, request.script?.resMetadata) + '\n');
 
         const partialResults = error?.partialResults?.results || [];
+        databaseOperations.push(...collectDatabaseOperations(error?.partialResults));
         postResponseTestResults = [
           ...partialResults,
           {
@@ -904,7 +922,7 @@ const runSingleRequest = async function (
     let assertionResults = [];
     const assertions = get(item, 'request.assertions');
     if (assertions) {
-      const assertRuntime = new AssertRuntime({ runtime: scriptingConfig?.runtime });
+      const assertRuntime = new AssertRuntime({ runtime: scriptingConfig?.runtime, databaseFactory: databaseFactoryForBru });
       assertionResults = assertRuntime.runAssertions(
         assertions,
         request,
@@ -919,7 +937,7 @@ const runSingleRequest = async function (
     let testResults = [];
     const testFile = get(request, 'tests');
     if (typeof testFile === 'string') {
-      const testRuntime = new TestRuntime({ runtime: scriptingConfig?.runtime });
+      const testRuntime = new TestRuntime({ runtime: scriptingConfig?.runtime, databaseFactory: databaseFactoryForBru });
       try {
         const result = await testRuntime.runTests(
           decomment(testFile, { space: true }),
@@ -1010,7 +1028,8 @@ const runSingleRequest = async function (
       preRequestTestResults,
       postResponseTestResults,
       nextRequestName: nextRequestName,
-      shouldStopRunnerExecution
+      shouldStopRunnerExecution,
+      databaseOperations
     };
   } catch (err) {
     console.log(chalk.red(stripExtension(relativeItemPathname)) + chalk.dim(` (${err.message})`));
@@ -1039,7 +1058,8 @@ const runSingleRequest = async function (
       assertionResults: [],
       testResults: [],
       preRequestTestResults: [],
-      postResponseTestResults: []
+      postResponseTestResults: [],
+      databaseOperations
     };
   }
 };

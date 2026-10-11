@@ -1,0 +1,61 @@
+{
+  "name": "@marrone/database",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "description": "Acesso a bancos de dados (MySQL, PostgreSQL, SQL Server, Oracle, DB2) para scripts de pré e pós-requisição do Marrone.",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src",
+    "package.json"
+  ],
+  "scripts": {
+    "clean": "rimraf dist",
+    "prebuild": "npm run clean",
+    "build": "rollup -c",
+    "watch": "rollup -c -w",
+    "//prepare": "Roda automaticamente no `npm install`: assim o pacote já chega construído para marrone-electron e marrone-cli, que consomem dist/ em runtime.",
+    "prepare": "npm run build",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:integration": "cross-env DB_INTEGRATION=true jest tests/integration.spec.ts",
+    "prepack": "npm run test && npm run build"
+  },
+  "dependencies": {
+    "ibm_db": "^4.0.1",
+    "mysql2": "^3.11.5",
+    "oracledb": "^6.7.0",
+    "pg": "^8.13.1",
+    "tedious": "^18.6.1"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.26.9",
+    "@babel/preset-typescript": "^7.27.0",
+    "@jest/globals": "^29.7.0",
+    "@rollup/plugin-commonjs": "^23.0.2",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "@rollup/plugin-terser": "^1.0.0",
+    "@rollup/plugin-typescript": "^12.1.2",
+    "@types/jest": "^29.5.14",
+    "babel-jest": "^29.7.0",
+    "cross-env": "^10.1.0",
+    "rimraf": "^5.0.10",
+    "rollup": "3.30.0",
+    "rollup-plugin-dts": "^5.0.0",
+    "typescript": "^5.8.3"
+  },
+  "overrides": {
+    "rollup": "3.30.0"
+  }
+}

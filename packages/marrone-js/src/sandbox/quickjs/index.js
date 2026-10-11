@@ -1,4 +1,5 @@
 const addBruShimToContext = require('./shims/bru');
+const addDatabaseShimToContext = require('./shims/database');
 const addMarroneRequestShimToContext = require('./shims/bruno-request');
 const addConsoleShimToContext = require('./shims/console');
 const addMarroneResponseShimToContext = require('./shims/bruno-response');
@@ -186,6 +187,9 @@ const executeQuickJsVmAsync = async ({ script: externalScript, context: external
 
     consoleFn && addConsoleShimToContext(vm, consoleFn);
     bru && addBruShimToContext(vm, bru);
+    // bru.db: só no caminho ASSÍNCRONO, que é onde os scripts de pré/pós-requisição
+    // rodam de verdade (operações de banco são assíncronas).
+    bru?.db && addDatabaseShimToContext(vm, bru.db);
     bru?.grpc && addMarroneGrpcShimToContext(vm, bru.grpc);
     req && addMarroneRequestShimToContext(vm, req);
     res && addMarroneResponseShimToContext(vm, res);

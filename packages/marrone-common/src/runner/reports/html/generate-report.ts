@@ -3,6 +3,57 @@ import { isHtmlContentType, getContentType, redactImageData, encodeBase64 } from
 import { buildCurl } from './curl';
 import htmlTemplateString from './template';
 
+const REDACTED = '***';
+
+/**
+ * Redação final dos parâmetros de operações de banco.
+ *
+ * O host JÁ registra os parâmetros redigidos (ver marrone-electron/src/services/database).
+ * Esta segunda passada existe porque o relatório é um artefato compartilhável e a garantia
+ * não pode depender de quem monta o payload — é o mesmo espírito de `buildCurl(request,
+ * { includeSensitive })`, que também decide aqui, no último momento, o que pode aparecer.
+ */
+const redactDatabaseParameters = (parameters: unknown, includeSensitive: boolean): unknown[] => {
+  if (!Array.isArray(parameters)) {
+    return [];
+  }
+
+  if (includeSensitive) {
+    return parameters;
+  }
+
+  return parameters.map(() => REDACTED);
+};
+
+/**
+ * Coleta as operações de banco de todas as iterações/requisições e anexa o contexto
+ * da requisição em que cada uma rodou (nome, método e url), para o relatório poder
+ * dizer de onde veio cada SQL.
+ */
+const collectDatabaseOperations = (runnerResults: T_RunnerResults[], includeSensitive: boolean): unknown[] => {
+  return runnerResults.flatMap(({ results }) =>
+    (results || []).flatMap((result) => {
+      const operations = (result as { databaseOperations?: unknown[] })?.databaseOperations;
+
+      if (!Array.isArray(operations)) {
+        return [];
+      }
+
+      return operations.map((operation) => {
+        const typed = operation as Record<string, unknown> & { parameters?: unknown };
+
+        return {
+          ...typed,
+          parameters: redactDatabaseParameters(typed.parameters, includeSensitive),
+          requestName: result?.request?.name || null,
+          requestUrl: result?.request?.url || null,
+          requestMethod: result?.request?.method || null
+        };
+      });
+    })
+  );
+};
+
 const generateHtmlReport = ({
   runnerResults,
   version = '', // Default to empty string if not provided
@@ -22,18 +73,26 @@ const generateHtmlReport = ({
     return {
       iterationIndex,
       results: results.map((result) => {
-        const { request, response } = result || {};
+        // databaseOperations é REMOVIDO daqui de propósito.
+        //
+        // Ele é agregado e redigido em `collectDatabaseOperations`, no nível do payload.
+        // Se ficasse no spread de cada result, os parâmetros CRUS (sem redação) viajariam
+        // junto dentro de payload.results — e a redação do topo seria inútil. Este detalhe
+        // é coberto por teste (database-report.spec.ts).
+        const { request, response, databaseOperations: omittedOperations, ...resultRest } = result || {};
+        void omittedOperations;
+
         const requestContentType = request?.headers ? getContentType(request?.headers) : '';
         const responseContentType = response?.headers ? getContentType(response?.headers) : '';
         return {
-          ...result,
+          ...resultRest,
           request: {
-            ...result.request,
+            ...request,
             data: request?.data ? redactImageData(request?.data, requestContentType) : request?.data,
             isHtml: isHtmlContentType(requestContentType)
           },
           response: {
-            ...result.response,
+            ...response,
             data: response?.data ? redactImageData(response?.data, responseContentType) : response?.data,
             isHtml: isHtmlContentType(responseContentType)
           },
@@ -43,14 +102,20 @@ const generateHtmlReport = ({
       summary
     };
   });
+
+  // Seção "Database Operations" (RF08 / P4). Os SQL executados pelos scripts de pré e
+  // pós-requisição vêm de bru.databaseOperations, serializado pelo runtime.
+  const databaseOperations = collectDatabaseOperations(runnerResults, includeSensitive);
+
   const htmlString = htmlTemplateString(encodeBase64(JSON.stringify({
     results: resultsWithSummaryAndCleanData,
     version,
     environment,
     runCompletionTime,
-    logo
+    logo,
+    databaseOperations
   })));
   return htmlString;
 };
 
-export { generateHtmlReport };
+export { generateHtmlReport, collectDatabaseOperations, redactDatabaseParameters };

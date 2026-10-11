@@ -77,6 +77,82 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
         overflow-wrap: break-word;
       }
 
+      /* Seção Database Operations (RF08) */
+      .db-note {
+        font-size: 0.75rem;
+        opacity: 0.75;
+        margin: 0 0 12px 0;
+      }
+
+      .db-filters {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+
+      .db-empty {
+        font-size: 0.8rem;
+        opacity: 0.7;
+        padding: 8px 0;
+      }
+
+      .db-operation {
+        border: 1px solid rgba(128, 128, 128, 0.25);
+        border-radius: 6px;
+        padding: 10px;
+        margin-bottom: 10px;
+      }
+
+      .db-operation-header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 8px;
+      }
+
+      .db-sgbd {
+        font-weight: 600;
+        font-size: 0.8rem;
+      }
+
+      .db-meta {
+        font-size: 0.7rem;
+        opacity: 0.7;
+      }
+
+      .db-copy {
+        margin-left: auto;
+        font-size: 0.7rem;
+        padding: 2px 8px;
+        border-radius: 4px;
+        border: 1px solid rgba(128, 128, 128, 0.4);
+        background: transparent;
+        cursor: pointer;
+        color: inherit;
+      }
+
+      .db-sql {
+        background: rgba(0, 0, 0, 0.06);
+        padding: 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        overflow-x: auto;
+        margin: 0 0 8px 0;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+
+      .db-details {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        font-size: 0.72rem;
+        opacity: 0.8;
+      }
+
       .curl-command {
         background: rgba(0, 0, 0, 0.04);
         padding: 12px;
@@ -152,12 +228,63 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
                     <x-requests v-for="(result, index) in res" :res="result" :key="index"></x-requests>
                   </n-flex>
                 </n-tab-pane>
+                <n-tab-pane v-if="databaseOperations.length > 0" name="database" tab="Database Operations">
+                  <x-database-operations :operations="databaseOperations"></x-database-operations>
+                </n-tab-pane>
               </n-tabs>
             </n-flex>
           </n-card>
         </n-layout>
       </n-config-provider>
     </div>
+    <script type="text/x-template" id="database-operations-component">
+      <n-flex justify="center" vertical>
+        <n-card title="Database Operations" size="small">
+          <p class="db-note">
+            Operações de banco executadas pelos scripts de pré e pós-requisição.
+            Os parâmetros aparecem redigidos por padrão — o relatório é um artefato compartilhável.
+          </p>
+
+          <div class="db-filters">
+            <span class="metadata-label">SGBD</span>
+            <n-select v-model:value="sgbdFilter" :options="sgbdOptions" clearable placeholder="Todos" style="max-width: 220px;" size="small" />
+            <span class="metadata-label">Status</span>
+            <n-select v-model:value="statusFilter" :options="statusOptions" clearable placeholder="Todos" style="max-width: 220px;" size="small" />
+            <span class="metadata-label">{{ filtered.length }} de {{ operations.length }} operação(ões)</span>
+          </div>
+
+          <div v-if="filtered.length === 0" class="db-empty">
+            Nenhuma operação de banco corresponde ao filtro.
+          </div>
+
+          <div v-for="(operation, index) in filtered" :key="index" class="db-operation">
+            <div class="db-operation-header">
+              <n-tag size="small" :type="operation.status === 'error' ? 'error' : 'success'">
+                {{ operation.status }}
+              </n-tag>
+              <span class="db-sgbd">{{ operation.sgbd }}</span>
+              <span class="db-meta">{{ operation.timestamp }}</span>
+              <span class="db-meta">{{ operation.durationMs }} ms</span>
+              <span v-if="operation.requestName" class="db-meta">{{ operation.requestMethod }} {{ operation.requestName }}</span>
+              <button type="button" class="db-copy" @click="copySql(operation, index)">
+                {{ copiedIndex === index ? 'Copiado!' : 'Copiar SQL' }}
+              </button>
+            </div>
+
+            <pre class="db-sql">{{ operation.sql || operation.operation || '-' }}</pre>
+
+            <div class="db-details">
+              <span>Parâmetros: {{ formatParameters(operation) }}</span>
+              <span>Resultado: {{ operation.resultSummary || (operation.operation ? operation.operation : '-') }}</span>
+            </div>
+
+            <n-alert v-if="operation.status === 'error' && operation.error" type="error" size="small">
+              {{ operation.error.code ? operation.error.code + ' — ' : '' }}{{ operation.error.message }}
+            </n-alert>
+          </div>
+        </n-card>
+      </n-flex>
+    </script>
     <script type="text/x-template" id="summary-component">
       <n-flex vertical style="margin-bottom: 50px;">
         <n-card>
@@ -412,6 +539,12 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
             return '-';
           });
 
+          // RF08: operações de banco executadas pelos scripts, já redigidas pelo host.
+          const databaseOperations = computed(() => {
+            const operations = rawResults.databaseOperations;
+            return Array.isArray(operations) ? operations : [];
+          });
+
           const currentTab = ref('summary');
 
           const getTabFromQueryParam = () => {
@@ -488,11 +621,57 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
             totalDuration,
             totalDataReceived,
             averageResponseTime,
-            runCompletionTime
+            runCompletionTime,
+            databaseOperations
           };
         }
       };
       const app = Vue.createApp(App);
+
+      app.component('x-database-operations', {
+        template: '#database-operations-component',
+        props: ['operations'],
+        setup(props) {
+          const sgbdFilter = ref(null);
+          const statusFilter = ref(null);
+          const copiedIndex = ref(null);
+
+          const sgbdOptions = computed(() => {
+            const unique = Array.from(new Set(props.operations.map((operation) => operation.sgbd).filter(Boolean)));
+            return unique.map((sgbd) => ({ label: sgbd, value: sgbd }));
+          });
+
+          const statusOptions = [
+            { label: 'success', value: 'success' },
+            { label: 'error', value: 'error' }
+          ];
+
+          const filtered = computed(() => props.operations.filter((operation) => {
+            if (sgbdFilter.value && operation.sgbd !== sgbdFilter.value) return false;
+            if (statusFilter.value && operation.status !== statusFilter.value) return false;
+            return true;
+          }));
+
+          const formatParameters = (operation) => {
+            if (!Array.isArray(operation.parameters) || operation.parameters.length === 0) {
+              return '-';
+            }
+            return operation.parameters.join(', ');
+          };
+
+          const copySql = async (operation, index) => {
+            const sql = operation.sql || operation.operation || '';
+            try {
+              await navigator.clipboard.writeText(sql);
+              copiedIndex.value = index;
+            } catch (err) {
+              copiedIndex.value = null;
+            }
+          };
+
+          return { sgbdFilter, statusFilter, sgbdOptions, statusOptions, filtered, formatParameters, copySql, copiedIndex };
+        }
+      });
 
       app.component('x-summary', {
         template: '#summary-component',

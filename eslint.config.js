@@ -21,6 +21,7 @@ const mainLintFiles = [
   'packages/marrone-app/src/test-utils/mocks/codemirror.js',
   'packages/marrone-cli/**/*.js',
   'packages/marrone-common/**/*.ts',
+  'packages/marrone-database/**/*.{ts,js}',
   'packages/marrone-converters/**/*.js',
   'packages/marrone-electron/**/*.js',
   'packages/marrone-filestore/**/*.ts',
@@ -150,6 +151,39 @@ module.exports = runESMImports().then(() => defineConfig([
       globals: {
         ...globals.node,
         ...globals.jest
+      }
+    },
+    rules: {
+      'no-undef': 'error'
+    }
+  },
+  {
+    // Os arquivos de configuração/ambiente do Jest do renderer rodam no NODE, não no browser:
+    // jest.canvasMock.js e jest.jsdomEnvironment.js usam module/__dirname. Sem este bloco, o
+    // bloco de browser acima reprova os dois com 'no-undef'.
+    files: ['packages/marrone-app/jest.*.js'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+        ...globals.jest
+      }
+    },
+    rules: {
+      'no-undef': 'error'
+    }
+  },
+  {
+    files: ['packages/marrone-database/**/*.{ts,js}'],
+    ignores: ['**/*.config.js', '**/dist/**/*'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+        ...globals.jest
+      },
+      parser: require('@typescript-eslint/parser'),
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module'
       }
     },
     rules: {

@@ -17,7 +17,8 @@
     "packages/marrone-graphql-docs",
     "packages/marrone-requests",
     "packages/marrone-filestore",
-    "packages/marrone-sqlite"
+    "packages/marrone-sqlite",
+    "packages/marrone-database"
   ],
   "homepage": "https://marrone.com",
   "devDependencies": {
@@ -66,6 +67,7 @@
     "build:marrone-requests": "npm run build --workspace=packages/marrone-requests",
     "build:marrone-filestore": "npm run build --workspace=packages/marrone-filestore",
     "build:marrone-sqlite": "npm run build --workspace=packages/marrone-sqlite",
+    "build:marrone-database": "npm run build --workspace=packages/marrone-database",
     "build:marrone-converters": "npm run build --workspace=packages/marrone-converters",
     "build:marrone-query": "npm run build --workspace=packages/marrone-query",
     "build:graphql-docs": "npm run build --workspace=packages/marrone-graphql-docs",
@@ -131,6 +133,8 @@
     "win-export-certificate-and-key@2.1.0": true,
     "@parcel/watcher": true,
     "@scarf/scarf": true,
-    "@tree-sitter-grammars/tree-sitter-yaml": true
+    "@tree-sitter-grammars/tree-sitter-yaml": true,
+    "ibm_db@4.0.1": true,
+    "oracledb@6.10.0": true
   }
 }

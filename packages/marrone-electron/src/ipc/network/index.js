@@ -11,6 +11,7 @@ const { ipcMain } = require('electron');
 const { each, get, extend, cloneDeep, merge } = require('lodash');
 const { NtlmClient } = require('axios-ntlm');
 const { VarsRuntime, AssertRuntime, ScriptRuntime, TestRuntime, formatErrorWithContextV2, trackUnresolvedVariables, getUnresolvedVariableCollector } = require('@marrone/js');
+const { databaseFactoryForBru } = require('../../services/database');
 const { encodeUrl, hasExplicitScheme, DEFAULT_MAX_REDIRECTS } = require('@marrone/common').utils;
 const { extractPromptVariables } = require('@marrone/common').utils;
 const { interpolateString } = require('./interpolate-string');
@@ -607,7 +608,7 @@ const registerNetworkIpc = (mainWindow) => {
 
     const requestScript = get(request, 'script.req');
     if (requestScript?.length) {
-      const scriptRuntime = new ScriptRuntime({ runtime: scriptingConfig?.runtime });
+      const scriptRuntime = new ScriptRuntime({ runtime: scriptingConfig?.runtime, databaseFactory: databaseFactoryForBru });
       scriptResult = await scriptRuntime.runRequestScript(
         decomment(requestScript, { space: true }),
         request,
@@ -711,7 +712,7 @@ const registerNetworkIpc = (mainWindow) => {
     // run post-response vars
     const postResponseVars = get(request, 'vars.res', []);
     if (postResponseVars?.length) {
-      const varsRuntime = new VarsRuntime({ runtime: scriptingConfig?.runtime });
+      const varsRuntime = new VarsRuntime({ runtime: scriptingConfig?.runtime, databaseFactory: databaseFactoryForBru });
       const result = varsRuntime.runPostResponseVars(
         postResponseVars,
         request,
@@ -736,7 +737,7 @@ const registerNetworkIpc = (mainWindow) => {
     let scriptResult;
     const collectionName = collection?.name;
     if (responseScript?.length) {
-      const scriptRuntime = new ScriptRuntime({ runtime: scriptingConfig?.runtime });
+      const scriptRuntime = new ScriptRuntime({ runtime: scriptingConfig?.runtime, databaseFactory: databaseFactoryForBru });
       scriptResult = await scriptRuntime.runResponseScript(
         decomment(responseScript, { space: true }),
         request,
@@ -1200,7 +1201,7 @@ const registerNetworkIpc = (mainWindow) => {
         // run assertions
         const assertions = get(request, 'assertions');
         if (assertions) {
-          const assertRuntime = new AssertRuntime({ runtime: scriptingConfig?.runtime });
+          const assertRuntime = new AssertRuntime({ runtime: scriptingConfig?.runtime, databaseFactory: databaseFactoryForBru });
           const results = assertRuntime.runAssertions(assertions,
             request,
             response,
@@ -1220,7 +1221,7 @@ const registerNetworkIpc = (mainWindow) => {
         const testFile = get(request, 'tests');
         const collectionName = collection?.name;
         if (typeof testFile === 'string') {
-          const testRuntime = new TestRuntime({ runtime: scriptingConfig?.runtime });
+          const testRuntime = new TestRuntime({ runtime: scriptingConfig?.runtime, databaseFactory: databaseFactoryForBru });
           let testResults = null;
           let testError = null;
 
@@ -2057,7 +2058,7 @@ const registerNetworkIpc = (mainWindow) => {
             // run assertions
             const assertions = get(item, 'request.assertions');
             if (assertions) {
-              const assertRuntime = new AssertRuntime({ runtime: scriptingConfig?.runtime });
+              const assertRuntime = new AssertRuntime({ runtime: scriptingConfig?.runtime, databaseFactory: databaseFactoryForBru });
               const results = assertRuntime.runAssertions(
                 assertions,
                 request,
@@ -2082,7 +2083,7 @@ const registerNetworkIpc = (mainWindow) => {
               let testError = null;
 
               try {
-                const testRuntime = new TestRuntime({ runtime: scriptingConfig?.runtime });
+                const testRuntime = new TestRuntime({ runtime: scriptingConfig?.runtime, databaseFactory: databaseFactoryForBru });
                 testResults = await testRuntime.runTests(
                   decomment(testFile, { space: true }),
                   request,

@@ -39,6 +39,7 @@
     "@lydell/node-pty": "^1.1.0",
     "@marrone/common": "0.1.0",
     "@marrone/converters": "^0.1.0",
+    "@marrone/database": "0.1.0",
     "@marrone/filestore": "^0.1.0",
     "@marrone/js": "0.12.0",
     "@marrone/lang": "0.12.0",

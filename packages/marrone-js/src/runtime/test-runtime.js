@@ -14,6 +14,8 @@ const { bindRunRequest, createScopeSetter } = require('./scripted-entries');
 class TestRuntime {
   constructor(props) {
     this.runtime = props?.runtime || 'quickjs';
+    // Capacidade de banco fornecida pelo host: (record) => objeto bru.db.
+    this.databaseFactory = props?.databaseFactory;
   }
 
   async runTests(
@@ -53,7 +55,9 @@ class TestRuntime {
       promptVariables,
       certsAndProxyConfig,
       requestUrl: request?.url,
-      onUnresolved: getUnresolvedVariableCollector(request)
+      onUnresolved: getUnresolvedVariableCollector(request),
+      // Sem isto, bru.db é null e o sandbox não expõe as funções de banco.
+      databaseFactory: this.databaseFactory
     });
     const req = new MarroneRequest(request);
     const res = new MarroneResponse(response);
@@ -142,7 +146,8 @@ class TestRuntime {
       results: cleanJson(__marroneTestResults.getResults()),
       nextRequestName: bru.nextRequest,
       stopExecution: bru.stopExecution,
-      scriptedRequestEntries: cleanJson(bru.scriptedRequestEntries || [])
+      scriptedRequestEntries: cleanJson(bru.scriptedRequestEntries || []),
+      databaseOperations: cleanJson(bru.databaseOperations || [])
     };
 
     if (scriptError) {
