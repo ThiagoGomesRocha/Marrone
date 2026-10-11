@@ -59,7 +59,7 @@ do login seja exatamente aquele que ele não consegue abrir. O sintoma é um err
 com usuário e senha corretos:
 
 ```text
-Falha de logon do usuário 'marrone'.
+Falha de logon do usuário 'app_user'.
 ```
 
 A mensagem vem do próprio servidor (o Marrone não a reescreve), então ela aparece no idioma
@@ -68,15 +68,15 @@ configurado no banco. Diagnóstico, conectado ao `master` com um login administr
 ```sql
 SELECT name, state_desc FROM sys.databases ORDER BY name;   -- o banco está ONLINE?
 SELECT name, is_disabled, default_database_name
-FROM sys.server_principals WHERE name = 'marrone';          -- o login existe? qual o banco padrão?
+FROM sys.server_principals WHERE name = 'app_user';        -- o login existe? qual o banco padrão?
 ```
 
 Correção, uma vez por database, também com um login administrador:
 
 ```sql
-USE MeuBanco;
-CREATE USER marrone FOR LOGIN marrone;
-ALTER ROLE db_owner ADD MEMBER marrone;  -- ou db_datareader/db_datawriter, se preferir restringir
+USE sua_base;
+CREATE USER app_user FOR LOGIN app_user;
+ALTER ROLE db_owner ADD MEMBER app_user;  -- ou db_datareader/db_datawriter, se preferir restringir
 ```
 
 O equivalente nos outros SGBDs: no MySQL é `GRANT` no schema; no PostgreSQL,
