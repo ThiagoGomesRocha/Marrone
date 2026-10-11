@@ -9,8 +9,8 @@ const initUserDataFresh = path.join(__dirname, 'init-user-data-fresh');
 const initUserDataExisting = path.join(__dirname, 'init-user-data-existing');
 const initUserDataCurrent = path.join(__dirname, 'init-user-data-current');
 
-// app.getVersion() reads from bruno-electron's package.json — match that here
-const currentVersion = require('../../packages/bruno-electron/package.json').version;
+// app.getVersion() reads from marrone-electron's package.json — match that here
+const currentVersion = require('../../packages/marrone-electron/package.json').version;
 
 test.describe('Changelog ("What\'s New") Tab', () => {
   test('should NOT show the changelog tab to brand-new users', async ({ launchElectronApp }) => {
@@ -49,7 +49,7 @@ test.describe('Changelog ("What\'s New") Tab', () => {
       await expect(page.getByTestId('welcome-modal')).not.toBeVisible();
 
       // Content sanity: header + a piece of the bundled markdown.
-      await expect(page.getByText('What\'s New in Bruno')).toBeVisible();
+      await expect(page.getByText('What\'s New in Marrone')).toBeVisible();
     } finally {
       if (app) {
         await closeElectronApp(app);

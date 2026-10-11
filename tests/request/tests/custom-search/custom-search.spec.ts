@@ -29,10 +29,10 @@ test.describe('Custom Search Functionality in Scripts Tab', () => {
 
     // Verify search box appears
     const preEditorSearchBar = page.getByTestId('pre-request-script-editor');
-    await expect(preEditorSearchBar.locator('.bruno-search-bar input[placeholder="Search..."]')).toBeVisible();
+    await expect(preEditorSearchBar.locator('.marrone-search-bar input[placeholder="Search..."]')).toBeVisible();
 
     // Test search functionality
-    const searchInput = preEditorSearchBar.locator('.bruno-search-bar input[placeholder="Search..."]');
+    const searchInput = preEditorSearchBar.locator('.marrone-search-bar input[placeholder="Search..."]');
     await searchInput.fill('searchableText');
     await expect(preEditorSearchBar.locator('.searchbar-result-count')).toContainText('1 / 4');
 
@@ -61,7 +61,7 @@ test.describe('Custom Search Functionality in Scripts Tab', () => {
     // Test close search
     const closeButton = page.getByTestId('pre-request-script-editor').locator('.searchbar-icon-btn').last();
     await closeButton.click();
-    await expect(page.getByTestId('pre-request-script-editor').locator('.bruno-search-bar')).not.toBeVisible();
+    await expect(page.getByTestId('pre-request-script-editor').locator('.marrone-search-bar')).not.toBeVisible();
   });
 
   test('should handle search in different script editors independently', async ({ pageWithUserData: page }) => {
@@ -79,7 +79,7 @@ test.describe('Custom Search Functionality in Scripts Tab', () => {
     await preTextarea.focus();
     await page.keyboard.press(findShortcut);
 
-    const preSearchInput = page.getByTestId('pre-request-script-editor').locator('.bruno-search-bar input[placeholder="Search..."]');
+    const preSearchInput = page.getByTestId('pre-request-script-editor').locator('.marrone-search-bar input[placeholder="Search..."]');
     await preSearchInput.fill('uniquePreVar');
     await expect(page.getByTestId('pre-request-script-editor').locator('.searchbar-result-count')).toContainText('1 / 1');
     await page.keyboard.press('Escape');
@@ -92,7 +92,7 @@ test.describe('Custom Search Functionality in Scripts Tab', () => {
     await postTextarea.focus();
     await page.keyboard.press(findShortcut);
 
-    const postSearchInput = page.getByTestId('post-response-script-editor').locator('.bruno-search-bar input[placeholder="Search..."]');
+    const postSearchInput = page.getByTestId('post-response-script-editor').locator('.marrone-search-bar input[placeholder="Search..."]');
     await postSearchInput.fill('uniquePostVar');
     await expect(page.getByTestId('post-response-script-editor').locator('.searchbar-result-count')).toContainText('1 / 1');
     await page.keyboard.press('Escape');
@@ -113,7 +113,7 @@ test.describe('Custom Search Functionality in Scripts Tab', () => {
     await preTextarea.focus();
     await page.keyboard.press(findShortcut);
 
-    const preSearchInput = page.getByTestId('pre-request-script-editor').locator('.bruno-search-bar input[placeholder="Search..."]');
+    const preSearchInput = page.getByTestId('pre-request-script-editor').locator('.marrone-search-bar input[placeholder="Search..."]');
     await preSearchInput.fill('commonVar');
     await expect(page.getByTestId('pre-request-script-editor').locator('.searchbar-result-count')).toContainText('1 / 1');
 
@@ -126,7 +126,7 @@ test.describe('Custom Search Functionality in Scripts Tab', () => {
     await postTextarea.focus();
     await page.keyboard.press(findShortcut);
 
-    const postSearchInput = page.getByTestId('post-response-script-editor').locator('.bruno-search-bar input[placeholder="Search..."]');
+    const postSearchInput = page.getByTestId('post-response-script-editor').locator('.marrone-search-bar input[placeholder="Search..."]');
     await postSearchInput.fill('postVar');
     await expect(page.getByTestId('post-response-script-editor').locator('.searchbar-result-count')).toContainText('1 / 1');
 
@@ -134,12 +134,12 @@ test.describe('Custom Search Functionality in Scripts Tab', () => {
     await page.getByRole('button', { name: 'Pre Request' }).click();
 
     // Search state should be maintained in Pre Request editor
-    await expect(page.getByTestId('pre-request-script-editor').locator('.bruno-search-bar')).toBeVisible();
+    await expect(page.getByTestId('pre-request-script-editor').locator('.marrone-search-bar')).toBeVisible();
     await expect(preSearchInput).toHaveValue('commonVar');
 
     // Close the search in Pre Request editor
     const closeButton = page.getByTestId('pre-request-script-editor').locator('.searchbar-icon-btn').last();
     await closeButton.click();
-    await expect(page.getByTestId('pre-request-script-editor').locator('.bruno-search-bar')).not.toBeVisible();
+    await expect(page.getByTestId('pre-request-script-editor').locator('.marrone-search-bar')).not.toBeVisible();
   });
 });

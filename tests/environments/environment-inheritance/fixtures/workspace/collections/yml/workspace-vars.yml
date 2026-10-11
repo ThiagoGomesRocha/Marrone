@@ -51,7 +51,7 @@ runtime:
             // An own row replaces the data type it inherited, not just the value.
             workspace_typed_override: "overridden_in_workspace_dev",
             // A secret carries no value on disk, so both runners give it one before the request
-            // goes out: the app through its secret store, `bru run` through --global-env-var.
+            // goes out: the app through its secret store, `marrone run` through --global-env-var.
             workspace_token: "token-from-workspace-base",
             // `workspace_dev` redeclares the inherited plain `workspace_overridden_plain` as a
             // secret, and the inherited secret `workspace_overridden_secret` as plain. Both ancestor

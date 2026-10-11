@@ -7,9 +7,9 @@ test.describe.serial('res.headerList PropertyList API', () => {
   test.beforeEach(() => test.setTimeout(2 * 60 * 1000));
 
   test('all res.headerList tests pass in developer mode', async ({ pageWithUserData: page }) => {
-    await setSandboxMode(page, 'bruno-testbench', 'developer');
+    await setSandboxMode(page, 'marrone-testbench', 'developer');
     await selectEnvironment(page, 'Prod');
-    await runFolder(page, 'bruno-testbench', ['scripting', 'api', 'res', 'headerList']);
+    await runFolder(page, 'marrone-testbench', ['scripting', 'api', 'res', 'headerList']);
     await validateRunnerResults(page, {
       totalRequests: 5,
       passed: 5,
@@ -18,9 +18,9 @@ test.describe.serial('res.headerList PropertyList API', () => {
   });
 
   test('all res.headerList tests pass in safe mode', async ({ pageWithUserData: page }) => {
-    await setSandboxMode(page, 'bruno-testbench', 'safe');
+    await setSandboxMode(page, 'marrone-testbench', 'safe');
     await selectEnvironment(page, 'Prod');
-    await runFolder(page, 'bruno-testbench', ['scripting', 'api', 'res', 'headerList']);
+    await runFolder(page, 'marrone-testbench', ['scripting', 'api', 'res', 'headerList']);
     await validateRunnerResults(page, {
       totalRequests: 5,
       passed: 5,

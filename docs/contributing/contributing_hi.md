@@ -1,12 +1,12 @@
 [English](../../contributing.md)
 
-## आइए मिलकर Bruno को बेहतर बनाएं !!
+## आइए मिलकर Marrone को बेहतर बनाएं !!
 
-हमें खुशी है कि आप Bruno को बेहतर बनाना चाहते हैं। Bruno को अपने कंप्यूटर पर लाना शुरू करने के लिए दिशानिर्देश नीचे दिए गए हैं।
+हमें खुशी है कि आप Marrone को बेहतर बनाना चाहते हैं। Marrone को अपने कंप्यूटर पर लाना शुरू करने के लिए दिशानिर्देश नीचे दिए गए हैं।
 
 ### टेक्नोलॉजी स्टैक
 
-Bruno को Next.js और React का उपयोग करके बनाया गया है। हम डेस्कटॉप संस्करण को शिप करने के लिए इलेक्ट्रॉन का भी उपयोग करते हैं (जो स्थानीय संग्रह का समर्थन करता है)
+Marrone को Next.js और React का उपयोग करके बनाया गया है। हम डेस्कटॉप संस्करण को शिप करने के लिए इलेक्ट्रॉन का भी उपयोग करते हैं (जो स्थानीय संग्रह का समर्थन करता है)
 
 Libraries जिनका हम उपयोग करते हैं
 
@@ -25,7 +25,7 @@ Libraries जिनका हम उपयोग करते हैं
 
 ## डेवलपमेंट
 
-Bruno को एक डेस्कटॉप ऐप के रूप में बनाया किया जा रहा है। आपको Next.js ऐप को एक टर्मिनल में चलाकर ऐप को लोड करना होगा और फिर इलेक्ट्रॉन ऐप को दूसरे टर्मिनल में चलाना होगा।
+Marrone को एक डेस्कटॉप ऐप के रूप में बनाया किया जा रहा है। आपको Next.js ऐप को एक टर्मिनल में चलाकर ऐप को लोड करना होगा और फिर इलेक्ट्रॉन ऐप को दूसरे टर्मिनल में चलाना होगा।
 
 ### लोकल डेवलपमेंट
 
@@ -38,10 +38,10 @@ npm i --legacy-peer-deps
 
 # पैकेज बिल्ड करें
 npm run build:graphql-docs
-npm run build:bruno-query
-npm run build:bruno-common
-npm run build:bruno-converters
-npm run build:bruno-requests
+npm run build:marrone-query
+npm run build:marrone-common
+npm run build:marrone-converters
+npm run build:marrone-requests
 
 # Next.js ऐप चलाएँ (टर्मिनल 1 पर)
 npm run dev:web
@@ -68,7 +68,7 @@ find . -type f -name "package-lock.json" -delete
 
 ```bash
 # ब्रूनो-स्कीमा परीक्षण चलाएँ
-npm test --workspace=packages/bruno-schema
+npm test --workspace=packages/marrone-schema
 
 # सभी कार्यस्थानों पर परीक्षण चलाएँ
 npm test --workspaces --if-present

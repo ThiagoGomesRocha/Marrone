@@ -19,7 +19,7 @@ const COLLECTION_NAME = 'EgdeGrid Auth';
 const REQUEST_LEVEL = 'Edgegrid auth -  request level';
 const INHERIT_REQUEST = 'Edgegrid Auth - inherit';
 
-// UI label → Postman/Bruno camelCase key (1:1). Order = display order (3 basic, then advanced).
+// UI label → Postman/Marrone camelCase key (1:1). Order = display order (3 basic, then advanced).
 const FIELDS: Array<{ label: string; key: string; advanced?: boolean }> = [
   { label: 'Access Token', key: 'accessToken' },
   { label: 'Client Token', key: 'clientToken' },

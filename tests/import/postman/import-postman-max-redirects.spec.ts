@@ -8,7 +8,7 @@ import {
   importCollection
 } from '../../utils/page';
 import { buildCommonLocators } from '../../utils/page/locators';
-import { DEFAULT_MAX_REDIRECTS } from '@usebruno/common/utils';
+import { DEFAULT_MAX_REDIRECTS } from '@marrone/common/utils';
 
 const COLLECTION_NAME = 'Max Redirects Collection';
 

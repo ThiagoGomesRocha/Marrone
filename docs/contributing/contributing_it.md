@@ -1,12 +1,12 @@
 [English](../../contributing.md)
 
-## Insieme, miglioriamo Bruno!
+## Insieme, miglioriamo Marrone!
 
-Sono felice di vedere che hai intenzione di migliorare Bruno. Di seguito, troverai le regole e le guide per ripristinare Bruno sul tuo computer.
+Sono felice di vedere che hai intenzione di migliorare Marrone. Di seguito, troverai le regole e le guide per ripristinare Marrone sul tuo computer.
 
 ### Tecnologie utilizzate
 
-Bruno è costruito utilizzando Next.js e React. Utilizziamo anche Electron per incorporare la versione desktop (che consente raccolte locali).
+Marrone è costruito utilizzando Next.js e React. Utilizziamo anche Electron per incorporare la versione desktop (che consente raccolte locali).
 
 Le librerie che utilizziamo sono:
 
@@ -38,7 +38,7 @@ Si prega di fare riferimento alla [documentazione di sviluppo](docs/development_
 
 ## Sviluppo
 
-Bruno è sviluppato come un'applicazione "heavy". È necessario caricare l'applicazione avviando Next.js in una finestra del terminale e quindi avviare l'applicazione Electron in un altro terminale.
+Marrone è sviluppato come un'applicazione "heavy". È necessario caricare l'applicazione avviando Next.js in una finestra del terminale e quindi avviare l'applicazione Electron in un altro terminale.
 
 ### Sviluppo
 
@@ -56,8 +56,8 @@ npm i --legacy-peer-deps
 # build graphql docs
 npm run build:graphql-docs
 
-# build bruno query
-npm run build:bruno-query
+# build marrone query
+npm run build:marrone-query
 
 # run next app (terminal 1)
 npm run dev:web
@@ -83,8 +83,8 @@ find . -type f -name "package-lock.json" -delete
 ### Tests
 
 ```bash
-# esegui i test dello schema bruno
-npm test --workspace=packages/bruno-schema
+# esegui i test dello schema marrone
+npm test --workspace=packages/marrone-schema
 
 # esegui test su tutti gli spazi di lavoro
 npm test --workspaces --if-present

@@ -12,11 +12,11 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "https://testbench-sanity.usebruno.com/ping",
+          "raw": "https://testbench-sanity.marrone.com/ping",
           "protocol": "https",
           "host": [
             "testbench-sanity",
-            "usebruno",
+            "marrone",
             "com"
           ],
           "path": [
@@ -31,11 +31,11 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://testbench-sanity.usebruno.com/ping",
+              "raw": "https://testbench-sanity.marrone.com/ping",
               "protocol": "https",
               "host": [
                 "testbench-sanity",
-                "usebruno",
+                "marrone",
                 "com"
               ],
               "path": [
@@ -83,11 +83,11 @@
               }
             },
             "url": {
-              "raw": "https://testbench-sanity.usebruno.com/ping",
+              "raw": "https://testbench-sanity.marrone.com/ping",
               "protocol": "https",
               "host": [
                 "testbench-sanity",
-                "usebruno",
+                "marrone",
                 "com"
               ],
               "path": [

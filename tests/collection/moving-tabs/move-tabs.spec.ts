@@ -17,7 +17,7 @@ test.describe('Move tabs', () => {
     await page.locator('.collection-item-name').filter({ hasText: 'test-folder' }).dblclick();
     await expect(page.locator('.request-tab .tab-label').filter({ hasText: 'test-folder' })).toBeVisible();
 
-    await createRequest(page, 'test-request', 'source-collection-drag-drop', { url: 'https://echo.usebruno.com' });
+    await createRequest(page, 'test-request', 'source-collection-drag-drop', { url: 'https://echo.marrone.com' });
 
     // Open the request tab
     await page.locator('.collection-item-name').filter({ hasText: 'test-request' }).dblclick();
@@ -67,7 +67,7 @@ test.describe('Move tabs', () => {
     await page.locator('.collection-item-name').filter({ hasText: 'test-folder' }).dblclick();
     await expect(page.locator('.request-tab .tab-label').filter({ hasText: 'test-folder' })).toBeVisible();
 
-    await createRequest(page, 'test-request', 'source-collection-keyboard-shortcut', { url: 'https://echo.usebruno.com' });
+    await createRequest(page, 'test-request', 'source-collection-keyboard-shortcut', { url: 'https://echo.marrone.com' });
 
     // Open the request tab
     await page.locator('.collection-item-name').filter({ hasText: 'test-request' }).dblclick();

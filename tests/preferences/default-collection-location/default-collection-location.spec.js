@@ -71,16 +71,16 @@ test.describe('Default Location Feature', () => {
     await inlineCreator.locator('.cog-btn').click();
 
     // Wait for modal to be visible
-    await page.locator('.bruno-modal').waitFor({ state: 'visible' });
+    await page.locator('.marrone-modal').waitFor({ state: 'visible' });
 
     // verify the default location is pre-filled
     // Scope to the modal to avoid conflict with preferences tab
-    const collectionLocationInput = page.locator('.bruno-modal').getByLabel('Location', { exact: true });
+    const collectionLocationInput = page.locator('.marrone-modal').getByLabel('Location', { exact: true });
     await expect(collectionLocationInput).toBeVisible();
     await expect(collectionLocationInput).toHaveValue(DEFAULT_LOCATION_SUFFIX_PATTERN, { timeout: 10000 });
 
     // cancel the collection creation
-    await page.locator('.bruno-modal').getByRole('button', { name: 'Cancel' }).click();
+    await page.locator('.marrone-modal').getByRole('button', { name: 'Cancel' }).click();
   });
 
   test('Should use default location in Clone Collection modal', async ({ pageWithUserData: page }) => {
@@ -91,16 +91,16 @@ test.describe('Default Location Feature', () => {
     await page.locator('.dropdown-item').filter({ hasText: 'Clone' }).click();
 
     // Wait for modal to be visible
-    await page.locator('.bruno-modal').waitFor({ state: 'visible' });
+    await page.locator('.marrone-modal').waitFor({ state: 'visible' });
 
     // verify the default location is pre-filled
     // Scope to the modal to avoid conflict with preferences tab
-    const cloneLocationInput = page.locator('.bruno-modal').getByLabel('Location', { exact: true });
+    const cloneLocationInput = page.locator('.marrone-modal').getByLabel('Location', { exact: true });
     await expect(cloneLocationInput).toBeVisible();
     await expect(cloneLocationInput).toHaveValue(DEFAULT_LOCATION_SUFFIX_PATTERN, { timeout: 10000 });
 
     // cancel the clone operation
-    await page.locator('.bruno-modal').getByRole('button', { name: 'Cancel' }).click();
+    await page.locator('.marrone-modal').getByRole('button', { name: 'Cancel' }).click();
   });
 
   test('Should save empty default location', async ({ pageWithUserData: page }) => {

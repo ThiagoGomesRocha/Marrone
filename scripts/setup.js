@@ -102,16 +102,16 @@ async function setup() {
 
     // Build packages
     execCommand('npm run build:graphql-docs', 'Building graphql-docs');
-    execCommand('npm run build:bruno-query', 'Building bruno-query');
-    execCommand('npm run build:bruno-common', 'Building bruno-common');
-    execCommand('npm run build:bruno-converters', 'Building bruno-converters');
-    execCommand('npm run build:bruno-requests', 'Building bruno-requests');
+    execCommand('npm run build:marrone-query', 'Building marrone-query');
+    execCommand('npm run build:marrone-common', 'Building marrone-common');
+    execCommand('npm run build:marrone-converters', 'Building marrone-converters');
+    execCommand('npm run build:marrone-requests', 'Building bruno-requests');
     execCommand('npm run build:schema-types', 'Building schema-types');
-    execCommand('npm run build:bruno-filestore', 'Building bruno-filestore');
-    execCommand('npm run build:bruno-sqlite', 'Building bruno-sqlite');
+    execCommand('npm run build:marrone-filestore', 'Building marrone-filestore');
+    execCommand('npm run build:marrone-sqlite', 'Building marrone-sqlite');
 
     // Bundle JS sandbox libraries
-    execCommand('npm run sandbox:bundle-libraries --workspace=packages/bruno-js', 'Bundling JS sandbox libraries');
+    execCommand('npm run sandbox:bundle-libraries --workspace=packages/marrone-js', 'Bundling JS sandbox libraries');
 
     console.log(`\n${icons.success} Setup completed successfully!\n`);
   } catch (error) {

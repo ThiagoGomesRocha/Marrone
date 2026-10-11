@@ -41,7 +41,7 @@ test.describe('bru.setGlobalEnvVar(name, value) - typed value persistence (works
         await sendRequest(page, 200);
 
         // The YAML serializer emits typed values as { value: { type, data } } objects —
-        // see packages/bruno-filestore/src/formats/yml/common/datatype.ts:34.
+        // see packages/marrone-filestore/src/formats/yml/common/datatype.ts:34.
         await expect.poll(() => fs.readFileSync(envFilePath, 'utf8'), { timeout: 5000 })
           .toMatch(/name:\s*global_num[\s\S]*?type:\s*number[\s\S]*?data:\s*['"]?42/);
         const content = fs.readFileSync(envFilePath, 'utf8');

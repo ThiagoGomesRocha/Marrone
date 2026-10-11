@@ -19,7 +19,7 @@ import {
  * signs and is accepted by the local simulator - asserting the echoed effective values.
  */
 
-const { TEST_EDGEGRID } = require('../../../packages/bruno-tests/src/auth/edgegrid');
+const { TEST_EDGEGRID } = require('../../../packages/marrone-tests/src/auth/edgegrid');
 const SIMULATOR_URL = 'http://localhost:8081/api/auth/edgegrid/resource';
 
 const label = (page, text: string) => page.locator('label').filter({ hasText: text });

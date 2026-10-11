@@ -5,7 +5,7 @@ const path = require('path');
 
 const PACKAGES_DIR = path.join(__dirname, '..', 'packages');
 const EXCLUDE_DIRS = ['node_modules', 'dist', 'build', '.next', 'coverage', '.git'];
-const EXCLUDE_PACKAGES = ['bruno-toml', 'bruno-tests', 'bruno-docs'];
+const EXCLUDE_PACKAGES = ['marrone-toml', 'marrone-tests', 'marrone-docs'];
 const CODE_EXTENSIONS = ['.js', '.jsx', '.ts', '.tsx', '.css', '.scss', '.json', '.md'];
 
 function countLinesInFile(filePath) {
@@ -103,7 +103,7 @@ function printTable(data) {
 }
 
 function main() {
-  console.log('Counting lines of code in Bruno packages...\n');
+  console.log('Counting lines of code in Marrone packages...\n');
   
   const packages = getPackages();
   const results = [];

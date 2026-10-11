@@ -1,5 +1,5 @@
 {
-  "name": "bruno-with-examples",
+  "name": "marrone-with-examples",
   "version": "1",
   "items": [
     {
@@ -7,7 +7,7 @@
       "name": "echo-request",
       "seq": 1,
       "request": {
-        "url": "https://testbench-sanity.usebruno.com/api/echo/json",
+        "url": "https://testbench-sanity.marrone.com/api/echo/json",
         "method": "POST",
         "headers": [
           {
@@ -45,7 +45,7 @@
           "description": "example description",
           "type": "http",
           "request": {
-            "url": "https://testbench-sanity.usebruno.com/api/echo/json",
+            "url": "https://testbench-sanity.marrone.com/api/echo/json",
             "method": "POST",
             "headers": [
               {
@@ -86,7 +86,7 @@
   "activeEnvironmentUid": null,
   "brunoConfig": {
     "version": "1",
-    "name": "bruno-with-examples",
+    "name": "marrone-with-examples",
     "type": "collection",
     "ignore": [
       "node_modules",

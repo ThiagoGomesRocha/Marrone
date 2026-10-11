@@ -16,7 +16,7 @@ export const buildFileModeLocators = (page: Page) => ({
   },
   transientSaveModal: {
     card: () => page.getByTestId('save-transient-request-modal'),
-    title: () => page.getByTestId('save-transient-request-modal').locator('.bruno-modal-header-title'),
+    title: () => page.getByTestId('save-transient-request-modal').locator('.marrone-modal-header-title'),
     collectionOption: (collectionName: string) =>
       page.getByTestId('save-transient-request-modal').locator('.collection-item').filter({ hasText: collectionName }),
     nameInput: () => page.getByTestId('save-transient-request-name'),

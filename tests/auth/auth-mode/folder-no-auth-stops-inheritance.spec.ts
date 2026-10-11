@@ -16,9 +16,9 @@ import { AUTH_MODE_LABELS } from '../../utils/constants';
 
 const DEFAULT_SENT_HEADERS: Array<[string, string | RegExp]> = [
   ['Accept', 'application/json, text/plain, */*'],
-  ['User-Agent', /^bruno-runtime\/\S+$/],
+  ['User-Agent', /^marrone-runtime\/\S+$/],
   ['Accept-Encoding', 'gzip, compress, deflate, br'],
-  ['Host', 'testbench-sanity.usebruno.com'],
+  ['Host', 'testbench-sanity.marrone.com'],
   ['Connection', 'keep-alive']
 ];
 
@@ -55,7 +55,7 @@ test('Request inherits No Auth from the folder — collection Bearer Token is ov
       inFolder: true,
       requestType: 'http',
       method: 'GET',
-      url: 'https://testbench-sanity.usebruno.com/api/auth/bearer/protected'
+      url: 'https://testbench-sanity.marrone.com/api/auth/bearer/protected'
     });
     await openRequest(page, collectionName, requestName);
     await selectRequestPaneTab(page, 'Auth');

@@ -19,13 +19,13 @@
 | [Slovenčina](docs/contributing/contributing_sk.md)
 | [فارسی](docs/contributing/contributing_fa.md)
 
-## Let's make Bruno better, together!!
+## Let's make Marrone better, together!!
 
-We are happy that you are looking to improve Bruno. Below are the guidelines to run Bruno on your computer.
+We are happy that you are looking to improve Marrone. Below are the guidelines to run Marrone on your computer.
 
 ### Technology Stack
 
-Bruno is built using React and Electron.
+Marrone is built using React and Electron.
 
 Libraries we use
 
@@ -48,27 +48,27 @@ All packages live under `packages/`:
 
 | Package | Description |
 | --- | --- |
-| `bruno-app` | React frontend (renderer) |
-| `bruno-electron` | Electron desktop app (main process) |
-| `bruno-cli` | Command line interface to run collections |
-| `bruno-common` | Shared utilities |
+| `marrone-app` | React frontend (renderer) |
+| `marrone-electron` | Electron desktop app (main process) |
+| `marrone-cli` | Command line interface to run collections |
+| `marrone-common` | Shared utilities |
 | `bruno-requests` | Request handling (auth, network, etc.) |
-| `bruno-converters` | Import/export converters (Postman, Insomnia, OpenAPI, etc.) |
-| `bruno-filestore` | File storage and parsing of collection files |
-| `bruno-sqlite` | SQLite storage layer |
+| `marrone-converters` | Import/export converters (Postman, Insomnia, OpenAPI, etc.) |
+| `marrone-filestore` | File storage and parsing of collection files |
+| `marrone-sqlite` | SQLite storage layer |
 | `bruno-lang` | `.bru` language parser |
-| `bruno-toml` | TOML parser |
-| `bruno-schema` / `bruno-schema-types` | Schema validation and shared types |
-| `bruno-js` | Script, test, vars and assert runtimes |
-| `bruno-query` | Query with deep navigation, filter and map support |
-| `bruno-graphql-docs` | GraphQL documentation explorer |
-| `bruno-tests` | Test collection and server used by CLI tests |
+| `marrone-toml` | TOML parser |
+| `marrone-schema` / `marrone-schema-types` | Schema validation and shared types |
+| `marrone-js` | Script, test, vars and assert runtimes |
+| `marrone-query` | Query with deep navigation, filter and map support |
+| `marrone-graphql-docs` | GraphQL documentation explorer |
+| `marrone-tests` | Test collection and server used by CLI tests |
 
 End-to-end (Playwright) tests live in the top-level `tests/` directory.
 
 ## Development
 
-Bruno is a desktop app. Below are the instructions to run Bruno.
+Marrone is a desktop app. Below are the instructions to run Marrone.
 
 > Note: We use React for the frontend and rsbuild for build and dev server.
 
@@ -88,8 +88,8 @@ npm run setup
 
 - removes existing `node_modules` directories
 - installs dependencies (`npm i --legacy-peer-deps`) and platform-specific native modules
-- builds the shared packages: `graphql-docs`, `bruno-query`, `bruno-common`, `bruno-converters`, `bruno-requests`, `schema-types`, `bruno-filestore` and `bruno-sqlite`
-- bundles the JS sandbox libraries for `bruno-js`
+- builds the shared packages: `graphql-docs`, `marrone-query`, `marrone-common`, `marrone-converters`, `bruno-requests`, `schema-types`, `marrone-filestore` and `marrone-sqlite`
+- bundles the JS sandbox libraries for `marrone-js`
 
 #### 2. Run the app
 
@@ -113,13 +113,13 @@ npm run dev:electron
 
 #### Rebuilding shared packages
 
-`npm run dev` does **not** rebuild the shared packages. If you change one of them (e.g. `bruno-common`, `bruno-requests`, `bruno-filestore`, `bruno-sqlite`), rebuild it so the app picks up your changes:
+`npm run dev` does **not** rebuild the shared packages. If you change one of them (e.g. `marrone-common`, `bruno-requests`, `marrone-filestore`, `marrone-sqlite`), rebuild it so the app picks up your changes:
 
 ```bash
-npm run build:bruno-common
-npm run build:bruno-requests
-npm run build:bruno-filestore
-npm run build:bruno-sqlite
+npm run build:marrone-common
+npm run build:marrone-requests
+npm run build:marrone-filestore
+npm run build:marrone-sqlite
 
 # or run a watcher while developing
 npm run watch:common
@@ -134,10 +134,10 @@ If `ELECTRON_USER_DATA_PATH` env-variable is present and its development mode, t
 e.g.
 
 ```sh
-ELECTRON_USER_DATA_PATH=$(realpath ~/Desktop/bruno-test) npm run dev:electron
+ELECTRON_USER_DATA_PATH=$(realpath ~/Desktop/marrone-test) npm run dev:electron
 ```
 
-This will create a `bruno-test` folder on your Desktop and use it as the `userData` path.
+This will create a `marrone-test` folder on your Desktop and use it as the `userData` path.
 
 ### Troubleshooting
 
@@ -164,22 +164,22 @@ Please add tests along with your changes:
 
 ```bash
 # run tests for a single package
-npm run test --workspace=packages/bruno-app
-npm run test --workspace=packages/bruno-electron
-npm run test --workspace=packages/bruno-cli
-npm run test --workspace=packages/bruno-common
-npm run test --workspace=packages/bruno-requests
-npm run test --workspace=packages/bruno-converters
-npm run test --workspace=packages/bruno-filestore
-npm run test --workspace=packages/bruno-sqlite
-npm run test --workspace=packages/bruno-js
-npm run test --workspace=packages/bruno-lang
-npm run test --workspace=packages/bruno-schema
-npm run test --workspace=packages/bruno-query
-npm run test --workspace=packages/bruno-toml
+npm run test --workspace=packages/marrone-app
+npm run test --workspace=packages/marrone-electron
+npm run test --workspace=packages/marrone-cli
+npm run test --workspace=packages/marrone-common
+npm run test --workspace=packages/marrone-requests
+npm run test --workspace=packages/marrone-converters
+npm run test --workspace=packages/marrone-filestore
+npm run test --workspace=packages/marrone-sqlite
+npm run test --workspace=packages/marrone-js
+npm run test --workspace=packages/marrone-lang
+npm run test --workspace=packages/marrone-schema
+npm run test --workspace=packages/marrone-query
+npm run test --workspace=packages/marrone-toml
 
 # run a single test file
-npm run test --workspace=packages/bruno-app -- path/to/file.spec.js
+npm run test --workspace=packages/marrone-app -- path/to/file.spec.js
 
 # run tests over all workspaces
 npm test --workspaces --if-present

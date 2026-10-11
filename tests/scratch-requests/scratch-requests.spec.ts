@@ -179,7 +179,7 @@ test.describe.serial('Scratch Requests', () => {
 
     await test.step('Fill in save dialog', async () => {
       // Wait for save modal to appear - scratch requests show "Select Collection" first
-      const saveModal = page.locator('.bruno-modal-card');
+      const saveModal = page.locator('.marrone-modal-card');
       await expect(saveModal).toBeVisible({ timeout: 5000 });
 
       // Fill in request name

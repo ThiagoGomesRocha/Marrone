@@ -14,5 +14,5 @@ grpc:
     - title: message 1
       message: |-
         {
-          "greeting": "bruno"
+          "greeting": "marrone"
         }

@@ -3,12 +3,12 @@
 
 ### ब्रूनो - API इंटरफेस (API) का अन्वेषण और परीक्षण करने के लिए एक ओपन-सोर्स विकास वातावरण।
 
-[![GitHub संस्करण](https://badge.fury.io/gh/usebruno%2Fbruno.svg)](https://badge.fury.io/gh/usebruno%2Fbruno)
-[![CI](https://github.com/usebruno/bruno/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/usebruno/bruno/actions/workflows/tests.yml)
-[![कमिट गतिविधि](https://img.shields.io/github/commit-activity/m/usebruno/bruno)](https://github.com/usebruno/bruno/pulse)
-[![X](https://img.shields.io/twitter/follow/use_bruno?style=social&logo=x)](https://twitter.com/use_bruno)
-[![वेबसाइट](https://img.shields.io/badge/Website-Visit-blue)](https://www.usebruno.com)
-[![डाउनलोड](https://img.shields.io/badge/Download-Latest-brightgreen)](https://www.usebruno.com/downloads)
+[![GitHub संस्करण](https://badge.fury.io/gh/marrone%2Fmarrone.svg)](https://badge.fury.io/gh/marrone%2Fmarrone)
+[![CI](https://github.com/marrone/marrone/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/marrone/marrone/actions/workflows/tests.yml)
+[![कमिट गतिविधि](https://img.shields.io/github/commit-activity/m/marrone/marrone)](https://github.com/marrone/marrone/pulse)
+[![X](https://img.shields.io/twitter/follow/use_marrone?style=social&logo=x)](https://twitter.com/use_marrone)
+[![वेबसाइट](https://img.shields.io/badge/Website-Visit-blue)](https://www.marrone.com)
+[![डाउनलोड](https://img.shields.io/badge/Download-Latest-brightgreen)](https://www.marrone.com/downloads)
 
 [English](../../readme.md)
 | [Українська](./readme_ua.md)
@@ -36,53 +36,53 @@
 
 आप अपनी API कलेक्शनों पर सहयोग करने के लिए Git या अपनी पसंद के किसी भी संस्करण नियंत्रण प्रणाली का उपयोग कर सकते हैं।
 
-ब्रूनो केवल ऑफ़लाइन उपयोग के लिए है। ब्रूनो में कभी भी क्लाउड-सिंक जोड़ने की कोई योजना नहीं है। हम आपके डेटा की गोपनीयता को महत्व देते हैं और मानते हैं कि इसे आपके डिवाइस पर ही रहना चाहिए। हमारी दीर्घकालिक दृष्टि [यहाँ](https://github.com/usebruno/bruno/discussions/269) पढ़ें।
+ब्रूनो केवल ऑफ़लाइन उपयोग के लिए है। ब्रूनो में कभी भी क्लाउड-सिंक जोड़ने की कोई योजना नहीं है। हम आपके डेटा की गोपनीयता को महत्व देते हैं और मानते हैं कि इसे आपके डिवाइस पर ही रहना चाहिए। हमारी दीर्घकालिक दृष्टि [यहाँ](https://github.com/marrone/marrone/discussions/269) पढ़ें।
 
 📢 हमारे हालिया India FOSS 3.0 सम्मेलन में हमारे वार्तालाप को [यहाँ](https://www.youtube.com/watch?v=7bSMFpbcPiY) देखें।
 
-![bruno](/assets/images/landing-2.png) <br /><br />
+![marrone](/assets/images/landing-2.png) <br /><br />
 
 ### गोल्डन संस्करण ✨
 
 हमारी अधिकांश सुविधाएँ मुफ्त और ओपन-सोर्स हैं।
-हम [पारदर्शिता और स्थिरता के सिद्धांतों](https://github.com/usebruno/bruno/discussions/269) के बीच एक सामंजस्यपूर्ण संतुलन प्राप्त करने का प्रयास करते हैं।
+हम [पारदर्शिता और स्थिरता के सिद्धांतों](https://github.com/marrone/marrone/discussions/269) के बीच एक सामंजस्यपूर्ण संतुलन प्राप्त करने का प्रयास करते हैं।
 
-[गोल्डन संस्करण](https://www.usebruno.com/pricing) के लिए खरीदारी जल्द ही $9 की कीमत पर उपलब्ध होगी! <br/>
-[यहाँ सदस्यता लें](https://usebruno.ck.page/4c65576bd4) ताकि आपको लॉन्च पर सूचनाएं मिलें।
+[गोल्डन संस्करण](https://www.marrone.com/pricing) के लिए खरीदारी जल्द ही $9 की कीमत पर उपलब्ध होगी! <br/>
+[यहाँ सदस्यता लें](https://marrone.ck.page/4c65576bd4) ताकि आपको लॉन्च पर सूचनाएं मिलें।
 
 ### स्थापना
 
-ब्रूनो Mac, Windows और Linux के लिए हमारे [वेबसाइट](https://www.usebruno.com/downloads) पर एक बाइनरी डाउनलोड के रूप में उपलब्ध है।
+ब्रूनो Mac, Windows और Linux के लिए हमारे [वेबसाइट](https://www.marrone.com/downloads) पर एक बाइनरी डाउनलोड के रूप में उपलब्ध है।
 
 आप ब्रूनो को Homebrew, Chocolatey, Scoop, Snap, Flatpak और Apt जैसे पैकेज प्रबंधकों के माध्यम से भी स्थापित कर सकते हैं।
 
 ```sh
 # Mac पर Homebrew के माध्यम से
-brew install bruno
+brew install marrone
 
 # Windows पर Chocolatey के माध्यम से
-choco install bruno
+choco install marrone
 
 # Windows पर Scoop के माध्यम से
 scoop bucket add extras
-scoop install bruno
+scoop install marrone
 
 # Linux पर Snap के माध्यम से
-snap install bruno
+snap install marrone
 
 # Linux पर Flatpak के माध्यम से
-flatpak install com.usebruno.Bruno
+flatpak install com.marrone.Marrone
 
 # Linux पर Apt के माध्यम से
 sudo mkdir -p /etc/apt/keyrings
 sudo apt update && sudo apt install gpg curl
 curl -fsSL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x9FA6017ECABE0266" \
   | gpg --dearmor \
-  | sudo tee /etc/apt/keyrings/bruno.gpg > /dev/null
-sudo chmod 644 /etc/apt/keyrings/bruno.gpg
-echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/bruno.gpg] http://debian.usebruno.com/ bruno stable" \
-  | sudo tee /etc/apt/sources.list.d/bruno.list
-sudo apt update && sudo apt install bruno
+  | sudo tee /etc/apt/keyrings/marrone.gpg > /dev/null
+sudo chmod 644 /etc/apt/keyrings/marrone.gpg
+echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/marrone.gpg] http://debian.marrone.com/ marrone stable" \
+  | sudo tee /etc/apt/sources.list.d/marrone.list
+sudo apt update && sudo apt install marrone
 
 कई प्लेटफार्मों पर चलाएं 🖥️
 <br /><br />
@@ -146,7 +146,7 @@ Scriptmania
 यदि आप सीधे कोड के माध्यम से योगदान नहीं कर सकते, तो भी कृपया बग्स की रिपोर्ट करने और उन सुविधाओं का अनुरोध करने में संकोच न करें जिन्हें आपकी स्थिति को हल करने के लिए लागू किया जाना चाहिए।
 
 लेखक
-<div align="center"> <a href="https://github.com/usebruno/bruno/graphs/contributors"> <img src="https://contrib.rocks/image?repo=usebruno/bruno" /> </a> </div>
+<div align="center"> <a href="https://github.com/marrone/marrone/graphs/contributors"> <img src="https://contrib.rocks/image?repo=marrone/marrone" /> </a> </div>
 
 लाइसेंस 📄
 MIT

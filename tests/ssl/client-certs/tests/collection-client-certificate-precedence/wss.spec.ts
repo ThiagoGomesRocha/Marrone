@@ -6,7 +6,7 @@ const COLLECTION = 'client-certs-precedence';
 
 // Both levels declare a client certificate for `localhost`, and the global one is a
 // self-signed cert the mTLS server rejects. The collection cert must win over WSS too:
-// the upgrade completing, and the server reporting CN bruno-client rather than
+// the upgrade completing, and the server reporting CN marrone-client rather than
 // untrusted-client, is what proves the global cert was never reached.
 test.describe('wss with collection client certificate taking precedence over global', () => {
   // App launch plus the mTLS handshake exceeds the default 30s under parallel load. The budget
@@ -35,11 +35,11 @@ test.describe('wss with collection client certificate taking precedence over glo
       await test.step('Send message and verify the server saw the collection client cert', async () => {
         await locators.runButton().click();
         // Match the reply by content rather than by position: the assertion is about what the
-        // server saw, and Bruno records an outgoing message only once its write completes, so the
+        // server saw, and Marrone records an outgoing message only once its write completes, so the
         // reply can be listed above the ping that triggered it.
         const certReply = locators.messageMatching(/clientCertPresented/);
         await expect(certReply).toHaveText(/clientCertPresented"?\s*:\s*true/);
-        await expect(certReply).toHaveText(/subjectCN"?\s*:\s*"?bruno-client/);
+        await expect(certReply).toHaveText(/subjectCN"?\s*:\s*"?marrone-client/);
       });
     });
   }

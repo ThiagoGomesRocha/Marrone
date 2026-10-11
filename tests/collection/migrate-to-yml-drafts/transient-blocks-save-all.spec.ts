@@ -49,7 +49,7 @@ test.describe('Migrate to YML — a transient request blocks Save All until it i
     await test.step('Save the transient via its per-item Save button', async () => {
       await migrate.draftsTransientSave(transientName).click();
 
-      const saveTransientModal = page.locator('.bruno-modal-card').filter({ hasText: 'Save Request' });
+      const saveTransientModal = page.locator('.marrone-modal-card').filter({ hasText: 'Save Request' });
       await expect(saveTransientModal).toBeVisible({ timeout: 10000 });
 
       const nameInput = saveTransientModal.locator('#request-name');

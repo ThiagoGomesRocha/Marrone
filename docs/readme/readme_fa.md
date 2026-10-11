@@ -1,14 +1,14 @@
 <br />
 <img src="../../assets/images/logo-transparent.png" width="80"/>
 
-### برونو یا Bruno - محیط توسعه متن باز برای تست و توسعه API ها
+### برونو یا Marrone - محیط توسعه متن باز برای تست و توسعه API ها
 
-[![GitHub version](https://badge.fury.io/gh/usebruno%2Fbruno.svg)](https://badge.fury.io/gh/usebruno%2Fbruno)
-[![CI](https://github.com/usebruno/bruno/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/usebruno/bruno/actions/workflows/tests.yml)
-[![Commit Activity](https://img.shields.io/github/commit-activity/m/usebruno/bruno)](https://github.com/usebruno/bruno/pulse)
-[![X](https://img.shields.io/twitter/follow/use_bruno?style=social&logo=x)](https://twitter.com/use_bruno)
-[![Website](https://img.shields.io/badge/Website-Visit-blue)](https://www.usebruno.com)
-[![Download](https://img.shields.io/badge/Download-Latest-brightgreen)](https://www.usebruno.com/downloads)
+[![GitHub version](https://badge.fury.io/gh/marrone%2Fmarrone.svg)](https://badge.fury.io/gh/marrone%2Fmarrone)
+[![CI](https://github.com/marrone/marrone/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/marrone/marrone/actions/workflows/tests.yml)
+[![Commit Activity](https://img.shields.io/github/commit-activity/m/marrone/marrone)](https://github.com/marrone/marrone/pulse)
+[![X](https://img.shields.io/twitter/follow/use_marrone?style=social&logo=x)](https://twitter.com/use_marrone)
+[![Website](https://img.shields.io/badge/Website-Visit-blue)](https://www.marrone.com)
+[![Download](https://img.shields.io/badge/Download-Latest-brightgreen)](https://www.marrone.com/downloads)
 
 [English](../../readme.md)
 | [Українська](./readme_ua.md)
@@ -36,65 +36,65 @@
 
 شما می‌توانید برای همکاری روی مجموعه‌های API خود، از Git یا هر سیستم کنترل نسخه دلخواهتان استفاده کنید.
 
-برونو فقط به صورت آفلاین کار می‌کند. هیچ برنامه‌ای برای اضافه کردن همگام‌سازی ابری به برونو در آینده وجود ندارد. ما به حریم خصوصی داده‌های شما اهمیت می‌دهیم و معتقدیم که باید روی دستگاه خودتان باقی بمانند. می‌توانید چشم‌انداز بلندمدت ما را مطالعه کنید. [اینجا (به انگلیسی)](https://github.com/usebruno/bruno/discussions/269)
+برونو فقط به صورت آفلاین کار می‌کند. هیچ برنامه‌ای برای اضافه کردن همگام‌سازی ابری به برونو در آینده وجود ندارد. ما به حریم خصوصی داده‌های شما اهمیت می‌دهیم و معتقدیم که باید روی دستگاه خودتان باقی بمانند. می‌توانید چشم‌انداز بلندمدت ما را مطالعه کنید. [اینجا (به انگلیسی)](https://github.com/marrone/marrone/discussions/269)
 
 📢 جدیدترین ارائه ما را در کنفرانس India FOSS 3.0 تماشا کنید.
 [اینجا](https://www.youtube.com/watch?v=7bSMFpbcPiY)
 
-![bruno](/assets/images/landing-2.png) <br /><br />
+![marrone](/assets/images/landing-2.png) <br /><br />
 
 ### نصب
 
-برونو به صورت یک فایل باینری برای دانلود در دسترس است. [بر روی وبسایت ما](https://www.usebruno.com/downloads) برای مک لینکوس و ویندوز.
+برونو به صورت یک فایل باینری برای دانلود در دسترس است. [بر روی وبسایت ما](https://www.marrone.com/downloads) برای مک لینکوس و ویندوز.
 
 همچنین می‌توانید برونو را از طریق مدیر بسته‌هایی مانند Homebrew، Chocolatey، Snap و Apt نصب کنید.
 
 ```sh
 # بر روی مک از طریق brew
-brew install bruno
+brew install marrone
 
 # بر روی ویندوز از طریق Chocolatey
-choco install bruno
+choco install marrone
 
 # بر روی لینوکس از طریق Snap
-snap install bruno
+snap install marrone
 
 # بر روی لینوکس از طریق Apt
 sudo mkdir -p /etc/apt/keyrings
 sudo apt update && sudo apt install gpg curl
 curl -fsSL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x9FA6017ECABE0266" \
   | gpg --dearmor \
-  | sudo tee /etc/apt/keyrings/bruno.gpg > /dev/null
-sudo chmod 644 /etc/apt/keyrings/bruno.gpg
-echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/bruno.gpg] http://debian.usebruno.com/ bruno stable" \
-  | sudo tee /etc/apt/sources.list.d/bruno.list
-sudo apt update && sudo apt install bruno
+  | sudo tee /etc/apt/keyrings/marrone.gpg > /dev/null
+sudo chmod 644 /etc/apt/keyrings/marrone.gpg
+echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/marrone.gpg] http://debian.marrone.com/ marrone stable" \
+  | sudo tee /etc/apt/sources.list.d/marrone.list
+sudo apt update && sudo apt install marrone
 ```
 
 ### روی پلتفرم‌های مختلف کار می‌کند 🖥️
 
-![bruno](/assets/images/run-anywhere.png) <br /><br />
+![marrone](/assets/images/run-anywhere.png) <br /><br />
 
 ### همکاری از طریق گیت 👩‍💻🧑‍💻
 
 یا هر سیستم کنترل نسخه‌ای که ترجیح می‌دهید
 
-![bruno](/assets/images/version-control.png) <br /><br />
+![marrone](/assets/images/version-control.png) <br /><br />
 
 ### لینک‌های مهم 📌
 
-- [آخرین نسخه پایدار ما](https://github.com/usebruno/bruno/discussions/269)
-- [نقشه راه](https://github.com/usebruno/bruno/discussions/384)
-- [مستندات](https://docs.usebruno.com)
-- [وبسایت](https://www.usebruno.com)
-- [اشتراک ها](https://www.usebruno.com/pricing)
-- [دانلود](https://www.usebruno.com/downloads)
+- [آخرین نسخه پایدار ما](https://github.com/marrone/marrone/discussions/269)
+- [نقشه راه](https://github.com/marrone/marrone/discussions/384)
+- [مستندات](https://docs.marrone.com)
+- [وبسایت](https://www.marrone.com)
+- [اشتراک ها](https://www.marrone.com/pricing)
+- [دانلود](https://www.marrone.com/downloads)
 
 ### ویدیوها 🎥
 
-- [تجربه ها](https://github.com/usebruno/bruno/discussions/343)
-- [مرکز دانش](https://github.com/usebruno/bruno/discussions/386)
-- [اسکریپ مانیا](https://github.com/usebruno/bruno/discussions/385)
+- [تجربه ها](https://github.com/marrone/marrone/discussions/343)
+- [مرکز دانش](https://github.com/marrone/marrone/discussions/386)
+- [اسکریپ مانیا](https://github.com/marrone/marrone/discussions/385)
 
 ### حمایت ❤️
 
@@ -102,7 +102,7 @@ sudo apt update && sudo apt install bruno
 
 ### تجربه‌های به اشتراک گذاشته‌شده 📣
 
-اگر برونو به شما یا تیمتان کمک کرده است، لطفاً فراموش نکنید تجربه‌های خود را به اشتراک بگذارید. [تجربه‌های خود را در بحث گیت‌هاب ما به اشتراک بگذارید](https://github.com/usebruno/bruno/discussions/343).
+اگر برونو به شما یا تیمتان کمک کرده است، لطفاً فراموش نکنید تجربه‌های خود را به اشتراک بگذارید. [تجربه‌های خود را در بحث گیت‌هاب ما به اشتراک بگذارید](https://github.com/marrone/marrone/discussions/343).
 
 ### انتشار برونو در یک پکیچ منیجر جدید
 
@@ -117,23 +117,23 @@ sudo apt update && sudo apt install bruno
 ### نویسنده ها
 
 <div align="center">
-    <a href="https://github.com/usebruno/bruno/graphs/contributors">
-        <img src="https://contrib.rocks/image?repo=usebruno/bruno" />
+    <a href="https://github.com/marrone/marrone/graphs/contributors">
+        <img src="https://contrib.rocks/image?repo=marrone/marrone" />
     </a>
 </div>
 
 ### در ارتباط باشید 🌐
 
-[𝕏 (تویتر)](https://twitter.com/use_bruno) <br />
-[وبسایت](https://www.usebruno.com) <br />
+[𝕏 (تویتر)](https://twitter.com/use_marrone) <br />
+[وبسایت](https://www.marrone.com) <br />
 [دیسکورد](https://discord.com/invite/KgcZUncpjq) <br />
-[لینکدین](https://www.linkedin.com/company/usebruno)
+[لینکدین](https://www.linkedin.com/company/marrone)
 
 ### برند
 
 **نام**
 
-به فارسی برونو - `Bruno` یک علامت تجاری ثبت‌شده متعلق به [Anoop M D](https://www.helloanoop.com/)
+به فارسی برونو - `Marrone` یک علامت تجاری ثبت‌شده متعلق به [Anoop M D](https://www.helloanoop.com/)
 
 **لوگو**
 

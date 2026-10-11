@@ -213,7 +213,7 @@ test.describe.serial('Mock Server', () => {
     expect(response.body.path).toBe('/');
   });
 
-  test('should create and send request to mock /health via Bruno', async ({ pageWithUserData: page }) => {
+  test('should create and send request to mock /health via Marrone', async ({ pageWithUserData: page }) => {
     await createRequest(page, 'mock-health-check', COLLECTION_NAME, {
       url: `http://localhost:${currentMockPort}/health`
     });
@@ -223,7 +223,7 @@ test.describe.serial('Mock Server', () => {
     expect(body).toContain('"ok"');
   });
 
-  test('should create and send request to mock /users/1 via Bruno', async ({ pageWithUserData: page }) => {
+  test('should create and send request to mock /users/1 via Marrone', async ({ pageWithUserData: page }) => {
     await createRequest(page, 'mock-get-user', COLLECTION_NAME, {
       url: `http://localhost:${currentMockPort}/users/1`
     });
@@ -233,7 +233,7 @@ test.describe.serial('Mock Server', () => {
     expect(body).toContain('john@example.com');
   });
 
-  test('should create and send POST request to mock /users via Bruno', async ({ pageWithUserData: page }) => {
+  test('should create and send POST request to mock /users via Marrone', async ({ pageWithUserData: page }) => {
     await createRequest(page, 'mock-create-user', COLLECTION_NAME, {
       url: `http://localhost:${currentMockPort}/users`,
       method: 'POST'
@@ -243,7 +243,7 @@ test.describe.serial('Mock Server', () => {
     expect(body).toContain('New User');
   });
 
-  test('should show all requests in request log after Bruno sends', async ({ pageWithUserData: page }) => {
+  test('should show all requests in request log after Marrone sends', async ({ pageWithUserData: page }) => {
     const ms = buildMockServerLocators(page);
     await openMockServerTab(page, COLLECTION_NAME);
     await ms.tabLog().click();

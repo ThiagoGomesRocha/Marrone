@@ -5,7 +5,7 @@ import { createRequestFromCurl } from '../../utils/request';
 
 const COLLECTION_NAME = 'curl-data-binary';
 
-const INLINE_JSON_CURL = 'curl -H "Content-Type: application/json" --data-binary "{\\"name\\":\\"bruno\\"}" "https://httpbin.org/post"';
+const INLINE_JSON_CURL = 'curl -H "Content-Type: application/json" --data-binary "{\\"name\\":\\"marrone\\"}" "https://httpbin.org/post"';
 
 // The `@` prefix tells curl to read the body from a file — a genuine file body.
 const FILE_CURL = 'curl -H "Content-Type: application/octet-stream" --data-binary "@/path/to/bruno.json" "https://httpbin.org/post"';
@@ -26,7 +26,7 @@ test.describe('cURL import — --data-binary', () => {
       await expect(request.bodyModeSelector()).toContainText('JSON');
 
       const bodyText = (await request.bodyEditor().locator('.CodeMirror').textContent()) ?? '';
-      expect(bodyText.replace(/\s/g, '')).toContain('"name":"bruno"');
+      expect(bodyText.replace(/\s/g, '')).toContain('"name":"marrone"');
     });
   });
 

@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import yaml from 'js-yaml';
-import { bruToJsonV2 } from '@usebruno/lang';
+import { bruToJsonV2 } from '@marrone/lang';
 import { expect, test } from '../../../playwright';
 import {
   addGrpcMessage,

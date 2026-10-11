@@ -523,7 +523,7 @@ const runDataTypeSelectorTests = (
 
   test('multipart form: typed pre-request vars stringify on the wire', async ({ pageWithUserData: page }) => {
     // Asserts the toFormValue stringifier in
-    // packages/bruno-electron/src/utils/form-data.js converts typed
+    // packages/marrone-electron/src/utils/form-data.js converts typed
     // (number/boolean/object) values to strings before form.append.
     await openRequestInCollection(page, collectionName, 'multipart');
     await sendRequestAndWaitForResponse(page, 200, { timeout: 30000 });
@@ -535,7 +535,7 @@ const runDataTypeSelectorTests = (
 
   test('form-urlencoded: typed pre-request vars stringify on the wire', async ({ pageWithUserData: page }) => {
     // form-urlencoded uses a separate code path from multipart:
-    // buildFormUrlEncodedPayload in @usebruno/common coerces values via String().
+    // buildFormUrlEncodedPayload in @marrone/common coerces values via String().
     // Verifies typed (number/boolean/object) vars round-trip into the
     // application/x-www-form-urlencoded body and the echo endpoint echoes the wire form.
     await openRequestInCollection(page, collectionName, 'form_urlencoded');

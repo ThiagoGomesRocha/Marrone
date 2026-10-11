@@ -10,7 +10,7 @@ const isRequestSaved = async (saveButton: Locator) => {
 
 const setup = async (page: Page, createTmpDir: (tag?: string | undefined) => Promise<string>) => {
   await createCollection(page, 'source-collection', await createTmpDir('source-collection'));
-  await createRequest(page, 'test-request', 'source-collection', { url: 'https://echo.usebruno.com' });
+  await createRequest(page, 'test-request', 'source-collection', { url: 'https://echo.marrone.com' });
 };
 
 test.describe.serial('save requests', () => {
@@ -23,7 +23,7 @@ test.describe.serial('save requests', () => {
     await setup(page, createTmpDir);
 
     const locators = buildCommonLocators(page);
-    const originalUrl = 'https://echo.usebruno.com';
+    const originalUrl = 'https://echo.marrone.com';
     const replacementUrl = 'ws://localhost:8082';
 
     const clearText = async (text: string) => {

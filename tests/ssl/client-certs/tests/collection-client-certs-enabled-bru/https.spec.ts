@@ -5,8 +5,8 @@ import { buildCommonLocators } from '../../../../utils/page/locators';
 const COLLECTION = 'client-certs-enabled-bru';
 
 // The collection carries a client certificate with `clientCertificates.enabled: true`,
-// so Bruno attaches it. The mTLS handshake succeeds and the request's assertions
-// (clientCertPresented: true, subjectCN: bruno-client) all pass.
+// so Marrone attaches it. The mTLS handshake succeeds and the request's assertions
+// (clientCertPresented: true, subjectCN: marrone-client) all pass.
 test.describe('https with collection client certificate (enabled, bru)', () => {
   // App launch plus the mTLS handshake exceeds the default 30s under parallel load. The budget
   // belongs on the describe so it covers fixture setup too, which test.setTimeout cannot reach.

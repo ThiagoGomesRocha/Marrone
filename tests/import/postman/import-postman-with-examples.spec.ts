@@ -42,7 +42,7 @@ test.describe('Import Postman Collection with Examples', () => {
     await test.step('Wait for import modal and verify title', async () => {
       const importModal = page.getByRole('dialog');
       await importModal.waitFor({ state: 'visible' });
-      await expect(importModal.locator('.bruno-modal-header-title')).toContainText('Import Collection');
+      await expect(importModal.locator('.marrone-modal-header-title')).toContainText('Import Collection');
     });
 
     await test.step('Upload Postman collection file using hidden file input', async () => {
@@ -63,7 +63,7 @@ test.describe('Import Postman Collection with Examples', () => {
 
     await test.step('Verify location selection modal appears', async () => {
       const locationModal = page.locator('[data-testid="import-collection-location-modal"]');
-      await expect(locationModal.locator('.bruno-modal-header-title')).toContainText('Import Collection');
+      await expect(locationModal.locator('.marrone-modal-header-title')).toContainText('Import Collection');
     });
 
     await test.step('Verify collection name appears in location modal', async () => {

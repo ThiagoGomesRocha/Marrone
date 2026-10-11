@@ -7,7 +7,7 @@ paths:
 
 # Coding Conventions, Readability & Hygiene
 
-`CODING_STANDARDS.md` is the source of truth for Bruno's coding standards — read it. This file is
+`CODING_STANDARDS.md` is the source of truth for Marrone's coding standards — read it. This file is
 the judgment layer over those standards: the readability and code-hygiene calls a linter can't make.
 Code and comments must read as a natural, permanent part of the project — never as artifacts of the
 task or session that produced them.

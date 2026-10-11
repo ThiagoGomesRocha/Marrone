@@ -13,7 +13,7 @@ export const SETTINGS_FILES = new Set([
 /**
  * Recursively collect request-file basenames under `dir`, excluding
  * collection/folder settings files. This is how we assert the *actual on-disk
- * filename* — the UI label alone can't prove that Bruno silently suffixed a
+ * filename* — the UI label alone can't prove that Marrone silently suffixed a
  * filesystem collision.
  */
 export const listRequestFiles = (dir: string, ext = '.bru'): string[] => {
@@ -47,7 +47,7 @@ export const minimalBru = (name: string) => `meta {\n  name: ${name}\n  type: ht
  * marker file and checking whether a case-flipped name resolves to the same file.
  */
 export const isCaseInsensitiveFs = (dir: string): boolean => {
-  const marker = path.join(dir, `.bruno-case-probe-${process.pid}-${Date.now()}a`);
+  const marker = path.join(dir, `.marrone-case-probe-${process.pid}-${Date.now()}a`);
   const flipped = path.join(dir, path.basename(marker).replace(/a$/, 'A'));
   try {
     fs.writeFileSync(marker, '');

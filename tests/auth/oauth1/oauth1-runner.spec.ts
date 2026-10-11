@@ -10,7 +10,7 @@ import { runCollection, validateRunnerResults } from '../../utils/page/runner';
 // The test PEM file is gitignored (*.pem). Write it to both fixture directories
 // at module load time so collectionFixturePath includes it when copying.
 
-const { TEST_RSA_PRIVATE_KEY } = require('../../../packages/bruno-tests/src/auth/oauth1');
+const { TEST_RSA_PRIVATE_KEY } = require('../../../packages/marrone-tests/src/auth/oauth1');
 
 const fixtureBase = path.join(__dirname, 'fixtures', 'collections');
 for (const subdir of ['bru', 'yml']) {

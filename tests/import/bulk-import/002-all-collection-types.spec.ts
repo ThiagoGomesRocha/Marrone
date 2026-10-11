@@ -13,7 +13,7 @@ test.describe('All Collection Types Bulk Import', () => {
   test('All 4 collection types appear in bulk import', async ({ page, createTmpDir }) => {
     const postmanFile = path.join(testDataDir, 'sample-postman.json');
     const insomniaFile = path.join(testDataDir, 'sample-insomnia.json');
-    const brunoFile = path.join(testDataDir, 'sample-bruno.json');
+    const marroneFile = path.join(testDataDir, 'sample-bruno.json');
     const openapiFile = path.join(testDataDir, 'sample-openapi.yaml');
 
     await page.getByTestId('collections-header-add-menu').click();
@@ -22,16 +22,16 @@ test.describe('All Collection Types Bulk Import', () => {
     // Wait for import collection modal to be ready
     const importModal = page.getByRole('dialog');
     await importModal.waitFor({ state: 'visible' });
-    await expect(importModal.locator('.bruno-modal-header-title')).toContainText('Import Collection');
+    await expect(importModal.locator('.marrone-modal-header-title')).toContainText('Import Collection');
 
-    await page.setInputFiles('input[type="file"]', [postmanFile, insomniaFile, brunoFile, openapiFile]);
+    await page.setInputFiles('input[type="file"]', [postmanFile, insomniaFile, marroneFile, openapiFile]);
 
     // Wait for the loader to disappear
     await page.locator('#import-collection-loader').waitFor({ state: 'hidden' });
 
     // Verify that the Bulk Import modal is displayed (no separate settings modal anymore)
     const bulkImportModal = page.getByRole('dialog');
-    await expect(bulkImportModal.locator('.bruno-modal-header-title')).toContainText('Bulk Import');
+    await expect(bulkImportModal.locator('.marrone-modal-header-title')).toContainText('Bulk Import');
 
     // Check that the Collections count shows 4 collections in the Bulk Import modal
     const collectionsHeading = bulkImportModal.getByTestId('selection-heading').filter({ hasText: 'Collections' });
@@ -39,7 +39,7 @@ test.describe('All Collection Types Bulk Import', () => {
     await expect(collectionsHeading.getByTestId('selection-count')).toHaveText('4');
     await expect(bulkImportModal.getByText('Sample Postman Collection')).toBeVisible();
     await expect(bulkImportModal.getByText('Sample Insomnia Collection')).toBeVisible();
-    await expect(bulkImportModal.getByText('Sample Bruno Collection')).toBeVisible();
+    await expect(bulkImportModal.getByText('Sample Marrone Collection')).toBeVisible();
     await expect(bulkImportModal.getByText('Sample API')).toBeVisible();
 
     // Verify that OpenAPI settings are visible (since one file is OpenAPI)
@@ -64,7 +64,7 @@ test.describe('All Collection Types Bulk Import', () => {
     // Verify all collections were imported successfully
     await expect(page.locator('#sidebar-collection-name').getByText('Sample Postman Collection')).toBeVisible();
     await expect(page.locator('#sidebar-collection-name').getByText('Sample Insomnia Collection')).toBeVisible();
-    await expect(page.locator('#sidebar-collection-name').getByText('Sample Bruno Collection')).toBeVisible();
+    await expect(page.locator('#sidebar-collection-name').getByText('Sample Marrone Collection')).toBeVisible();
     await expect(page.locator('#sidebar-collection-name').getByText('Sample API')).toBeVisible();
   });
 });

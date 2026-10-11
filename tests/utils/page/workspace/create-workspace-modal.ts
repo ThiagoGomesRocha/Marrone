@@ -1,7 +1,7 @@
 import { Page, expect, test } from '../../../../playwright';
 
 export const buildCreateWorkspaceModalLocators = (page: Page) => {
-  const modal = () => page.locator('.bruno-modal-card').filter({ hasText: 'Create Workspace' });
+  const modal = () => page.locator('.marrone-modal-card').filter({ hasText: 'Create Workspace' });
 
   return {
     modal,

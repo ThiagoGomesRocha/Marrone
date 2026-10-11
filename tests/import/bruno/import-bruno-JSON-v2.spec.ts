@@ -3,14 +3,14 @@ import { test, expect } from '../../../playwright';
 import { importCollection, closeAllCollections, readCollectionProxyField } from '../../utils/page';
 import { buildCommonLocators } from '../../utils/page/locators';
 
-test.describe('Import Bruno v2 JSON collection', () => {
+test.describe('Import Marrone v2 JSON collection', () => {
   test.afterEach(async ({ page }) => {
     await closeAllCollections(page);
   });
 
   test('proxy settings are preserved after importing a v2 JSON collection', async ({ page, createTmpDir }) => {
     const collectionName = 'proxy-collection-v2';
-    const collectionFile = path.join(__dirname, 'fixtures', 'bruno-v2-json-collection-with-proxy.json');
+    const collectionFile = path.join(__dirname, 'fixtures', 'marrone-v2-json-collection-with-proxy.json');
     const locators = buildCommonLocators(page);
 
     await test.step('Import v2 JSON collection', async () => {

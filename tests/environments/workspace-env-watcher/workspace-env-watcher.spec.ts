@@ -7,9 +7,9 @@ import { buildCommonLocators } from '../../utils/page/locators';
 /**
  * Regression test for the workspace-watcher IPC channel mismatch.
  *
- * `packages/bruno-electron/src/app/workspace-watcher.js` used to emit
+ * `packages/marrone-electron/src/app/workspace-watcher.js` used to emit
  * `main:global-environment-{added,changed,deleted}`, but the renderer
- * (`packages/bruno-app/src/providers/App/useIpcEvents.js`) only listens
+ * (`packages/marrone-app/src/providers/App/useIpcEvents.js`) only listens
  * for `main:workspace-environment-{added,changed,deleted}`. As a result,
  * changes made to workspace global-environment files on disk never
  * reached Redux until the app was restarted.

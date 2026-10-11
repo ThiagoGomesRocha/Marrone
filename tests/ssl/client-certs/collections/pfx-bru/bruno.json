@@ -10,7 +10,7 @@
         "domain": "localhost",
         "type": "pfx",
         "pfxFilePath": "../../server/certs/client.pfx",
-        "passphrase": "bruno"
+        "passphrase": "marrone"
       }
     ]
   }

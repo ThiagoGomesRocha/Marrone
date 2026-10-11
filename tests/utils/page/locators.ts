@@ -117,19 +117,19 @@ export const buildCommonLocators = (page: Page) => ({
     chevron: (folderName: string) => page.locator('.collection-item-name').filter({ hasText: folderName }).getByTestId('folder-chevron')
   },
   modal: {
-    any: () => page.locator('.bruno-modal'),
+    any: () => page.locator('.marrone-modal'),
     formError: (text: string | RegExp) =>
-      page.locator('.bruno-modal [data-testid="form-error"]').getByText(text),
-    title: (title: string) => page.locator('.bruno-modal-header-title').filter({ hasText: title }),
-    byTitle: (title: string) => page.locator('.bruno-modal').filter({ has: page.locator('.bruno-modal-header-title').filter({ hasText: title }) }),
-    itemNameInput: (root?: Locator) => (root ?? page.locator('.bruno-modal')).locator('#collection-item-name'),
-    button: (name: string) => page.locator('.bruno-modal').getByRole('button', { name: name, exact: true }),
-    closeButton: () => page.locator('.bruno-modal').getByTestId('modal-close-button'),
-    card: () => page.locator('.bruno-modal-card'),
-    footer: () => page.locator('.bruno-modal-footer'),
-    submitButton: () => page.locator('.bruno-modal-footer .submit'),
+      page.locator('.marrone-modal [data-testid="form-error"]').getByText(text),
+    title: (title: string) => page.locator('.marrone-modal-header-title').filter({ hasText: title }),
+    byTitle: (title: string) => page.locator('.marrone-modal').filter({ has: page.locator('.marrone-modal-header-title').filter({ hasText: title }) }),
+    itemNameInput: (root?: Locator) => (root ?? page.locator('.marrone-modal')).locator('#collection-item-name'),
+    button: (name: string) => page.locator('.marrone-modal').getByRole('button', { name: name, exact: true }),
+    closeButton: () => page.locator('.marrone-modal').getByTestId('modal-close-button'),
+    card: () => page.locator('.marrone-modal-card'),
+    footer: () => page.locator('.marrone-modal-footer'),
+    submitButton: () => page.locator('.marrone-modal-footer .submit'),
     newRequestMethodOption: (id: string) => page.getByTestId(`method-selector-${id.toLowerCase()}`),
-    backdrop: () => page.locator('.bruno-modal-backdrop')
+    backdrop: () => page.locator('.marrone-modal-backdrop')
   },
   openCollectionPicker: {
     list: () => page.getByTestId('selection-list'),
@@ -240,41 +240,41 @@ export const buildCommonLocators = (page: Page) => ({
   },
   generateDocs: {
     menuItem: () => page.locator('.dropdown-item').filter({ hasText: 'Generate Docs' }),
-    modal: () => page.locator('.bruno-modal').filter({
-      has: page.locator('.bruno-modal-header-title').filter({ hasText: 'Generate Documentation' })
+    modal: () => page.locator('.marrone-modal').filter({
+      has: page.locator('.marrone-modal-header-title').filter({ hasText: 'Generate Documentation' })
     }),
-    heading: () => page.locator('.bruno-modal').getByText('Interactive API Documentation'),
-    generateButton: () => page.locator('.bruno-modal').getByRole('button', { name: 'Generate', exact: true }),
-    cancelButton: () => page.locator('.bruno-modal').getByRole('button', { name: 'Cancel', exact: true }),
+    heading: () => page.locator('.marrone-modal').getByText('Interactive API Documentation'),
+    generateButton: () => page.locator('.marrone-modal').getByRole('button', { name: 'Generate', exact: true }),
+    cancelButton: () => page.locator('.marrone-modal').getByRole('button', { name: 'Cancel', exact: true }),
     // Collection name + version (read-only) display
-    versionInfo: () => page.locator('.bruno-modal').getByTestId('version-info'),
-    collectionName: () => page.locator('.bruno-modal').getByTestId('collection-name'),
-    versionValue: () => page.locator('.bruno-modal').getByTestId('version-value'),
-    versionCounts: () => page.locator('.bruno-modal').getByTestId('version-summary'),
+    versionInfo: () => page.locator('.marrone-modal').getByTestId('version-info'),
+    collectionName: () => page.locator('.marrone-modal').getByTestId('collection-name'),
+    versionValue: () => page.locator('.marrone-modal').getByTestId('version-value'),
+    versionCounts: () => page.locator('.marrone-modal').getByTestId('version-summary'),
     // Environment selection list
-    environmentsTitle: () => page.locator('.bruno-modal').getByTestId('env-section-title'),
+    environmentsTitle: () => page.locator('.marrone-modal').getByTestId('env-section-title'),
     // Header controls: tri-state "select all" checkbox + "X/Y selected" count
-    selectAllCheckbox: () => page.locator('.bruno-modal').getByTestId('env-select-all'),
-    selectAllLabel: () => page.locator('.bruno-modal').getByTestId('env-select-all-label'),
-    selectedCount: () => page.locator('.bruno-modal').getByTestId('env-selected-count'),
-    environmentRows: () => page.locator('.bruno-modal').getByTestId('env-row'),
+    selectAllCheckbox: () => page.locator('.marrone-modal').getByTestId('env-select-all'),
+    selectAllLabel: () => page.locator('.marrone-modal').getByTestId('env-select-all-label'),
+    selectedCount: () => page.locator('.marrone-modal').getByTestId('env-selected-count'),
+    environmentRows: () => page.locator('.marrone-modal').getByTestId('env-row'),
     environmentRow: (name: string) =>
-      page.locator('.bruno-modal').getByTestId('env-row').filter({ has: page.getByText(name, { exact: true }) }),
+      page.locator('.marrone-modal').getByTestId('env-row').filter({ has: page.getByText(name, { exact: true }) }),
     // A row has exactly one checkbox; its data-testid is uid-keyed, so select it by role within the named row.
     environmentCheckbox: (name: string) =>
       page
-        .locator('.bruno-modal')
+        .locator('.marrone-modal')
         .getByTestId('env-row')
         .filter({ has: page.getByText(name, { exact: true }) })
         .getByRole('checkbox'),
-    advancedToggle: () => page.locator('.bruno-modal').getByTestId('docs-advanced-toggle'),
-    allRequestsRadio: () => page.locator('.bruno-modal').getByTestId('docs-requests-all'),
-    filterByTagsRadio: () => page.locator('.bruno-modal').getByTestId('docs-requests-filter'),
+    advancedToggle: () => page.locator('.marrone-modal').getByTestId('docs-advanced-toggle'),
+    allRequestsRadio: () => page.locator('.marrone-modal').getByTestId('docs-requests-all'),
+    filterByTagsRadio: () => page.locator('.marrone-modal').getByTestId('docs-requests-filter'),
     tooltip: (text: string) => page.locator('.react-tooltip').filter({ hasText: text }),
-    includeTagsInput: () => page.locator('.bruno-modal').getByLabel('Include Tags'),
-    excludeTagsInput: () => page.locator('.bruno-modal').getByLabel('Exclude Tags'),
-    tagChip: (name: string) => page.locator('.bruno-modal .docs-tag-item').filter({ hasText: name }),
-    gitLinkLabel: () => page.locator('.bruno-modal').getByTestId('docs-git-link')
+    includeTagsInput: () => page.locator('.marrone-modal').getByLabel('Include Tags'),
+    excludeTagsInput: () => page.locator('.marrone-modal').getByLabel('Exclude Tags'),
+    tagChip: (name: string) => page.locator('.marrone-modal .docs-tag-item').filter({ hasText: name }),
+    gitLinkLabel: () => page.locator('.marrone-modal').getByTestId('docs-git-link')
   },
   runnerResults: {
     itemPath: (name: string) => page.getByTestId('runner-result-item').filter({ hasText: name })

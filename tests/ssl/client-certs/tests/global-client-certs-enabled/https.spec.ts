@@ -5,7 +5,7 @@ import { buildCommonLocators } from '../../../../utils/page/locators';
 const COLLECTION = 'global-client-certs-enabled';
 
 // The collection has no client certificate of its own — the cert is configured globally
-// in Preferences (request.clientCertificates). Bruno applies the global cert to the
+// in Preferences (request.clientCertificates). Marrone applies the global cert to the
 // matching domain, the mTLS handshake succeeds, and the request's assertions all pass.
 test.describe('https with global client certificate (enabled)', () => {
   // App launch plus the mTLS handshake exceeds the default 30s under parallel load. The budget

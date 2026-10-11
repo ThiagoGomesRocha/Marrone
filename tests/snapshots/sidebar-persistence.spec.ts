@@ -4,7 +4,7 @@ import { test, expect, closeElectronApp, Page } from '../../playwright';
 import { buildSidebarLocators } from '../utils/page/sidebar';
 import { waitForReadyPage } from '../utils/page';
 import { readSnapshot, waitForSnapshotFile } from '../utils/snapshot';
-import { SIDEBAR_WIDTH_KEY, SIDEBAR_COLLAPSED_KEY } from '../../packages/bruno-app/src/utils/common/localStorage';
+import { SIDEBAR_WIDTH_KEY, SIDEBAR_COLLAPSED_KEY } from '../../packages/marrone-app/src/utils/common/localStorage';
 
 async function resizeSidebar(page: Page, targetWidth: number) {
   const dragHandle = buildSidebarLocators(page).dragHandle();

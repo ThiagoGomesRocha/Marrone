@@ -56,7 +56,7 @@ test.describe('Global Environment Variable Update via Script', () => {
 
     await test.step('"baseUrl" is unchanged', async () => {
       await expect(
-        locators.environment.varRowsByValue('baseUrl', 'https://echo.usebruno.com')
+        locators.environment.varRowsByValue('baseUrl', 'https://echo.marrone.com')
       ).toHaveCount(1);
     });
 

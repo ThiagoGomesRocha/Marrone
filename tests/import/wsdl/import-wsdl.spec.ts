@@ -9,7 +9,7 @@ test.describe('Import WSDL Collection', () => {
     await closeAllCollections(page);
   });
 
-  test('Import WSDL XML file as Bruno collection', async ({ page, createTmpDir }) => {
+  test('Import WSDL XML file as Marrone collection', async ({ page, createTmpDir }) => {
     const wsdlFile = path.join(testDataDir, 'wsdl.xml');
 
     await test.step('Open import collection modal', async () => {
@@ -32,7 +32,7 @@ test.describe('Import WSDL Collection', () => {
     await test.step('Select the location for the collection and submit to import', async () => {
       // Verify that the location selection modal is displayed to import the collection
       const locationModal = page.locator('[data-testid="import-collection-location-modal"]');
-      await expect(locationModal.locator('.bruno-modal-header-title')).toContainText('Import Collection');
+      await expect(locationModal.locator('.marrone-modal-header-title')).toContainText('Import Collection');
 
       // select a location
       await page.locator('#collection-location').fill(await createTmpDir('wsdl-xml-test'));
@@ -68,7 +68,7 @@ test.describe('Import WSDL Collection', () => {
     });
   });
 
-  test('Import WSDL JSON file as Bruno collection', async ({ page, createTmpDir }) => {
+  test('Import WSDL JSON file as Marrone collection', async ({ page, createTmpDir }) => {
     const wsdlFile = path.join(testDataDir, 'wsdl-bruno.json');
 
     await test.step('Open import collection modal', async () => {
@@ -91,7 +91,7 @@ test.describe('Import WSDL Collection', () => {
     await test.step('Select the location for the collection and submit to import', async () => {
       // Verify that the location selection modal is displayed to import the collection
       const locationModal = page.locator('[data-testid="import-collection-location-modal"]');
-      await expect(locationModal.locator('.bruno-modal-header-title')).toContainText('Import Collection');
+      await expect(locationModal.locator('.marrone-modal-header-title')).toContainText('Import Collection');
 
       // Wait for collection to appear in the location modal
       await expect(locationModal.getByText('TestWSDLServiceJSON')).toBeVisible();

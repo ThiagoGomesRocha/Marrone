@@ -9,12 +9,12 @@ test.describe('Notifications Modal', () => {
     await notificationBell.click();
 
     // Get modal elements
-    const notificationsModal = page.locator('.bruno-modal');
-    const modalCloseButton = notificationsModal.locator('div.bruno-modal-header div.close');
+    const notificationsModal = page.locator('.marrone-modal');
+    const modalCloseButton = notificationsModal.locator('div.marrone-modal-header div.close');
 
     // Verify modal is visible and has the correct title
     await expect(notificationsModal).toBeVisible();
-    await expect(notificationsModal.locator('.bruno-modal-header-title')).toContainText('Notifications');
+    await expect(notificationsModal.locator('.marrone-modal-header-title')).toContainText('Notifications');
 
     // Click the close button
     await modalCloseButton.click();

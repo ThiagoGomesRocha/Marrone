@@ -1,6 +1,6 @@
 ---
 paths:
-  - "packages/bruno-app/**/*"
+  - "packages/marrone-app/**/*"
 ---
 
 # React / Redux Architecture
@@ -132,7 +132,7 @@ Slices and middleware have Jest coverage under `src/providers/ReduxStore/` (e.g.
 `middlewares/snapshot/serializeSnapshot.spec.js`). After a change, run the relevant spec:
 
 ```bash
-npm test --workspace=packages/bruno-app -- <path-or-pattern>
+npm test --workspace=packages/marrone-app -- <path-or-pattern>
 ```
 
 If you touch the reducer map, thunks that fire IPC, or the snapshot subset, also sanity-check that

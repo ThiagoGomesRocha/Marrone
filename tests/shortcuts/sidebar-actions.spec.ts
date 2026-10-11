@@ -64,7 +64,7 @@ test.describe('Shortcut Keys - BOUND_ACTIONS', () => {
 
         await page.getByTestId('request-name').fill('nr-folder');
         await page.getByTestId('new-request-url').locator('.CodeMirror').click();
-        await page.keyboard.type('https://echo.usebruno.com');
+        await page.keyboard.type('https://echo.marrone.com');
         await page.getByTestId('create-new-request-button').click();
 
         await expect(page.locator('.request-tab').filter({ has: page.getByText('nr-folder', { exact: true }) })).toBeVisible();
@@ -91,7 +91,7 @@ test.describe('Shortcut Keys - BOUND_ACTIONS', () => {
 
         await page.getByTestId('request-name').fill('nr-collection');
         await page.getByTestId('new-request-url').locator('.CodeMirror').click();
-        await page.keyboard.type('https://echo.usebruno.com');
+        await page.keyboard.type('https://echo.marrone.com');
         await page.getByTestId('create-new-request-button').click();
 
         await expect(page.locator('.request-tab').filter({ has: page.getByText('nr-collection', { exact: true }) })).toBeVisible();
@@ -106,7 +106,7 @@ test.describe('Shortcut Keys - BOUND_ACTIONS', () => {
           await pressShortcut(page, modifier, 'KeyR');
 
           // Verify rename modal opens
-          const renameModal = page.locator('.bruno-modal-card').filter({ hasText: /rename request/i });
+          const renameModal = page.locator('.marrone-modal-card').filter({ hasText: /rename request/i });
           await expect(renameModal).toBeVisible();
 
           // Fill in the rename req name
@@ -127,7 +127,7 @@ test.describe('Shortcut Keys - BOUND_ACTIONS', () => {
           await pressShortcut(page, modifier, 'KeyR');
 
           // Verify rename modal opens
-          const renameModal = page.locator('.bruno-modal-card').filter({ hasText: /rename folder/i });
+          const renameModal = page.locator('.marrone-modal-card').filter({ hasText: /rename folder/i });
           await expect(renameModal).toBeVisible();
 
           // Fill in the rename req name
@@ -148,7 +148,7 @@ test.describe('Shortcut Keys - BOUND_ACTIONS', () => {
           await pressShortcut(page, modifier, 'KeyR');
 
           // Verify rename modal opens
-          const renameModal = page.locator('.bruno-modal-card').filter({ hasText: /rename collection/i });
+          const renameModal = page.locator('.marrone-modal-card').filter({ hasText: /rename collection/i });
           await expect(renameModal).toBeVisible();
 
           // Fill in the rename req name
@@ -180,7 +180,7 @@ test.describe('Shortcut Keys - BOUND_ACTIONS', () => {
           await pressShortcut(page, 'Alt', 'KeyX');
 
           // Verify rename modal opens
-          const renameModal = page.locator('.bruno-modal-card').filter({ hasText: /rename request/i });
+          const renameModal = page.locator('.marrone-modal-card').filter({ hasText: /rename request/i });
           await expect(renameModal).toBeVisible();
 
           // Fill in the rename req name
@@ -204,7 +204,7 @@ test.describe('Shortcut Keys - BOUND_ACTIONS', () => {
           await pressShortcut(page, 'Alt', 'KeyX');
 
           // Verify rename modal opens
-          const renameModal = page.locator('.bruno-modal-card').filter({ hasText: /rename folder/i });
+          const renameModal = page.locator('.marrone-modal-card').filter({ hasText: /rename folder/i });
           await expect(renameModal).toBeVisible();
 
           // Fill in the rename req name
@@ -227,7 +227,7 @@ test.describe('Shortcut Keys - BOUND_ACTIONS', () => {
           await pressShortcut(page, 'Alt', 'KeyX');
 
           // Verify rename modal opens
-          const renameModal = page.locator('.bruno-modal-card').filter({ hasText: /rename collection/i });
+          const renameModal = page.locator('.marrone-modal-card').filter({ hasText: /rename collection/i });
           await expect(renameModal).toBeVisible();
 
           // Fill in the rename req name

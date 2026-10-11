@@ -1,14 +1,14 @@
 <br />
 <img src="../../assets/images/logo-transparent.png" width="80"/>
 
-### Bruno - IDE с открытым исходным кодом для изучения и тестирования API.
+### Marrone - IDE с открытым исходным кодом для изучения и тестирования API.
 
-[![GitHub version](https://badge.fury.io/gh/usebruno%2Fbruno.svg)](https://badge.fury.io/gh/usebruno%2Fbruno)
-[![CI](https://github.com/usebruno/bruno/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/usebruno/bruno/actions/workflows/tests.yml)
-[![Commit Activity](https://img.shields.io/github/commit-activity/m/usebruno/bruno)](https://github.com/usebruno/bruno/pulse)
-[![X](https://img.shields.io/twitter/follow/use_bruno?style=social&logo=x)](https://twitter.com/use_bruno)
-[![Website](https://img.shields.io/badge/Website-Visit-blue)](https://www.usebruno.com)
-[![Download](https://img.shields.io/badge/Download-Latest-brightgreen)](https://www.usebruno.com/downloads)
+[![GitHub version](https://badge.fury.io/gh/marrone%2Fmarrone.svg)](https://badge.fury.io/gh/marrone%2Fmarrone)
+[![CI](https://github.com/marrone/marrone/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/marrone/marrone/actions/workflows/tests.yml)
+[![Commit Activity](https://img.shields.io/github/commit-activity/m/marrone/marrone)](https://github.com/marrone/marrone/pulse)
+[![X](https://img.shields.io/twitter/follow/use_marrone?style=social&logo=x)](https://twitter.com/use_marrone)
+[![Website](https://img.shields.io/badge/Website-Visit-blue)](https://www.marrone.com)
+[![Download](https://img.shields.io/badge/Download-Latest-brightgreen)](https://www.marrone.com/downloads)
 
 [English](../../readme.md)
 | [Українська](./readme_ua.md)
@@ -30,39 +30,39 @@
 | [ქართული](./readme_ka.md)
 | [हिन्दी](./readme_hi.md)
 
-Bruno - новый и инновационный клиент API, направленный на революцию в установившейся ситуации, представленной Postman и подобными инструментами.
+Marrone - новый и инновационный клиент API, направленный на революцию в установившейся ситуации, представленной Postman и подобными инструментами.
 
-Bruno хранит ваши коллекции непосредственно в папке в вашей файловой системе. Для сохранения информации об API-запросах мы используем язык Bru.
+Marrone хранит ваши коллекции непосредственно в папке в вашей файловой системе. Для сохранения информации об API-запросах мы используем язык Bru.
 
 Для совместной работы над коллекциями API можно использовать git или любой другой контроль версий по вашему выбору.
 
-Bruno работает только в автономном режиме. Добавление облачной синхронизации в Bruno не планируется. Мы ценим конфиденциальность ваших данных и считаем, что они должны оставаться на вашем устройстве. Ознакомьтесь с нашим долгосрочным видением [здесь](https://github.com/usebruno/bruno/discussions/269)
+Marrone работает только в автономном режиме. Добавление облачной синхронизации в Marrone не планируется. Мы ценим конфиденциальность ваших данных и считаем, что они должны оставаться на вашем устройстве. Ознакомьтесь с нашим долгосрочным видением [здесь](https://github.com/marrone/marrone/discussions/269)
 
-![bruno](/assets/images/landing-2.png) <br /><br />
+![marrone](/assets/images/landing-2.png) <br /><br />
 
 ### Работа на нескольких платформах 🖥️
 
-![bruno](/assets/images/run-anywhere.png) <br /><br />
+![marrone](/assets/images/run-anywhere.png) <br /><br />
 
 ### Совместная работа через Git 👩‍💻🧑‍💻
 
 Или другая система контроля версий по вашему выбору
 
-![bruno](/assets/images/version-control.png) <br /><br />
+![marrone](/assets/images/version-control.png) <br /><br />
 
 ### Важные ссылки 📌
 
-- [Наше долгосрочное видение](https://github.com/usebruno/bruno/discussions/269)
-- [Roadmap](https://github.com/usebruno/bruno/discussions/384)
-- [Документация](https://docs.usebruno.com)
-- [Сайт](https://www.usebruno.com)
-- [Скачать Bruno](https://www.usebruno.com/downloads)
+- [Наше долгосрочное видение](https://github.com/marrone/marrone/discussions/269)
+- [Roadmap](https://github.com/marrone/marrone/discussions/384)
+- [Документация](https://docs.marrone.com)
+- [Сайт](https://www.marrone.com)
+- [Скачать Marrone](https://www.marrone.com/downloads)
 
 ### Витрина 🎥
 
-- [Отзывы](https://github.com/usebruno/bruno/discussions/343)
-- [Центр знаний](https://github.com/usebruno/bruno/discussions/386)
-- [Скриптомания](https://github.com/usebruno/bruno/discussions/385)
+- [Отзывы](https://github.com/marrone/marrone/discussions/343)
+- [Центр знаний](https://github.com/marrone/marrone/discussions/386)
+- [Скриптомания](https://github.com/marrone/marrone/discussions/385)
 
 ### Поддержка ❤️
 
@@ -70,7 +70,7 @@ Bruno работает только в автономном режиме. Доб
 
 ### Поделись отзывами 📣
 
-Если Бруно помог вам в работе и в ваших командах, пожалуйста, не забудьте поделиться своим [отзывом на нашем обсуждении в github](https://github.com/usebruno/bruno/discussions/343)
+Если Бруно помог вам в работе и в ваших командах, пожалуйста, не забудьте поделиться своим [отзывом на нашем обсуждении в github](https://github.com/marrone/marrone/discussions/343)
 
 ### Внести вклад 👩‍💻🧑‍💻
 
@@ -81,15 +81,15 @@ Bruno работает только в автономном режиме. Доб
 ### Авторы
 
 <div align="center">
-    <a href="https://github.com/usebruno/bruno/graphs/contributors">
-        <img src="https://contrib.rocks/image?repo=usebruno/bruno" />
+    <a href="https://github.com/marrone/marrone/graphs/contributors">
+        <img src="https://contrib.rocks/image?repo=marrone/marrone" />
     </a>
 </div>
 
 ### Оставайтесь на связи 🌐
 
-[X ( Twitter )](https://twitter.com/use_bruno) <br />
-[Наш сайт](https://www.usebruno.com) <br />
+[X ( Twitter )](https://twitter.com/use_marrone) <br />
+[Наш сайт](https://www.marrone.com) <br />
 [Discord](https://discord.com/invite/KgcZUncpjq)
 
 ### Лицензия 📄

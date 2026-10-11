@@ -5,7 +5,7 @@ import { buildGrpcCommonLocators } from '../../../../utils/page/locators';
 const COLLECTION = 'client-certs-enabled-bru';
 
 // The collection carries a client certificate with `clientCertificates.enabled: true`,
-// so Bruno attaches it over gRPC TLS. The mTLS handshake succeeds and the unary
+// so Marrone attaches it over gRPC TLS. The mTLS handshake succeeds and the unary
 // SayHello call returns OK with the server's `(mTLS ok)` reply.
 test.describe('grpc with collection client certificate (enabled, bru)', () => {
   // App launch plus the mTLS handshake exceeds the default 30s under parallel load. The budget

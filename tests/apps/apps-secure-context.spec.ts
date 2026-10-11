@@ -15,7 +15,7 @@ import {
  * Inlining a guest as `data:text/html` gives it an opaque origin, which is not
  * a secure context: `crypto.subtle` is absent, and third-party SDKs that
  * require one refuse to initialise. Guests are served over the privileged
- * `bruno-app://` scheme instead, with a per-app token in the host so each guest
+ * `marrone-app://` scheme instead, with a per-app token in the host so each guest
  * keeps its own origin.
  */
 
@@ -77,10 +77,10 @@ const awaitResult = async (page, electronApp, timeoutMs: number) => {
 // The values every guest must report; a shared origin or a data: fallback
 // fails here regardless of which test surfaced the guest.
 const expectSecureGuest = (result) => {
-  expect(result.protocol, 'guest must not fall back to a data: URL').toBe('bruno-app:');
+  expect(result.protocol, 'guest must not fall back to a data: URL').toBe('marrone-app:');
   // A per-app token in the host keeps each guest on its own origin; a shared
   // origin would let apps reach each other's storage.
-  expect(result.origin).toMatch(/^bruno-app:\/\/[0-9a-f-]{36}$/);
+  expect(result.origin).toMatch(/^marrone-app:\/\/[0-9a-f-]{36}$/);
   expect(result.isSecureContext).toBe(true);
   expect(result.hasSubtleCrypto).toBe(true);
 };

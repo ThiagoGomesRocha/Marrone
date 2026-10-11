@@ -18,11 +18,11 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "https://echo.usebruno.com/api/get",
+          "raw": "https://echo.marrone.com/api/get",
           "protocol": "https",
           "host": [
             "echo",
-            "usebruno",
+            "marrone",
             "com"
           ],
           "path": [
@@ -42,11 +42,11 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "https://echo.usebruno.com/api/get",
+          "raw": "https://echo.marrone.com/api/get",
           "protocol": "https",
           "host": [
             "echo",
-            "usebruno",
+            "marrone",
             "com"
           ],
           "path": [

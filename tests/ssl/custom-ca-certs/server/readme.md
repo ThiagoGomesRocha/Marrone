@@ -1,6 +1,6 @@
 # CA Certificates Test Server
 
-A Node.js HTTPS test server with self-signed certificate generation for testing SSL/TLS connections in Bruno.
+A Node.js HTTPS test server with self-signed certificate generation for testing SSL/TLS connections in Marrone.
 
 ## Overview
 

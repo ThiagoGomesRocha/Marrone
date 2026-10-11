@@ -234,7 +234,7 @@ test.describe('Create Workspace', () => {
       });
 
       await test.step('Fill in the advanced modal form with custom location', async () => {
-        const modal = page.locator('.bruno-modal-card').filter({ hasText: 'Create Workspace' });
+        const modal = page.locator('.marrone-modal-card').filter({ hasText: 'Create Workspace' });
         await modal.waitFor({ state: 'visible', timeout: 5000 });
 
         // Fill workspace name
@@ -259,7 +259,7 @@ test.describe('Create Workspace', () => {
       });
 
       await test.step('Submit the form', async () => {
-        const modal = page.locator('.bruno-modal-card').filter({ hasText: 'Create Workspace' });
+        const modal = page.locator('.marrone-modal-card').filter({ hasText: 'Create Workspace' });
         await modal.getByRole('button', { name: 'Create Workspace' }).click();
       });
 
@@ -304,14 +304,14 @@ test.describe('Create Workspace', () => {
       });
 
       await test.step('Fill name and keep default location', async () => {
-        const modal = page.locator('.bruno-modal-card').filter({ hasText: 'Create Workspace' });
+        const modal = page.locator('.marrone-modal-card').filter({ hasText: 'Create Workspace' });
         await modal.waitFor({ state: 'visible', timeout: 5000 });
         await modal.locator('#workspace-name').fill('Default Loc Workspace');
         await page.waitForTimeout(300);
       });
 
       await test.step('Submit the form', async () => {
-        const modal = page.locator('.bruno-modal-card').filter({ hasText: 'Create Workspace' });
+        const modal = page.locator('.marrone-modal-card').filter({ hasText: 'Create Workspace' });
         await modal.getByRole('button', { name: 'Create Workspace' }).click();
       });
 
@@ -345,7 +345,7 @@ test.describe('Create Workspace', () => {
       });
 
       await test.step('Cancel the advanced modal', async () => {
-        const modal = page.locator('.bruno-modal-card').filter({ hasText: 'Create Workspace' });
+        const modal = page.locator('.marrone-modal-card').filter({ hasText: 'Create Workspace' });
         await modal.waitFor({ state: 'visible', timeout: 5000 });
         await modal.getByRole('button', { name: 'Cancel' }).click();
       });
@@ -372,7 +372,7 @@ test.describe('Create Workspace', () => {
       });
 
       await test.step('Clear name and submit', async () => {
-        const modal = page.locator('.bruno-modal-card').filter({ hasText: 'Create Workspace' });
+        const modal = page.locator('.marrone-modal-card').filter({ hasText: 'Create Workspace' });
         await modal.waitFor({ state: 'visible', timeout: 5000 });
         const submitButton = modal.getByRole('button', { name: 'Create Workspace' });
 
@@ -382,7 +382,7 @@ test.describe('Create Workspace', () => {
       });
 
       await test.step('Verify validation error appears and modal stays open', async () => {
-        const modal = page.locator('.bruno-modal-card').filter({ hasText: 'Create Workspace' });
+        const modal = page.locator('.marrone-modal-card').filter({ hasText: 'Create Workspace' });
         const submitButton = modal.getByRole('button', { name: 'Create Workspace' });
         await expect(modal).toBeVisible();
         await expect(submitButton).toBeEnabled();
@@ -407,7 +407,7 @@ test.describe('Create Workspace', () => {
       });
 
       await test.step('Enter whitespace-only name and submit', async () => {
-        const modal = page.locator('.bruno-modal-card').filter({ hasText: 'Create Workspace' });
+        const modal = page.locator('.marrone-modal-card').filter({ hasText: 'Create Workspace' });
         await modal.waitFor({ state: 'visible', timeout: 5000 });
         const submitButton = modal.getByRole('button', { name: 'Create Workspace' });
 
@@ -417,7 +417,7 @@ test.describe('Create Workspace', () => {
       });
 
       await test.step('Verify validation error appears and modal stays open', async () => {
-        const modal = page.locator('.bruno-modal-card').filter({ hasText: 'Create Workspace' });
+        const modal = page.locator('.marrone-modal-card').filter({ hasText: 'Create Workspace' });
         const submitButton = modal.getByRole('button', { name: 'Create Workspace' });
         await expect(modal).toBeVisible();
         await expect(submitButton).toBeEnabled();
@@ -564,7 +564,7 @@ test.describe('Create Workspace', () => {
       await closeElectronApp(app);
     });
 
-    test('TC-959: Verify created Workspace persists even after bruno app restart.', { tag: '@sanity' }, async ({ launchElectronApp, createTmpDir }) => {
+    test('TC-959: Verify created Workspace persists even after marrone app restart.', { tag: '@sanity' }, async ({ launchElectronApp, createTmpDir }) => {
       const userDataPath = await createTmpDir('create-ws-name-persist');
       const wsLocation = await createTmpDir('ws-location-persist');
 

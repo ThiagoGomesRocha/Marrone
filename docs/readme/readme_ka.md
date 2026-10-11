@@ -3,12 +3,12 @@
 
 ### ბრუნო - ღია წყაროების IDE API-ების შესწავლისა და ტესტირებისათვის.
 
-[![GitHub version](https://badge.fury.io/gh/usebruno%2Fbruno.svg)](https://badge.fury.io/gh/usebruno%2Fbruno)
-[![CI](https://github.com/usebruno/bruno/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/usebruno/bruno/actions/workflows/tests.yml)
-[![Commit Activity](https://img.shields.io/github/commit-activity/m/usebruno/bruno)](https://github.com/usebruno/bruno/pulse)
-[![X](https://img.shields.io/twitter/follow/use_bruno?style=social&logo=x)](https://twitter.com/use_bruno)
-[![Website](https://img.shields.io/badge/Website-Visit-blue)](https://www.usebruno.com)
-[![Download](https://img.shields.io/badge/Download-Latest-brightgreen)](https://www.usebruno.com/downloads)
+[![GitHub version](https://badge.fury.io/gh/marrone%2Fmarrone.svg)](https://badge.fury.io/gh/marrone%2Fmarrone)
+[![CI](https://github.com/marrone/marrone/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/marrone/marrone/actions/workflows/tests.yml)
+[![Commit Activity](https://img.shields.io/github/commit-activity/m/marrone/marrone)](https://github.com/marrone/marrone/pulse)
+[![X](https://img.shields.io/twitter/follow/use_marrone?style=social&logo=x)](https://twitter.com/use_marrone)
+[![Website](https://img.shields.io/badge/Website-Visit-blue)](https://www.marrone.com)
+[![Download](https://img.shields.io/badge/Download-Latest-brightgreen)](https://www.marrone.com/downloads)
 
 [English](../../readme.md)
 | [Українська](./readme_ua.md)
@@ -36,61 +36,61 @@
 
 თქვენ შეგიძლიათ გამოიყენოთ Git ან ნებისმიერი ვერსიის კონტროლის სისტემა თქვენი API კოლექციების გასაზიარებლად.
 
-ბრუნო მხოლოდ ოფლაინ რეჟიმში მუშაობს. ბრუნოში ღრუბლური სინქრონიზაციის დამატების გეგმები არ არის. ჩვენ ვაფასებთ თქვენი მონაცემების პრივატობას და creemos, რომ ისინი თქვენს მოწყობილობაში უნდა დარჩეს. წაიკითხეთ ჩვენი გრძელვადიანი ხედვა [აქ](https://github.com/usebruno/bruno/discussions/269)
+ბრუნო მხოლოდ ოფლაინ რეჟიმში მუშაობს. ბრუნოში ღრუბლური სინქრონიზაციის დამატების გეგმები არ არის. ჩვენ ვაფასებთ თქვენი მონაცემების პრივატობას და creemos, რომ ისინი თქვენს მოწყობილობაში უნდა დარჩეს. წაიკითხეთ ჩვენი გრძელვადიანი ხედვა [აქ](https://github.com/marrone/marrone/discussions/269)
 
-[დამატებით ბრუნო](https://www.usebruno.com/downloads)
+[დამატებით ბრუნო](https://www.marrone.com/downloads)
 
 📢 შეიტყვეთ ჩვენი უახლესი საუბრის შესახებ India FOSS 3.0 კონფერენციაზე [აქ](https://www.youtube.com/watch?v=7bSMFpbcPiY)
 
-![bruno](../../assets/images/landing-2.png) <br /><br />
+![marrone](../../assets/images/landing-2.png) <br /><br />
 
 ### ინსტალაცია
 
-ბრუნო ხელმისაწვდომია როგორც ბინარული ჩამოტვირთვა [ჩვენ的网站上](https://www.usebruno.com/downloads) Mac-ის, Windows-ისა და Linux-ისთვის.
+ბრუნო ხელმისაწვდომია როგორც ბინარული ჩამოტვირთვა [ჩვენ的网站上](https://www.marrone.com/downloads) Mac-ის, Windows-ისა და Linux-ისთვის.
 
 თქვენ ასევე შეგიძლიათ დააინსტალიროთ ბრუნო პაკეტის მენეჯერების საშუალებით, როგორიცაა Homebrew, Chocolatey, Scoop, Snap, Flatpak და Apt.
 
 ```sh
 # Mac-ზე Homebrew-ს საშუალებით
-brew install bruno
+brew install marrone
 
 # Windows-ზე Chocolatey-ს საშუალებით
-choco install bruno
+choco install marrone
 
 # Windows-ზე Scoop-ის საშუალებით
 scoop bucket add extras
-scoop install bruno
+scoop install marrone
 
 # Windows-ზე winget-ის საშუალებით
-winget install Bruno.Bruno
+winget install Marrone.Marrone
 
 # Linux-ზე Snap-ის საშუალებით
-snap install bruno
+snap install marrone
 
 # Linux-ზე Flatpak-ის საშუალებით
-flatpak install com.usebruno.Bruno
+flatpak install com.marrone.Marrone
 
 # Linux-ზე Apt-ის საშუალებით
 sudo mkdir -p /etc/apt/keyrings
 sudo apt update && sudo apt install gpg curl
 curl -fsSL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x9FA6017ECABE0266" \
   | gpg --dearmor \
-  | sudo tee /etc/apt/keyrings/bruno.gpg > /dev/null
-sudo chmod 644 /etc/apt/keyrings/bruno.gpg
-echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/bruno.gpg] http://debian.usebruno.com/ bruno stable" \
-  | sudo tee /etc/apt/sources.list.d/bruno.list
-sudo apt update && sudo apt install bruno
+  | sudo tee /etc/apt/keyrings/marrone.gpg > /dev/null
+sudo chmod 644 /etc/apt/keyrings/marrone.gpg
+echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/marrone.gpg] http://debian.marrone.com/ marrone stable" \
+  | sudo tee /etc/apt/sources.list.d/marrone.list
+sudo apt update && sudo apt install marrone
 ```
 
 ### პლატფორმებს შორის მუშაობა 🖥️
 
-![bruno](../../assets/images/run-anywhere.png) <br /><br />
+![marrone](../../assets/images/run-anywhere.png) <br /><br />
 
 ### თანამშრომლობა Git-ის საშუალებით 👩‍💻🧑‍💻
 
 ან ნებისმიერი ვერსიის კონტროლის სისტემის საშუალებით
 
-![bruno](../../assets/images/version-control.png) <br /><br />
+![marrone](../../assets/images/version-control.png) <br /><br />
 
 ### სპონსორები
 
@@ -104,26 +104,26 @@ sudo apt update && sudo apt install bruno
 
 #### ბრინჯის სპონსორები
 
-<a href="https://zuplo.link/bruno">
+<a href="https://zuplo.link/marrone">
     <img src="../../assets/images/sponsors/zuplo.png" width="120"/>
 </a>
 
 ### მნიშვნელოვანი ბმულები 📌
 
-- [ჩვენი გრძელვადიანი ხედვა](https://github.com/usebruno/bruno/discussions/269)
-- [გეგმა](https://github.com/usebruno/bruno/discussions/384)
-- [დოკუმენტაცია](https://docs.usebruno.com)
-- [Stack Overflow](https://stackoverflow.com/questions/tagged/bruno)
-- [ვებსაიტი](https://www.usebruno.com)
-- [ფასები](https://www.usebruno.com/pricing)
-- [დამატება](https://www.usebruno.com/downloads)
+- [ჩვენი გრძელვადიანი ხედვა](https://github.com/marrone/marrone/discussions/269)
+- [გეგმა](https://github.com/marrone/marrone/discussions/384)
+- [დოკუმენტაცია](https://docs.marrone.com)
+- [Stack Overflow](https://stackoverflow.com/questions/tagged/marrone)
+- [ვებსაიტი](https://www.marrone.com)
+- [ფასები](https://www.marrone.com/pricing)
+- [დამატება](https://www.marrone.com/downloads)
 - [GitHub სპონსორები](https://github.com/sponsors/helloanoop).
 
 ### ვიტრინა 🎥
 
-- [მოწონებები](https://github.com/usebruno/bruno/discussions/343)
-- [მეცნიერების ჰაბი](https://github.com/usebruno/bruno/discussions/386)
-- [Scriptmania](https://github.com/usebruno/bruno/discussions/385)
+- [მოწონებები](https://github.com/marrone/marrone/discussions/343)
+- [მეცნიერების ჰაბი](https://github.com/marrone/marrone/discussions/386)
+- [Scriptmania](https://github.com/marrone/marrone/discussions/385)
 
 ### მხარდაჭერა ❤️
 
@@ -131,7 +131,7 @@ sudo apt update && sudo apt install bruno
 
 ### გააზიარეთ მოწმობები 📣
 
-თუ ბრუნო დაგეხმარათ თქვენს სამუშაოში და გუნდებში, გთხოვთ, არ დაგავიწყდეთ ჩვენი [მოწონებების გაზიარება ჩვენს GitHub განხილვაში](https://github.com/usebruno/bruno/discussions/343)
+თუ ბრუნო დაგეხმარათ თქვენს სამუშაოში და გუნდებში, გთხოვთ, არ დაგავიწყდეთ ჩვენი [მოწონებების გაზიარება ჩვენს GitHub განხილვაში](https://github.com/marrone/marrone/discussions/343)
 
 ### ახალი პაკეტის მენეჯერებში გამოქვეყნება
 
@@ -139,10 +139,10 @@ sudo apt update && sudo apt install bruno
 
 ### დაინტერესდით 🌐
 
-[𝕎 (Twitter)](https://twitter.com/use_bruno) <br />
-[ვებსაიტი](https://www.usebruno.com) <br />
+[𝕎 (Twitter)](https://twitter.com/use_marrone) <br />
+[ვებსაიტი](https://www.marrone.com) <br />
 [Discord](https://discord.com/invite/KgcZUncpjq) <br />
-[LinkedIn](https://www.linkedin.com/company/usebruno)
+[LinkedIn](https://www.linkedin.com/company/marrone)
 
 ### სავაჭრო ნიშანი
 
@@ -163,8 +163,8 @@ sudo apt update && sudo apt install bruno
 ### ავტორები
 
 <div align="center">
-    <a href="https://github.com/usebruno/bruno/graphs/contributors">
-        <img src="https://contrib.rocks/image?repo=usebruno/bruno" />
+    <a href="https://github.com/marrone/marrone/graphs/contributors">
+        <img src="https://contrib.rocks/image?repo=marrone/marrone" />
     </a>
 </div>
 

@@ -23,8 +23,8 @@ test.describe('Close all tabs lands on workspace overview', () => {
 
       await test.step('Create a collection and open two requests', async () => {
         await createCollection(page, 'ColOverview', collectionPath);
-        await createRequest(page, 'ReqOne', 'ColOverview', { url: 'https://echo.usebruno.com', method: 'GET' });
-        await createRequest(page, 'ReqTwo', 'ColOverview', { url: 'https://echo.usebruno.com', method: 'GET' });
+        await createRequest(page, 'ReqOne', 'ColOverview', { url: 'https://echo.marrone.com', method: 'GET' });
+        await createRequest(page, 'ReqTwo', 'ColOverview', { url: 'https://echo.marrone.com', method: 'GET' });
         await openRequest(page, 'ColOverview', 'ReqOne', { persist: true });
         await openRequest(page, 'ColOverview', 'ReqTwo', { persist: true });
         await expect(locators.tabs.requestTab('ReqOne')).toBeVisible();

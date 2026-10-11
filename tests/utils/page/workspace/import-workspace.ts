@@ -21,7 +21,7 @@ export const buildImportWorkspaceModalLocators = (page: Page) => {
 };
 
 /**
- * Build a valid Bruno workspace zip on disk that the importer will accept.
+ * Build a valid Marrone workspace zip on disk that the importer will accept.
  * The zip contains a single `workspace.yml` (info.name + info.type: workspace).
  *
  * @param zipDir - directory in which to write the zip

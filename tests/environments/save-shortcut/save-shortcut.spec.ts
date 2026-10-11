@@ -31,7 +31,7 @@ test.describe('Environment save shortcut (Cmd/Ctrl+S)', () => {
     await createEnvironment(page, 'Shortcut Save Env', 'collection');
 
     await test.step('Add a variable to create an unsaved draft', async () => {
-      await addRowToActiveTab(page, 'host', 'https://echo.usebruno.com');
+      await addRowToActiveTab(page, 'host', 'https://echo.marrone.com');
       await expect(tabDraftIcon(page)).toBeVisible();
     });
 
@@ -60,7 +60,7 @@ test.describe('Global environment save shortcut (Cmd/Ctrl+S)', () => {
     await createEnvironment(page, 'Global Shortcut Save Env', 'global');
 
     await test.step('Add a variable to create an unsaved draft', async () => {
-      await addRowToActiveTab(page, 'host', 'https://echo.usebruno.com');
+      await addRowToActiveTab(page, 'host', 'https://echo.marrone.com');
       await expect(tabDraftIcon(page)).toBeVisible();
     });
 

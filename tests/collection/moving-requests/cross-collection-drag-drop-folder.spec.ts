@@ -21,7 +21,7 @@ test.describe('Cross-Collection Drag and Drop for folder', () => {
     await createFolder(page, 'test-folder', 'source-collection');
     await expandFolder(page, 'test-folder');
     await createRequest(page, 'test-request-in-folder', 'test-folder', {
-      url: 'https://echo.usebruno.com',
+      url: 'https://echo.marrone.com',
       inFolder: true
     });
 
@@ -72,7 +72,7 @@ test.describe('Cross-Collection Drag and Drop for folder', () => {
     await createFolder(page, 'folder-1', 'source-collection');
     await expandFolder(page, 'folder-1');
     await createRequest(page, 'http-request', 'folder-1', {
-      url: 'https://echo.usebruno.com',
+      url: 'https://echo.marrone.com',
       inFolder: true
     });
 

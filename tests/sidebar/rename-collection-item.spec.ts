@@ -24,7 +24,7 @@ test.describe('Rename Collection Item - File Extension', () => {
       await locators.actions.collectionItemActions('Test Request').click();
       await locators.dropdown.item('Rename').click();
 
-      const renameModal = page.locator('.bruno-modal').filter({ hasText: 'Rename Request' });
+      const renameModal = page.locator('.marrone-modal').filter({ hasText: 'Rename Request' });
       await renameModal.waitFor({ state: 'visible' });
 
       // Show filesystem name via Options dropdown

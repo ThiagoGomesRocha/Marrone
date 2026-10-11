@@ -4,7 +4,7 @@ import { buildCommonLocators } from '../../../../utils/page/locators';
 
 const COLLECTION = 'client-certs-disabled-bru';
 
-// The collection's client certificate is present but flagged `disabled: true`, so Bruno
+// The collection's client certificate is present but flagged `disabled: true`, so Marrone
 // withholds it over WSS. The WebSocket upgrade fails the mTLS handshake — the connection
 // never reaches CONNECTED and an error entry appears in the message list.
 test.describe('wss with collection client certificate (disabled, bru)', () => {

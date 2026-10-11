@@ -8,7 +8,7 @@ import { buildCommonLocators } from '../../utils/page/locators';
 // sync. Only the yml format persists a name; bru derives it from the filename.
 const ORIGINAL_ENV_NAME = 'Local';
 const NEW_ENV_NAME = 'Staging';
-const HOST_VALUE = 'https://echo.usebruno.com';
+const HOST_VALUE = 'https://echo.marrone.com';
 
 const environmentFile = (collectionPath: string, format: string, envName: string) =>
   path.join(collectionPath, format, 'environments', `${envName}.${format}`);

@@ -207,7 +207,7 @@ const runDescriptionImportAssertions = async (page: Page, collectionName: string
 
 test.describe.configure({ mode: 'serial' });
 
-test.describe('Description import — Bruno JSON (.bru) collection', () => {
+test.describe('Description import — Marrone JSON (.bru) collection', () => {
   test.afterEach(async ({ page }) => {
     await closeAllCollections(page);
   });

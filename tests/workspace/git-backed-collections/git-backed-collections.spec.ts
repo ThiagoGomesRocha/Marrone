@@ -10,7 +10,7 @@ type WorkspaceConfig = { collections?: CollectionEntry[] };
 const initUserDataPath = path.join(__dirname, 'init-user-data');
 const fixturesPath = path.join(__dirname, 'fixtures');
 
-const REMOTE_URL = 'https://github.com/usebruno/sample-collection.git';
+const REMOTE_URL = 'https://github.com/marrone/sample-collection.git';
 
 const FIXTURE_WS_NAME = 'Fixture WS';
 const GHOST_WS_NAME = 'Ghost WS';
@@ -57,7 +57,7 @@ test.describe('Git-backed collections', () => {
       });
 
       await test.step('Submit the modal with a Git URL', async () => {
-        const modal = page.locator('.bruno-modal-card').filter({ hasText: 'Connect to Git' });
+        const modal = page.locator('.marrone-modal-card').filter({ hasText: 'Connect to Git' });
         await modal.waitFor({ state: 'visible', timeout: 5000 });
         await modal.locator('#remoteUrl').fill(REMOTE_URL);
         await modal.getByRole('button', { name: 'Connect', exact: true }).click();
@@ -98,7 +98,7 @@ test.describe('Git-backed collections', () => {
         await card.locator('.collection-menu').click();
         await page.locator('.dropdown-item').filter({ hasText: 'Connect to Git' }).click();
 
-        const modal = page.locator('.bruno-modal-card').filter({ hasText: 'Connect to Git' });
+        const modal = page.locator('.marrone-modal-card').filter({ hasText: 'Connect to Git' });
         await modal.locator('#remoteUrl').fill(REMOTE_URL);
         await modal.getByRole('button', { name: 'Connect', exact: true }).click();
         await expect(page.getByText('Git remote connected')).toBeVisible({ timeout: 10000 });
@@ -108,7 +108,7 @@ test.describe('Git-backed collections', () => {
         await card.locator('.collection-menu').click();
         await page.locator('.dropdown-item').filter({ hasText: 'Remove Git Remote' }).click();
 
-        const removeModal = page.locator('.bruno-modal-card').filter({ hasText: 'Remove Git Remote' });
+        const removeModal = page.locator('.marrone-modal-card').filter({ hasText: 'Remove Git Remote' });
         await removeModal.waitFor({ state: 'visible', timeout: 5000 });
         await removeModal.getByRole('button', { name: 'Remove', exact: true }).click();
         await expect(page.getByText('Git remote removed')).toBeVisible({ timeout: 10000 });
@@ -149,7 +149,7 @@ test.describe('Git-backed collections', () => {
         await page.locator('.dropdown-item').filter({ hasText: 'Connect to Git' }).click();
       });
 
-      const modal = page.locator('.bruno-modal-card').filter({ hasText: 'Connect to Git' });
+      const modal = page.locator('.marrone-modal-card').filter({ hasText: 'Connect to Git' });
 
       await test.step('Empty URL should show validation error and keep modal open', async () => {
         await modal.waitFor({ state: 'visible', timeout: 5000 });
@@ -180,7 +180,7 @@ test.describe('Git-backed collections', () => {
 
     test('default workspace does not expose Git options on the collection card', async ({ launchElectronApp, createTmpDir }) => {
       // No fixture: the playwright fixture default-seeds preferences to skip onboarding,
-      // and Bruno auto-creates the default workspace under the userData path.
+      // and Marrone auto-creates the default workspace under the userData path.
       const collectionDir = await createTmpDir('git-default-coll');
 
       const app = await launchElectronApp();
@@ -235,7 +235,7 @@ test.describe('Git-backed collections', () => {
 
       await test.step('Clicking the ghost row opens the Clone Git Repository modal pre-filled with the remote URL', async () => {
         await ghostRow.click();
-        const cloneModal = page.locator('.bruno-modal-card').filter({ hasText: 'Clone' });
+        const cloneModal = page.locator('.marrone-modal-card').filter({ hasText: 'Clone' });
         await cloneModal.waitFor({ state: 'visible', timeout: 5000 });
         await expect(cloneModal).toContainText(REMOTE_URL);
       });
@@ -262,7 +262,7 @@ test.describe('Git-backed collections', () => {
         await ghostRow.click({ button: 'right' });
         await page.locator('.dropdown-item').filter({ hasText: 'Remove Git Remote' }).click();
 
-        const removeModal = page.locator('.bruno-modal-card').filter({ hasText: 'Remove Git Remote' });
+        const removeModal = page.locator('.marrone-modal-card').filter({ hasText: 'Remove Git Remote' });
         await removeModal.waitFor({ state: 'visible', timeout: 5000 });
         await removeModal.getByRole('button', { name: 'Remove', exact: true }).click();
         await expect(page.getByText('Git remote removed')).toBeVisible({ timeout: 10000 });

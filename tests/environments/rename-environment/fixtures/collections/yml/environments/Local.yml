@@ -2,4 +2,4 @@ name: Local
 
 variables:
   - name: host
-    value: https://echo.usebruno.com
+    value: https://echo.marrone.com

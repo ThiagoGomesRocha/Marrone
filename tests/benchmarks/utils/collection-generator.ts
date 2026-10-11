@@ -1,11 +1,11 @@
-import { stringifyRequest, stringifyCollection, stringifyFolder } from '@usebruno/filestore';
-import type { BrunoItem } from '@usebruno/schema-types';
+import { stringifyRequest, stringifyCollection, stringifyFolder } from '@marrone/filestore';
+import type { MarroneItem } from '@marrone/schema-types';
 import * as path from 'path';
 import * as fs from 'fs';
 
 export type CollectionFormat = 'bru' | 'yml';
 
-export function buildRequestItem(seq: number): BrunoItem {
+export function buildRequestItem(seq: number): MarroneItem {
   return {
     uid: `req-${seq}`,
     type: 'http-request',
@@ -21,7 +21,7 @@ export function buildRequestItem(seq: number): BrunoItem {
       body: { mode: 'none' },
       auth: { mode: 'none' }
     }
-  } as BrunoItem;
+  } as MarroneItem;
 }
 
 export interface GenerateCollectionOptions {

@@ -3,9 +3,9 @@ import { merge } from 'lodash-es';
 import * as path from 'path';
 import * as os from 'os';
 import * as fs from 'fs';
-import { version } from '../packages/bruno-app/package.json';
+import { version } from '../packages/marrone-app/package.json';
 
-const electronAppPath = path.join(__dirname, '../packages/bruno-electron');
+const electronAppPath = path.join(__dirname, '../packages/marrone-electron');
 
 const PREFERENCES_FILE = 'preferences.json';
 

@@ -4,7 +4,7 @@ import { buildGrpcCommonLocators } from '../../../../utils/page/locators';
 
 const COLLECTION = 'global-client-certs-disabled';
 
-// The global client certificate in Preferences carries `disabled: true`, so Bruno
+// The global client certificate in Preferences carries `disabled: true`, so Marrone
 // withholds it over gRPC TLS. The server rejects the connection at the handshake and the
 // call fails with a non-OK status.
 test.describe('grpc with global client certificate (disabled)', () => {

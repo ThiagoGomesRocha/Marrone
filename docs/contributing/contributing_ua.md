@@ -1,12 +1,12 @@
 [English](../../contributing.md)
 
-## Давайте зробимо Bruno краще, разом !!
+## Давайте зробимо Marrone краще, разом !!
 
-Я дуже радий що Ви бажаєте покращити Bruno. Нижче наведені вказівки як розпочати розробку Bruno на Вашому комп'ютері.
+Я дуже радий що Ви бажаєте покращити Marrone. Нижче наведені вказівки як розпочати розробку Marrone на Вашому комп'ютері.
 
 ### Стек технологій
 
-Bruno побудований на Next.js та React. Також для десктопної версії (яка підтримує локальні колекції) використовується Electron
+Marrone побудований на Next.js та React. Також для десктопної версії (яка підтримує локальні колекції) використовується Electron
 
 Бібліотеки, які ми використовуємо
 
@@ -38,7 +38,7 @@ Bruno побудований на Next.js та React. Також для деск
 
 ## Розробка
 
-Bruno розробляється як декстопний застосунок. Вам потрібно запустити Next.js в одній сесії терміналу, та запустити застосунок Electron в іншій сесії терміналу.
+Marrone розробляється як декстопний застосунок. Вам потрібно запустити Next.js в одній сесії терміналу, та запустити застосунок Electron в іншій сесії терміналу.
 
 ### Залежності
 
@@ -56,8 +56,8 @@ npm i --legacy-peer-deps
 # зберіть документацію graphql
 npm run build:graphql-docs
 
-# зберіть bruno query
-npm run build:bruno-query
+# зберіть marrone query
+npm run build:marrone-query
 
 # запустіть додаток next (термінал 1)
 npm run dev:web
@@ -83,8 +83,8 @@ find . -type f -name "package-lock.json" -delete
 ### Тестування
 
 ```bash
-# запустити тести bruno-schema
-npm test --workspace=packages/bruno-schema
+# запустити тести marrone-schema
+npm test --workspace=packages/marrone-schema
 
 # запустити тести у всіх робочих просторах
 npm test --workspaces --if-present

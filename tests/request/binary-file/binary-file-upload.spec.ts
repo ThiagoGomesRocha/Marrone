@@ -100,7 +100,7 @@ test.describe.serial('File / Binary body upload', () => {
   });
 
   // Switches the body to File / Binary, adds a row, picks the file, and
-  // (optionally) overrides the content-type. Bruno's `updateFile` reducer
+  // (optionally) overrides the content-type. Marrone's `updateFile` reducer
   // auto-fills content-type from the file extension via mime.contentType
   // (.json → application/json; charset=utf-8, .bin → application/octet-stream),
   // so when we want a different value (e.g. plain "application/json") we

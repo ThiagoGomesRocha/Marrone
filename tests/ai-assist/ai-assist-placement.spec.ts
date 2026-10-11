@@ -28,7 +28,7 @@ test.describe('AI Assist tab-bar placement', () => {
 
     await test.step('Arrange: create and open a request', async () => {
       await createCollection(page, collectionName, await createTmpDir(collectionName));
-      await createRequest(page, requestName, collectionName, { url: 'https://echo.usebruno.com' });
+      await createRequest(page, requestName, collectionName, { url: 'https://echo.marrone.com' });
       await locators.sidebar.request(requestName).click();
       await locators.tabs.requestTab(requestName).waitFor({ state: 'visible' });
     });

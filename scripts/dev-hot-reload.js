@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 /**
-# Bruno Development Script
+# Marrone Development Script
 #
-# This script sets up and runs the Bruno development environment with hot-reloading.
+# This script sets up and runs the Marrone development environment with hot-reloading.
 # It manages concurrent processes for various packages and provides cleanup on exit.
 #
 # Usage:
@@ -24,11 +24,11 @@ const CONFIG = {
   NODE_VERSION,
   ELECTRON_WATCH_PATHS: [
     'packages/**/dist/',
-    'packages/bruno-electron/src/',
-    'packages/bruno-lang/src/',
-    'packages/bruno-lang/v2/src/',
-    'packages/bruno-js/src/',
-    'packages/bruno-schema/src/'
+    'packages/marrone-electron/src/',
+    'packages/marrone-lang/src/',
+    'packages/marrone-lang/v2/src/',
+    'packages/marrone-js/src/',
+    'packages/marrone-schema/src/'
   ],
   ELECTRON_START_DELAY: 10, // seconds
   NODEMON_WATCH_DELAY: 1000 // milliseconds
@@ -71,7 +71,7 @@ function log(level, msg) {
 // Show help documentation
 function showHelp() {
   console.log(`
-  Development Environment Setup for Bruno
+  Development Environment Setup for Marrone
 
   Usage:
       From the root of the project, run:
@@ -146,32 +146,32 @@ function startDevelopment() {
   // concurrently command objects: { command, name, prefixColor, env, cwd, ipc }
   const commandObjects = [
     {
-      command: 'npm run watch --workspace=packages/bruno-common',
+      command: 'npm run watch --workspace=packages/marrone-common',
       name: 'common',
       prefixColor: 'magenta'
     },
     {
-      command: 'npm run watch --workspace=packages/bruno-converters',
+      command: 'npm run watch --workspace=packages/marrone-converters',
       name: 'converters',
       prefixColor: 'green'
     },
     {
-      command: 'npm run watch --workspace=packages/bruno-query',
+      command: 'npm run watch --workspace=packages/marrone-query',
       name: 'query',
       prefixColor: 'blue'
     },
     {
-      command: 'npm run watch --workspace=packages/bruno-graphql-docs',
+      command: 'npm run watch --workspace=packages/marrone-graphql-docs',
       name: 'graphql',
       prefixColor: 'white'
     },
     {
-      command: 'npm run watch --workspace=packages/bruno-requests',
+      command: 'npm run watch --workspace=packages/marrone-requests',
       name: 'requests',
       prefixColor: 'gray'
     },
     {
-      command: 'npm run watch --workspace=packages/bruno-filestore',
+      command: 'npm run watch --workspace=packages/marrone-filestore',
       name: 'filestore',
       prefixColor: '#FA8072'
     },
@@ -181,7 +181,7 @@ function startDevelopment() {
       prefixColor: 'cyan'
     },
     {
-      command: `sleep ${CONFIG.ELECTRON_START_DELAY} && nodemon ${watchPaths} --ext js,jsx,ts,tsx --delay ${CONFIG.NODEMON_WATCH_DELAY}ms --exec "npm run dev --workspace=packages/bruno-electron"`,
+      command: `sleep ${CONFIG.ELECTRON_START_DELAY} && nodemon ${watchPaths} --ext js,jsx,ts,tsx --delay ${CONFIG.NODEMON_WATCH_DELAY}ms --exec "npm run dev --workspace=packages/marrone-electron"`,
       name: 'electron',
       prefixColor: 'yellow',
       delay: CONFIG.ELECTRON_START_DELAY
@@ -223,7 +223,7 @@ function startDevelopment() {
     }
   }
 
-  log(LOG_LEVELS.INFO, 'Initializing Bruno development environment...');
+  log(LOG_LEVELS.INFO, 'Initializing Marrone development environment...');
 
   // Ensure required global packages and node version
   ensureNodeVersion(CONFIG.NODE_VERSION);

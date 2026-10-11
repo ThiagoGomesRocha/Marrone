@@ -98,7 +98,7 @@ test.describe('Generate Code – URL Encoding OFF', () => {
       // Same fixture URL the ON spec uses — but here the toggle is OFF, so
       // the user-typed bytes round-trip unchanged. This is the contract a
       // user expects when they've already encoded their redirect URL
-      // themselves and don't want Bruno to touch it.
+      // themselves and don't want Marrone to touch it.
       await openCollection(page, COLLECTION);
       await openRequestInFolder(page, FOLDER, 'query-double-encode');
       await setUrlEncoding(page, false);

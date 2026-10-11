@@ -6,7 +6,7 @@ info:
 collections:
   - name: "Missing Coll"
     path: "collections/missing-coll"
-    remote: "https://github.com/usebruno/sample-collection.git"
+    remote: "https://github.com/marrone/sample-collection.git"
 
 specs:
 

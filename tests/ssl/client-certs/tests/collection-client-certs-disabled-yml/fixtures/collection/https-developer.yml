@@ -19,4 +19,4 @@ runtime:
       value: "true"
     - expression: res.body.subjectCN
       operator: eq
-      value: bruno-client
+      value: marrone-client

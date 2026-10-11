@@ -34,8 +34,8 @@ items:
       maxRedirects: 5
 bundled: true
 extensions:
-  bruno:
+  marrone:
     ignore:
       - node_modules
       - .git
-    exportedUsing: Bruno
+    exportedUsing: Marrone

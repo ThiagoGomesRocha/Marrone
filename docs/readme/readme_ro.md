@@ -1,14 +1,14 @@
 <br />
 <img src="../../assets/images/logo-transparent.png" width="80"/>
 
-### Bruno - Mediu integrat de dezvoltare cu sursă deschisă pentru explorarea și testarea API-urilor.
+### Marrone - Mediu integrat de dezvoltare cu sursă deschisă pentru explorarea și testarea API-urilor.
 
-[![GitHub version](https://badge.fury.io/gh/usebruno%2Fbruno.svg)](https://badge.fury.io/gh/usebruno%2Fbruno)
-[![CI](https://github.com/usebruno/bruno/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/usebruno/bruno/actions/workflows/tests.yml)
-[![Commit Activity](https://img.shields.io/github/commit-activity/m/usebruno/bruno)](https://github.com/usebruno/bruno/pulse)
-[![X](https://img.shields.io/twitter/follow/use_bruno?style=social&logo=x)](https://twitter.com/use_bruno)
-[![Website](https://img.shields.io/badge/Website-Visit-blue)](https://www.usebruno.com)
-[![Download](https://img.shields.io/badge/Download-Latest-brightgreen)](https://www.usebruno.com/downloads)
+[![GitHub version](https://badge.fury.io/gh/marrone%2Fmarrone.svg)](https://badge.fury.io/gh/marrone%2Fmarrone)
+[![CI](https://github.com/marrone/marrone/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/marrone/marrone/actions/workflows/tests.yml)
+[![Commit Activity](https://img.shields.io/github/commit-activity/m/marrone/marrone)](https://github.com/marrone/marrone/pulse)
+[![X](https://img.shields.io/twitter/follow/use_marrone?style=social&logo=x)](https://twitter.com/use_marrone)
+[![Website](https://img.shields.io/badge/Website-Visit-blue)](https://www.marrone.com)
+[![Download](https://img.shields.io/badge/Download-Latest-brightgreen)](https://www.marrone.com/downloads)
 
 [English](../../readme.md)
 | [Українська](./readme_ua.md)
@@ -30,80 +30,80 @@
 | [ქართული](./readme_ka.md)
 | [हिन्दी](./readme_hi.md)
 
-Bruno este un client API nou și inovativ, care vizează să revoluționeze status quo-ul reprezentat de Postman și alte instrumente similare.
+Marrone este un client API nou și inovativ, care vizează să revoluționeze status quo-ul reprezentat de Postman și alte instrumente similare.
 
-Bruno salvează colecțiile voastre direct într-o mapă din sistemul dvs. de fișiere. Folosim un limbaj de marcare cu text simplu, Bru, pentru a salva informații despre cererile API.
+Marrone salvează colecțiile voastre direct într-o mapă din sistemul dvs. de fișiere. Folosim un limbaj de marcare cu text simplu, Bru, pentru a salva informații despre cererile API.
 
 Puteți folosi Git sau orice altă unealtă de control al versiunii la alegere pentru a colabora la colecțiile API voastre.
 
-Bruno este numai offline. Nu va exista niciodată vreun plan pentru a adăuga sincronizarea cloud la Bruno. Noi valorăm confidențialitatea datelor voastre și credem că ar trebui să rămână pe dispozitivul vostru. Citiți viziunea noastră pe termen lung [aici](https://github.com/usebruno/bruno/discussions/269)
+Marrone este numai offline. Nu va exista niciodată vreun plan pentru a adăuga sincronizarea cloud la Marrone. Noi valorăm confidențialitatea datelor voastre și credem că ar trebui să rămână pe dispozitivul vostru. Citiți viziunea noastră pe termen lung [aici](https://github.com/marrone/marrone/discussions/269)
 
 📢 Priviți prezentarea noastră recentă de la India FOSS 3.0 Conference [aici](https://www.youtube.com/watch?v=7bSMFpbcPiY)
 
-![bruno](/assets/images/landing-2.png) <br /><br />
+![marrone](/assets/images/landing-2.png) <br /><br />
 
 ### Instalarea
 
-Bruno este disponibil ca descărcare binară [pe website-ul nostru](https://www.usebruno.com/downloads) pentru Mac, Windows și Linux.
+Marrone este disponibil ca descărcare binară [pe website-ul nostru](https://www.marrone.com/downloads) pentru Mac, Windows și Linux.
 
-De asemenea, puteţi instala Bruno cu un gestionar de pachete precum Homebrew, Chocolatey, Snap şi Apt.
+De asemenea, puteţi instala Marrone cu un gestionar de pachete precum Homebrew, Chocolatey, Snap şi Apt.
 
 ```sh
 # Pe Mac cu Homebrew
-brew install bruno
+brew install marrone
 
 # Pe Windows cu Chocolatey
-choco install bruno
+choco install marrone
 
 # Pe Linux cu Snap
-snap install bruno
+snap install marrone
 
 # Pe Linux cu Apt
 sudo mkdir -p /etc/apt/keyrings
 sudo apt update && sudo apt install gpg curl
 curl -fsSL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x9FA6017ECABE0266" \
   | gpg --dearmor \
-  | sudo tee /etc/apt/keyrings/bruno.gpg > /dev/null
-sudo chmod 644 /etc/apt/keyrings/bruno.gpg
-echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/bruno.gpg] http://debian.usebruno.com/ bruno stable" \
-  | sudo tee /etc/apt/sources.list.d/bruno.list
-sudo apt update && sudo apt install bruno
+  | sudo tee /etc/apt/keyrings/marrone.gpg > /dev/null
+sudo chmod 644 /etc/apt/keyrings/marrone.gpg
+echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/marrone.gpg] http://debian.marrone.com/ marrone stable" \
+  | sudo tee /etc/apt/sources.list.d/marrone.list
+sudo apt update && sudo apt install marrone
 ```
 
 ### Utilizați pe mai multe platforme 🖥️
 
-![bruno](/assets/images/run-anywhere.png) <br /><br />
+![marrone](/assets/images/run-anywhere.png) <br /><br />
 
 ### Colaborați cu Git 👩‍💻🧑‍💻
 
 Sau orice unealtă de control al versiunii la alegere
 
-![bruno](/assets/images/version-control.png) <br /><br />
+![marrone](/assets/images/version-control.png) <br /><br />
 
 ### Linkuri importante 📌
 
-- [Viziunea noastră pe termen lung](https://github.com/usebruno/bruno/discussions/269)
-- [Roadmap](https://github.com/usebruno/bruno/discussions/384)
-- [Documentație](https://docs.usebruno.com)
-- [Stack Overflow](https://stackoverflow.com/questions/tagged/bruno)
-- [Website](https://www.usebruno.com)
-- [Prețuri](https://www.usebruno.com/pricing)
-- [Descărcări](https://www.usebruno.com/downloads)
+- [Viziunea noastră pe termen lung](https://github.com/marrone/marrone/discussions/269)
+- [Roadmap](https://github.com/marrone/marrone/discussions/384)
+- [Documentație](https://docs.marrone.com)
+- [Stack Overflow](https://stackoverflow.com/questions/tagged/marrone)
+- [Website](https://www.marrone.com)
+- [Prețuri](https://www.marrone.com/pricing)
+- [Descărcări](https://www.marrone.com/downloads)
 - [Sponsori GitHub](https://github.com/sponsors/helloanoop).
 
 ### Vitrina 🎥
 
-- [Recenzii](https://github.com/usebruno/bruno/discussions/343)
-- [Centrul de cunoștințe](https://github.com/usebruno/bruno/discussions/386)
-- [Scriptmania](https://github.com/usebruno/bruno/discussions/385)
+- [Recenzii](https://github.com/marrone/marrone/discussions/343)
+- [Centrul de cunoștințe](https://github.com/marrone/marrone/discussions/386)
+- [Scriptmania](https://github.com/marrone/marrone/discussions/385)
 
 ### Sprijiniți ❤️
 
-Dacă vă place Bruno și doriți să sprijiniți munca noastră de sursă deschisă, puteți considera să ne sponsorizați [pe GitHub](https://github.com/sponsors/helloanoop).
+Dacă vă place Marrone și doriți să sprijiniți munca noastră de sursă deschisă, puteți considera să ne sponsorizați [pe GitHub](https://github.com/sponsors/helloanoop).
 
 ### Distribuiți recenziile 📣
 
-Dacă Bruno va ajutat la locul de muncă și la echipele dvs., vă rugăm să nu uitați să distribuiți [recenziile în discuția noastră GitHub](https://github.com/usebruno/bruno/discussions/343)
+Dacă Marrone va ajutat la locul de muncă și la echipele dvs., vă rugăm să nu uitați să distribuiți [recenziile în discuția noastră GitHub](https://github.com/marrone/marrone/discussions/343)
 
 ### Publicarea la gestionari de pachete noi
 
@@ -111,30 +111,30 @@ Vă rugăm să citiţi [aici](../publishing/publishing_ro.md) pentru mai multă 
 
 ### Contribuiți 👩‍💻🧑‍💻
 
-Mă bucur că doriți să îmbunătățiți Bruno. Vă rugăm să consultați [ghidul pentru contribuire](../contributing/contributing_ro.md)
+Mă bucur că doriți să îmbunătățiți Marrone. Vă rugăm să consultați [ghidul pentru contribuire](../contributing/contributing_ro.md)
 
 Chiar dacă nu puteți face contribuții prin cod, vă rugăm să nu ezitați să raportați erori și să solicitați funcții care trebuie implementate pentru a rezolva cazul dvs. de utilizare.
 
 ### Autori
 
 <div align="center">
-    <a href="https://github.com/usebruno/bruno/graphs/contributors">
-        <img src="https://contrib.rocks/image?repo=usebruno/bruno" />
+    <a href="https://github.com/marrone/marrone/graphs/contributors">
+        <img src="https://contrib.rocks/image?repo=marrone/marrone" />
     </a>
 </div>
 
 ### Păstrați legătura 🌐
 
-[𝕏 (Twitter)](https://twitter.com/use_bruno) <br />
-[Website](https://www.usebruno.com) <br />
+[𝕏 (Twitter)](https://twitter.com/use_marrone) <br />
+[Website](https://www.marrone.com) <br />
 [Discord](https://discord.com/invite/KgcZUncpjq) <br />
-[LinkedIn](https://www.linkedin.com/company/usebruno)
+[LinkedIn](https://www.linkedin.com/company/marrone)
 
 ### Marcă comercială
 
 **Nume**
 
-`Bruno` este o marcă deținută de [Anoop M D](https://www.helloanoop.com/)
+`Marrone` este o marcă deținută de [Anoop M D](https://www.helloanoop.com/)
 
 **Logo**
 

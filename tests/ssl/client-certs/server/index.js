@@ -8,7 +8,7 @@
  *
  * Run `node scripts/generate-certs.js` first. Each server is configured with
  * requestCert + rejectUnauthorized so a request WITHOUT a client cert is rejected
- * at the TLS layer — which is exactly what proves Bruno did (or did not) attach one.
+ * at the TLS layer — which is exactly what proves Marrone did (or did not) attach one.
  */
 
 const path = require('node:path');

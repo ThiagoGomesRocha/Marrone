@@ -1,5 +1,5 @@
 name: 'Start Test Server - macOS'
-description: 'Start the bruno-tests mock server for OAuth1 CLI tests on macOS'
+description: 'Start the marrone-tests mock server for OAuth1 CLI tests on macOS'
 runs:
   using: 'composite'
   steps:
@@ -8,7 +8,7 @@ runs:
       run: |
         set -euo pipefail
 
-        cd packages/bruno-tests
+        cd packages/marrone-tests
 
         echo "starting test server in background"
         node src/index.js &

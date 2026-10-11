@@ -1,7 +1,7 @@
 ---
 paths:
   - "scripts/**/*"
-  - "packages/bruno-electron/**/*"
+  - "packages/marrone-electron/**/*"
 ---
 
 # Cross-Platform Guidelines

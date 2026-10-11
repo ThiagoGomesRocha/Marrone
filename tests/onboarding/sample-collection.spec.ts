@@ -107,7 +107,7 @@ test.describe('Onboarding', () => {
     await removeOption.click();
 
     // Wait for modal to appear - could be either regular remove or drafts confirmation
-    const removeModal = page.locator('.bruno-modal').filter({ hasText: 'Remove Collection' });
+    const removeModal = page.locator('.marrone-modal').filter({ hasText: 'Remove Collection' });
     await removeModal.waitFor({ state: 'visible', timeout: 5000 });
 
     // Check if it's the drafts confirmation modal (has "Discard All and Remove" button)
@@ -118,7 +118,7 @@ test.describe('Onboarding', () => {
       await page.getByRole('button', { name: 'Discard All and Remove' }).click();
     } else {
       // Regular modal - click the submit button
-      await page.locator('.bruno-modal-footer .submit').click();
+      await page.locator('.marrone-modal-footer .submit').click();
     }
 
     // Verify collection is closed (no longer visible in sidebar)
@@ -138,8 +138,8 @@ test.describe('Onboarding', () => {
     await page.locator('[data-app-state="loaded"]').waitFor();
 
     // This test simulates old users who already have a collection opened
-    const brunoTestbench = page.locator('#sidebar-collection-name').getByText('bruno-testbench');
-    await expect(brunoTestbench).toBeVisible();
+    const marroneTestbench = page.locator('#sidebar-collection-name').getByText('marrone-testbench');
+    await expect(marroneTestbench).toBeVisible();
 
     // Verify no sample collection was created since user already has collections
     const sampleCollection = page.locator('#sidebar-collection-name').getByText('Sample API Collection');

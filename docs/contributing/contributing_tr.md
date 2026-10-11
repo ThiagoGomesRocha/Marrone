@@ -1,12 +1,12 @@
 [English](../../contributing.md)
 
-## Bruno'yu birlikte daha iyi hale getirelim!!!
+## Marrone'yu birlikte daha iyi hale getirelim!!!
 
-bruno'yu geliştirmek istemenizden mutluluk duyuyoruz. Aşağıda, bruno'yu bilgisayarınıza getirmeye başlamak için yönergeler bulunmaktadır.
+marrone'yu geliştirmek istemenizden mutluluk duyuyoruz. Aşağıda, marrone'yu bilgisayarınıza getirmeye başlamak için yönergeler bulunmaktadır.
 
 ### Kullanılan Teknolojiler
 
-Bruno, Next.js ve React kullanılarak oluşturulmuştur. Ayrıca bir masaüstü sürümü (yerel koleksiyonları destekleyen) göndermek için electron kullanıyoruz
+Marrone, Next.js ve React kullanılarak oluşturulmuştur. Ayrıca bir masaüstü sürümü (yerel koleksiyonları destekleyen) göndermek için electron kullanıyoruz
 
 Kullandığımız kütüphaneler
 
@@ -25,7 +25,7 @@ Kullandığımız kütüphaneler
 
 ## Gelişim
 
-Bruno bir masaüstü uygulaması olarak geliştirilmektedir. Next.js uygulamasını bir terminalde çalıştırarak uygulamayı yüklemeniz ve ardından electron uygulamasını başka bir terminalde çalıştırmanız gerekir.
+Marrone bir masaüstü uygulaması olarak geliştirilmektedir. Next.js uygulamasını bir terminalde çalıştırarak uygulamayı yüklemeniz ve ardından electron uygulamasını başka bir terminalde çalıştırmanız gerekir.
 
 ### Bağımlılıklar
 
@@ -43,8 +43,8 @@ npm i --legacy-peer-deps
 # graphql dokümanlarını oluştur
 npm run build:graphql-docs
 
-# bruno sorgusu oluştur
-npm run build:bruno-query
+# marrone sorgusu oluştur
+npm run build:marrone-query
 
 # sonraki uygulamayı çalıştır (terminal 1)
 npm run dev:web
@@ -70,8 +70,8 @@ find . -type f -name "package-lock.json" -delete
 ### Test
 
 ```bash
-# bruno-schema testlerini çalıştır
-npm test --workspace=packages/bruno-schema
+# marrone-schema testlerini çalıştır
+npm test --workspace=packages/marrone-schema
 
 # tüm çalışma alanlarında testleri çalıştır
 npm test --workspaces --if-present

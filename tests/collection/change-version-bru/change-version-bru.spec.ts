@@ -15,10 +15,10 @@ test.describe('Change Collection Version (bru collection)', () => {
     collectionFixturePath
   }) => {
     const collectionPath = collectionFixturePath!;
-    const brunoJsonPath = path.join(collectionPath, 'bruno.json');
+    const marroneJsonPath = path.join(collectionPath, 'bruno.json');
 
     await test.step('the collection has no version yet (only the internal "1" marker)', async () => {
-      const config = JSON.parse(fs.readFileSync(brunoJsonPath, 'utf-8'));
+      const config = JSON.parse(fs.readFileSync(marroneJsonPath, 'utf-8'));
       expect(config.collectionVersion).toBeUndefined();
       expect(config.version).toBe('1'); // the format marker is untouched
     });
@@ -43,7 +43,7 @@ test.describe('Change Collection Version (bru collection)', () => {
       await expect(page.getByTestId('info-version-value')).toHaveText('v2.3.4');
 
       await expect
-        .poll(async () => JSON.parse(fs.readFileSync(brunoJsonPath, 'utf-8')), { timeout: 5000 })
+        .poll(async () => JSON.parse(fs.readFileSync(marroneJsonPath, 'utf-8')), { timeout: 5000 })
         .toMatchObject({ version: '1', collectionVersion: 'v2.3.4' });
     });
   });

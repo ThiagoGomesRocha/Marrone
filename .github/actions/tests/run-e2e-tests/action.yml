@@ -17,7 +17,7 @@ runs:
   steps:
     - name: Install Test Collection Dependencies
       shell: ${{ inputs.shell }}
-      run: npm ci --prefix packages/bruno-tests/collection
+      run: npm ci --prefix packages/marrone-tests/collection
 
     - name: Run Playwright Tests (Ubuntu)
       if: inputs.os == 'ubuntu' && inputs.shard == ''

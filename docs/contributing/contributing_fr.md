@@ -1,12 +1,12 @@
 [English](../../contributing.md)
 
-## Ensemble, améliorons Bruno !
+## Ensemble, améliorons Marrone !
 
-Je suis content de voir que vous envisagez d'améliorer Bruno. Vous trouverez ci-dessous les règles et guides pour récupérer Bruno sur votre ordinateur.
+Je suis content de voir que vous envisagez d'améliorer Marrone. Vous trouverez ci-dessous les règles et guides pour récupérer Marrone sur votre ordinateur.
 
 ### Technologies utilisées
 
-Bruno est basé sur NextJs et React. Nous utilisons aussi Electron pour embarquer la version ordinateur (ce qui permet les collections locales).
+Marrone est basé sur NextJs et React. Nous utilisons aussi Electron pour embarquer la version ordinateur (ce qui permet les collections locales).
 
 Les librairies que nous utilisons :
 
@@ -25,7 +25,7 @@ Vous aurez besoin de [Node v20.x ou la dernière version LTS](https://nodejs.org
 
 ## Développement
 
-Bruno est développé comme une application _client lourd_. Vous devrez charger l'application en démarrant nextjs dans un premier terminal, puis démarre l'application Electron dans un second.
+Marrone est développé comme une application _client lourd_. Vous devrez charger l'application en démarrant nextjs dans un premier terminal, puis démarre l'application Electron dans un second.
 
 ### Dépendances
 
@@ -43,11 +43,11 @@ npm i --legacy-peer-deps
 # construction des docs graphql
 npm run build:graphql-docs
 
-# construction de bruno query
-npm run build:bruno-query
+# construction de marrone query
+npm run build:marrone-query
 
-# construction de bruno common
-npm run build:bruno-common
+# construction de marrone common
+npm run build:marrone-common
 
 # démarrage de next (terminal 1)
 npm run dev:web
@@ -73,8 +73,8 @@ find . -type f -name "package-lock.json" -delete
 ### Tests
 
 ```bash
-# exécuter des tests de schéma bruno
-npm test --workspace=packages/bruno-schema
+# exécuter des tests de schéma marrone
+npm test --workspace=packages/marrone-schema
 
 # exécuter des tests sur tous les espaces de travail
 npm test --workspaces --if-present

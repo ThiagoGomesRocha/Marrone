@@ -8,7 +8,7 @@ import {
   waitForReadyPage
 } from '../../utils/page';
 import { buildTimelineHeaderLocators } from '../../utils/page/timeline-headers';
-import { startNtlmServer, type NtlmEndpoint } from '@usebruno/tests/ntlm';
+import { startNtlmServer, type NtlmEndpoint } from '@marrone/tests/ntlm';
 
 const PASSWORD = 'Br!unoNtlm';
 

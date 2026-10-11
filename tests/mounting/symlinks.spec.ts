@@ -41,9 +41,9 @@ interface SymlinkFixture {
  */
 async function buildSymlinkFixture(format: Format, fileCacheEnabled: boolean): Promise<SymlinkFixture> {
   const ext = format;
-  const userDataPath = await fs.promises.mkdtemp(path.join(os.tmpdir(), 'bruno-test-userdata-'));
-  const collectionPath = await fs.promises.mkdtemp(path.join(os.tmpdir(), 'bruno-test-collection-'));
-  const targetsPath = await fs.promises.mkdtemp(path.join(os.tmpdir(), 'bruno-test-targets-'));
+  const userDataPath = await fs.promises.mkdtemp(path.join(os.tmpdir(), 'marrone-test-userdata-'));
+  const collectionPath = await fs.promises.mkdtemp(path.join(os.tmpdir(), 'marrone-test-collection-'));
+  const targetsPath = await fs.promises.mkdtemp(path.join(os.tmpdir(), 'marrone-test-targets-'));
 
   const cleanup = async () => {
     await Promise.all([

@@ -44,7 +44,7 @@ npm i --legacy-peer-deps
 npm run build:graphql-docs
 
 # ব্রুনো কোয়েরি তৈরি করুন
-npm run build:bruno-query
+npm run build:marrone-query
 
 # NextJs অ্যাপ চালান (টার্মিনাল 1)
 npm run dev:web
@@ -71,7 +71,7 @@ find . -type f -name "package-lock.json" -delete
 
 ```bash
 # ব্রুনো-স্কিমা পরীক্ষা চালান
-npm test --workspace=packages/bruno-schema
+npm test --workspace=packages/marrone-schema
 
 # সমস্ত কর্মক্ষেত্রে পরীক্ষা চালান
 npm test --workspaces --if-present

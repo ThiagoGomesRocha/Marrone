@@ -14,7 +14,7 @@ export const buildApiSpecPanelLocators = (page: Page) => ({
   specTab: (tabLabel: string) => page.locator('.request-tab').filter({ hasText: tabLabel }),
   tabUnsavedMarker: (tabLabel: string) =>
     page.locator('.request-tab').filter({ hasText: tabLabel }).locator('.close-gradient'),
-  unsavedChangesDialog: () => page.locator('.bruno-modal').filter({ hasText: 'unsaved changes in the API spec' }),
+  unsavedChangesDialog: () => page.locator('.marrone-modal').filter({ hasText: 'unsaved changes in the API spec' }),
   saveAndCloseButton: () => page.getByTestId('api-spec-save'),
   sidebarRows: () => page.getByTestId('sidebar-api-spec-row'),
   sidebarRow: (name: string | RegExp) => page.getByTestId('sidebar-api-spec-row').filter({ hasText: name }),
@@ -66,7 +66,7 @@ export const createApiSpec = async (
     await addMenuButton().click();
     await page.getByTestId('api-specs-header-add-menu-create-api-spec').click();
 
-    const modal = page.locator('.bruno-modal').filter({ hasText: 'Create API Spec' });
+    const modal = page.locator('.marrone-modal').filter({ hasText: 'Create API Spec' });
     await expect(modal).toBeVisible();
 
     await modal.getByLabel('Blank Spec').check();

@@ -45,7 +45,7 @@ test.describe('Snapshot: Shared collection across workspaces restores its own en
       await openWorkspaceFromDialog(app, page, workspaceAPath);
       await expect(page.getByTestId('workspace-name')).toHaveText('Workspace A', { timeout: 10000 });
       await openCollection(page, 'SharedCol');
-      await createRequest(page, 'PingA', 'SharedCol', { url: 'https://echo.usebruno.com', method: 'GET' });
+      await createRequest(page, 'PingA', 'SharedCol', { url: 'https://echo.marrone.com', method: 'GET' });
       await openRequest(page, 'SharedCol', 'PingA', { persist: true });
 
       await createEnvironment(page, 'env-a');

@@ -354,7 +354,7 @@ test.describe('Generate Code – URL Encoding ON', () => {
     //
     // Caveats for the / # ? rows: GenerateCodeItem invokes
     // interpolateUrlPathParams without an `encodeUrl` option, so the value is
-    // substituted *raw* (see packages/bruno-app/src/utils/url/index.js).
+    // substituted *raw* (see packages/marrone-app/src/utils/url/index.js).
     // Once the literal `/` `?` `#` lands in the URL string it becomes a
     // path-separator / query-marker / fragment-marker respectively — the
     // "literal in value" semantic is lost. The expectations below capture

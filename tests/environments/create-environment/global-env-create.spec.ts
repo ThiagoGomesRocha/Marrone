@@ -37,7 +37,7 @@ test.describe('Global Environment Create Tests', () => {
       await createEnvironment(page, 'Test Global Environment', 'global');
 
       await addEnvironmentVariables(page, [
-        { name: 'host', value: 'https://echo.usebruno.com' },
+        { name: 'host', value: 'https://echo.marrone.com' },
         { name: 'userId', value: '1' },
         { name: 'postTitle', value: 'Global Test Post from Environment' },
         { name: 'postBody', value: 'This is a global test post body with environment variables' },

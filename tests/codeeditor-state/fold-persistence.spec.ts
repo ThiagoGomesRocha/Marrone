@@ -131,7 +131,7 @@ test.describe('CodeEditor — fold state persists across tab switches', () => {
     await expect(bodyCm.locator('.CodeMirror-foldmarker')).toHaveCount(1);
     await expect(bodyCm.getByText('↤3↦')).toHaveCount(1);
 
-    // Sub-tab switch — Headers unmounts the body editor in Bruno's request pane.
+    // Sub-tab switch — Headers unmounts the body editor in Marrone's request pane.
     await selectRequestPaneTab(page, 'Headers');
     await selectRequestPaneTab(page, 'Body');
 

@@ -3,9 +3,9 @@ import { setSandboxMode, runFolder, selectEnvironment, validateRunnerResults } f
 
 test.describe.serial('bru.cookies PropertyList API', () => {
   test('all cookie tests pass in developer mode', async ({ pageWithUserData: page }) => {
-    await setSandboxMode(page, 'bruno-testbench', 'developer');
+    await setSandboxMode(page, 'marrone-testbench', 'developer');
     await selectEnvironment(page, 'Local');
-    await runFolder(page, 'bruno-testbench', ['scripting', 'api', 'bru', 'cookies']);
+    await runFolder(page, 'marrone-testbench', ['scripting', 'api', 'bru', 'cookies']);
     await validateRunnerResults(page, {
       totalRequests: 16,
       passed: 16,
@@ -14,9 +14,9 @@ test.describe.serial('bru.cookies PropertyList API', () => {
   });
 
   test('all cookie tests pass in safe mode', async ({ pageWithUserData: page }) => {
-    await setSandboxMode(page, 'bruno-testbench', 'safe');
+    await setSandboxMode(page, 'marrone-testbench', 'safe');
     await selectEnvironment(page, 'Local');
-    await runFolder(page, 'bruno-testbench', ['scripting', 'api', 'bru', 'cookies']);
+    await runFolder(page, 'marrone-testbench', ['scripting', 'api', 'bru', 'cookies']);
     await validateRunnerResults(page, {
       totalRequests: 16,
       passed: 16,

@@ -1,10 +1,10 @@
 {
   "version": "1",
-  "uid": "bruno_test_collection_1",
-  "name": "Sample Bruno Collection",
+  "uid": "marrone_test_collection_1",
+  "name": "Sample Marrone Collection",
   "items": [
     {
-      "uid": "bruno_test_request_1",
+      "uid": "marrone_test_request_1",
       "type": "http-request",
       "name": "Get Sample Data",
       "seq": 1,

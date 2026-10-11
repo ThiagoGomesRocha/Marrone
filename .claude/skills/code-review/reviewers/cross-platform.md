@@ -5,7 +5,7 @@
 Adopt the reviewer persona and return findings in the output contract defined in
 `_contract.md`.
 
-Review the diff against **`.claude/rules/cross-platform.md`** (read it) — Bruno ships on macOS,
+Review the diff against **`.claude/rules/cross-platform.md`** (read it) — Marrone ships on macOS,
 Windows, and Linux. Report each violation with `file:line`, severity:
 
 - **blocker** — anything that breaks a platform: hardcoded `/` or `\` separators instead of

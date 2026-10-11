@@ -5,7 +5,7 @@ import { buildCommonLocators } from '../../../../utils/page/locators';
 const COLLECTION = 'client-certs-enabled-yml';
 
 // The opencollection.yml declares a client certificate under `config.clientCertificates`
-// (type: pem), so Bruno attaches it over WSS. The WebSocket upgrade completes the mTLS
+// (type: pem), so Marrone attaches it over WSS. The WebSocket upgrade completes the mTLS
 // handshake and the server replies with the peer-cert info.
 test.describe('wss with collection client certificate (enabled, yml)', () => {
   // App launch plus the mTLS handshake exceeds the default 30s under parallel load. The budget
@@ -34,11 +34,11 @@ test.describe('wss with collection client certificate (enabled, yml)', () => {
       await test.step('Send message and verify the server saw the client cert', async () => {
         await locators.runButton().click();
         // Match the reply by content rather than by position: the assertion is about what the
-        // server saw, and Bruno records an outgoing message only once its write completes, so the
+        // server saw, and Marrone records an outgoing message only once its write completes, so the
         // reply can be listed above the ping that triggered it.
         const certReply = locators.messageMatching(/clientCertPresented/);
         await expect(certReply).toHaveText(/clientCertPresented"?\s*:\s*true/);
-        await expect(certReply).toHaveText(/subjectCN"?\s*:\s*"?bruno-client/);
+        await expect(certReply).toHaveText(/subjectCN"?\s*:\s*"?marrone-client/);
       });
     });
   }

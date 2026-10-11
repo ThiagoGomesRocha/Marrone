@@ -42,7 +42,7 @@ test.describe('Collection-level app actions', () => {
     await openAppRowMenu(page, collectionName, 'rename-src');
     await menuItem(page, 'Rename').click();
 
-    const modal = page.locator('.bruno-modal').filter({ hasText: 'Rename App' });
+    const modal = page.locator('.marrone-modal').filter({ hasText: 'Rename App' });
     await expect(modal).toBeVisible({ timeout: 5000 });
 
     const nameInput = modal.locator('#collection-item-name');
@@ -63,7 +63,7 @@ test.describe('Collection-level app actions', () => {
     await openAppRowMenu(page, collectionName, 'info-app');
     await menuItem(page, 'Info').click();
 
-    const modal = page.locator('.bruno-modal').filter({ hasText: 'Info' });
+    const modal = page.locator('.marrone-modal').filter({ hasText: 'Info' });
     await expect(modal).toBeVisible({ timeout: 5000 });
 
     const rows = modal.locator('tbody tr');

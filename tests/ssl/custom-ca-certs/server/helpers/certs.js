@@ -154,7 +154,7 @@ function addCAToTruststore(certsDir) {
 
     case 'linux': {
       const linuxCertPath = path.join(certsDir, 'ca-cert.pem');
-      execCommand(`sudo cp "${linuxCertPath}" /usr/local/share/ca-certificates/bruno-ca.crt`);
+      execCommand(`sudo cp "${linuxCertPath}" /usr/local/share/ca-certificates/marrone-ca.crt`);
       execCommand('sudo update-ca-certificates');
       break;
     }

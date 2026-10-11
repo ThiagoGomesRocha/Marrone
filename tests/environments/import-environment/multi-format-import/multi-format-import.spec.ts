@@ -29,7 +29,7 @@ test.describe('Import environment - mixed format and invalid file handling', () 
       await closeAllCollections(page);
     });
 
-    test('imports Postman and Bruno environment files selected together in one batch', async ({ page, createTmpDir }) => {
+    test('imports Postman and Marrone environment files selected together in one batch', async ({ page, createTmpDir }) => {
       const { environment } = buildCommonLocators(page);
       await createCollection(page, 'multi-format-mixed', await createTmpDir('multi-format-mixed'));
 
@@ -41,13 +41,13 @@ test.describe('Import environment - mixed format and invalid file handling', () 
         await environment.importSubmitButton('collection').click();
         await expect(environment.importModal('collection')).toBeHidden();
         await expect(environment.sidebarListItemExact('collection', 'Postman Env')).toBeVisible();
-        await expect(environment.sidebarListItemExact('collection', 'Bruno Env')).toBeVisible();
+        await expect(environment.sidebarListItemExact('collection', 'Marrone Env')).toBeVisible();
 
         await environment.sidebarListItemExact('collection', 'Postman Env').click();
         await expect(environment.varRowLine('base_url')).toHaveText('https://postman.example.com');
 
-        await environment.sidebarListItemExact('collection', 'Bruno Env').click();
-        await expect(environment.varRowLine('base_url')).toHaveText('https://bruno.example.com');
+        await environment.sidebarListItemExact('collection', 'Marrone Env').click();
+        await expect(environment.varRowLine('base_url')).toHaveText('https://marrone.example.com');
       });
     });
 
@@ -62,13 +62,13 @@ test.describe('Import environment - mixed format and invalid file handling', () 
         await expect(environment.importInvalidCount()).toHaveText('1');
         await expect(environment.importInvalidItem('malformed.json')).toBeVisible();
         await expect(environment.importNewCount()).toHaveText('1');
-        await expect(environment.importReviewItem('Bruno Env')).toBeVisible();
+        await expect(environment.importReviewItem('Marrone Env')).toBeVisible();
       });
 
       await environment.importSubmitButton('collection').click();
 
       await test.step('Only the valid environment is actually imported', async () => {
-        await expect(environment.sidebarListItemExact('collection', 'Bruno Env')).toBeVisible();
+        await expect(environment.sidebarListItemExact('collection', 'Marrone Env')).toBeVisible();
         await expect(environment.sidebarListItemExact('collection', 'malformed.json')).toBeHidden();
       });
     });
@@ -83,13 +83,13 @@ test.describe('Import environment - mixed format and invalid file handling', () 
         await expect(environment.importInvalidCount()).toHaveText('1');
         await expect(environment.importInvalidItem('null-content.json')).toBeVisible();
         await expect(environment.importNewCount()).toHaveText('1');
-        await expect(environment.importReviewItem('Bruno Env')).toBeVisible();
+        await expect(environment.importReviewItem('Marrone Env')).toBeVisible();
       });
 
       await environment.importSubmitButton('collection').click();
 
       await test.step('Only the valid environment is actually imported', async () => {
-        await expect(environment.sidebarListItemExact('collection', 'Bruno Env')).toBeVisible();
+        await expect(environment.sidebarListItemExact('collection', 'Marrone Env')).toBeVisible();
         await expect(environment.sidebarListItemExact('collection', 'null-content.json')).toBeHidden();
       });
     });
@@ -141,7 +141,7 @@ test.describe('Import environment - mixed format and invalid file handling', () 
       await environment.importSubmitButton('collection').click();
 
       await test.step('Only the two valid environments are imported', async () => {
-        await expect(environment.sidebarListItemExact('collection', 'Bruno Env')).toBeVisible();
+        await expect(environment.sidebarListItemExact('collection', 'Marrone Env')).toBeVisible();
         await expect(environment.sidebarListItemExact('collection', 'Postman Env')).toBeVisible();
       });
     });
@@ -195,7 +195,7 @@ test.describe('Import environment - mixed format and invalid file handling', () 
       await createCollection(page, 'multi-format-order', await createTmpDir('multi-format-order'));
 
       // Interleaved on purpose: grouping the batch by format used to pull both Postman files
-      // ahead of the Bruno one regardless of the order they were chosen in.
+      // ahead of the Marrone one regardless of the order they were chosen in.
       await openImportReviewFromEmpty(
         page,
         'collection',
@@ -207,7 +207,7 @@ test.describe('Import environment - mixed format and invalid file handling', () 
       await test.step('Rows appear in pick order', async () => {
         await expect(environment.importReviewItemNames()).toHaveText([
           'Postman Env',
-          'Bruno Env',
+          'Marrone Env',
           'Postman Env Two'
         ]);
       });
@@ -223,7 +223,7 @@ test.describe('Import environment - mixed format and invalid file handling', () 
 
       await test.step('No group exists for a status nothing in the batch has', async () => {
         await expect(environment.importDuplicatesGroup()).toHaveCount(0);
-        await page.getByTestId('env-search-input').fill('bruno');
+        await page.getByTestId('env-search-input').fill('marrone');
         await expect(environment.importDuplicatesGroup()).toHaveCount(0);
         await expect(environment.importNewCount()).toHaveText('1');
       });
@@ -253,7 +253,7 @@ test.describe('Import environment - mixed format and invalid file handling', () 
       await test.step('The review step opens with the numeric name read as text and the object name refused', async () => {
         await expect(environment.importTotalCount()).toHaveText('3');
         await expect(environment.importNewCount()).toHaveText('2');
-        await expect(environment.importReviewItem('Bruno Env')).toBeVisible();
+        await expect(environment.importReviewItem('Marrone Env')).toBeVisible();
         await expect(environment.importReviewItem('123')).toBeVisible();
 
         await expect(environment.importInvalidCount()).toHaveText('1');
@@ -265,7 +265,7 @@ test.describe('Import environment - mixed format and invalid file handling', () 
       await environment.importSubmitButton('collection').click();
 
       await test.step('Both usable environments land, the refused one does not', async () => {
-        await expect(environment.sidebarListItemExact('collection', 'Bruno Env')).toBeVisible();
+        await expect(environment.sidebarListItemExact('collection', 'Marrone Env')).toBeVisible();
         await expect(environment.sidebarListItemExact('collection', '123')).toBeVisible();
         await expect(environment.sidebarListItemExact('collection', 'object-name-env.json')).toBeHidden();
       });
@@ -273,7 +273,7 @@ test.describe('Import environment - mixed format and invalid file handling', () 
   });
 
   test.describe('global scope', () => {
-    test('mixed Postman and Bruno files import correctly for global environments', async ({ newPage: page, createTmpDir }) => {
+    test('mixed Postman and Marrone files import correctly for global environments', async ({ newPage: page, createTmpDir }) => {
       const { environment } = buildCommonLocators(page);
       await createCollection(page, 'multi-format-global', await createTmpDir('multi-format-global'));
 
@@ -283,7 +283,7 @@ test.describe('Import environment - mixed format and invalid file handling', () 
         await environment.importSubmitButton('global').click();
         await expect(environment.importModal('global')).toBeHidden();
         await expect(environment.sidebarListItemExact('global', 'Postman Env')).toBeVisible();
-        await expect(environment.sidebarListItemExact('global', 'Bruno Env')).toBeVisible();
+        await expect(environment.sidebarListItemExact('global', 'Marrone Env')).toBeVisible();
       });
 
       await closeAllCollections(page);

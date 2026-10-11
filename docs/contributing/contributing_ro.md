@@ -1,12 +1,12 @@
 [English](../../contributing.md)
 
-## Haideţi să îmbunătățim Bruno, împreună!!
+## Haideţi să îmbunătățim Marrone, împreună!!
 
-Ne bucurăm că doriți să îmbunătățiți bruno. Mai jos sunt instrucțiunile pentru ca să porniți bruno pe calculatorul dvs.
+Ne bucurăm că doriți să îmbunătățiți marrone. Mai jos sunt instrucțiunile pentru ca să porniți marrone pe calculatorul dvs.
 
 ### Stack-ul tehnologic
 
-Bruno este construit cu Next.js și React. De asemenea, folosim electron pentru a livra o versiune desktop (care poate folosi colecții locale)
+Marrone este construit cu Next.js și React. De asemenea, folosim electron pentru a livra o versiune desktop (care poate folosi colecții locale)
 
 Bibliotecile pe care le folosim
 
@@ -25,7 +25,7 @@ Veți avea nevoie de [Node v20.x sau cea mai recentă versiune LTS](https://node
 
 ## Dezvoltarea
 
-Bruno este dezvoltat ca o aplicație desktop. Ca să porniți aplicatia trebuie să rulați aplicația Next.js într-un terminal și apoi să rulați aplicația electron într-un alt terminal.
+Marrone este dezvoltat ca o aplicație desktop. Ca să porniți aplicatia trebuie să rulați aplicația Next.js într-un terminal și apoi să rulați aplicația electron într-un alt terminal.
 
 ```shell
 # folosiți nodejs versiunea 18
@@ -37,8 +37,8 @@ npm i --legacy-peer-deps
 # construiți documente graphql
 npm run build:graphql-docs
 
-# construiți bruno query
-npm run build:bruno-query
+# construiți marrone query
+npm run build:marrone-query
 
 # rulați aplicația next (terminal 1)
 npm run dev:web
@@ -64,8 +64,8 @@ find . -type f -name "package-lock.json" -delete
 ### Testarea
 
 ```shell
-# executați teste bruno-schema
-npm test --workspace=packages/bruno-schema
+# executați teste marrone-schema
+npm test --workspace=packages/marrone-schema
 
 # executați teste peste toate spațiile de lucru
 npm test --workspaces --if-present

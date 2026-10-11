@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "https://echo.usebruno.com",
+      "url": "https://echo.marrone.com",
       "description": "Echo test server"
     }
   ],

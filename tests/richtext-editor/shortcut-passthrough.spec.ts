@@ -49,14 +49,14 @@ test.describe('Rich Text Editor - Keyboard Shortcut Interop with Global Hotkeys'
     const prosemirror = locators.docs.proseMirror();
 
     await test.step('Give the request a real URL, so a regression (Send Request also firing) would be unambiguous', async () => {
-      await setRequestUrlAndSave(page, 'https://echo.usebruno.com');
+      await setRequestUrlAndSave(page, 'https://echo.marrone.com');
       await expect(prosemirror).toBeVisible();
     });
 
     await test.step('Cmd/Ctrl+Enter inserts a hard break (Tiptap\'s HardBreak binding)', async () => {
       await prosemirror.click();
       await page.keyboard.type('Line one');
-      // Mod-Enter is Tiptap's HardBreak binding and Bruno's global "Send Request" shortcut.
+      // Mod-Enter is Tiptap's HardBreak binding and Marrone's global "Send Request" shortcut.
       await pressShortcut(page, modifier, 'Enter');
       await page.keyboard.type('Line two');
 

@@ -5,7 +5,7 @@ import { TLS_HANDSHAKE_FAILURE } from '../../../../utils/constants';
 
 const COLLECTION = 'global-client-certs-disabled';
 
-// The global client certificate in Preferences carries `disabled: true`, so Bruno
+// The global client certificate in Preferences carries `disabled: true`, so Marrone
 // withholds it. The mTLS server rejects the request at the TLS handshake — the error
 // surfaced in the response pane is the proof the global disable flag is honored.
 test.describe('https with global client certificate (disabled)', () => {

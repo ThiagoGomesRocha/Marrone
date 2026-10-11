@@ -6,7 +6,7 @@ const { createCertsDir, generateCertificates, verifyCertificates, PFX_PASSPHRASE
 /**
  * Setup mTLS certificates (CA + server + client PEM/PFX) for the client-certificate test server.
  *
- * The CA (ca-cert.pem) is NOT added to the OS truststore — tests trust it via Bruno's
+ * The CA (ca-cert.pem) is NOT added to the OS truststore — tests trust it via Marrone's
  * custom CA preference (or by disabling TLS verification), which keeps this script sudo-free.
  */
 async function setup() {
@@ -28,7 +28,7 @@ async function setup() {
     console.log(`   Client PEM : client-cert.pem + client-key.pem  (type: cert)`);
     console.log(`   Client PFX : client.pfx  (type: pfx, passphrase: "${PFX_PASSPHRASE}")`);
     console.log(`   Untrusted  : untrusted-client-cert.pem + untrusted-client-key.pem  (rejected by the server)`);
-    console.log(`   Trust CA   : ca-cert.pem  (set as custom CA in Bruno, or disable TLS verification)`);
+    console.log(`   Trust CA   : ca-cert.pem  (set as custom CA in Marrone, or disable TLS verification)`);
     return true;
   } catch (error) {
     console.error('❌ Generate certs failed:', error.message);

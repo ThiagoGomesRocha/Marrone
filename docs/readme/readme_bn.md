@@ -3,12 +3,12 @@
 
 ### ব্রুনো - API অন্বেষণ এবং পরীক্ষা করার জন্য ওপেনসোর্স IDE।
 
-[![GitHub version](https://badge.fury.io/gh/usebruno%2Fbruno.svg)](https://badge.fury.io/gh/usebruno%2Fbruno)
-[![CI](https://github.com/usebruno/bruno/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/usebruno/bruno/actions/workflows/tests.yml)
-[![Commit Activity](https://img.shields.io/github/commit-activity/m/usebruno/bruno)](https://github.com/usebruno/bruno/pulse)
-[![X](https://img.shields.io/twitter/follow/use_bruno?style=social&logo=x)](https://twitter.com/use_bruno)
-[![Website](https://img.shields.io/badge/Website-Visit-blue)](https://www.usebruno.com)
-[![Download](https://img.shields.io/badge/Download-Latest-brightgreen)](https://www.usebruno.com/downloads)
+[![GitHub version](https://badge.fury.io/gh/marrone%2Fmarrone.svg)](https://badge.fury.io/gh/marrone%2Fmarrone)
+[![CI](https://github.com/marrone/marrone/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/marrone/marrone/actions/workflows/tests.yml)
+[![Commit Activity](https://img.shields.io/github/commit-activity/m/marrone/marrone)](https://github.com/marrone/marrone/pulse)
+[![X](https://img.shields.io/twitter/follow/use_marrone?style=social&logo=x)](https://twitter.com/use_marrone)
+[![Website](https://img.shields.io/badge/Website-Visit-blue)](https://www.marrone.com)
+[![Download](https://img.shields.io/badge/Download-Latest-brightgreen)](https://www.marrone.com/downloads)
 
 [English](../../readme.md)
 | [Українська](./readme_ua.md)
@@ -36,64 +36,64 @@
 
 আপনি আপনার API সংগ্রহে সহযোগিতা করতে গিট বা আপনার পছন্দের যেকোনো সংস্করণ নিয়ন্ত্রণ ব্যবহার করতে পারেন।
 
-ব্রুনো শুধুমাত্র অফলাইন। ব্রুনোতে ক্লাউড-সিঙ্ক যোগ করার কোন পরিকল্পনা নেই, কখনও। আমরা আপনার ডেটা গোপনীয়তার মূল্য দিই এবং বিশ্বাস করি এটি আপনার ডিভাইসে থাকা উচিত। আমাদের দীর্ঘমেয়াদী দৃষ্টি পড়ুন। [এখানে ](https://github.com/usebruno/bruno/discussions/269)
+ব্রুনো শুধুমাত্র অফলাইন। ব্রুনোতে ক্লাউড-সিঙ্ক যোগ করার কোন পরিকল্পনা নেই, কখনও। আমরা আপনার ডেটা গোপনীয়তার মূল্য দিই এবং বিশ্বাস করি এটি আপনার ডিভাইসে থাকা উচিত। আমাদের দীর্ঘমেয়াদী দৃষ্টি পড়ুন। [এখানে ](https://github.com/marrone/marrone/discussions/269)
 
 📢 ইন্ডিয়া FOSS 3.0 সম্মেলনে আমাদের সাম্প্রতিক আলোচনা দেখুন [এখানে](https://www.youtube.com/watch?v=7bSMFpbcPiY)
 
-![bruno](/assets/images/landing-2.png) <br /><br />
+![marrone](/assets/images/landing-2.png) <br /><br />
 
 ### স্থাপন
 
-ব্রুনো বাইনারি ডাউনলোড হিসাবে উপলব্ধ [আমাদের ওয়েবসাইটে](https://www.usebruno.com/downloads) ম্যাক, উইন্ডোজ এবং লিনাক্সের জন্য।
+ব্রুনো বাইনারি ডাউনলোড হিসাবে উপলব্ধ [আমাদের ওয়েবসাইটে](https://www.marrone.com/downloads) ম্যাক, উইন্ডোজ এবং লিনাক্সের জন্য।
 
 আপনি Homebrew, Chocolatey, Snap এবং Apt এর মত প্যাকেজ ম্যানেজারদের মাধ্যমে ব্রুনো ইনস্টল করতে পারেন।
 
 ```sh
 # Homebrew এর মাধ্যমে Mac-এ
-brew install bruno
+brew install marrone
 
 # চকোলেটির মাধ্যমে উইন্ডোজে
-choco install bruno
+choco install marrone
 
 # স্ন্যাপ এর মাধ্যমে লিনাক্সে
-snap install bruno
+snap install marrone
 
 # Apt এর মাধ্যমে লিনাক্সে
 sudo mkdir -p /etc/apt/keyrings
 sudo apt update && sudo apt install gpg curl
 curl -fsSL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x9FA6017ECABE0266" \
   | gpg --dearmor \
-  | sudo tee /etc/apt/keyrings/bruno.gpg > /dev/null
-sudo chmod 644 /etc/apt/keyrings/bruno.gpg
-echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/bruno.gpg] http://debian.usebruno.com/ bruno stable" \
-  | sudo tee /etc/apt/sources.list.d/bruno.list
-sudo apt update && sudo apt install bruno
+  | sudo tee /etc/apt/keyrings/marrone.gpg > /dev/null
+sudo chmod 644 /etc/apt/keyrings/marrone.gpg
+echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/marrone.gpg] http://debian.marrone.com/ marrone stable" \
+  | sudo tee /etc/apt/sources.list.d/marrone.list
+sudo apt update && sudo apt install marrone
 ```
 
 ### একাধিক প্ল্যাটফর্মে চালান 🖥️
 
-![bruno](/assets/images/run-anywhere.png) <br /><br />
+![marrone](/assets/images/run-anywhere.png) <br /><br />
 
 ### Git এর মাধ্যমে সহযোগিতা করুন 👩‍💻🧑‍💻
 
 অথবা আপনার পছন্দের যেকোনো সংস্করণ নিয়ন্ত্রণ ব্যবস্থা
 
-![bruno](/assets/images/version-control.png) <br /><br />
+![marrone](/assets/images/version-control.png) <br /><br />
 
 ### গুরুত্বপূর্ণ লিংক 📌
 
-- [আমাদের দীর্ঘমেয়াদী দৃষ্টি](https://github.com/usebruno/bruno/discussions/269)
-- [রোডম্যাপ](https://github.com/usebruno/bruno/discussions/384)
-- [ডকুমেন্টেশন](https://docs.usebruno.com)
-- [ওয়েবসাইট](https://www.usebruno.com)
-- [মূল্য](https://www.usebruno.com/pricing)
-- [ডাউনলোড করুন](https://www.usebruno.com/downloads)
+- [আমাদের দীর্ঘমেয়াদী দৃষ্টি](https://github.com/marrone/marrone/discussions/269)
+- [রোডম্যাপ](https://github.com/marrone/marrone/discussions/384)
+- [ডকুমেন্টেশন](https://docs.marrone.com)
+- [ওয়েবসাইট](https://www.marrone.com)
+- [মূল্য](https://www.marrone.com/pricing)
+- [ডাউনলোড করুন](https://www.marrone.com/downloads)
 
 ### শোকেস 🎥
 
-- [প্রশংসাপত্র](https://github.com/usebruno/bruno/discussions/343)
-- [নলেজ হাব](https://github.com/usebruno/bruno/discussions/386)
-- [স্ক্রিপ্টম্যানিয়া](https://github.com/usebruno/bruno/discussions/385)
+- [প্রশংসাপত্র](https://github.com/marrone/marrone/discussions/343)
+- [নলেজ হাব](https://github.com/marrone/marrone/discussions/386)
+- [স্ক্রিপ্টম্যানিয়া](https://github.com/marrone/marrone/discussions/385)
 
 ### সমর্থন ❤️
 
@@ -101,7 +101,7 @@ sudo apt update && sudo apt install bruno
 
 ### প্রশংসাপত্র শেয়ার করুন 📣
 
-যদি ব্রুনো আপনাকে কর্মক্ষেত্রে এবং আপনার দলগুলিতে সাহায্য করে থাকে, অনুগ্রহ করে আপনার [আমাদের গিটহাব আলোচনায় প্রশংসাপত্রগুলি](https://github.com/usebruno/bruno/discussions/343) শেয়ার করতে ভুলবেন না
+যদি ব্রুনো আপনাকে কর্মক্ষেত্রে এবং আপনার দলগুলিতে সাহায্য করে থাকে, অনুগ্রহ করে আপনার [আমাদের গিটহাব আলোচনায় প্রশংসাপত্রগুলি](https://github.com/marrone/marrone/discussions/343) শেয়ার করতে ভুলবেন না
 
 ### নতুন প্যাকেজ পরিচালকদের কাছে প্রকাশ করা হচ্ছে
 
@@ -116,23 +116,23 @@ sudo apt update && sudo apt install bruno
 ### লেখক
 
 <div align="center">
-    <a href="https://github.com/usebruno/bruno/graphs/contributors">
-        <img src="https://contrib.rocks/image?repo=usebruno/bruno" />
+    <a href="https://github.com/marrone/marrone/graphs/contributors">
+        <img src="https://contrib.rocks/image?repo=marrone/marrone" />
     </a>
 </div>
 
 ### সাথে থাকুন 🌐
 
-[𝕏 (টুইটার)](https://twitter.com/use_bruno) <br />
-[ওয়েবসাইট](https://www.usebruno.com) <br />
+[𝕏 (টুইটার)](https://twitter.com/use_marrone) <br />
+[ওয়েবসাইট](https://www.marrone.com) <br />
 [ডিসকর্ড](https://discord.com/invite/KgcZUncpjq) <br />
-[লিঙ্কডইন](https://www.linkedin.com/company/usebruno)
+[লিঙ্কডইন](https://www.linkedin.com/company/marrone)
 
 ### ট্রেডমার্ক
 
 **নাম**
 
-`Bruno` হল একটি ট্রেডমার্ক [Anoop M D](https://www.helloanoop.com/)
+`Marrone` হল একটি ট্রেডমার্ক [Anoop M D](https://www.helloanoop.com/)
 
 **লোগো**
 

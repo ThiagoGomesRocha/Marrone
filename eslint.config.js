@@ -16,21 +16,21 @@ const mainLintFiles = [
   './eslint.config.js',
   'tests/**/*.{ts,js}',
   'playwright/**/*.{js,ts}',
-  'packages/bruno-app/**/*.{js,jsx,ts}',
-  'packages/bruno-app/plugins/**/*.{js,cjs,mjs}',
-  'packages/bruno-app/src/test-utils/mocks/codemirror.js',
-  'packages/bruno-cli/**/*.js',
-  'packages/bruno-common/**/*.ts',
-  'packages/bruno-converters/**/*.js',
-  'packages/bruno-electron/**/*.js',
-  'packages/bruno-filestore/**/*.ts',
-  'packages/bruno-schema-types/**/*.ts',
-  'packages/bruno-js/**/*.js',
-  'packages/bruno-lang/**/*.js',
-  'packages/bruno-requests/**/*.ts',
-  'packages/bruno-requests/**/*.js',
-  'packages/bruno-tests/**/*.{js,ts}',
-  'packages/bruno-sqlite/**/*.{js,ts}'
+  'packages/marrone-app/**/*.{js,jsx,ts}',
+  'packages/marrone-app/plugins/**/*.{js,cjs,mjs}',
+  'packages/marrone-app/src/test-utils/mocks/codemirror.js',
+  'packages/marrone-cli/**/*.js',
+  'packages/marrone-common/**/*.ts',
+  'packages/marrone-converters/**/*.js',
+  'packages/marrone-electron/**/*.js',
+  'packages/marrone-filestore/**/*.ts',
+  'packages/marrone-schema-types/**/*.ts',
+  'packages/marrone-js/**/*.js',
+  'packages/marrone-lang/**/*.js',
+  'packages/marrone-requests/**/*.ts',
+  'packages/marrone-requests/**/*.js',
+  'packages/marrone-tests/**/*.{js,ts}',
+  'packages/marrone-sqlite/**/*.{js,ts}'
 ];
 
 module.exports = runESMImports().then(() => defineConfig([
@@ -40,10 +40,10 @@ module.exports = runESMImports().then(() => defineConfig([
       '**/node_modules/**/*',
       '**/dist/**/*',
       '**/*.bru',
-      'packages/bruno-js/src/sandbox/bundle-browser-rollup.js',
-      'packages/bruno-app/public/static/**/*',
-      'packages/bruno-app/.next/**/*',
-      'packages/bruno-electron/web/**/*'
+      'packages/marrone-js/src/sandbox/bundle-browser-rollup.js',
+      'packages/marrone-app/public/static/**/*',
+      'packages/marrone-app/.next/**/*',
+      'packages/marrone-electron/web/**/*'
     ]
   },
   {
@@ -98,7 +98,7 @@ module.exports = runESMImports().then(() => defineConfig([
     }
   },
   {
-    files: ['packages/bruno-app/**/*.{js,jsx,ts}'],
+    files: ['packages/marrone-app/**/*.{js,jsx,ts}'],
     ignores: ['**/*.config.js', '**/public/**/*', '**/plugins/**/*'],
     languageOptions: {
       globals: {
@@ -109,7 +109,7 @@ module.exports = runESMImports().then(() => defineConfig([
         Buffer: false,
         process: false,
         ipcRenderer: false,
-        __BRUNO_BENCHMARK__: false
+        __MARRONE_BENCHMARK__: false
       },
       parserOptions: {
         ecmaFeatures: {
@@ -123,7 +123,7 @@ module.exports = runESMImports().then(() => defineConfig([
   },
   {
     // Rsbuild/rspack plugins are Node build tooling (CommonJS + ESM), not browser UI.
-    files: ['packages/bruno-app/plugins/**/*.{js,cjs,mjs}'],
+    files: ['packages/marrone-app/plugins/**/*.{js,cjs,mjs}'],
     languageOptions: {
       globals: {
         ...globals.node,
@@ -135,7 +135,7 @@ module.exports = runESMImports().then(() => defineConfig([
     }
   },
   {
-    files: ['packages/bruno-app/**/*.{js,jsx,ts}'],
+    files: ['packages/marrone-app/**/*.{js,jsx,ts}'],
     ignores: ['**/*.config.js', '**/public/**/*', '**/plugins/**/*'],
     plugins: { 'react-hooks': require('eslint-plugin-react-hooks') },
     rules: {
@@ -145,7 +145,7 @@ module.exports = runESMImports().then(() => defineConfig([
   },
   {
     // It prevents lint errors when using CommonJS exports (module.exports) in Jest mocks.
-    files: ['packages/bruno-app/src/test-utils/mocks/codemirror.js'],
+    files: ['packages/marrone-app/src/test-utils/mocks/codemirror.js'],
     languageOptions: {
       globals: {
         ...globals.node,
@@ -158,7 +158,7 @@ module.exports = runESMImports().then(() => defineConfig([
   },
   {
     // Storybook config files use CommonJS with __dirname and module.exports
-    files: ['packages/bruno-app/storybook/**/*.js'],
+    files: ['packages/marrone-app/storybook/**/*.js'],
     languageOptions: {
       globals: {
         ...globals.node
@@ -169,7 +169,7 @@ module.exports = runESMImports().then(() => defineConfig([
     }
   },
   {
-    files: ['packages/bruno-cli/**/*.js'],
+    files: ['packages/marrone-cli/**/*.js'],
     ignores: ['**/*.config.js'],
     languageOptions: {
       globals: {
@@ -185,7 +185,7 @@ module.exports = runESMImports().then(() => defineConfig([
     }
   },
   {
-    files: ['packages/bruno-common/**/*.ts'],
+    files: ['packages/marrone-common/**/*.ts'],
     ignores: ['**/*.config.js', '**/dist/**/*'],
     languageOptions: {
       globals: {
@@ -196,7 +196,7 @@ module.exports = runESMImports().then(() => defineConfig([
       parserOptions: {
         ecmaVersion: 'latest',
         sourceType: 'module',
-        project: './packages/bruno-common/tsconfig.json'
+        project: './packages/marrone-common/tsconfig.json'
       }
     },
     rules: {
@@ -204,7 +204,7 @@ module.exports = runESMImports().then(() => defineConfig([
     }
   },
   {
-    files: ['packages/bruno-converters/**/*.js'],
+    files: ['packages/marrone-converters/**/*.js'],
     ignores: ['**/*.config.js', '**/dist/**/*'],
     languageOptions: {
       globals: {
@@ -222,7 +222,7 @@ module.exports = runESMImports().then(() => defineConfig([
     }
   },
   {
-    files: ['packages/bruno-electron/**/*.js'],
+    files: ['packages/marrone-electron/**/*.js'],
     ignores: ['**/*.config.js', '**/web/**/*'],
     languageOptions: {
       globals: {
@@ -235,7 +235,7 @@ module.exports = runESMImports().then(() => defineConfig([
     }
   },
   {
-    files: ['packages/bruno-filestore/**/*.ts'],
+    files: ['packages/marrone-filestore/**/*.ts'],
     ignores: ['**/*.config.js', '**/dist/**/*'],
     languageOptions: {
       globals: {
@@ -246,7 +246,7 @@ module.exports = runESMImports().then(() => defineConfig([
       parserOptions: {
         ecmaVersion: 'latest',
         sourceType: 'module',
-        project: './packages/bruno-filestore/tsconfig.json'
+        project: './packages/marrone-filestore/tsconfig.json'
       }
     },
     rules: {
@@ -254,7 +254,7 @@ module.exports = runESMImports().then(() => defineConfig([
     }
   },
   {
-    files: ['packages/bruno-js/**/*.js'],
+    files: ['packages/marrone-js/**/*.js'],
     ignores: ['**/*.config.js', '**/dist/**/*'],
     languageOptions: {
       globals: {
@@ -275,7 +275,7 @@ module.exports = runESMImports().then(() => defineConfig([
     }
   },
   {
-    files: ['packages/bruno-lang/**/*.js'],
+    files: ['packages/marrone-lang/**/*.js'],
     ignores: ['**/*.config.js', '**/dist/**/*'],
     languageOptions: {
       globals: {
@@ -292,7 +292,7 @@ module.exports = runESMImports().then(() => defineConfig([
     }
   },
   {
-    files: ['packages/bruno-requests/**/*.ts'],
+    files: ['packages/marrone-requests/**/*.ts'],
     ignores: ['**/*.config.js', '**/dist/**/*'],
     languageOptions: {
       globals: {
@@ -303,7 +303,7 @@ module.exports = runESMImports().then(() => defineConfig([
       parserOptions: {
         ecmaVersion: 'latest',
         sourceType: 'module',
-        project: './packages/bruno-requests/tsconfig.json'
+        project: './packages/marrone-requests/tsconfig.json'
       }
     },
     rules: {
@@ -311,7 +311,7 @@ module.exports = runESMImports().then(() => defineConfig([
     }
   },
   {
-    files: ['packages/bruno-requests/**/*.js'],
+    files: ['packages/marrone-requests/**/*.js'],
     ignores: ['**/*.config.js', '**/dist/**/*'],
     languageOptions: {
       globals: {

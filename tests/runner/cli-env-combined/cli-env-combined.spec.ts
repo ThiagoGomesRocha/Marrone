@@ -5,7 +5,7 @@ import path from 'path';
 
 test.describe('CLI Combined Environment Support (--env and --env-file)', () => {
   const collectionPath = path.resolve(__dirname, 'collection');
-  const BRU = 'node ../../../../packages/bruno-cli/bin/bru.js';
+  const BRU = 'node ../../../../packages/marrone-cli/bin/marrone.js';
 
   // Helper: run bru CLI and return exit code
   const runFrom = (cwd: string, args: string): number => {
@@ -49,8 +49,8 @@ test.describe('CLI Combined Environment Support (--env and --env-file)', () => {
     const report = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
     const result = report.results[0];
 
-    // baseUrl should be from collection env (https://echo.usebruno.com), not global (https://global.example.com)
-    expect(result.request.url).toBe('https://echo.usebruno.com');
+    // baseUrl should be from collection env (https://echo.marrone.com), not global (https://global.example.com)
+    expect(result.request.url).toBe('https://echo.marrone.com');
 
     // overrideVar should be from collection env, not global
     const body = JSON.parse(result.request.data);
@@ -99,7 +99,7 @@ test.describe('CLI Combined Environment Support (--env and --env-file)', () => {
     const result = report.results[0];
 
     // Should use collection env values
-    expect(result.request.url).toBe('https://echo.usebruno.com');
+    expect(result.request.url).toBe('https://echo.marrone.com');
 
     const body = JSON.parse(result.request.data);
     expect(body.overrideVar).toBe('collection-value');

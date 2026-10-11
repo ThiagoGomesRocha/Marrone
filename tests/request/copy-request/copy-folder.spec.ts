@@ -13,7 +13,7 @@ test.describe.serial('Copy and Paste Folders', () => {
     await createFolder(page, 'folder-to-copy', 'test-collection');
     await expandFolder(page, 'folder-to-copy');
     await createRequest(page, 'request-in-folder', 'folder-to-copy', {
-      url: 'https://echo.usebruno.com/test',
+      url: 'https://echo.marrone.com/test',
       inFolder: true
     });
 

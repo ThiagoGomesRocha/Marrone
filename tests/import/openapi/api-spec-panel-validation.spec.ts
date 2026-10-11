@@ -1,8 +1,8 @@
 import { test, expect } from '../../../playwright';
 import * as path from 'path';
 import { openApiSpecFromDialog, openApiSpecSidebarItem } from '../../utils/page/openapi/render-spec';
-import { SPEC_PREVIEW_ERRORS } from '../../../packages/bruno-app/src/components/ApiSpecPanel/constants';
-import { INVALID_EXTENSION_MESSAGE } from '../../../packages/bruno-electron/src/app/apiSpecs';
+import { SPEC_PREVIEW_ERRORS } from '../../../packages/marrone-app/src/components/ApiSpecPanel/constants';
+import { INVALID_EXTENSION_MESSAGE } from '../../../packages/marrone-electron/src/app/apiSpecs';
 
 test.describe('API Spec Panel - open & preview validation', () => {
   test.beforeAll(async ({ electronApp }) => {

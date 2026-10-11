@@ -5,7 +5,7 @@ import { buildGrpcCommonLocators } from '../../../../utils/page/locators';
 const COLLECTION = 'client-certs-enabled-yml';
 
 // The opencollection.yml declares a client certificate under `config.clientCertificates`
-// (type: pem), so Bruno attaches it over gRPC TLS. The mTLS handshake succeeds and the
+// (type: pem), so Marrone attaches it over gRPC TLS. The mTLS handshake succeeds and the
 // unary SayHello call returns OK with the server's `(mTLS ok)` reply.
 test.describe('grpc with collection client certificate (enabled, yml)', () => {
   // App launch plus the mTLS handshake exceeds the default 30s under parallel load. The budget

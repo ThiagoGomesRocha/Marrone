@@ -11,18 +11,18 @@ file, find it in the rule's tables, open the counterpart, and check whether the 
 is in the diff. Report with `file:line`, severity:
 
 - **blocker** — logic changed on one side of an app ↔ CLI pair (§1) when the twin file holds the
-  counterpart logic and the diff leaves it untouched. Includes bug fixes in `bruno-electron` whose
-  root cause `bruno-cli` also has a copy of. Name the twin path and function.
-- **blocker** — a scripting API added or changed in `bruno-js/src/{bru,bruno-request,bruno-response}.js`
-  without the matching bridge in `bruno-js/src/sandbox/quickjs/shims/`.
-- **blocker** — a persisted field that skips a §2 layer: missing from `bruno-schema` (throws on
+  counterpart logic and the diff leaves it untouched. Includes bug fixes in `marrone-electron` whose
+  root cause `marrone-cli` also has a copy of. Name the twin path and function.
+- **blocker** — a scripting API added or changed in `marrone-js/src/{bru,bruno-request,bruno-response}.js`
+  without the matching bridge in `marrone-js/src/sandbox/quickjs/shims/`.
+- **blocker** — a persisted field that skips a §2 layer: missing from `marrone-schema` (throws on
   save), the app save transform, one on-disk format, the BRU → YML migration, or OpenCollection
   import/export (either direction). Flag the missing surface only — the on-disk contract itself
   (compat, escaping, round-trip) belongs to the `dsl-changes` lens; don't duplicate its findings.
 - **suggestion** — identical logic patched in both runtimes that has no Electron- or CLI-only
-  dependency and could move into `@usebruno/requests` / `@usebruno/common` (`utils/cookies.js` is
+  dependency and could move into `@marrone/requests` / `@marrone/common` (`utils/cookies.js` is
   the precedent); otherwise, a missing comment naming the pairing at both sites.
-- **suggestion** — a new app runner option with no `bru run` flag; a feature at one scope level
+- **suggestion** — a new app runner option with no `marrone run` flag; a feature at one scope level
   with no decision for the others or `inherit`; a wire-request change without a
   `snippet-generator.js` update; an HTTP-only change on a path gRPC/WebSocket also flow through;
   a Postman/Insomnia/OpenAPI converter not updated for a field its format can represent.

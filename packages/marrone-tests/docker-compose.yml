@@ -1,0 +1,14 @@
+services:
+  marrone-cli:
+    image: marrone/cli:latest
+    container_name: marrone-cli-runner
+    volumes:
+      - ./collection:/marrone
+      - ./reports:/reports
+    command:
+      run echo
+      -r
+      --env Prod
+      --reporter-json /reports/results.json
+      --reporter-junit /reports/results.xml
+      --reporter-html /reports/results.html

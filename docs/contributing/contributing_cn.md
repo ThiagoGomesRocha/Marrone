@@ -1,12 +1,12 @@
 [English](../../contributing.md)
 
-## 让我们一起改进 Bruno！
+## 让我们一起改进 Marrone！
 
-很高兴看到您考虑改进 Bruno。以下是获取 Bruno 并在您的电脑上运行它的规则和指南。
+很高兴看到您考虑改进 Marrone。以下是获取 Marrone 并在您的电脑上运行它的规则和指南。
 
 ### 使用的技术
 
-Bruno 基于 NextJs 和 React 构建。我们使用 Electron 来封装桌面版本。
+Marrone 基于 NextJs 和 React 构建。我们使用 Electron 来封装桌面版本。
 
 我们使用的库包括：
 
@@ -25,7 +25,7 @@ Bruno 基于 NextJs 和 React 构建。我们使用 Electron 来封装桌面版�
 
 ## 开发
 
-Bruno 是作为一个 _client lourd（重客户端）_ 应用程序开发的。您需要在一个终端中启动 nextjs 来加载应用程序，然后在另一个终端中启动 Electron 应用程序。
+Marrone 是作为一个 _client lourd（重客户端）_ 应用程序开发的。您需要在一个终端中启动 nextjs 来加载应用程序，然后在另一个终端中启动 Electron 应用程序。
 
 ### 依赖项
 
@@ -43,8 +43,8 @@ npm i --legacy-peer-deps
 # 构建 graphql 文档
 npm run build:graphql-docs
 
-# 构建 bruno 查询
-npm run build:bruno-query
+# 构建 marrone 查询
+npm run build:marrone-query
 
 # 启动 next（终端 1）
 npm run dev:web
@@ -70,8 +70,8 @@ find . -type f -name "package-lock.json" -delete
 ### 测试
 
 ```bash
-# 运行 bruno-schema 测试
-npm test --workspace=packages/bruno-schema
+# 运行 marrone-schema 测试
+npm test --workspace=packages/marrone-schema
 
 # 在所有工作区上运行测试
 npm test --workspaces --if-present

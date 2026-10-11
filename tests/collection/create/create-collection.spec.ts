@@ -15,7 +15,7 @@ test.describe('Create collection', () => {
     await inlineCreator.waitFor({ state: 'visible', timeout: 5000 });
     await inlineCreator.locator('.cog-btn').click();
 
-    const createCollectionModal = page.locator('.bruno-modal-card').filter({ hasText: 'Create Collection' });
+    const createCollectionModal = page.locator('.marrone-modal-card').filter({ hasText: 'Create Collection' });
     await createCollectionModal.waitFor({ state: 'visible', timeout: 5000 });
 
     const submitButton = createCollectionModal.getByRole('button', { name: 'Create', exact: true });
@@ -38,7 +38,7 @@ test.describe('Create collection', () => {
     await inlineCreator.waitFor({ state: 'visible', timeout: 5000 });
     await inlineCreator.locator('.cog-btn').click();
 
-    const createCollectionModal = page.locator('.bruno-modal-card').filter({ hasText: 'Create Collection' });
+    const createCollectionModal = page.locator('.marrone-modal-card').filter({ hasText: 'Create Collection' });
     await createCollectionModal.waitFor({ state: 'visible', timeout: 5000 });
 
     const submitButton = createCollectionModal.getByRole('button', { name: 'Create', exact: true });

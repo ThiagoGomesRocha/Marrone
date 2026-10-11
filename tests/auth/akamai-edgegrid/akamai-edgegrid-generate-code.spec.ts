@@ -15,12 +15,12 @@ import {
 
 /**
  * Generate Code for Akamai EdgeGrid. The snippet must carry a real EG1-HMAC-SHA256
- * `Authorization` header - computed at codegen time (bruno-common signs the HAR) - for both
+ * `Authorization` header - computed at codegen time (marrone-common signs the HAR) - for both
  * request-level and inherited auth. When a credential is an unresolved `{{var}}`, no real
  * signature can be produced, so a placeholder stands in.
  */
 
-const { TEST_EDGEGRID } = require('../../../packages/bruno-tests/src/auth/edgegrid');
+const { TEST_EDGEGRID } = require('../../../packages/marrone-tests/src/auth/edgegrid');
 const REQUEST_URL = 'http://localhost:8081/api/auth/edgegrid/resource';
 
 // The credential tokens are embedded verbatim in the header; asserting the prefix proves both

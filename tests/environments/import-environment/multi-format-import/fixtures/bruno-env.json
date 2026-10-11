@@ -1,6 +1,6 @@
 {
-  "name": "Bruno Env",
+  "name": "Marrone Env",
   "variables": [
-    { "name": "base_url", "value": "https://bruno.example.com", "enabled": true, "secret": false }
+    { "name": "base_url", "value": "https://marrone.example.com", "enabled": true, "secret": false }
   ]
 }

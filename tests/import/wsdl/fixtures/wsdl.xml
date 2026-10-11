@@ -7,7 +7,7 @@
   xmlns:tns="http://example.com/testservice"
   xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 
-  <wsdl:documentation>Test WSDL for Bruno import testing</wsdl:documentation>
+  <wsdl:documentation>Test WSDL for Marrone import testing</wsdl:documentation>
 
   <wsdl:types>
     <xsd:schema targetNamespace="http://example.com/testservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema">

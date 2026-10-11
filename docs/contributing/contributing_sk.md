@@ -1,10 +1,10 @@
-## Urobme bruno lepším, spoločne !!
+## Urobme marrone lepším, spoločne !!
 
-Sme radi, že chcete zlepšiť bruno. Nižšie sú uvedené pokyny, ako začať s výchovou bruno na vašom počítači.
+Sme radi, že chcete zlepšiť marrone. Nižšie sú uvedené pokyny, ako začať s výchovou marrone na vašom počítači.
 
 ### Technologický zásobník
 
-Bruno je vytvorené pomocou Next.js a React. Na dodávanie desktopovej verzie (ktorá podporuje lokálne kolekcie) používame aj electron.
+Marrone je vytvorené pomocou Next.js a React. Na dodávanie desktopovej verzie (ktorá podporuje lokálne kolekcie) používame aj electron.
 
 Balíčky, ktoré používame:
 
@@ -23,7 +23,7 @@ Budete potrebovať [NodeJS v18.x alebo najnovšiu verziu LTS](https://nodejs.org
 
 ## Vývoj
 
-Bruno sa vyvíja ako desktopová aplikácia. Aplikáciu je potrebné načítať spustením aplikácie Next.js v jednom termináli a potom spustiť aplikáciu electron v inom termináli.
+Marrone sa vyvíja ako desktopová aplikácia. Aplikáciu je potrebné načítať spustením aplikácie Next.js v jednom termináli a potom spustiť aplikáciu electron v inom termináli.
 
 ### Závislosti
 
@@ -40,10 +40,10 @@ npm i --legacy-peer-deps
 
 # zostaviť balíčky
 npm run build:graphql-docs
-npm run build:bruno-query
-npm run build:bruno-common
-npm run build:bruno-converters
-npm run build:bruno-requests
+npm run build:marrone-query
+npm run build:marrone-common
+npm run build:marrone-converters
+npm run build:marrone-requests
 
 # spustite ďalšiu aplikáciu (terminál 1)
 npm run dev:web
@@ -69,8 +69,8 @@ find . -type f -name "package-lock.json" -delete
 ### Testovanie
 
 ````bash
-# spustiť bruno-schema testy
-npm test --workspace=packages/bruno-schema
+# spustiť marrone-schema testy
+npm test --workspace=packages/marrone-schema
 
 # spustiť testy vo všetkých pracovných priestoroch
 npm test --workspaces --if-present

@@ -17,7 +17,7 @@ test.describe('Global Environment Import Tests', () => {
     await page.setInputFiles('input[type="file"]', openApiFile);
 
     const locationModal = page.locator('[data-testid="import-collection-location-modal"]');
-    await expect(locationModal.locator('.bruno-modal-header-title')).toContainText('Import Collection');
+    await expect(locationModal.locator('.marrone-modal-header-title')).toContainText('Import Collection');
     await expect(locationModal.getByText('Environment Test Collection')).toBeVisible();
 
     await page.locator('#collection-location').fill(await createTmpDir('global-env-import-test'));

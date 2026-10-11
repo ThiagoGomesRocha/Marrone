@@ -1,12 +1,12 @@
 [English](../../contributing.md)
 
-## Vamos tornar o Bruno melhor, juntos!!
+## Vamos tornar o Marrone melhor, juntos!!
 
-Estamos felizes que você queira ajudar a melhorar o Bruno. Abaixo estão as diretrizes e orientações para começar a executar o Bruno no seu computador.
+Estamos felizes que você queira ajudar a melhorar o Marrone. Abaixo estão as diretrizes e orientações para começar a executar o Marrone no seu computador.
 
 ### Stack de Tecnologias
 
-O Bruno é construído usando Next.js e React. Também usamos o Electron para disponibilizar uma versão para desktop (que suporta coleções locais).
+O Marrone é construído usando Next.js e React. Também usamos o Electron para disponibilizar uma versão para desktop (que suporta coleções locais).
 
 Bibliotecas que utilizamos:
 
@@ -25,7 +25,7 @@ Você precisará do [Node v20.x (ou da versão LTS mais recente)](https://nodejs
 
 ## Desenvolvimento
 
-Bruno está sendo desenvolvido como um aplicativo de desktop. Você precisa carregar o programa executando o aplicativo Next.js em um terminal e, em seguida, executar o aplicativo Electron em outro terminal.
+Marrone está sendo desenvolvido como um aplicativo de desktop. Você precisa carregar o programa executando o aplicativo Next.js em um terminal e, em seguida, executar o aplicativo Electron em outro terminal.
 
 ### Dependências
 
@@ -43,8 +43,8 @@ npm i --legacy-peer-deps
 # build graphql docs
 npm run build:graphql-docs
 
-# build bruno query
-npm run build:bruno-query
+# build marrone query
+npm run build:marrone-query
 
 # run next app (terminal 1)
 npm run dev:web
@@ -70,8 +70,8 @@ find . -type f -name "package-lock.json" -delete
 ### Testando
 
 ```bash
-# executar testes do bruno-schema
-npm test --workspace=packages/bruno-schema
+# executar testes do marrone-schema
+npm test --workspace=packages/marrone-schema
 
 # executar testes em todos os ambientes de trabalho
 npm test --workspaces --if-present

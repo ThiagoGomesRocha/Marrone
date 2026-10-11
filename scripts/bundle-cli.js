@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 
-// pack a self-contained tarball of @usebruno/cli that installs offline
+// pack a self-contained tarball of @marrone/cli that installs offline
 // - npm pack all workspace packages into tarballs/
 // - stage cli without node_modules, patch package.json to use local tarballs
 // - npm install in stage, then npm pack the whole thing
@@ -12,7 +12,7 @@ const path = require('path');
 const os = require('os');
 
 const ROOT = path.resolve(__dirname, '..');
-const CLI_DIR = path.join(ROOT, 'packages', 'bruno-cli');
+const CLI_DIR = path.join(ROOT, 'packages', 'marrone-cli');
 const OUT_DIR = path.join(ROOT, 'dist', 'cli-bundle');
 const TARBALLS = path.join(OUT_DIR, 'tarballs');
 
@@ -69,7 +69,7 @@ for (const [name, { dir }] of Object.entries(workspaces)) {
 }
 
 log('staging cli...');
-const stage = fs.mkdtempSync(path.join(os.tmpdir(), 'bruno-cli-bundle-'));
+const stage = fs.mkdtempSync(path.join(os.tmpdir(), 'marrone-cli-bundle-'));
 
 const cleanup = () => {
   try { fs.rmSync(stage, { recursive: true, force: true }); } catch {}

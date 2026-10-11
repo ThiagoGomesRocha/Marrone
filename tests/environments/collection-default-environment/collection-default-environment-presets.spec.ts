@@ -138,7 +138,7 @@ test.describe('Collection Default Environment - Presets & sharing', () => {
     });
 
     const zip = new AdmZip(zipPath);
-    const entry = zip.getEntries().find((e) => /(^|\/)bruno\.json$/.test(e.entryName));
+    const entry = zip.getEntries().find((e) => /(^|\/)marrone\.json$/.test(e.entryName));
     expect(entry).toBeTruthy();
     const archivedConfig = JSON.parse(entry!.getData().toString('utf8'));
     expect(archivedConfig?.presets?.defaultEnvironment).toBe('prod');

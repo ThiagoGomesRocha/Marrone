@@ -9,8 +9,8 @@ const initUserDataPath = path.join(__dirname, 'init-user-data');
 const fixturesPath = path.join(__dirname, 'fixtures');
 
 const WORKSPACE_NAME = 'Clone WS';
-const REPOSITORY_URL = 'https://github.com/usebruno/github-rest-api-collection';
-const UNREACHABLE_REPOSITORY_URL = 'https://github.com/usebruno/this-repo-does-not-exist';
+const REPOSITORY_URL = 'https://github.com/marrone/github-rest-api-collection';
+const UNREACHABLE_REPOSITORY_URL = 'https://github.com/marrone/this-repo-does-not-exist';
 const DEFAULT_BRANCH = 'main';
 const CLONED_COLLECTION_DIR = 'github-rest-api-collection';
 const BRANCH_SEARCH_TERM = 'feat/';

@@ -2,16 +2,16 @@ import { test } from '../../../playwright';
 import * as path from 'path';
 import { closeAllCollections, importCollection } from '../../utils/page';
 
-test.describe('Import Bruno Testbench Collection', () => {
+test.describe('Import Marrone Testbench Collection', () => {
   test.afterAll(async ({ page }) => {
     await closeAllCollections(page);
   });
 
-  test('Import Bruno Testbench collection successfully', async ({ page, createTmpDir }) => {
-    const brunoFile = path.resolve(__dirname, 'fixtures', 'bruno-testbench.json');
+  test('Import Marrone Testbench collection successfully', async ({ page, createTmpDir }) => {
+    const marroneFile = path.resolve(__dirname, 'fixtures', 'marrone-testbench.json');
 
-    await importCollection(page, brunoFile, await createTmpDir('bruno-testbench-test'), {
-      expectedCollectionName: 'bruno-testbench'
+    await importCollection(page, marroneFile, await createTmpDir('marrone-testbench-test'), {
+      expectedCollectionName: 'marrone-testbench'
     });
   });
 });

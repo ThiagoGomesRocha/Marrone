@@ -92,7 +92,7 @@ test.describe('Shortcut Keys - BOUND_ACTIONS', () => {
         await pressShortcut(page, 'Shift', 'KeyX');
 
         // The request "Unsaved changes" modal should appear
-        const modal = page.locator('.bruno-modal-card').filter({ has: page.getByText('Unsaved changes', { exact: true }) });
+        const modal = page.locator('.marrone-modal-card').filter({ has: page.getByText('Unsaved changes', { exact: true }) });
         await expect(modal).toBeVisible({ timeout: 3000 });
         await expect(modal).toContainText('You have unsaved changes in request');
         await expect(modal).toContainText('req-1');
@@ -131,7 +131,7 @@ test.describe('Shortcut Keys - BOUND_ACTIONS', () => {
         await pressShortcut(page, 'Shift', 'KeyX');
 
         // The folder "Unsaved changes" modal should appear
-        const modal = page.locator('.bruno-modal-card').filter({ has: page.getByText('Unsaved changes', { exact: true }) });
+        const modal = page.locator('.marrone-modal-card').filter({ has: page.getByText('Unsaved changes', { exact: true }) });
         await expect(modal).toBeVisible({ timeout: 3000 });
         await expect(modal).toContainText('folder settings');
         await expect(modal).toContainText('kb-draft-folder');
@@ -171,7 +171,7 @@ test.describe('Shortcut Keys - BOUND_ACTIONS', () => {
         await pressShortcut(page, 'Shift', 'KeyX');
 
         // The collection "Unsaved changes" modal should appear
-        const modal = page.locator('.bruno-modal-card').filter({ has: page.getByText('Unsaved changes', { exact: true }) });
+        const modal = page.locator('.marrone-modal-card').filter({ has: page.getByText('Unsaved changes', { exact: true }) });
         await expect(modal).toBeVisible({ timeout: 3000 });
         await expect(modal).toContainText('collection settings');
         await expect(modal).toContainText(collectionName);

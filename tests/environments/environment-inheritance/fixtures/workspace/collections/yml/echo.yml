@@ -51,7 +51,7 @@ runtime:
             // An own row replaces the data type it inherited, not just the value.
             typed_override: "overridden_in_dev",
             // A secret carries no value on disk, so both runners give it one before the request
-            // goes out: the app through its secret store, `bru run` through --env-var.
+            // goes out: the app through its secret store, `marrone run` through --env-var.
             base_token: "token-from-base",
             // `dev` redeclares the inherited plain `overridden_plain` as a secret, and the
             // inherited secret `overridden_secret` as plain. Both ancestor rows survive, and in

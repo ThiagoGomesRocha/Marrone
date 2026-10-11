@@ -60,7 +60,7 @@ test.describe('Response Clearing', () => {
       await test.step('Setup collection and request', async () => {
         await createCollection(page, collectionName, await createTmpDir(collectionName));
         await createRequest(page, requestName, collectionName, {
-          url: 'https://testbench-sanity.usebruno.com/ping'
+          url: 'https://testbench-sanity.marrone.com/ping'
         });
       });
 

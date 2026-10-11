@@ -1,12 +1,12 @@
 [Inglés](../../contributing.md)
 
-## ¡Juntos, hagamos a Bruno mejor!
+## ¡Juntos, hagamos a Marrone mejor!
 
-Estamos encantados de que quieras ayudar a mejorar Bruno. A continuación encontrarás las instrucciones para empezar a trabajar con Bruno en tu computadora.
+Estamos encantados de que quieras ayudar a mejorar Marrone. A continuación encontrarás las instrucciones para empezar a trabajar con Marrone en tu computadora.
 
 ### Tecnologías utilizadas
 
-Bruno está construido con React y Electron
+Marrone está construido con React y Electron
 
 Librerías que utilizamos:
 
@@ -23,11 +23,11 @@ Librerías que utilizamos:
 ### Dependencias
 
 > [!IMPORTANT]
-> Necesitarás [Node v22.x o la última versión LTS](https://nodejs.org/es/). Ten en cuenta que Bruno usa los espacios de trabajo de npm
+> Necesitarás [Node v22.x o la última versión LTS](https://nodejs.org/es/). Ten en cuenta que Marrone usa los espacios de trabajo de npm
 
 ## Desarrollo
 
-Bruno es una aplicación de escritorio. A continuación se detallan las instrucciones paso a paso para ejecutar Bruno.
+Marrone es una aplicación de escritorio. A continuación se detallan las instrucciones paso a paso para ejecutar Marrone.
 
 > Nota: Utilizamos React para el frontend y rsbuild para el servidor de desarrollo.
 
@@ -52,13 +52,13 @@ npm i --legacy-peer-deps
 ```bash
 # construir paquetes
 npm run build:graphql-docs
-npm run build:bruno-query
-npm run build:bruno-common
-npm run build:bruno-converters
-npm run build:bruno-requests
+npm run build:marrone-query
+npm run build:marrone-common
+npm run build:marrone-converters
+npm run build:marrone-requests
 
 # empaquetar bibliotecas JavaScript del entorno de pruebas aislado
-npm run sandbox:bundle-libraries --workspace=packages/bruno-js
+npm run sandbox:bundle-libraries --workspace=packages/marrone-js
 ```
 
 ##### Opción 2
@@ -101,10 +101,10 @@ Si la variable de entorno `ELECTRON_USER_DATA_PATH` está presente y se encuentr
 ejemplo:
 
 ```sh
-ELECTRON_USER_DATA_PATH=$(realpath ~/Desktop/bruno-test) npm run dev:electron
+ELECTRON_USER_DATA_PATH=$(realpath ~/Desktop/marrone-test) npm run dev:electron
 ```
 
-Esto creará una carpeta llamada `bruno-test` en tu escritorio y la usará como la ruta userData.
+Esto creará una carpeta llamada `marrone-test` en tu escritorio y la usará como la ruta userData.
 
 ### Solución de problemas
 
@@ -125,35 +125,35 @@ find . -type f -name "package-lock.json" -delete
 #### Pruebas individuales
 
 ```bash
-# ejecutar pruebas de bruno-app
-npm run test --workspace=packages/bruno-app
+# ejecutar pruebas de marrone-app
+npm run test --workspace=packages/marrone-app
 
-# ejecutar pruebas de bruno-electron
-npm run test --workspace=packages/bruno-electron
+# ejecutar pruebas de marrone-electron
+npm run test --workspace=packages/marrone-electron
 
-# ejecutar pruebas de bruno-cli
-npm run test --workspace=packages/bruno-cli
+# ejecutar pruebas de marrone-cli
+npm run test --workspace=packages/marrone-cli
 
-# ejecutar pruebas de bruno-common
-npm run test --workspace=packages/bruno-common
+# ejecutar pruebas de marrone-common
+npm run test --workspace=packages/marrone-common
 
-# ejecutar pruebas de bruno-converters
-npm run test --workspace=packages/bruno-converters
+# ejecutar pruebas de marrone-converters
+npm run test --workspace=packages/marrone-converters
 
-# ejecutar pruebas de bruno-schema
-npm run test --workspace=packages/bruno-schema
+# ejecutar pruebas de marrone-schema
+npm run test --workspace=packages/marrone-schema
 
-# ejecutar pruebas de bruno-query
-npm run test --workspace=packages/bruno-query
+# ejecutar pruebas de marrone-query
+npm run test --workspace=packages/marrone-query
 
-# ejecutar pruebas de bruno-js
-npm run test --workspace=packages/bruno-js
+# ejecutar pruebas de marrone-js
+npm run test --workspace=packages/marrone-js
 
 # ejecutar pruebas de bruno-lang
-npm run test --workspace=packages/bruno-lang
+npm run test --workspace=packages/marrone-lang
 
-# ejecutar pruebas de bruno-toml
-npm run test --workspace=packages/bruno-toml
+# ejecutar pruebas de marrone-toml
+npm run test --workspace=packages/marrone-toml
 ```
 #### Pruebas en conjunto
 

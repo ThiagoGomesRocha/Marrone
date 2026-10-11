@@ -1,12 +1,12 @@
 [English](../../contributing.md)
 
-## 함께 Bruno를 더 좋게 만들어요!!
+## 함께 Marrone를 더 좋게 만들어요!!
 
-우리는 여러분이 Bruno를 발전시키기 위해 노력해주셔서 기쁩니다. 다음은 여러분의 컴퓨터에서 Bruno를 불러오는 가이드라인입니다.
+우리는 여러분이 Marrone를 발전시키기 위해 노력해주셔서 기쁩니다. 다음은 여러분의 컴퓨터에서 Marrone를 불러오는 가이드라인입니다.
 
 ### 기술 스택
 
-Bruno는 Next.js와 React로 구축되었습니다. 또한, (로컬 컬렉션을 지원하는) 데스크톱 버전을 제공하기 위해 electron을 사용합니다.
+Marrone는 Next.js와 React로 구축되었습니다. 또한, (로컬 컬렉션을 지원하는) 데스크톱 버전을 제공하기 위해 electron을 사용합니다.
 
 우리가 사용하는 라이브러리
 
@@ -25,7 +25,7 @@ Bruno는 Next.js와 React로 구축되었습니다. 또한, (로컬 컬렉션을
 
 ## 개발
 
-Bruno는 데스크톱 앱으로 개발되고 있습니다. 한 터미널에서 Next.js를 실행하여 앱을 로드한 다음 다른 터미널에서 electron 앱을 실행해야합니다.
+Marrone는 데스크톱 앱으로 개발되고 있습니다. 한 터미널에서 Next.js를 실행하여 앱을 로드한 다음 다른 터미널에서 electron 앱을 실행해야합니다.
 
 ### 로컬 개발
 
@@ -38,10 +38,10 @@ npm i --legacy-peer-deps
 
 # packages 빌드
 npm run build:graphql-docs
-npm run build:bruno-query
-npm run build:bruno-common
-npm run build:bruno-converters
-npm run build:bruno-requests
+npm run build:marrone-query
+npm run build:marrone-common
+npm run build:marrone-converters
+npm run build:marrone-requests
 
 # next 앱 실행 (1번 터미널)
 npm run dev:web
@@ -68,8 +68,8 @@ find . -type f -name "package-lock.json" -delete
 ### 테스팅
 
 ```bash
-# bruno-schema 테스트 실행
-npm test --workspace=packages/bruno-schema
+# marrone-schema 테스트 실행
+npm test --workspace=packages/marrone-schema
 
 # 모든 작업 공간에서 테스트 실행
 npm test --workspaces --if-present

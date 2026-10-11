@@ -1,11 +1,11 @@
 ---
 name: code-review
-description: Review a Bruno diff, PR, or branch via focused reviewers run in parallel —
+description: Review a Marrone diff, PR, or branch via focused reviewers run in parallel —
   correctness, security, DSL, React, cross-platform, tests. Mirrors the CodeRabbit /
   CODING_STANDARDS review.
 ---
 
-# Reviewing Bruno code
+# Reviewing Marrone code
 
 This skill mirrors the automated CodeRabbit review (`.coderabbit.yaml`) so you can run
 the same review locally. Source-of-truth order: coding standards → `CODING_STANDARDS.md`;
@@ -40,7 +40,7 @@ merge and report their findings.
      already hold the uncommitted state.
 2. **Enumerate changed files** — `git diff --name-only main...HEAD` (committed range) or
    `git diff --name-only HEAD` (working tree). Use this to skip any lens whose file scope
-   isn't touched (e.g. no `packages/bruno-app/**` change → skip `react.md`; no `tests/**`
+   isn't touched (e.g. no `packages/marrone-app/**` change → skip `react.md`; no `tests/**`
    change → skip `e2e-tests.md`). Never skip the lenses scoped to all files, and never skip
    `feature-parity.md` for a small diff — a one-file change is exactly the shape it catches.
 3. **Fan out the reviewers in parallel.** In a *single message*, launch one `Agent`
@@ -74,10 +74,10 @@ Each file is a self-contained checklist for one lens:
 | `reviewers/correctness.md` | Correctness & root-cause | all source (excl. `tests/**`) |
 | `reviewers/architecture.md` | Architecture & dependency boundaries | `packages/**` |
 | `reviewers/conventions.md` | Coding standards & readability | all files |
-| `reviewers/react.md` | React — app files | `packages/bruno-app/**` |
+| `reviewers/react.md` | React — app files | `packages/marrone-app/**` |
 | `reviewers/cross-platform.md` | Cross-platform (macOS/Windows/Linux) | all files |
 | `reviewers/security.md` | Security & data safety | all source (excl. `tests/**`) |
-| `reviewers/dsl-changes.md` | On-disk DSL & serialization (backward compat) | `bruno-app`, `bruno-electron`, `bruno-cli`, `bruno-lang`, `bruno-filestore`, `bruno-schema(-types)`, `bruno-converters` |
+| `reviewers/dsl-changes.md` | On-disk DSL & serialization (backward compat) | `marrone-app`, `marrone-electron`, `marrone-cli`, `bruno-lang`, `marrone-filestore`, `marrone-schema(-types)`, `marrone-converters` |
 | `reviewers/feature-parity.md` | Co-related features & parity (app↔CLI, shim, converter, level, protocol twins) | `packages/**` |
 | `reviewers/e2e-tests.md` | Playwright E2E tests | `tests/**` |
 

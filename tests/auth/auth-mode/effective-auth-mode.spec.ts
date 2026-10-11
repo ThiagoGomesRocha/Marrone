@@ -110,7 +110,7 @@ test.describe('Effective auth mode resolution', () => {
 
     await test.step('Reopen the dropdown and verify No Auth is highlighted as the selected option', async () => {
       await page.locator('.auth-mode-label').first().click();
-      // Bruno marks the selected dropdown item with the `dropdown-item-active` class.
+      // Marrone marks the selected dropdown item with the `dropdown-item-active` class.
       const noAuthItem = locators.auth.dropdownItem('none');
       await expect(noAuthItem).toBeVisible();
       await expect(noAuthItem).toHaveClass(/dropdown-item-active/);

@@ -11,9 +11,9 @@ updates:
     schedule:
       interval: weekly
     groups:
-      bruno-dependencies:
+      marrone-dependencies:
         patterns:
-          - "*usebruno*"
+          - "*marrone*"
       babel-dependencies:
         patterns:
           - "*babel*"

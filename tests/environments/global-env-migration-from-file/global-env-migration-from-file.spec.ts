@@ -7,7 +7,7 @@ const initUserDataPath = path.join(__dirname, 'init-user-data');
 const workspaceFixturePath = path.join(__dirname, 'fixtures', 'workspace');
 
 /**
- * Replicate the uid generation from bruno-electron/src/utils/common.js
+ * Replicate the uid generation from marrone-electron/src/utils/common.js
  * so we can compute environment uids at test time.
  */
 function simpleHash(str: string): string {

@@ -18,7 +18,7 @@ function normalizeExportedContent(content: any) {
   if (content.info) {
     // Replace dynamic fields with fixed values for comparison
     content.info.exportedAt = '2024-01-01T00:00:00.000Z';
-    content.info.exportedUsing = 'Bruno/v1.0.0';
+    content.info.exportedUsing = 'Marrone/v1.0.0';
   }
   return content;
 }
@@ -49,7 +49,7 @@ test.describe.serial('Collection Environment Export Tests', () => {
         await page.locator('button[title="Export environment"]').click();
 
         // Verify export modal opens
-        const exportModal = page.locator('.bruno-modal').filter({ hasText: 'Export Environments' });
+        const exportModal = page.locator('.marrone-modal').filter({ hasText: 'Export Environments' });
         await expect(exportModal).toBeVisible();
 
         // Deselect all environments first

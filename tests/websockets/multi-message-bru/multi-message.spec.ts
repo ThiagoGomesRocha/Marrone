@@ -208,7 +208,7 @@ test.describe.serial('websocket multi-message (bru format)', () => {
     const textarea = editor.locator('textarea');
     await textarea.focus();
     await page.keyboard.press(selectAllShortcut);
-    await page.keyboard.insertText('{"name":"bruno","version":"1.0"}');
+    await page.keyboard.insertText('{"name":"marrone","version":"1.0"}');
 
     await websocket.message.prettifyAll().click();
 

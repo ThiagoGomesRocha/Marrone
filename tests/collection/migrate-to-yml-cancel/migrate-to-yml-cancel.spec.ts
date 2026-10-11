@@ -32,7 +32,7 @@ test.describe('Cancelling a bru to yml migration restores the collection', () =>
     const app = await launchElectronApp({
       initUserDataPath: path.join(__dirname, 'init-user-data'),
       templateVars: { collectionPath },
-      dotEnv: { BRUNO_MIGRATE_TO_YML_FILE_DELAY_MS: '250' }
+      dotEnv: { MARRONE_MIGRATE_TO_YML_FILE_DELAY_MS: '250' }
     });
     const page = await waitForReadyPage(app);
     const loc = buildCommonLocators(page);

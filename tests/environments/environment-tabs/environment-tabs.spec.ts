@@ -7,7 +7,7 @@ import { buildCommonLocators } from '../../utils/page/locators';
 
 const envLocators = (page: Page) => buildCommonLocators(page).environment;
 
-// Mirrors DUPLICATE_SECRET_NAMES_ERROR in packages/bruno-app/src/utils/environments.js.
+// Mirrors DUPLICATE_SECRET_NAMES_ERROR in packages/marrone-app/src/utils/environments.js.
 const DUPLICATE_SECRET_TOAST = 'Duplicate secret names are not allowed';
 const toastByMessage = (page: Page, message: string) => buildCommonLocators(page).toast.byMessage(message);
 const varErrors = (page: Page) => envLocators(page).varErrors();
@@ -68,7 +68,7 @@ test.describe('Environment Variables / Secrets tab separation', () => {
 
     await test.step('Add a variable on the Variables tab', async () => {
       await expect(variablesTab(page)).toHaveClass(/active/);
-      await addRowToActiveTab(page, 'host', 'https://echo.usebruno.com');
+      await addRowToActiveTab(page, 'host', 'https://echo.marrone.com');
       await expect(varRow(page, 'host')).toBeVisible();
     });
 
@@ -120,7 +120,7 @@ test.describe('Environment Variables / Secrets tab separation', () => {
     await createEnvironment(page, 'Independent Save Env', 'collection');
 
     await test.step('Add and save a variable on the Variables tab', async () => {
-      await addRowToActiveTab(page, 'host', 'https://echo.usebruno.com');
+      await addRowToActiveTab(page, 'host', 'https://echo.marrone.com');
       await saveTab(page).click();
       // newest toast: the two back-to-back saves can briefly show two identical toasts
       await expect(page.getByText('Changes saved successfully').last()).toBeVisible();
@@ -153,7 +153,7 @@ test.describe('Environment Variables / Secrets tab separation', () => {
     await createEnvironment(page, 'Unsaved Var Env', 'collection');
 
     await test.step('Add a variable on the Variables tab without saving', async () => {
-      await addRowToActiveTab(page, 'host', 'https://echo.usebruno.com');
+      await addRowToActiveTab(page, 'host', 'https://echo.marrone.com');
       await expect(varRow(page, 'host')).toBeVisible();
     });
 
@@ -167,7 +167,7 @@ test.describe('Environment Variables / Secrets tab separation', () => {
     await test.step('The unsaved variable survived the Secrets save', async () => {
       await variablesTab(page).click();
       await expect(varRow(page, 'host')).toBeVisible();
-      await expect(varRowValueLine(page, 'host')).toHaveText('https://echo.usebruno.com');
+      await expect(varRowValueLine(page, 'host')).toHaveText('https://echo.marrone.com');
       // The variable is still unsaved, so the draft indicator must remain.
       await expect(tabDraftIcon(page)).toBeVisible();
     });
@@ -175,7 +175,7 @@ test.describe('Environment Variables / Secrets tab separation', () => {
     await test.step('Saving the Variables tab now persists the variable', async () => {
       await saveTab(page).click();
       await expect(page.getByText('Changes saved successfully').last()).toBeVisible();
-      await expect(varRowValueLine(page, 'host')).toHaveText('https://echo.usebruno.com');
+      await expect(varRowValueLine(page, 'host')).toHaveText('https://echo.marrone.com');
       // Everything is saved now, so the draft indicator must clear.
       await expect(tabDraftIcon(page)).not.toBeVisible();
     });
@@ -194,7 +194,7 @@ test.describe('Environment Variables / Secrets tab separation', () => {
     });
 
     await test.step('Editing the Variables tab marks only Variables unsaved', async () => {
-      await addRowToActiveTab(page, 'host', 'https://echo.usebruno.com');
+      await addRowToActiveTab(page, 'host', 'https://echo.marrone.com');
       await expect(tabCount(page, 'variables')).toHaveText('1');
       await expect(tabCount(page, 'variables')).toHaveClass(/unsaved/);
       await expect(tabCount(page, 'secrets')).toHaveCount(0);
@@ -239,7 +239,7 @@ test.describe('Environment Variables / Secrets tab separation', () => {
     await createEnvironment(page, 'Save All Env', 'collection');
 
     await test.step('Add a variable on the Variables tab without saving', async () => {
-      await addRowToActiveTab(page, 'host', 'https://echo.usebruno.com');
+      await addRowToActiveTab(page, 'host', 'https://echo.marrone.com');
     });
 
     await test.step('Add a secret on the Secrets tab without saving', async () => {
@@ -283,7 +283,7 @@ test.describe('Environment Variables / Secrets tab separation', () => {
 
     await createEnvironment(page, 'Search Scope Env', 'collection');
 
-    await addRowToActiveTab(page, 'host', 'https://echo.usebruno.com');
+    await addRowToActiveTab(page, 'host', 'https://echo.marrone.com');
     await saveTab(page).click();
     await expect(page.getByText('Changes saved successfully').last()).toBeVisible();
 
@@ -324,7 +324,7 @@ test.describe('Environment Variables / Secrets tab separation', () => {
 
     await createEnvironment(page, 'Search Persist Env', 'collection');
 
-    await addRowToActiveTab(page, 'host', 'https://echo.usebruno.com');
+    await addRowToActiveTab(page, 'host', 'https://echo.marrone.com');
     await saveTab(page).click();
     await expect(page.getByText('Changes saved successfully').last()).toBeVisible();
 
@@ -374,7 +374,7 @@ test.describe('Environment Variables / Secrets tab separation', () => {
 
     await createEnvironment(page, 'Delete Scope Env', 'collection');
 
-    await addRowToActiveTab(page, 'host', 'https://echo.usebruno.com');
+    await addRowToActiveTab(page, 'host', 'https://echo.marrone.com');
     await saveTab(page).click();
     await expect(page.getByText('Changes saved successfully').last()).toBeVisible();
 
@@ -556,7 +556,7 @@ test.describe('Environment Variables / Secrets tab separation', () => {
     await createEnvironment(page, 'Draft Persist Env', 'collection');
 
     await test.step('Add an unsaved variable on the Variables tab', async () => {
-      await addRowToActiveTab(page, 'host', 'https://echo.usebruno.com');
+      await addRowToActiveTab(page, 'host', 'https://echo.marrone.com');
       await expect(varRow(page, 'host')).toBeVisible();
     });
 
@@ -605,7 +605,7 @@ test.describe('Global Environment Variables / Secrets tab separation', () => {
 
     await test.step('Add a variable on the Variables tab', async () => {
       await expect(variablesTab(page)).toHaveClass(/active/);
-      await addRowToActiveTab(page, 'host', 'https://echo.usebruno.com');
+      await addRowToActiveTab(page, 'host', 'https://echo.marrone.com');
       await expect(varRow(page, 'host')).toBeVisible();
     });
 
@@ -635,7 +635,7 @@ test.describe('Global Environment Variables / Secrets tab separation', () => {
     await createEnvironment(page, 'Global Independent Save Env', 'global');
 
     await test.step('Add and save a variable on the Variables tab', async () => {
-      await addRowToActiveTab(page, 'host', 'https://echo.usebruno.com');
+      await addRowToActiveTab(page, 'host', 'https://echo.marrone.com');
       await saveTab(page).click();
       // newest toast: the two back-to-back saves can briefly show two identical toasts
       await expect(page.getByText('Changes saved successfully').last()).toBeVisible();
@@ -667,7 +667,7 @@ test.describe('Global Environment Variables / Secrets tab separation', () => {
     await createEnvironment(page, 'Global Unsaved Var Env', 'global');
 
     await test.step('Add a variable on the Variables tab without saving', async () => {
-      await addRowToActiveTab(page, 'host', 'https://echo.usebruno.com');
+      await addRowToActiveTab(page, 'host', 'https://echo.marrone.com');
       await expect(varRow(page, 'host')).toBeVisible();
     });
 
@@ -681,7 +681,7 @@ test.describe('Global Environment Variables / Secrets tab separation', () => {
     await test.step('The unsaved variable survived the Secrets save', async () => {
       await variablesTab(page).click();
       await expect(varRow(page, 'host')).toBeVisible();
-      await expect(varRowValueLine(page, 'host')).toHaveText('https://echo.usebruno.com');
+      await expect(varRowValueLine(page, 'host')).toHaveText('https://echo.marrone.com');
       // The variable is still unsaved, so the draft indicator must remain.
       await expect(tabDraftIcon(page)).toBeVisible();
     });
@@ -689,7 +689,7 @@ test.describe('Global Environment Variables / Secrets tab separation', () => {
     await test.step('Saving the Variables tab now persists the variable', async () => {
       await saveTab(page).click();
       await expect(page.getByText('Changes saved successfully').last()).toBeVisible();
-      await expect(varRowValueLine(page, 'host')).toHaveText('https://echo.usebruno.com');
+      await expect(varRowValueLine(page, 'host')).toHaveText('https://echo.marrone.com');
       // Everything is saved now, so the draft indicator must clear.
       await expect(tabDraftIcon(page)).not.toBeVisible();
     });
@@ -708,7 +708,7 @@ test.describe('Global Environment Variables / Secrets tab separation', () => {
     });
 
     await test.step('Editing the Variables tab marks only Variables unsaved', async () => {
-      await addRowToActiveTab(page, 'host', 'https://echo.usebruno.com');
+      await addRowToActiveTab(page, 'host', 'https://echo.marrone.com');
       await expect(tabCount(page, 'variables')).toHaveText('1');
       await expect(tabCount(page, 'variables')).toHaveClass(/unsaved/);
       await expect(tabCount(page, 'secrets')).toHaveCount(0);
@@ -753,7 +753,7 @@ test.describe('Global Environment Variables / Secrets tab separation', () => {
     await createEnvironment(page, 'Global Save All Env', 'global');
 
     await test.step('Add a variable on the Variables tab without saving', async () => {
-      await addRowToActiveTab(page, 'host', 'https://echo.usebruno.com');
+      await addRowToActiveTab(page, 'host', 'https://echo.marrone.com');
     });
 
     await test.step('Add a secret on the Secrets tab without saving', async () => {
@@ -797,7 +797,7 @@ test.describe('Global Environment Variables / Secrets tab separation', () => {
 
     await createEnvironment(page, 'Global Search Scope Env', 'global');
 
-    await addRowToActiveTab(page, 'host', 'https://echo.usebruno.com');
+    await addRowToActiveTab(page, 'host', 'https://echo.marrone.com');
     await saveTab(page).click();
     await expect(page.getByText('Changes saved successfully').last()).toBeVisible();
 
@@ -838,7 +838,7 @@ test.describe('Global Environment Variables / Secrets tab separation', () => {
 
     await createEnvironment(page, 'Global Search Persist Env', 'global');
 
-    await addRowToActiveTab(page, 'host', 'https://echo.usebruno.com');
+    await addRowToActiveTab(page, 'host', 'https://echo.marrone.com');
     await saveTab(page).click();
     await expect(page.getByText('Changes saved successfully').last()).toBeVisible();
 
@@ -886,7 +886,7 @@ test.describe('Global Environment Variables / Secrets tab separation', () => {
 
     await createEnvironment(page, 'Global Delete Scope Env', 'global');
 
-    await addRowToActiveTab(page, 'host', 'https://echo.usebruno.com');
+    await addRowToActiveTab(page, 'host', 'https://echo.marrone.com');
     await saveTab(page).click();
     await expect(page.getByText('Changes saved successfully').last()).toBeVisible();
 

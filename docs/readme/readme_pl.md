@@ -1,14 +1,14 @@
 <br />
 <img src="../../assets/images/logo-transparent.png" width="80"/>
 
-### Bruno - Otwartoźródłowe IDE do eksploracji i testów APIs.
+### Marrone - Otwartoźródłowe IDE do eksploracji i testów APIs.
 
-[![GitHub version](https://badge.fury.io/gh/usebruno%2Fbruno.svg)](https://badge.fury.io/gh/usebruno%2Fbruno)
-[![CI](https://github.com/usebruno/bruno/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/usebruno/bruno/actions/workflows/tests.yml)
-[![Commit Activity](https://img.shields.io/github/commit-activity/m/usebruno/bruno)](https://github.com/usebruno/bruno/pulse)
-[![X](https://img.shields.io/twitter/follow/use_bruno?style=social&logo=x)](https://twitter.com/use_bruno)
-[![Website](https://img.shields.io/badge/Website-Visit-blue)](https://www.usebruno.com)
-[![Download](https://img.shields.io/badge/Download-Latest-brightgreen)](https://www.usebruno.com/downloads)
+[![GitHub version](https://badge.fury.io/gh/marrone%2Fmarrone.svg)](https://badge.fury.io/gh/marrone%2Fmarrone)
+[![CI](https://github.com/marrone/marrone/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/marrone/marrone/actions/workflows/tests.yml)
+[![Commit Activity](https://img.shields.io/github/commit-activity/m/marrone/marrone)](https://github.com/marrone/marrone/pulse)
+[![X](https://img.shields.io/twitter/follow/use_marrone?style=social&logo=x)](https://twitter.com/use_marrone)
+[![Website](https://img.shields.io/badge/Website-Visit-blue)](https://www.marrone.com)
+[![Download](https://img.shields.io/badge/Download-Latest-brightgreen)](https://www.marrone.com/downloads)
 
 [English](../../readme.md)
 | [Українська](./readme_ua.md)
@@ -30,90 +30,90 @@
 | [ქართული](./readme_ka.md)
 | [हिन्दी](./readme_hi.md)
 
-Bruno to nowy i innowacyjny klient API, którego celem jest zrewolucjonizowanie status quo reprezentowanego przez narzędzia takie jak Postman.
+Marrone to nowy i innowacyjny klient API, którego celem jest zrewolucjonizowanie status quo reprezentowanego przez narzędzia takie jak Postman.
 
-Bruno przechowuje twoje kolekcje bezpośrednio w folderze na twoim systemie plików. Używamy prostego języka znaczników, Bru, do zapisywania informacji o żądaniach API.
+Marrone przechowuje twoje kolekcje bezpośrednio w folderze na twoim systemie plików. Używamy prostego języka znaczników, Bru, do zapisywania informacji o żądaniach API.
 
 Możesz użyć Git lub dowolnego systemu kontroli wersji do współpracy nad swoimi kolekcjami API.
 
-Bruno działa tylko w trybie offline. Nie planujemy nigdy dodawać synchronizacji w chmurze do Bruno. Cenimy prywatność Twoich danych i wierzymy, że powinny one pozostać na Twoim urządzeniu. Przeczytaj naszą długoterminową wizję [tutaj](https://github.com/usebruno/bruno/discussions/269)
+Marrone działa tylko w trybie offline. Nie planujemy nigdy dodawać synchronizacji w chmurze do Marrone. Cenimy prywatność Twoich danych i wierzymy, że powinny one pozostać na Twoim urządzeniu. Przeczytaj naszą długoterminową wizję [tutaj](https://github.com/marrone/marrone/discussions/269)
 
 📢 Obejrzyj naszą ostatnią rozmowę na konferencji India FOSS 3.0 [tutaj](https://www.youtube.com/watch?v=7bSMFpbcPiY)
 
-![bruno](/assets/images/landing-2.png) <br /><br />
+![marrone](/assets/images/landing-2.png) <br /><br />
 
 ### Instalacja
 
-Bruno jest dostępny jako plik binarny do pobrania [na naszej stronie internetowej](https://www.usebruno.com/downloads) dla Mac, Windows i Linux.
+Marrone jest dostępny jako plik binarny do pobrania [na naszej stronie internetowej](https://www.marrone.com/downloads) dla Mac, Windows i Linux.
 
-Możesz również zainstalować Bruno za pomocą menedżerów pakietów, takich jak Homebrew, Chocolatey, Scoop, Snap i Apt.
+Możesz również zainstalować Marrone za pomocą menedżerów pakietów, takich jak Homebrew, Chocolatey, Scoop, Snap i Apt.
 
 ```sh
 # On Mac via Homebrew
-brew install bruno
+brew install marrone
 
 # On Windows via Chocolatey
-choco install bruno
+choco install marrone
 
 # On Windows via Scoop
 scoop bucket add extras
-scoop install bruno
+scoop install marrone
 
 # On Windows via winget
-winget install Bruno.Bruno
+winget install Marrone.Marrone
 
 # On Linux via Snap
-snap install bruno
+snap install marrone
 
 # On Linux via Flatpak
-flatpak install com.usebruno.Bruno
+flatpak install com.marrone.Marrone
 
 # On Linux via Apt
 sudo mkdir -p /etc/apt/keyrings
 sudo apt update && sudo apt install gpg curl
 curl -fsSL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x9FA6017ECABE0266" \
   | gpg --dearmor \
-  | sudo tee /etc/apt/keyrings/bruno.gpg > /dev/null
-sudo chmod 644 /etc/apt/keyrings/bruno.gpg
-echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/bruno.gpg] http://debian.usebruno.com/ bruno stable" \
-  | sudo tee /etc/apt/sources.list.d/bruno.list
-sudo apt update && sudo apt install bruno
+  | sudo tee /etc/apt/keyrings/marrone.gpg > /dev/null
+sudo chmod 644 /etc/apt/keyrings/marrone.gpg
+echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/marrone.gpg] http://debian.marrone.com/ marrone stable" \
+  | sudo tee /etc/apt/sources.list.d/marrone.list
+sudo apt update && sudo apt install marrone
 ```
 
 ### Uruchom na wielu platformach 🖥️
 
-![bruno](/assets/images/run-anywhere.png) <br /><br />
+![marrone](/assets/images/run-anywhere.png) <br /><br />
 
 ### Współpracuj przez Git 👩‍💻🧑‍💻
 
 Lub dowolny inny system kontroli wersji, który wybierzesz
 
-![bruno](/assets/images/version-control.png) <br /><br />
+![marrone](/assets/images/version-control.png) <br /><br />
 
 ### Ważne Linki 📌
 
-- [Nasza Długoterminowa Wizja](https://github.com/usebruno/bruno/discussions/269)
-- [Mapa Drogi](https://github.com/usebruno/bruno/discussions/384)
-- [Dokumentacja](https://docs.usebruno.com)
-- [Stack Overflow](https://stackoverflow.com/questions/tagged/bruno)
-- [Strona Internetowa](https://www.usebruno.com)
-- [Cennik](https://www.usebruno.com/pricing)
-- [Pobieranie](https://www.usebruno.com/downloads)
+- [Nasza Długoterminowa Wizja](https://github.com/marrone/marrone/discussions/269)
+- [Mapa Drogi](https://github.com/marrone/marrone/discussions/384)
+- [Dokumentacja](https://docs.marrone.com)
+- [Stack Overflow](https://stackoverflow.com/questions/tagged/marrone)
+- [Strona Internetowa](https://www.marrone.com)
+- [Cennik](https://www.marrone.com/pricing)
+- [Pobieranie](https://www.marrone.com/downloads)
 - [Sponsorzy GitHub](https://github.com/sponsors/helloanoop).
 
 ### Zobacz 🎥
 
-- [Opinie](https://github.com/usebruno/bruno/discussions/343)
-- [Centrum Wiedzy](https://github.com/usebruno/bruno/discussions/386)
-- [Scriptmania](https://github.com/usebruno/bruno/discussions/385)
+- [Opinie](https://github.com/marrone/marrone/discussions/343)
+- [Centrum Wiedzy](https://github.com/marrone/marrone/discussions/386)
+- [Scriptmania](https://github.com/marrone/marrone/discussions/385)
 
 ### Wsparcie ❤️
 
-Jeśli podoba Ci się Bruno i chcesz wspierać naszą pracę opensource, rozważ sponsorowanie nas przez [Sponsorzy GitHub](https://github.com/sponsors/helloanoop).
+Jeśli podoba Ci się Marrone i chcesz wspierać naszą pracę opensource, rozważ sponsorowanie nas przez [Sponsorzy GitHub](https://github.com/sponsors/helloanoop).
 
 ### Udostępnij Opinie 📣
 
-Jeśli Bruno pomógł w pracy Tobie i Twoim zespołom, nie zapomnij podzielić się swoimi [opiniami na naszej dyskusji GitHub](https://github.com/usebruno/bruno/discussions/343)
+Jeśli Marrone pomógł w pracy Tobie i Twoim zespołom, nie zapomnij podzielić się swoimi [opiniami na naszej dyskusji GitHub](https://github.com/marrone/marrone/discussions/343)
 
 ### Publikowanie w Nowych Menedżerach Pakietów
 
@@ -121,30 +121,30 @@ Więcej informacji znajdziesz [tutaj](../publishing/publishing_pl.md).
 
 ### Współpraca 👩‍💻🧑‍💻
 
-Cieszymy się, że chcesz udoskonalić bruno. Proszę sprawdź [przewodnik współpracy](../contributing/contributing_pl.md)
+Cieszymy się, że chcesz udoskonalić marrone. Proszę sprawdź [przewodnik współpracy](../contributing/contributing_pl.md)
 
 Nawet jeśli nie jesteś w stanie przyczynić się poprzez kod, nie wahaj się zgłaszać błędów i wniosków o funkcje, które muszą zostać zaimplementowane, aby rozwiązać Twój przypadek użycia.
 
 ### Autorzy
 
 <div align="center">
-    <a href="https://github.com/usebruno/bruno/graphs/contributors">
-        <img src="https://contrib.rocks/image?repo=usebruno/bruno" />
+    <a href="https://github.com/marrone/marrone/graphs/contributors">
+        <img src="https://contrib.rocks/image?repo=marrone/marrone" />
     </a>
 </div>
 
 ### Pozostań w kontakcie 🌐
 
-[𝕏 (Twitter)](https://twitter.com/use_bruno) <br />
-[Strona Internetowa](https://www.usebruno.com) <br />
+[𝕏 (Twitter)](https://twitter.com/use_marrone) <br />
+[Strona Internetowa](https://www.marrone.com) <br />
 [Discord](https://discord.com/invite/KgcZUncpjq) <br />
-[LinkedIn](https://www.linkedin.com/company/usebruno)
+[LinkedIn](https://www.linkedin.com/company/marrone)
 
 ### Znak Towarowy
 
 **Nazwa**
 
-`Bruno` jest znakiem towarowym należącym do [Anoop M D](https://www.helloanoop.com/)
+`Marrone` jest znakiem towarowym należącym do [Anoop M D](https://www.helloanoop.com/)
 
 **Logo**
 

@@ -8,7 +8,7 @@ const writeCollection = (dir: string, name: string) => {
   fs.writeFileSync(path.join(dir, 'opencollection.yml'), `opencollection: "1.0.0"\ninfo:\n  name: ${name}\n`);
 };
 
-const writeBrunoJsonCollection = (dir: string, name: string) => {
+const writeMarroneJsonCollection = (dir: string, name: string) => {
   fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(
     path.join(dir, 'bruno.json'),
@@ -80,21 +80,21 @@ test.describe('Open Collection - selection flow', () => {
 
   test('opens a bruno.json collection directly', async ({ page, electronApp, createTmpDir }) => {
     const locators = buildCommonLocators(page);
-    const dir = await createTmpDir('bruno-json');
-    writeBrunoJsonCollection(dir, 'Bruno JSON Collection');
+    const dir = await createTmpDir('marrone-json');
+    writeMarroneJsonCollection(dir, 'Marrone JSON Collection');
 
     await mockPickerPaths(electronApp, [dir]);
     await openViaSidebar(page);
 
-    await expect(locators.sidebar.collection('Bruno JSON Collection')).toBeVisible();
+    await expect(locators.sidebar.collection('Marrone JSON Collection')).toBeVisible();
     await expect(openCollectionModal(page)).toHaveCount(0);
     await closeAllCollections(page);
   });
 
   test('shows the selection modal for a nested bruno.json collection', async ({ page, electronApp, createTmpDir }) => {
     const locators = buildCommonLocators(page);
-    const base = await createTmpDir('nested-bruno-json');
-    writeBrunoJsonCollection(path.join(base, 'nested'), 'Nested JSON Collection');
+    const base = await createTmpDir('nested-marrone-json');
+    writeMarroneJsonCollection(path.join(base, 'nested'), 'Nested JSON Collection');
 
     await mockPickerPaths(electronApp, [base]);
     await openViaSidebar(page);
@@ -272,7 +272,7 @@ test.describe('Open Collection - selection flow', () => {
     await openViaSidebar(page);
 
     await expect(
-      page.getByText('No Bruno collections found. Couldn\'t find a bruno.json or opencollection.yml')
+      page.getByText('No Marrone collections found. Couldn\'t find a bruno.json or opencollection.yml')
     ).toBeVisible();
     await expect(openCollectionModal(page)).toHaveCount(0);
   });

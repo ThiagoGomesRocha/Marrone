@@ -8,7 +8,7 @@ test.describe.serial('Copy and Paste Requests', () => {
 
   test('should copy and paste a request within the same collection', async ({ page, createTmpDir }) => {
     await createCollection(page, 'test-collection', await createTmpDir('test-collection'));
-    await createRequest(page, 'original-request', 'test-collection', { url: 'https://echo.usebruno.com' });
+    await createRequest(page, 'original-request', 'test-collection', { url: 'https://echo.marrone.com' });
 
     const collection = page.locator('.collection-name').filter({ hasText: 'test-collection' });
 

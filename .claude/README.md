@@ -1,8 +1,8 @@
 # Claude Config
 
 The [Claude Code](https://docs.claude.com/en/docs/claude-code) configuration for
-[Bruno](https://github.com/usebruno/bruno) — the project context, architecture notes, coding
-rules, and review/test skills the team has tuned while working on Bruno. Claude picks it up
+[Marrone](https://github.com/marrone/marrone) — the project context, architecture notes, coding
+rules, and review/test skills the team has tuned while working on Marrone. Claude picks it up
 automatically when you launch from the project root.
 
 <!-- This README is a human maintainer guide. It is NOT a memory file and is never imported into
@@ -13,27 +13,27 @@ automatically when you launch from the project root.
 | Path | What it is | Loads |
 |------|------------|-------|
 | `CLAUDE.md` | Project overview — commands, key architecture, coding standards, index of rules/references. | Every session (auto). |
-| `rules/*.md` | Path-scoped engineering guidance: `architecture` (`@usebruno/*` dependency boundaries + manifests), `bruno-app-layout` (component directories, `src/ui` vs `src/components`), `redux-store`, `electron-ipc`, `sqlite` (`@usebruno/sqlite` — migrations, statements, per-statement IPC), `dsl-changes` (on-disk `.bru`/`.yml` format), `cross-platform`, `testing`, `conventions` (readability, reuse, replacement hygiene, comment/diff hygiene). | When Claude touches files matching each rule's `paths:`. |
+| `rules/*.md` | Path-scoped engineering guidance: `architecture` (`@marrone/*` dependency boundaries + manifests), `marrone-app-layout` (component directories, `src/ui` vs `src/components`), `redux-store`, `electron-ipc`, `sqlite` (`@marrone/sqlite` — migrations, statements, per-statement IPC), `dsl-changes` (on-disk `.bru`/`.yml` format), `cross-platform`, `testing`, `conventions` (readability, reuse, replacement hygiene, comment/diff hygiene). | When Claude touches files matching each rule's `paths:`. |
 | `reference/architecture.md` | The monorepo map — request pipeline, sandbox, file formats, core types, dependency versions. Too big to auto-load. | On demand only (Claude reads it when a task needs it). |
 | `skills/code-review/` | `/code-review` — reviews the current branch/PR via focused lenses in parallel; takes base pointers from `.coderabbit.yaml`. | On invocation / when relevant. |
-| `skills/write-e2e-test/` | `/write-e2e-test` — writes a Playwright E2E test following Bruno's fixtures and conventions. | On invocation / when relevant. |
+| `skills/write-e2e-test/` | `/write-e2e-test` — writes a Playwright E2E test following Marrone's fixtures and conventions. | On invocation / when relevant. |
 | `settings.json` | Shared project settings, checked in for the team. Denies `Read` on `**/dist/**` so Claude works from `src/`, not generated bundles. | At startup, from the launch directory. |
 | `settings.local.json` | Your machine-specific overrides. Gitignored — never committed. | At startup, if present. |
 
 ## Requirements
 
 - [Claude Code](https://docs.claude.com/en/docs/claude-code) installed (`npm i -g @anthropic-ai/claude-code`).
-- A local checkout of Bruno (or a Bruno fork).
+- A local checkout of Marrone (or a Marrone fork).
 
 ## Install
 
-Start Claude Code (`claude`) from the Bruno root and everything loads on its own:
+Start Claude Code (`claude`) from the Marrone root and everything loads on its own:
 
 - **`.claude/CLAUDE.md`** loads every session — it is a first-class project-instruction location,
   so **no root `CLAUDE.md` and no `@` import are needed**; keeping all shared guidance under
   `.claude/` leaves the Claude config self-contained in one folder.
 - **Path-scoped rules** attach automatically when Claude reads a matching file (e.g. `dsl-changes`
-  kicks in on `bruno-filestore`). Launching from a package subdirectory still loads this root
+  kicks in on `marrone-filestore`). Launching from a package subdirectory still loads this root
   `.claude/` (rules + `CLAUDE.md`) from the ancestor directory.
 - **`reference/architecture.md`** is *not* auto-loaded; Claude reads it on demand.
 - **Skills** are discovered from `.claude/skills/` — type `/code-review` or `/write-e2e-test`.

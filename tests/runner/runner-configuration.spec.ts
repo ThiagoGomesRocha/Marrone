@@ -1,7 +1,7 @@
 import { test, expect } from '../../playwright';
 import { openRunnerTab, buildRunnerLocators } from '../utils/page/index';
 
-const COLLECTION_NAME = 'bruno-testbench';
+const COLLECTION_NAME = 'marrone-testbench';
 
 /**
  * Waits for the config panel to finish loading and initializing requests.

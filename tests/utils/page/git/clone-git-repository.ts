@@ -5,8 +5,8 @@ import { buildCommonLocators } from '../locators';
 export const buildCloneGitRepositoryLocators = (page: Page) => {
   const modal = (): Locator =>
     page
-      .locator('.bruno-modal-card')
-      .filter({ has: page.locator('.bruno-modal-header-title', { hasText: 'Clone Git Repository' }) });
+      .locator('.marrone-modal-card')
+      .filter({ has: page.locator('.marrone-modal-header-title', { hasText: 'Clone Git Repository' }) });
   const branchOptions = (): Locator => page.getByRole('listbox').locator('.dropdown-item');
 
   return {

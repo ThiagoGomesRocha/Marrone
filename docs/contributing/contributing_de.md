@@ -1,12 +1,12 @@
 [English](../../contributing.md)
 
-## Lass uns Bruno noch besser machen, gemeinsam!!
+## Lass uns Marrone noch besser machen, gemeinsam!!
 
-Ich freue mich, dass Du Bruno verbessern möchtest. Hier findest Du eine Anleitung, mit der Du Bruno auf Deinem Computer einrichten kannst.
+Ich freue mich, dass Du Marrone verbessern möchtest. Hier findest Du eine Anleitung, mit der Du Marrone auf Deinem Computer einrichten kannst.
 
 ### Technologie Stack
 
-Bruno ist mit Next.js und React erstellt. Außerdem benötigen wir electron für die Desktop Version (die lokale Sammlungen unterstützt).
+Marrone ist mit Next.js und React erstellt. Außerdem benötigen wir electron für die Desktop Version (die lokale Sammlungen unterstützt).
 
 Bibliotheken die wir benutzen
 
@@ -38,7 +38,7 @@ Eine Anleitung zum Ausführen einer lokalen Entwicklungsumgebung findest Du in [
 
 ## Entwicklung
 
-Bruno wird als Desktop-Anwendung entwickelt. Um die App zu starten, musst Du zuerst die Next.js App in einem Terminal ausführen und anschließend in einem anderen Terminal die Electron-App.
+Marrone wird als Desktop-Anwendung entwickelt. Um die App zu starten, musst Du zuerst die Next.js App in einem Terminal ausführen und anschließend in einem anderen Terminal die Electron-App.
 
 ### Abhängigkeiten
 
@@ -56,8 +56,8 @@ npm i --legacy-peer-deps
 # build graphql docs
 npm run build:graphql-docs
 
-# build bruno query
-npm run build:bruno-query
+# build marrone query
+npm run build:marrone-query
 
 # run next app (terminal 1)
 npm run dev:web
@@ -83,8 +83,8 @@ find . -type f -name "package-lock.json" -delete
 ### Testen
 
 ```bash
-# Führen Sie Bruno-Schema-Tests aus
-npm test --workspace=packages/bruno-schema
+# Führen Sie Marrone-Schema-Tests aus
+npm test --workspace=packages/marrone-schema
 
 # Führen Sie Tests für alle Arbeitsbereiche durch
 npm test --workspaces --if-present

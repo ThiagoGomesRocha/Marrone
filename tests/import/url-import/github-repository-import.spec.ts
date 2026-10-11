@@ -7,7 +7,7 @@ test.describe('GitHub Repository URL Import', () => {
   });
 
   test('GitHub repository URL import', async ({ page }) => {
-    const githubUrl = 'https://github.com/usebruno/github-rest-api-collection';
+    const githubUrl = 'https://github.com/marrone/github-rest-api-collection';
 
     // Test GitHub repository import
     await page.getByTestId('collections-header-add-menu').click();
@@ -16,7 +16,7 @@ test.describe('GitHub Repository URL Import', () => {
     // Wait for import collection modal to be ready
     const importModal = page.getByRole('dialog');
     await importModal.waitFor({ state: 'visible' });
-    await expect(importModal.locator('.bruno-modal-header-title')).toContainText('Import Collection');
+    await expect(importModal.locator('.marrone-modal-header-title')).toContainText('Import Collection');
 
     // Select the GitHub tab
     await page.getByTestId('github-tab').click();
@@ -30,7 +30,7 @@ test.describe('GitHub Repository URL Import', () => {
 
     // Verify that the Clone Git Repository modal is displayed
     const cloneModal = page.getByRole('dialog');
-    await expect(cloneModal.locator('.bruno-modal-header-title')).toContainText('Clone Git Repository');
+    await expect(cloneModal.locator('.marrone-modal-header-title')).toContainText('Clone Git Repository');
 
     // Cleanup: close any open modals using Cancel button (avoids form validation)
     await page.getByRole('button', { name: 'Cancel' }).click();

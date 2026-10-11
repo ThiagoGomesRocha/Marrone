@@ -1,12 +1,12 @@
 ## Security  
 
-At Bruno, we take security seriously and are committed to providing a safe experience for all users.  
-We appreciate responsible disclosure and value contributions that help improve Bruno's security.  
+At Marrone, we take security seriously and are committed to providing a safe experience for all users.  
+We appreciate responsible disclosure and value contributions that help improve Marrone's security.  
 
 
 ## Reporting a Vulnerability  
 
-To report a security issue, please email us at [security@usebruno.com](mailto:security@usebruno.com)
+To report a security issue, please email us at [security@marrone.com](mailto:security@marrone.com)
 
 When reporting a vulnerability, please include as many details as possible to help us investigate:  
 

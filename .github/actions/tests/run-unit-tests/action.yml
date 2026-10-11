@@ -8,50 +8,50 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - name: Test Package bruno-js
+    - name: Test Package marrone-js
       shell: ${{ inputs.shell }}
-      run: npm run test:ci --workspace=packages/bruno-js
+      run: npm run test:ci --workspace=packages/marrone-js
 
-    - name: Test Package bruno-cli
+    - name: Test Package marrone-cli
       shell: ${{ inputs.shell }}
-      run: npm run test:ci --workspace=packages/bruno-cli
+      run: npm run test:ci --workspace=packages/marrone-cli
 
-    - name: Test Package bruno-query
+    - name: Test Package marrone-query
       shell: ${{ inputs.shell }}
-      run: npm run test --workspace=packages/bruno-query
+      run: npm run test --workspace=packages/marrone-query
 
     - name: Test Package bruno-lang
       shell: ${{ inputs.shell }}
-      run: npm run test --workspace=packages/bruno-lang
+      run: npm run test --workspace=packages/marrone-lang
 
-    - name: Test Package bruno-schema
+    - name: Test Package marrone-schema
       shell: ${{ inputs.shell }}
-      run: npm run test --workspace=packages/bruno-schema
+      run: npm run test --workspace=packages/marrone-schema
 
-    - name: Test Package bruno-app
+    - name: Test Package marrone-app
       shell: ${{ inputs.shell }}
-      run: npm run test --workspace=packages/bruno-app
+      run: npm run test --workspace=packages/marrone-app
 
-    - name: Test Package bruno-common
+    - name: Test Package marrone-common
       shell: ${{ inputs.shell }}
-      run: npm run test --workspace=packages/bruno-common
+      run: npm run test --workspace=packages/marrone-common
 
-    - name: Test Package bruno-converters
+    - name: Test Package marrone-converters
       shell: ${{ inputs.shell }}
-      run: npm run test:ci --workspace=packages/bruno-converters
+      run: npm run test:ci --workspace=packages/marrone-converters
 
-    - name: Test Package bruno-electron
+    - name: Test Package marrone-electron
       shell: ${{ inputs.shell }}
-      run: npm run test:ci --workspace=packages/bruno-electron
+      run: npm run test:ci --workspace=packages/marrone-electron
 
     - name: Test Package bruno-requests
       shell: ${{ inputs.shell }}
-      run: npm run test --workspace=packages/bruno-requests
+      run: npm run test --workspace=packages/marrone-requests
 
-    - name: Test Package bruno-filestore
+    - name: Test Package marrone-filestore
       shell: ${{ inputs.shell }}
-      run: npm run test --workspace=packages/bruno-filestore
+      run: npm run test --workspace=packages/marrone-filestore
 
-    - name: Test Package bruno-sqlite
+    - name: Test Package marrone-sqlite
       shell: ${{ inputs.shell }}
-      run: npm run test --workspace=packages/bruno-sqlite
+      run: npm run test --workspace=packages/marrone-sqlite

@@ -5,7 +5,7 @@ import { TLS_HANDSHAKE_FAILURE } from '../../../../utils/constants';
 
 const COLLECTION = 'client-certs-disabled-bru';
 
-// The collection's client certificate is present but flagged `disabled: true`, so Bruno
+// The collection's client certificate is present but flagged `disabled: true`, so Marrone
 // withholds it. The mTLS server rejects the request at the TLS handshake — the error
 // surfaced in the response pane is the proof the disable flag is honored.
 test.describe('https with collection client certificate (disabled, bru)', () => {

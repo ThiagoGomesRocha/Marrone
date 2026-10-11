@@ -8,8 +8,8 @@ http:
   url: "{{localhost}}/api/auth/edgegrid/resource"
   auth:
     type: akamai-edgegrid
-    accessToken: akab-access-token-bruno-test
-    clientToken: akab-client-token-bruno-test
+    accessToken: akab-access-token-marrone-test
+    clientToken: akab-client-token-marrone-test
     clientSecret: this-is-the-wrong-secret=
 
 runtime:

@@ -1,6 +1,6 @@
 # React — app files reviewer
 
-**Scope:** `packages/bruno-app/**`.
+**Scope:** `packages/marrone-app/**`.
 
 Adopt the reviewer persona and return findings in the output contract defined in
 `_contract.md`.
@@ -14,7 +14,7 @@ touch the store, also consult **`.claude/rules/redux-store.md`**. Report violati
   12 themes — verify the token path exists on the theme object); namespaced hook import (`React.useX`);
   a component that mixes controlled and uncontrolled state; a hook called after a conditional
   early return.
-- **blocker** — anything breaking **`.claude/rules/bruno-app-layout.md`** (read it),
+- **blocker** — anything breaking **`.claude/rules/marrone-app-layout.md`** (read it),
   component-specific vs shared placement included; the drift noted at the end of that file is not a
   finding.
 - **blocker** — a new theme token defined in `themes/light|dark/*.js` without the matching property

@@ -6,7 +6,7 @@ const COLLECTION = 'client-certs-precedence';
 
 // Both levels declare a client certificate for `localhost`, and the global one is a
 // self-signed cert the mTLS server rejects. The collection cert must win: the handshake
-// succeeding at all — plus subjectCN being bruno-client rather than untrusted-client —
+// succeeding at all — plus subjectCN being marrone-client rather than untrusted-client —
 // is what proves the global cert was never reached.
 test.describe('https with collection client certificate taking precedence over global', () => {
   // App launch plus the mTLS handshake exceeds the default 30s under parallel load. The budget

@@ -58,7 +58,7 @@ Reuse existing helpers instead of hand-rolling clicks; read the module for its c
 - `page/actions.ts` — high-level user actions (create/open collections, requests, folders, environments; send/save requests; workspace + tab management; import)
 - `page/locators.ts` — locator builders (`buildCommonLocators(page)` + per-protocol/feature variants) and table helpers
 - `page/runner.ts` — collection/folder runner actions and result assertions
-- `tests/utils/cli.ts` — `runCLI(cwd, args)` for bruno-cli testing
+- `tests/utils/cli.ts` — `runCLI(cwd, args)` for marrone-cli testing
 - `tests/utils/wait.ts` — polling helpers (e.g. `waitForPredicate(predicate, {tries, interval})`)
 
 **Convention:** a spec must never inline raw selectors. Each `page/*` module owns one UI section and exports both a locator builder and its actions; a new section gets a new file whose builder is mapped into `buildCommonLocators`. Full pattern + examples in [the guide](../../docs/playwright-testing-guide.md#1-centralize-locators-and-actions-in-page-modules).

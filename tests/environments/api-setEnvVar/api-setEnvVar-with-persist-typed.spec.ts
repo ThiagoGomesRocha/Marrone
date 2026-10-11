@@ -4,7 +4,7 @@ import path from 'path';
 import { sendRequest } from '../../utils/page';
 
 const ENV_FILE_ORIGINAL = `vars {
-  host: https://testbench-sanity.usebruno.com
+  host: https://testbench-sanity.marrone.com
 }
 
 vars:secret [

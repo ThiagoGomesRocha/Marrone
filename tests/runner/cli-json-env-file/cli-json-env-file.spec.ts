@@ -2,13 +2,13 @@ import { test, expect } from '../../../playwright';
 import { execSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
-import constants from '../../../packages/bruno-cli/src/constants.js';
+import constants from '../../../packages/marrone-cli/src/constants.js';
 
 test.describe('CLI JSON Environment File Support', () => {
   const collectionPath = path.resolve(__dirname, 'collection');
-  const BRU = 'node ../../../../packages/bruno-cli/bin/bru.js';
+  const BRU = 'node ../../../../packages/marrone-cli/bin/marrone.js';
 
-  // Helper: emulate `bru run` from a given working directory and
+  // Helper: emulate `marrone run` from a given working directory and
   // return the process exit code (0 on success). We use execSync so
   // these tests behave like invoking the CLI directly in a shell.
   const runFrom = (cwd: string, args: string): number => {
@@ -22,7 +22,7 @@ test.describe('CLI JSON Environment File Support', () => {
 
   test('CLI: Run with invalid JSON environment file should fail', async () => {
     // Create a temporary invalid JSON file
-    const tempDir = '/tmp/bruno-cli-test';
+    const tempDir = '/tmp/marrone-cli-test';
     const invalidEnvPath = path.join(tempDir, 'invalid-env.json');
 
     fs.mkdirSync(tempDir, { recursive: true });
@@ -51,7 +51,7 @@ test.describe('CLI JSON Environment File Support', () => {
     expect(fs.existsSync(outputPath)).toBe(true);
     const report = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
     const result = report.results[0];
-    expect(result.request.url).toBe('https://echo.usebruno.com');
+    expect(result.request.url).toBe('https://echo.marrone.com');
     expect(result.response.status).toEqual(200);
 
     try {

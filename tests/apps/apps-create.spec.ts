@@ -26,7 +26,7 @@ const openFolderMenu = async (page: Page, collectionName: string, folderName: st
 const openNewAppModal = async (page: Page, opener: () => Promise<void>) => {
   await opener();
   await page.locator('.tippy-box:visible .dropdown-item').filter({ hasText: 'New App' }).click();
-  const modal = page.locator('.bruno-modal').filter({ hasText: 'New App' });
+  const modal = page.locator('.marrone-modal').filter({ hasText: 'New App' });
   await expect(modal).toBeVisible({ timeout: 5000 });
   return modal;
 };
@@ -48,9 +48,9 @@ test.describe('Apps - creation flows', () => {
   // will block sidebar clicks in the next. Dismiss both after every test.
   test.afterEach(async ({ page }) => {
     await page.keyboard.press('Escape').catch(() => {});
-    if (await page.locator('.bruno-modal').count()) {
+    if (await page.locator('.marrone-modal').count()) {
       await page.keyboard.press('Escape').catch(() => {});
-      await page.locator('.bruno-modal').waitFor({ state: 'detached', timeout: 5000 }).catch(() => {});
+      await page.locator('.marrone-modal').waitFor({ state: 'detached', timeout: 5000 }).catch(() => {});
     }
   });
 
@@ -150,12 +150,12 @@ test.describe('Apps - creation flows', () => {
     await createCollection(page, collectionName, collectionPath);
 
     const modal = await openNewAppModal(page, () => openCollectionMenu(page, collectionName));
-    const card = modal.locator('.bruno-modal-card');
+    const card = modal.locator('.marrone-modal-card');
     const beforeBox = await card.boundingBox();
     expect(beforeBox).not.toBeNull();
 
     // The header sits inside the modal card but outside the name input — clicking it must be a no-op.
-    await modal.locator('.bruno-modal-header').click({ position: { x: 5, y: 5 } });
+    await modal.locator('.marrone-modal-header').click({ position: { x: 5, y: 5 } });
 
     await expect(modal).toBeVisible();
     const afterBox = await card.boundingBox();
@@ -163,7 +163,7 @@ test.describe('Apps - creation flows', () => {
     // Tolerate sub-pixel drift from layout re-measurement while still catching an actual resize.
     expect(afterBox!.width).toBeCloseTo(beforeBox!.width, 0);
     expect(afterBox!.height).toBeCloseTo(beforeBox!.height, 0);
-    await expect(page.locator('.bruno-modal [data-testid="form-error"]')).toHaveCount(0);
+    await expect(page.locator('.marrone-modal [data-testid="form-error"]')).toHaveCount(0);
   });
 
   test('TC-4185 Clicking on the backdrop closes the New App modal', async ({ page, createTmpDir }) => {
@@ -173,9 +173,9 @@ test.describe('Apps - creation flows', () => {
 
     const modal = await openNewAppModal(page, () => openCollectionMenu(page, collectionName));
 
-    await page.locator('.bruno-modal-backdrop').click();
+    await page.locator('.marrone-modal-backdrop').click();
     await expect(modal).toBeHidden({ timeout: 5000 });
-    await expect(page.locator('.bruno-modal [data-testid="form-error"]')).toHaveCount(0);
+    await expect(page.locator('.marrone-modal [data-testid="form-error"]')).toHaveCount(0);
   });
 
   test('TC-4186 Submitting the New App modal with no name shows a validation error', async ({ page, createTmpDir }) => {

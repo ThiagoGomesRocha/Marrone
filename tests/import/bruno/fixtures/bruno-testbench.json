@@ -1,5 +1,5 @@
 {
-  "name": "bruno-testbench",
+  "name": "marrone-testbench",
   "version": "1",
   "items": [
     {
@@ -104,7 +104,7 @@
                     "auth": {
                       "mode": "basic",
                       "basic": {
-                        "username": "bruno",
+                        "username": "marrone",
                         "password": "{{basic_auth_password}}"
                       }
                     }
@@ -177,7 +177,7 @@
                       "file": []
                     },
                     "script": {
-                      "req": "const username = \"bruno\";\nconst password = \"della\";\n\nconst authString = `${username}:${password}`;\nconst encodedAuthString = require('btoa')(authString);\n\nreq.setHeader(\"Authorization\", `Basic ${encodedAuthString}`);"
+                      "req": "const username = \"marrone\";\nconst password = \"della\";\n\nconst authString = `${username}:${password}`;\nconst encodedAuthString = require('btoa')(authString);\n\nreq.setHeader(\"Authorization\", `Basic ${encodedAuthString}`);"
                     },
                     "vars": {},
                     "assertions": [
@@ -218,7 +218,7 @@
                       "file": []
                     },
                     "script": {
-                      "req": "const username = \"bruno\";\nconst password = \"invalid\";\n\nconst authString = `${username}:${password}`;\nconst encodedAuthString = require('btoa')(authString);\n\nreq.setHeader(\"Authorization\", `Basic ${encodedAuthString}`);"
+                      "req": "const username = \"marrone\";\nconst password = \"invalid\";\n\nconst authString = `${username}:${password}`;\nconst encodedAuthString = require('btoa')(authString);\n\nreq.setHeader(\"Authorization\", `Basic ${encodedAuthString}`);"
                     },
                     "vars": {},
                     "assertions": [
@@ -627,7 +627,7 @@
             "params": [],
             "body": {
               "mode": "json",
-              "json": "{\n  \"hello\": \"bruno\"\n}",
+              "json": "{\n  \"hello\": \"marrone\"\n}",
               "formUrlEncoded": [],
               "multipartForm": [],
               "file": []
@@ -644,7 +644,7 @@
                 "uid": "FFVx1w4MstKeQfQR66Xy8"
               }
             ],
-            "tests": "test(\"should return json\", function() {\n  const data = res.getBody();\n  expect(res.getBody()).to.eql({\n    \"hello\": \"bruno\"\n  });\n});\n",
+            "tests": "test(\"should return json\", function() {\n  const data = res.getBody();\n  expect(res.getBody()).to.eql({\n    \"hello\": \"marrone\"\n  });\n});\n",
             "docs": "",
             "auth": {
               "mode": "none"
@@ -714,7 +714,7 @@
                   "type": "file",
                   "name": "file",
                   "value": [
-                    "bruno.png"
+                    "marrone.png"
                   ],
                   "enabled": true
                 }
@@ -790,7 +790,7 @@
             "params": [],
             "body": {
               "mode": "xml",
-              "xml": "<hello>\n  <world>bruno</world>\n  <world/>\n</hello>",
+              "xml": "<hello>\n  <world>marrone</world>\n  <world/>\n</hello>",
               "formUrlEncoded": [],
               "multipartForm": [],
               "file": []
@@ -805,7 +805,7 @@
                 "uid": "lIbw7OdlPxbNUKdShGNvi"
               }
             ],
-            "tests": "test(\"should return parsed xml\", function() {\n  const data = res.getBody();\n  expect(res.getBody()).to.eql({\n    \"hello\": {\n      \"world\": [\n        \"bruno\",\n        \"\"\n      ]\n    }\n  });\n});\n",
+            "tests": "test(\"should return parsed xml\", function() {\n  const data = res.getBody();\n  expect(res.getBody()).to.eql({\n    \"hello\": {\n      \"world\": [\n        \"marrone\",\n        \"\"\n      ]\n    }\n  });\n});\n",
             "docs": "",
             "auth": {
               "mode": "none"
@@ -823,7 +823,7 @@
             "params": [],
             "body": {
               "mode": "xml",
-              "xml": "<hello>\n  <world>bruno</world>\n</hello>",
+              "xml": "<hello>\n  <world>marrone</world>\n</hello>",
               "formUrlEncoded": [],
               "multipartForm": [],
               "file": []
@@ -838,7 +838,7 @@
                 "uid": "5yr5fbjrAre0Cp0C3PY4c"
               }
             ],
-            "tests": "test(\"should return parsed xml\", function() {\n  const data = res.getBody();\n  expect(res.getBody()).to.eql({\n    \"hello\": {\n      \"world\": [\"bruno\"]\n    }\n  });\n});\n",
+            "tests": "test(\"should return parsed xml\", function() {\n  const data = res.getBody();\n  expect(res.getBody()).to.eql({\n    \"hello\": {\n      \"world\": [\"marrone\"]\n    }\n  });\n});\n",
             "docs": "",
             "auth": {
               "mode": "none"
@@ -856,7 +856,7 @@
             "params": [],
             "body": {
               "mode": "xml",
-              "xml": "<hello><world>bruno</world></hello>",
+              "xml": "<hello><world>marrone</world></hello>",
               "formUrlEncoded": [],
               "multipartForm": [],
               "file": []
@@ -973,7 +973,7 @@
           "items": [
             {
               "type": "http",
-              "name": "bruno",
+              "name": "marrone",
               "seq": 1,
               "request": {
                 "url": "https://www.github.com",
@@ -1018,10 +1018,10 @@
           "items": [
             {
               "type": "http",
-              "name": "bruno",
+              "name": "marrone",
               "seq": 1,
               "request": {
-                "url": "https://www.usebruno.com/images/landing-2.png",
+                "url": "https://www.marrone.com/images/landing-2.png",
                 "method": "GET",
                 "headers": [],
                 "params": [],
@@ -1200,7 +1200,7 @@
                     "script": {},
                     "vars": {},
                     "assertions": [],
-                    "tests": "test(\"should get env var in scripts\", function() {\n  const host = bru.getEnvVar(\"host\")\n  expect(host).to.equal(\"https://testbench-sanity.usebruno.com\");\n});",
+                    "tests": "test(\"should get env var in scripts\", function() {\n  const host = bru.getEnvVar(\"host\")\n  expect(host).to.equal(\"https://testbench-sanity.marrone.com\");\n});",
                     "docs": "",
                     "auth": {
                       "mode": "none"
@@ -1250,7 +1250,7 @@
                     "script": {},
                     "vars": {},
                     "assertions": [],
-                    "tests": "test(\"should get var in scripts\", function() {\n  const testSetVar = bru.getVar(\"testSetVar\");\n  expect(testSetVar).to.equal(\"bruno-test-87267\");\n});",
+                    "tests": "test(\"should get var in scripts\", function() {\n  const testSetVar = bru.getVar(\"testSetVar\");\n  expect(testSetVar).to.equal(\"marrone-test-87267\");\n});",
                     "docs": "",
                     "auth": {
                       "mode": "none"
@@ -1273,11 +1273,11 @@
                       "file": []
                     },
                     "script": {
-                      "res": "bru.setEnvVar(\"testSetEnvVar\", \"bruno-29653\")"
+                      "res": "bru.setEnvVar(\"testSetEnvVar\", \"marrone-29653\")"
                     },
                     "vars": {},
                     "assertions": [],
-                    "tests": "test(\"should set env var in scripts\", function() {\n  const testSetEnvVar = bru.getEnvVar(\"testSetEnvVar\")\n  expect(testSetEnvVar).to.equal(\"bruno-29653\");\n});",
+                    "tests": "test(\"should set env var in scripts\", function() {\n  const testSetEnvVar = bru.getEnvVar(\"testSetEnvVar\")\n  expect(testSetEnvVar).to.equal(\"marrone-29653\");\n});",
                     "docs": "",
                     "auth": {
                       "mode": "none"
@@ -1300,11 +1300,11 @@
                       "file": []
                     },
                     "script": {
-                      "res": "bru.setVar(\"testSetVar\", \"bruno-test-87267\")"
+                      "res": "bru.setVar(\"testSetVar\", \"marrone-test-87267\")"
                     },
                     "vars": {},
                     "assertions": [],
-                    "tests": "test(\"should get var in scripts\", function() {\n  const testSetVar = bru.getVar(\"testSetVar\");\n  expect(testSetVar).to.equal(\"bruno-test-87267\");\n});",
+                    "tests": "test(\"should get var in scripts\", function() {\n  const testSetVar = bru.getVar(\"testSetVar\");\n  expect(testSetVar).to.equal(\"marrone-test-87267\");\n});",
                     "docs": "",
                     "auth": {
                       "mode": "none"
@@ -1333,7 +1333,7 @@
                     "params": [],
                     "body": {
                       "mode": "json",
-                      "json": "{\n  \"hello\": \"bruno\"\n}",
+                      "json": "{\n  \"hello\": \"marrone\"\n}",
                       "formUrlEncoded": [],
                       "multipartForm": [],
                       "file": []
@@ -1348,7 +1348,7 @@
                         "uid": "7VvXmRWwUdGYbvrQaeDMD"
                       }
                     ],
-                    "tests": "test(\"req.getBody()\", function() {\n  const data = res.getBody();\n  expect(data).to.eql({\n    \"hello\": \"bruno\"\n  });\n});\n",
+                    "tests": "test(\"req.getBody()\", function() {\n  const data = res.getBody();\n  expect(data).to.eql({\n    \"hello\": \"marrone\"\n  });\n});\n",
                     "docs": "",
                     "auth": {
                       "mode": "none"
@@ -1364,7 +1364,7 @@
                     "method": "GET",
                     "headers": [
                       {
-                        "name": "bruno",
+                        "name": "marrone",
                         "value": "is-awesome",
                         "enabled": true
                       }
@@ -1392,7 +1392,7 @@
                         "uid": "50NSDIeXgRr0TcXEdquci"
                       }
                     ],
-                    "tests": "test(\"req.getHeader(name)\", function() {\n  const h = req.getHeader('bruno');\n  expect(h).to.equal(\"is-awesome\");\n});",
+                    "tests": "test(\"req.getHeader(name)\", function() {\n  const h = req.getHeader('marrone');\n  expect(h).to.equal(\"is-awesome\");\n});",
                     "docs": "",
                     "auth": {
                       "mode": "none"
@@ -1408,7 +1408,7 @@
                     "method": "GET",
                     "headers": [
                       {
-                        "name": "bruno",
+                        "name": "marrone",
                         "value": "is-awesome",
                         "enabled": true
                       },
@@ -1441,7 +1441,7 @@
                         "uid": "f9ULUob9jYiABYuEzfmgC"
                       }
                     ],
-                    "tests": "test(\"req.getHeaders()\", function() {\n  const h = req.getHeaders();\n  expect(h.bruno).to.equal(\"is-awesome\");\n  expect(h.della).to.equal(\"is-beautiful\");\n});",
+                    "tests": "test(\"req.getHeaders()\", function() {\n  const h = req.getHeaders();\n  expect(h.marrone).to.equal(\"is-awesome\");\n  expect(h.della).to.equal(\"is-beautiful\");\n});",
                     "docs": "",
                     "auth": {
                       "mode": "none"
@@ -1517,7 +1517,7 @@
                         "uid": "4vC9zp5XBajbYKDYM4oFN"
                       }
                     ],
-                    "tests": "test(\"req.getUrl()\", function() {\n  const url = req.getUrl();\n  expect(url).to.equal(\"https://testbench-sanity.usebruno.com/ping\");\n});",
+                    "tests": "test(\"req.getUrl()\", function() {\n  const url = req.getUrl();\n  expect(url).to.equal(\"https://testbench-sanity.marrone.com/ping\");\n});",
                     "docs": "",
                     "auth": {
                       "mode": "none"
@@ -1535,13 +1535,13 @@
                     "params": [],
                     "body": {
                       "mode": "json",
-                      "json": "{\n  \"hello\": \"bruno\"\n}",
+                      "json": "{\n  \"hello\": \"marrone\"\n}",
                       "formUrlEncoded": [],
                       "multipartForm": [],
                       "file": []
                     },
                     "script": {
-                      "req": "req.setBody({\n  \"bruno\": \"is awesome\"\n});"
+                      "req": "req.setBody({\n  \"marrone\": \"is awesome\"\n});"
                     },
                     "vars": {},
                     "assertions": [
@@ -1552,7 +1552,7 @@
                         "uid": "EGlBavIEZ2j0s2aczQxAP"
                       }
                     ],
-                    "tests": "test(\"req.setBody()\", function() {\n  const data = res.getBody();\n  expect(data).to.eql({\n    \"bruno\": \"is awesome\"\n  });\n});\n",
+                    "tests": "test(\"req.setBody()\", function() {\n  const data = res.getBody();\n  expect(data).to.eql({\n    \"marrone\": \"is awesome\"\n  });\n});\n",
                     "docs": "",
                     "auth": {
                       "mode": "none"
@@ -1568,7 +1568,7 @@
                     "method": "GET",
                     "headers": [
                       {
-                        "name": "bruno",
+                        "name": "marrone",
                         "value": "is-awesome",
                         "enabled": true
                       }
@@ -1581,7 +1581,7 @@
                       "file": []
                     },
                     "script": {
-                      "req": "req.setHeader('bruno', 'is-the-future');"
+                      "req": "req.setHeader('marrone', 'is-the-future');"
                     },
                     "vars": {},
                     "assertions": [
@@ -1598,7 +1598,7 @@
                         "uid": "sb6dpEtw8SYyeXVqEz3OA"
                       }
                     ],
-                    "tests": "test(\"req.setHeader(name)\", function() {\n  const h = req.getHeader('bruno');\n  expect(h).to.equal(\"is-the-future\");\n});",
+                    "tests": "test(\"req.setHeader(name)\", function() {\n  const h = req.getHeader('marrone');\n  expect(h).to.equal(\"is-the-future\");\n});",
                     "docs": "",
                     "auth": {
                       "mode": "none"
@@ -1614,7 +1614,7 @@
                     "method": "GET",
                     "headers": [
                       {
-                        "name": "bruno",
+                        "name": "marrone",
                         "value": "is-awesome",
                         "enabled": true
                       },
@@ -1712,7 +1712,7 @@
                       "file": []
                     },
                     "script": {
-                      "req": "req.setUrl(\"https://testbench-sanity.usebruno.com/ping\");"
+                      "req": "req.setUrl(\"https://testbench-sanity.marrone.com/ping\");"
                     },
                     "vars": {},
                     "assertions": [
@@ -1729,7 +1729,7 @@
                         "uid": "SPVLRHys6RQh1GbRWnPpT"
                       }
                     ],
-                    "tests": "test(\"req.setUrl()\", function() {\n  const url = req.getUrl();\n  expect(url).to.equal(\"https://testbench-sanity.usebruno.com/ping\");\n});",
+                    "tests": "test(\"req.setUrl()\", function() {\n  const url = req.getUrl();\n  expect(url).to.equal(\"https://testbench-sanity.marrone.com/ping\");\n});",
                     "docs": "",
                     "auth": {
                       "mode": "none"
@@ -1758,7 +1758,7 @@
                     "params": [],
                     "body": {
                       "mode": "json",
-                      "json": "{\n  \"hello\": \"bruno\"\n}",
+                      "json": "{\n  \"hello\": \"marrone\"\n}",
                       "formUrlEncoded": [],
                       "multipartForm": [],
                       "file": []
@@ -1773,7 +1773,7 @@
                         "uid": "rQe4gitaooPrQkEqD6AvL"
                       }
                     ],
-                    "tests": "test(\"res.getBody()\", function() {\n  const data = res.getBody();\n  expect(data).to.eql({\n    \"hello\": \"bruno\"\n  });\n});\n",
+                    "tests": "test(\"res.getBody()\", function() {\n  const data = res.getBody();\n  expect(data).to.eql({\n    \"hello\": \"marrone\"\n  });\n});\n",
                     "docs": "",
                     "auth": {
                       "mode": "none"
@@ -1791,7 +1791,7 @@
                     "params": [],
                     "body": {
                       "mode": "json",
-                      "json": "{\n  \"hello\": \"bruno\"\n}",
+                      "json": "{\n  \"hello\": \"marrone\"\n}",
                       "formUrlEncoded": [],
                       "multipartForm": [],
                       "file": []
@@ -1824,7 +1824,7 @@
                     "params": [],
                     "body": {
                       "mode": "json",
-                      "json": "{\n  \"hello\": \"bruno\"\n}",
+                      "json": "{\n  \"hello\": \"marrone\"\n}",
                       "formUrlEncoded": [],
                       "multipartForm": [],
                       "file": []
@@ -1857,7 +1857,7 @@
                     "params": [],
                     "body": {
                       "mode": "json",
-                      "json": "{\n  \"hello\": \"bruno\"\n}",
+                      "json": "{\n  \"hello\": \"marrone\"\n}",
                       "formUrlEncoded": [],
                       "multipartForm": [],
                       "file": []
@@ -1955,11 +1955,11 @@
                       "file": []
                     },
                     "script": {
-                      "req": "const axios = require(\"axios\");\n\nconst url = \"https://testbench-sanity.usebruno.com/api/echo/json\";\nconst response = await axios.post(url, {\n  \"hello\": \"bruno\"\n});\n\nreq.setBody(response.data);\nreq.setMethod(\"POST\");\nreq.setUrl(url);"
+                      "req": "const axios = require(\"axios\");\n\nconst url = \"https://testbench-sanity.marrone.com/api/echo/json\";\nconst response = await axios.post(url, {\n  \"hello\": \"marrone\"\n});\n\nreq.setBody(response.data);\nreq.setMethod(\"POST\");\nreq.setUrl(url);"
                     },
                     "vars": {},
                     "assertions": [],
-                    "tests": "test(\"req.getBody()\", function() {\n  const data = res.getBody();\n  expect(data).to.eql({\n    \"hello\": \"bruno\"\n  });\n});\n",
+                    "tests": "test(\"req.getBody()\", function() {\n  const data = res.getBody();\n  expect(data).to.eql({\n    \"hello\": \"marrone\"\n  });\n});\n",
                     "docs": "",
                     "auth": {
                       "mode": "none"
@@ -2104,7 +2104,7 @@
                 "params": [],
                 "body": {
                   "mode": "json",
-                  "json": "{\n  \"boolean\": false,\n  \"number_1\": 1,\n  \"number_2\": 0,\n  \"number_3\": -1,\n  \"string\": \"bruno\",\n  \"array\": [1, 2, 3, 4, 5],\n  \"object\": {\n    \"hello\": \"bruno\"\n  },\n  \"null\": null\n}",
+                  "json": "{\n  \"boolean\": false,\n  \"number_1\": 1,\n  \"number_2\": 0,\n  \"number_3\": -1,\n  \"string\": \"marrone\",\n  \"array\": [1, 2, 3, 4, 5],\n  \"object\": {\n    \"hello\": \"marrone\"\n  },\n  \"null\": null\n}",
                   "formUrlEncoded": [],
                   "multipartForm": [],
                   "file": []
@@ -2132,7 +2132,7 @@
                   },
                   {
                     "name": "req.body.string",
-                    "value": "isString bruno",
+                    "value": "isString marrone",
                     "enabled": true,
                     "uid": "ohANzzhuM8E8egvoVy20M"
                   },
@@ -2168,7 +2168,7 @@
                   },
                   {
                     "name": "req.body.string",
-                    "value": "eq bruno",
+                    "value": "eq marrone",
                     "enabled": true,
                     "uid": "fXTl58gxhAUrUM8SZFxLW"
                   },
@@ -2221,7 +2221,7 @@
                 "params": [],
                 "body": {
                   "mode": "json",
-                  "json": "{\n  \"boolean\": false,\n  \"number\": 1,\n  \"string\": \"bruno\",\n  \"array\": [1, 2, 3, 4, 5],\n  \"object\": {\n    \"hello\": \"bruno\"\n  },\n  \"null\": null\n}",
+                  "json": "{\n  \"boolean\": false,\n  \"number\": 1,\n  \"string\": \"marrone\",\n  \"array\": [1, 2, 3, 4, 5],\n  \"object\": {\n    \"hello\": \"marrone\"\n  },\n  \"null\": null\n}",
                   "formUrlEncoded": [],
                   "multipartForm": [],
                   "file": []
@@ -2231,7 +2231,7 @@
                 },
                 "vars": {},
                 "assertions": [],
-                "tests": "test(\"data types check via bru var\", function() {\n  let v = bru.getVar(\"dataTypeVarTest\");\n  v = {\n    ...v,\n    \"undefined\": undefined\n  };\n  expect(v).to.eql({\n    \"boolean\": false,\n    \"number\": 1,\n    \"string\": \"bruno\",\n    \"array\": [1, 2, 3, 4, 5],\n    \"object\": {\n      \"hello\": \"bruno\"\n    },\n    \"null\": null,\n    \"undefined\": undefined\n  })\n});",
+                "tests": "test(\"data types check via bru var\", function() {\n  let v = bru.getVar(\"dataTypeVarTest\");\n  v = {\n    ...v,\n    \"undefined\": undefined\n  };\n  expect(v).to.eql({\n    \"boolean\": false,\n    \"number\": 1,\n    \"string\": \"marrone\",\n    \"array\": [1, 2, 3, 4, 5],\n    \"object\": {\n      \"hello\": \"marrone\"\n    },\n    \"null\": null,\n    \"undefined\": undefined\n  })\n});",
                 "docs": "",
                 "auth": {
                   "mode": "none"
@@ -2254,11 +2254,11 @@
                   "file": []
                 },
                 "script": {
-                  "req": "bru.setVar(\"test-js-set-timeout\", \"\");\nawait new Promise((resolve, reject) => {\n  setTimeout(() => {\n    bru.setVar(\"test-js-set-timeout\", \"bruno\");\n    resolve();\n  }, 1000);\n});\n\nconst v = bru.getVar(\"test-js-set-timeout\");\nbru.setVar(\"test-js-set-timeout\", v + \"-is-awesome\");\n"
+                  "req": "bru.setVar(\"test-js-set-timeout\", \"\");\nawait new Promise((resolve, reject) => {\n  setTimeout(() => {\n    bru.setVar(\"test-js-set-timeout\", \"marrone\");\n    resolve();\n  }, 1000);\n});\n\nconst v = bru.getVar(\"test-js-set-timeout\");\nbru.setVar(\"test-js-set-timeout\", v + \"-is-awesome\");\n"
                 },
                 "vars": {},
                 "assertions": [],
-                "tests": "test(\"setTimeout()\", function() {\n  const v = bru.getVar(\"test-js-set-timeout\")\n  expect(v).to.eql(\"bruno-is-awesome\");\n});",
+                "tests": "test(\"setTimeout()\", function() {\n  const v = bru.getVar(\"test-js-set-timeout\")\n  expect(v).to.eql(\"marrone-is-awesome\");\n});",
                 "docs": "",
                 "auth": {
                   "mode": "none"
@@ -2408,7 +2408,7 @@
                 "params": [],
                 "body": {
                   "mode": "json",
-                  "json": "{\n  \"hello\": \"bruno\"\n}",
+                  "json": "{\n  \"hello\": \"marrone\"\n}",
                   "formUrlEncoded": [],
                   "multipartForm": [],
                   "file": []
@@ -2425,7 +2425,7 @@
                     "uid": "ZVuM9BByoo5XFCtUYTwfP"
                   }
                 ],
-                "tests": "test(\"should return json\", function() {\n  const data = res.getBody();\n  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;\n  const isUUID = (inputString) => {\n    return uuidRegex.test(inputString);\n  };\n  \n  expect(data.hello).to.equal(\"bruno\");\n  expect(isUUID(data.uuid)).to.be.true;\n});\n",
+                "tests": "test(\"should return json\", function() {\n  const data = res.getBody();\n  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;\n  const isUUID = (inputString) => {\n    return uuidRegex.test(inputString);\n  };\n  \n  expect(data.hello).to.equal(\"marrone\");\n  expect(isUUID(data.uuid)).to.be.true;\n});\n",
                 "docs": "",
                 "auth": {
                   "mode": "none"
@@ -2589,7 +2589,7 @@
               "file": []
             },
             "script": {
-              "req": "bru.setVar(\"rUser\", {\n  full_name: 'Bruno',\n  age: 4,\n  'fav-food': ['egg', 'meat'],\n  'want.attention': true\n});"
+              "req": "bru.setVar(\"rUser\", {\n  full_name: 'Marrone',\n  age: 4,\n  'fav-food': ['egg', 'meat'],\n  'want.attention': true\n});"
             },
             "vars": {},
             "assertions": [
@@ -2600,7 +2600,7 @@
                 "uid": "xe4IAIu4EXYOYiXmKU374"
               }
             ],
-            "tests": "test(\"should return json\", function() {\n  const expectedResponse = `Hi, I am Bruno,\nI am 4 years old.\nMy favorite food is egg and meat.\nI like attention: true`;\n  expect(res.getBody()).to.equal(expectedResponse);\n});\n",
+            "tests": "test(\"should return json\", function() {\n  const expectedResponse = `Hi, I am Marrone,\nI am 4 years old.\nMy favorite food is egg and meat.\nI like attention: true`;\n  expect(res.getBody()).to.equal(expectedResponse);\n});\n",
             "docs": "",
             "auth": {
               "mode": "none"
@@ -2789,7 +2789,7 @@
       "variables": [
         {
           "name": "host",
-          "value": "https://testbench-sanity.usebruno.com",
+          "value": "https://testbench-sanity.marrone.com",
           "enabled": true,
           "secret": false,
           "type": "text"
@@ -2838,14 +2838,14 @@
         },
         {
           "name": "testSetEnvVar",
-          "value": "bruno-29653",
+          "value": "marrone-29653",
           "enabled": true,
           "secret": false,
           "type": "text"
         },
         {
           "name": "echo-host",
-          "value": "https://echo.usebruno.com",
+          "value": "https://echo.marrone.com",
           "enabled": true,
           "secret": false,
           "type": "text"
@@ -2895,11 +2895,11 @@
         ]
       }
     },
-    "docs": "# bruno-testbench 🐶\n\nThis is a test collection that I am using to test various functionalities around bruno"
+    "docs": "# marrone-testbench 🐶\n\nThis is a test collection that I am using to test various functionalities around marrone"
   },
   "brunoConfig": {
     "version": "1",
-    "name": "bruno-testbench",
+    "name": "marrone-testbench",
     "type": "collection",
     "proxy": {
       "enabled": false,

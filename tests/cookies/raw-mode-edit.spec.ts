@@ -12,7 +12,7 @@ test('should add a cookie via the modal raw-edit mode', async ({ createTmpDir, l
 
   await page.getByRole('button', { name: /Add Cookie/i }).click();
 
-  const modal = page.locator('.bruno-modal').filter({ hasText: 'Edit Raw' });
+  const modal = page.locator('.marrone-modal').filter({ hasText: 'Edit Raw' });
   await expect(modal).toBeVisible();
 
   const rawSwitch = modal.locator('.ml-auto').filter({ hasText: 'Edit Raw' });

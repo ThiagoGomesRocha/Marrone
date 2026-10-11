@@ -56,7 +56,7 @@ export async function generateCollection(
 
   // Create temp directory
   const tempDir = await fs.promises.mkdtemp(
-    path.join(os.tmpdir(), 'bruno-test-collection-')
+    path.join(os.tmpdir(), 'marrone-test-collection-')
   );
 
   try {
@@ -118,14 +118,14 @@ async function generateCollectionRoot(
   format: CollectionFormat
 ): Promise<void> {
   // Always create bruno.json
-  const brunoJson = {
+  const marroneJson = {
     version: '1',
     name,
     type: 'collection'
   };
   await fs.promises.writeFile(
     path.join(basePath, 'bruno.json'),
-    JSON.stringify(brunoJson, null, 2)
+    JSON.stringify(marroneJson, null, 2)
   );
 
   if (format === 'bru') {
@@ -422,7 +422,7 @@ export async function generateSortingTestCollection(
 
   // Create temp directory
   const tempDir = await fs.promises.mkdtemp(
-    path.join(os.tmpdir(), 'bruno-test-sorting-')
+    path.join(os.tmpdir(), 'marrone-test-sorting-')
   );
 
   try {
@@ -499,7 +499,7 @@ export async function setupSortingTestFixture(
   const collection = await generateSortingTestCollection(options);
 
   const userDataPath = await fs.promises.mkdtemp(
-    path.join(os.tmpdir(), 'bruno-test-userdata-')
+    path.join(os.tmpdir(), 'marrone-test-userdata-')
   );
 
   try {
@@ -576,7 +576,7 @@ export async function setupTestFixture(
 
   // Create user data directory
   const userDataPath = await fs.promises.mkdtemp(
-    path.join(os.tmpdir(), 'bruno-test-userdata-')
+    path.join(os.tmpdir(), 'marrone-test-userdata-')
   );
 
   try {
@@ -641,10 +641,10 @@ export async function setupStaticFixture(
   sourceCollectionPath: string
 ): Promise<StaticTestFixture> {
   const userDataPath = await fs.promises.mkdtemp(
-    path.join(os.tmpdir(), 'bruno-test-userdata-')
+    path.join(os.tmpdir(), 'marrone-test-userdata-')
   );
   const collectionPath = await fs.promises.mkdtemp(
-    path.join(os.tmpdir(), 'bruno-test-collection-')
+    path.join(os.tmpdir(), 'marrone-test-collection-')
   );
 
   const cleanup = async () => {

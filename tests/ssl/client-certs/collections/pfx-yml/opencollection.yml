@@ -8,4 +8,4 @@ config:
     - domain: localhost
       type: pkcs12
       pkcs12FilePath: ../../server/certs/client.pfx
-      passphrase: bruno
+      passphrase: marrone

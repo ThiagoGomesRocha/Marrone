@@ -36,7 +36,7 @@ info:
 
 bundled: false
 extensions:
-  bruno:
+  marrone:
     ignore:
       - hidden
 `

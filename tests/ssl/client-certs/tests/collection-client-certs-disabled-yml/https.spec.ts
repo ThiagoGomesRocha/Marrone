@@ -5,7 +5,7 @@ import { TLS_HANDSHAKE_FAILURE } from '../../../../utils/constants';
 
 const COLLECTION = 'client-certs-disabled-yml';
 
-// The opencollection.yml cert entry carries `disabled: true`, so Bruno withholds it. The
+// The opencollection.yml cert entry carries `disabled: true`, so Marrone withholds it. The
 // mTLS server rejects the request at the TLS handshake — the error surfaced in the
 // response pane is the proof the disable flag is honored on the yml parse path.
 test.describe('https with collection client certificate (disabled, yml)', () => {

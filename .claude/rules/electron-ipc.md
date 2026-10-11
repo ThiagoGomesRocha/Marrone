@@ -1,11 +1,11 @@
 ---
 paths:
-  - "packages/bruno-electron/**/*"
+  - "packages/marrone-electron/**/*"
 ---
 
 # Electron Main Process Guide
 
-The main process (`packages/bruno-electron/src/index.js`) owns the filesystem, network, child
+The main process (`packages/marrone-electron/src/index.js`) owns the filesystem, network, child
 processes, and all electron-store data. The renderer reaches it **only** over IPC through the
 preload bridge — there is no direct Node access in the renderer despite `nodeIntegration: true`
 (see Security below). Before adding or changing any IPC, read this file plus the target
@@ -25,7 +25,7 @@ preload bridge — there is no direct Node access in the renderer despite `nodeI
 Also exposed: `window.isPlaywright` (`process.env.PLAYWRIGHT === 'true'`).
 
 Renderer code accesses this as `window.ipcRenderer` (e.g. `const { ipcRenderer } = window;` in
-`bruno-app/src/providers/App/useIpcEvents.js`). **There is no channel allowlist** — any channel
+`marrone-app/src/providers/App/useIpcEvents.js`). **There is no channel allowlist** — any channel
 string is forwarded. Do not rely on the preload to gate channels; validate inputs inside the
 handler.
 
@@ -116,7 +116,7 @@ renderer mounts
 did-finish-load (independent, from Chromium):                     [index.js]
   -> wraps webContents.send with a safeStringify/safeParse JSON roundtrip
   -> send main:app-loaded
-     -> renderer sink sets data-app-state="loaded"        [pages/Bruno/index.js, NOT useIpcEvents.js]
+     -> renderer sink sets data-app-state="loaded"        [pages/Marrone/index.js, NOT useIpcEvents.js]
 ```
 
 ## IPC race-condition pattern

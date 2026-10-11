@@ -14,7 +14,7 @@ const TESTID_SEGMENT: Record<VariablesSection, string> = {
  * How the value editor classifies a token. A cell's text alone can't tell a number
  * from a numeric string, since both read as `25` once the quotes are stripped, so
  * the type assertions go through the class CodeMirror puts on the token instead.
- * `variable` is Bruno's own token for a resolvable `{{name}}` reference.
+ * `variable` is Marrone's own token for a resolvable `{{name}}` reference.
  */
 export type ValueTokenType = 'string' | 'number' | 'boolean' | 'property' | 'variable';
 

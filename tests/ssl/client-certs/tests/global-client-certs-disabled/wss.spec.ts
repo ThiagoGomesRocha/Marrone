@@ -4,7 +4,7 @@ import { buildCommonLocators } from '../../../../utils/page/locators';
 
 const COLLECTION = 'global-client-certs-disabled';
 
-// The global client certificate in Preferences carries `disabled: true`, so Bruno
+// The global client certificate in Preferences carries `disabled: true`, so Marrone
 // withholds it over WSS. The WebSocket upgrade fails the mTLS handshake — the connection
 // never reaches CONNECTED and an error entry appears in the message list.
 test.describe('wss with global client certificate (disabled)', () => {

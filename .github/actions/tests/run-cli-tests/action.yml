@@ -6,7 +6,7 @@ inputs:
     required: false
     default: 'bash'
   experimental_cache_modules:
-    description: 'Pass --experimental-cache-modules to bru run (requires developer sandbox)'
+    description: 'Pass --experimental-cache-modules to marrone run (requires developer sandbox)'
     required: false
     default: 'false'
 runs:
@@ -14,33 +14,33 @@ runs:
   steps:
     - name: Install Test Collection Dependencies
       shell: ${{ inputs.shell }}
-      run: npm ci --prefix packages/bruno-tests/collection
+      run: npm ci --prefix packages/marrone-tests/collection
 
     - name: Install additional-context-root-lib Dependencies
       shell: ${{ inputs.shell }}
-      run: npm ci --prefix packages/bruno-tests/additional-context-root-lib
+      run: npm ci --prefix packages/marrone-tests/additional-context-root-lib
 
     - name: Run Local Testbench and CLI Tests
       if: inputs.shell != 'pwsh'
       shell: ${{ inputs.shell }}
       run: |
-        npm start --workspace=packages/bruno-tests &
+        npm start --workspace=packages/marrone-tests &
         sleep 5
-        cd packages/bruno-tests/collection
+        cd packages/marrone-tests/collection
         EXTRA_ARGS=""
         if [ "${{ inputs.experimental_cache_modules }}" = "true" ]; then
           EXTRA_ARGS="--experimental-cache-modules"
         fi
-        node ../../bruno-cli/bin/bru.js run --env Prod --output junit.xml --format junit --sandbox developer $EXTRA_ARGS
+        node ../../marrone-cli/bin/marrone.js run --env Prod --output junit.xml --format junit --sandbox developer $EXTRA_ARGS
         cd ../safe-mode
-        node ../../bruno-cli/bin/bru.js run --env Prod --output junit.xml --format junit
+        node ../../marrone-cli/bin/marrone.js run --env Prod --output junit.xml --format junit
 
     - name: Run Local Testbench and CLI Tests - Windows
       if: inputs.shell == 'pwsh'
       shell: pwsh
       run: |
         $process = Start-Process "npm.cmd" `
-          -ArgumentList "start","--workspace=packages/bruno-tests" `
+          -ArgumentList "start","--workspace=packages/marrone-tests" `
           -NoNewWindow `
           -PassThru
 
@@ -51,13 +51,13 @@ runs:
           exit 1
         }
 
-        cd packages/bruno-tests/collection
-        $bruArgs = @("run", "--env", "Prod", "--output", "junit.xml", "--format", "junit", "--sandbox", "developer")
+        cd packages/marrone-tests/collection
+        $marroneArgs = @("run", "--env", "Prod", "--output", "junit.xml", "--format", "junit", "--sandbox", "developer")
         if ("${{ inputs.experimental_cache_modules }}" -eq "true") {
-          $bruArgs += "--experimental-cache-modules"
+          $marroneArgs += "--experimental-cache-modules"
         }
-        & node ../../bruno-cli/bin/bru.js @bruArgs
+        & node ../../marrone-cli/bin/marrone.js @marroneArgs
         if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
         cd ../safe-mode
-        & node ../../bruno-cli/bin/bru.js run --env Prod --output junit.xml --format junit
+        & node ../../marrone-cli/bin/marrone.js run --env Prod --output junit.xml --format junit

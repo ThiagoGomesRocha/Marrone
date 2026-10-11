@@ -14,13 +14,13 @@ export interface WriteRequestOptions {
   seq: number;
   /** HTTP verb (lowercased into the request block); default 'get' */
   method?: string;
-  /** Request URL; default 'https://echo.usebruno.com' */
+  /** Request URL; default 'https://echo.marrone.com' */
   url?: string;
   /** Names of saved response examples to attach to the request */
   examples?: string[];
 }
 
-/** Create the collection directory + `bruno.json` (the marker that makes a dir a Bruno collection). */
+/** Create the collection directory + `bruno.json` (the marker that makes a dir a Marrone collection). */
 export const initBruCollection = (dir: string, name: string) => {
   fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(
@@ -40,10 +40,10 @@ export const writeBruFolder = (dir: string, name: string, seq: number) => {
 /**
  * Write an HTTP request `.bru`, optionally with saved response examples. The `example { ... }`
  * block shape matches the bru serializer output (see
- * packages/bruno-lang/v2/tests/examples/fixtures/bru/bruToJson-single-example.bru).
+ * packages/marrone-lang/v2/tests/examples/fixtures/bru/bruToJson-single-example.bru).
  */
 export const writeBruRequest = (dir: string, name: string, options: WriteRequestOptions) => {
-  const { seq, method = 'get', url = 'https://echo.usebruno.com', examples = [] } = options;
+  const { seq, method = 'get', url = 'https://echo.marrone.com', examples = [] } = options;
   const exampleBlocks = examples
     .map((ex) => `\nexample {\n  name: ${ex}\n  request: {\n    url: ${url}\n    method: ${method}\n    mode: none\n  }\n}\n`)
     .join('');

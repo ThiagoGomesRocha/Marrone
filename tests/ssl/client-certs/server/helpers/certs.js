@@ -2,7 +2,7 @@ const { execCommand, execCommandSilent } = require('./platform');
 const fs = require('node:fs');
 const path = require('node:path');
 
-const PFX_PASSPHRASE = 'bruno';
+const PFX_PASSPHRASE = 'marrone';
 
 function createCertsDir(certsDir) {
   if (fs.existsSync(certsDir)) {
@@ -15,13 +15,13 @@ function createCertsDir(certsDir) {
  * Generates a self-contained mTLS certificate set:
  *   ca-cert.pem / ca-key.pem          - the CA that signs everything
  *   server-cert.pem / server-key.pem  - server cert (CN=localhost, SAN localhost/127.0.0.1)
- *   client-cert.pem / client-key.pem  - client cert (extendedKeyUsage=clientAuth, CN=bruno-client)
- *   client.pfx                        - PKCS#12 bundle of the client cert (passphrase: "bruno")
+ *   client-cert.pem / client-key.pem  - client cert (extendedKeyUsage=clientAuth, CN=marrone-client)
+ *   client.pfx                        - PKCS#12 bundle of the client cert (passphrase: "marrone")
  *   untrusted-client-cert.pem / untrusted-client-key.pem
  *                                     - self-signed client cert the server rejects (CN=untrusted-client)
  *
- * Point Bruno's client-certificate config at client-cert.pem/client-key.pem (type "cert")
- * or client.pfx (type "pfx"). The CA (ca-cert.pem) must be trusted by Bruno for the TLS
+ * Point Marrone's client-certificate config at client-cert.pem/client-key.pem (type "cert")
+ * or client.pfx (type "pfx"). The CA (ca-cert.pem) must be trusted by Marrone for the TLS
  * handshake to complete — set it as the custom CA cert in Preferences, or disable TLS verification.
  */
 function generateCertificates(certsDir) {
@@ -36,7 +36,7 @@ distinguished_name = dn
 x509_extensions = v3_ca
 prompt = no
 [dn]
-CN = Bruno Test CA
+CN = Marrone Test CA
 [v3_ca]
 basicConstraints = critical, CA:TRUE
 keyUsage = critical, keyCertSign, cRLSign`);
@@ -69,7 +69,7 @@ distinguished_name = dn
 req_extensions = v3_req
 prompt = no
 [dn]
-CN = bruno-client
+CN = marrone-client
 [v3_req]
 keyUsage = critical, digitalSignature
 extendedKeyUsage = clientAuth

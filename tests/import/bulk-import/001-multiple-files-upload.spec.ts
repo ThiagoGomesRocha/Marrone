@@ -20,7 +20,7 @@ test.describe('Multiple Files Upload', () => {
     // Wait for import collection modal to be ready
     const importModal = page.getByRole('dialog');
     await importModal.waitFor({ state: 'visible' });
-    await expect(importModal.locator('.bruno-modal-header-title')).toContainText('Import Collection');
+    await expect(importModal.locator('.marrone-modal-header-title')).toContainText('Import Collection');
 
     await page.setInputFiles('input[type="file"]', [postmanFile, insomniaFile]);
 
@@ -29,7 +29,7 @@ test.describe('Multiple Files Upload', () => {
 
     // Verify that the Bulk Import modal is now displayed
     const bulkImportModal = page.getByRole('dialog');
-    await expect(bulkImportModal.locator('.bruno-modal-header-title')).toContainText('Bulk Import');
+    await expect(bulkImportModal.locator('.marrone-modal-header-title')).toContainText('Bulk Import');
 
     // Check that the Collections count shows 2 collections in the Bulk Import modal
     const collectionsHeading = bulkImportModal.getByTestId('selection-heading').filter({ hasText: 'Collections' });

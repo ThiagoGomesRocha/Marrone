@@ -13,5 +13,5 @@ http:
         "headers": {
           "content-type": "application/xml"
         },
-        "content": "<catalog version='2'><book id='b1'><title>Bruno</title></book><empty/></catalog>"
+        "content": "<catalog version='2'><book id='b1'><title>Marrone</title></book><empty/></catalog>"
       }

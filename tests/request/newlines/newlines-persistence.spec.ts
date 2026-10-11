@@ -23,7 +23,7 @@ test('should persist request with newlines across app restarts', async ({ create
   await page.getByPlaceholder('Request Name').fill('persistence-test');
   await page.locator('#new-request-url').locator('.CodeMirror').click();
   await page.locator('#new-request-url').locator('textarea').fill('https://httpbin.org/get');
-  await page.locator('.bruno-modal').getByRole('button', { name: 'Create', exact: true }).click();
+  await page.locator('.marrone-modal').getByRole('button', { name: 'Create', exact: true }).click();
 
   await openCollection(page, 'newlines-persistence');
 

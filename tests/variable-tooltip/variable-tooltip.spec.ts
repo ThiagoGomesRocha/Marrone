@@ -343,7 +343,7 @@ test.describe('Variable Tooltip', () => {
       await saveEnvironment(page);
 
       await page.getByTestId('env-delete-action').click();
-      const deleteModal = page.locator('.bruno-modal').filter({ hasText: 'Delete Environment' });
+      const deleteModal = page.locator('.marrone-modal').filter({ hasText: 'Delete Environment' });
       await deleteModal.getByRole('button', { name: 'Delete', exact: true }).click();
       await expect(deleteModal).toBeHidden();
 

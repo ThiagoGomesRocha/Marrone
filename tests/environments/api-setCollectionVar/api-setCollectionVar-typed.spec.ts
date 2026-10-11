@@ -9,7 +9,7 @@ const COLLECTION_FILE_ORIGINAL = `meta {
 }
 
 vars:pre-request {
-  host: https://testbench-sanity.usebruno.com
+  host: https://testbench-sanity.marrone.com
   existingCollVar: original-coll-value
 }
 `;

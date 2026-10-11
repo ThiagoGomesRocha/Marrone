@@ -1,5 +1,5 @@
 import { Locator, Page, expect, test } from '../../../../playwright';
-import { collectionSlug } from '../../../../packages/bruno-app/src/utils/collections/collectionSlug';
+import { collectionSlug } from '../../../../packages/marrone-app/src/utils/collections/collectionSlug';
 
 export type EmptyStateRequestType = 'http' | 'graphql' | 'grpc' | 'websocket';
 
@@ -90,7 +90,7 @@ export const buildSidebarLocators = (page: Page) => {
     },
 
     saveRequestModal: {
-      modal: (): Locator => page.locator('.bruno-modal-card').filter({ hasText: 'Save Request' }),
+      modal: (): Locator => page.locator('.marrone-modal-card').filter({ hasText: 'Save Request' }),
       nameInput: (): Locator => page.locator('#request-name')
     },
 

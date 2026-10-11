@@ -24,8 +24,8 @@ import { formatMib } from '../utils/format';
 import * as path from 'node:path';
 import * as fs from 'node:fs';
 
-const SOURCE_COLLECTION_DIR = path.join(process.cwd(), 'packages', 'bruno-tests', 'collection');
-const COLLECTION_NAME = 'bruno-testbench';
+const SOURCE_COLLECTION_DIR = path.join(process.cwd(), 'packages', 'marrone-tests', 'collection');
+const COLLECTION_NAME = 'marrone-testbench';
 const ENVIRONMENT = 'Local';
 const ITERATIONS = 1;
 const RUNS = 3;
@@ -94,7 +94,7 @@ test.describe('Benchmark: Runner allocation', () => {
   const runs: RunMetrics[] = [];
   let measuredPhases: string[] = [PHASE_RUN];
 
-  test('renderer + main heap while running the bruno-testbench collection', async ({ page, electronApp, createTmpDir }) => {
+  test('renderer + main heap while running the marrone-testbench collection', async ({ page, electronApp, createTmpDir }) => {
     test.setTimeout(RUNS * (RUN_COMPLETION_TIMEOUT + REPORT_TIMEOUT) + 5 * 60 * 1000);
 
     const cdp = await page.context().newCDPSession(page);
@@ -102,7 +102,7 @@ test.describe('Benchmark: Runner allocation', () => {
     measuredPhases = [PHASE_RUN];
 
     const collectionDir = await test.step('Copy the collection to a temp dir', async () => {
-      const dir = await createTmpDir('bruno-testbench');
+      const dir = await createTmpDir('marrone-testbench');
       copyCollection(dir);
       return dir;
     });

@@ -307,6 +307,6 @@ test('sends an explicit request header instead of the matching default', async (
     await sendRequest(page, 200);
     const body = await readResponsePreviewBody(page);
     expect(body).toMatch(/"user-agent"\s*:\s*"custom-ua\/1\.0"/i);
-    expect(body).not.toMatch(/bruno-runtime/i);
+    expect(body).not.toMatch(/marrone-runtime/i);
   });
 });

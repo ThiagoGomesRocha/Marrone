@@ -83,7 +83,7 @@ test.describe('Send Request — every fixture, ON and OFF', () => {
 });
 
 /**
- * Tests against the local Bruno echo server (`/api/echo/anything/*`) — covers
+ * Tests against the local Marrone echo server (`/api/echo/anything/*`) — covers
  * the # encoding decision-tree scenarios from fixings/snippet-vs-sendrequest.md.
  *
  * The echo server returns the request shape (args/data/headers/method/url) in
@@ -115,7 +115,7 @@ const expectEchoReceived = async (page: Page, expectedUrlSubstring: string) => {
 // Negative-case helper. Asserts the response body does NOT contain the
 // forbidden substring — used to prove that the fragment was stripped on wire
 // for OFF-mode tests (otherwise an `includes` on the path-only prefix would
-// pass even if Bruno wrongly leaked the fragment through).
+// pass even if Marrone wrongly leaked the fragment through).
 const expectEchoDidNotReceive = async (page: Page, forbiddenSubstring: string) => {
   const texts = await page
     .getByTestId('response-preview-container')

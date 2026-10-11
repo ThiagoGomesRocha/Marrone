@@ -34,7 +34,7 @@ test('should handle corrupted passkey and still display saved cookie list', asyn
   cookiesJson.encryptedPasskey = 'deadbeef'; // clearly invalid value
   await fs.writeFile(cookiesFilePath, JSON.stringify(cookiesJson, null, 2));
 
-  // 3. Second run – Bruno should recover and still list the cookie domain
+  // 3. Second run – Marrone should recover and still list the cookie domain
   const app2 = await launchElectronApp({ userDataPath });
   const page2 = await waitForReadyPage(app2);
 

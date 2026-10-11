@@ -29,19 +29,19 @@ test.describe.serial('Response Format Select and Preview', () => {
     await test.step('Verify response pane and default JSON editor formatting', async () => {
       await expect(responseBody).toBeVisible();
       await expect(responseFormatTab).toHaveText('JSON');
-      await expect(codeLine.nth(1)).toContainText('"hello": "bruno"');
+      await expect(codeLine.nth(1)).toContainText('"hello": "marrone"');
     });
 
     await test.step('Switch to Preview tab and check formatted object', async () => {
       await switchToPreviewTab(page);
       const jsonTreeLines = locators.response.jsonTreeLine();
-      await expect(jsonTreeLines.nth(1)).toContainText('"hello":"bruno"');
+      await expect(jsonTreeLines.nth(1)).toContainText('"hello":"marrone"');
     });
 
     await test.step('Switch to Editor, select HTML, verify editor and preview', async () => {
       await switchToEditorTab(page);
       await switchResponseFormat(page, 'HTML');
-      await expect(codeLine.nth(1)).toContainText('"hello": "bruno"');
+      await expect(codeLine.nth(1)).toContainText('"hello": "marrone"');
       await switchToPreviewTab(page);
       await expect(previewContainer.locator('webview')).toBeVisible();
     });
@@ -49,7 +49,7 @@ test.describe.serial('Response Format Select and Preview', () => {
     await test.step('Switch to Editor, select XML, verify editor and preview error', async () => {
       await switchToEditorTab(page);
       await switchResponseFormat(page, 'XML');
-      await expect(codeLine.nth(1)).toContainText('"hello": "bruno"');
+      await expect(codeLine.nth(1)).toContainText('"hello": "marrone"');
       await switchToPreviewTab(page);
       await expect(previewContainer).toContainText('Cannot preview as XML');
     });
@@ -57,7 +57,7 @@ test.describe.serial('Response Format Select and Preview', () => {
     await test.step('Switch to Editor, select JavaScript, verify editor and preview fallback', async () => {
       await switchToEditorTab(page);
       await switchResponseFormat(page, 'JavaScript');
-      await expect(codeLine.nth(1)).toContainText('"hello": "bruno"');
+      await expect(codeLine.nth(1)).toContainText('"hello": "marrone"');
       await switchToPreviewTab(page);
       await expect(previewContainer.locator('webview')).toBeVisible();
     });
@@ -65,9 +65,9 @@ test.describe.serial('Response Format Select and Preview', () => {
     await test.step('Switch to Editor, select Raw, verify editor and preview', async () => {
       await switchToEditorTab(page);
       await switchResponseFormat(page, 'Raw');
-      await expect(codeLine.nth(1)).toContainText('"hello": "bruno"');
+      await expect(codeLine.nth(1)).toContainText('"hello": "marrone"');
       await switchToPreviewTab(page);
-      await expect(previewContainer).toContainText('{"hello":"bruno"}');
+      await expect(previewContainer).toContainText('{"hello":"marrone"}');
     });
 
     await test.step('Switch to Editor, select Hex, verify editor and preview', async () => {
@@ -75,7 +75,7 @@ test.describe.serial('Response Format Select and Preview', () => {
       await switchResponseFormat(page, 'Hex');
       await expect(editorContainer).toContainText('00000000: 7B 0A 20 20 22 68 65 6C 6C 6F 22 3A 20 22');
       await switchToPreviewTab(page);
-      await expect(previewContainer).toContainText('{"hello":"bruno"}');
+      await expect(previewContainer).toContainText('{"hello":"marrone"}');
     });
 
     await test.step('Switch to Editor, select Base64, verify editor and preview', async () => {
@@ -83,7 +83,7 @@ test.describe.serial('Response Format Select and Preview', () => {
       await switchResponseFormat(page, 'Base64');
       await expect(editorContainer).toContainText('ewogICJoZWxsbyI6ICJicnVubyIKfQ==');
       await switchToPreviewTab(page);
-      await expect(previewContainer).toContainText('{"hello":"bruno"}');
+      await expect(previewContainer).toContainText('{"hello":"marrone"}');
     });
   });
 

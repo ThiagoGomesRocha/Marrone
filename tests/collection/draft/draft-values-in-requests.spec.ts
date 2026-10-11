@@ -108,8 +108,8 @@ test.describe('Draft values are used in requests', () => {
     await page.getByTestId('modal-close-button').click();
 
     // Wait for modal to fully close before continuing
-    await page.waitForSelector('.bruno-modal', { state: 'hidden', timeout: 10000 });
-    await page.waitForSelector('.bruno-modal-backdrop', { state: 'hidden', timeout: 10000 });
+    await page.waitForSelector('.marrone-modal', { state: 'hidden', timeout: 10000 });
+    await page.waitForSelector('.marrone-modal-backdrop', { state: 'hidden', timeout: 10000 });
   });
 
   test('Verify draft for proxy settings are used in HTTP requests', async ({ page, createTmpDir }) => {
@@ -126,7 +126,7 @@ test.describe('Draft values are used in requests', () => {
     await page.locator('.dropdown-item').filter({ hasText: 'New Request' }).click();
     await page.getByTestId('request-name').fill('Test Request');
     await page.getByTestId('new-request-url').locator('.CodeMirror').click();
-    await page.keyboard.type('https://testbench-sanity.usebruno.com/ping');
+    await page.keyboard.type('https://testbench-sanity.marrone.com/ping');
     await page.getByRole('button', { name: 'Create', exact: true }).click();
 
     // Verify the request is created

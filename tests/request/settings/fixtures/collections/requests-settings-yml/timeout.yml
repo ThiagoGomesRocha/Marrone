@@ -5,7 +5,7 @@ info:
 
 http:
   method: GET
-  url: https://testbench-sanity.usebruno.com/redirect-to-ping
+  url: https://testbench-sanity.marrone.com/redirect-to-ping
   auth: inherit
 
 settings:

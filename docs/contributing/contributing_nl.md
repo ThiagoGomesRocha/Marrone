@@ -1,12 +1,12 @@
 [English](../../contributing.md)
 
-## Laten we Bruno samen beter maken !!
+## Laten we Marrone samen beter maken !!
 
-We zijn blij dat je Bruno wilt verbeteren. Hieronder staan de richtlijnen om Bruno op je computer op te zetten.
+We zijn blij dat je Marrone wilt verbeteren. Hieronder staan de richtlijnen om Marrone op je computer op te zetten.
 
 ### Technologiestack
 
-Bruno is gebouwd met Next.js en React. We gebruiken ook Electron om een desktopversie te leveren (die lokale collecties ondersteunt).
+Marrone is gebouwd met Next.js en React. We gebruiken ook Electron om een desktopversie te leveren (die lokale collecties ondersteunt).
 
 Bibliotheken die we gebruiken:
 
@@ -25,7 +25,7 @@ Je hebt [Node v18.x of de nieuwste LTS-versie](https://nodejs.org/en/) en npm 8.
 
 ## Ontwikkeling
 
-Bruno wordt ontwikkeld als een desktop-app. Je moet de app laden door de Next.js app in één terminal te draaien en daarna de Electron app in een andere terminal te draaien.
+Marrone wordt ontwikkeld als een desktop-app. Je moet de app laden door de Next.js app in één terminal te draaien en daarna de Electron app in een andere terminal te draaien.
 
 ### Lokale Ontwikkeling
 
@@ -38,10 +38,10 @@ npm i --legacy-peer-deps
 
 # build pakketten
 npm run build:graphql-docs
-npm run build:bruno-query
-npm run build:bruno-common
-npm run build:bruno-converters
-npm run build:bruno-requests
+npm run build:marrone-query
+npm run build:marrone-common
+npm run build:marrone-converters
+npm run build:marrone-requests
 
 # draai next app (terminal 1)
 npm run dev:web
@@ -67,8 +67,8 @@ find . -type f -name "package-lock.json" -delete
 ### Testen
 
 ```bash
-# voer bruno-schema tests uit
-npm test --workspace=packages/bruno-schema
+# voer marrone-schema tests uit
+npm test --workspace=packages/marrone-schema
 
 # voer tests uit over alle werkruimten
 npm test --workspaces --if-present

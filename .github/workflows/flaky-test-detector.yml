@@ -47,21 +47,21 @@ jobs:
           fi
 
       - name: Install test collection dependencies
-        run: npm ci --prefix packages/bruno-tests/collection
+        run: npm ci --prefix packages/marrone-tests/collection
 
       - name: Install additional-context-root-lib dependencies
-        run: npm ci --prefix packages/bruno-tests/additional-context-root-lib
+        run: npm ci --prefix packages/marrone-tests/additional-context-root-lib
 
       - name: Build libraries
         run: |
           npm run build:graphql-docs
-          npm run build:bruno-query
-          npm run build:bruno-common
-          npm run sandbox:bundle-libraries --workspace=packages/bruno-js
-          npm run build:bruno-converters
-          npm run build:bruno-requests
+          npm run build:marrone-query
+          npm run build:marrone-common
+          npm run sandbox:bundle-libraries --workspace=packages/marrone-js
+          npm run build:marrone-converters
+          npm run build:marrone-requests
           npm run build:schema-types
-          npm run build:bruno-filestore
+          npm run build:marrone-filestore
 
       - name: Run Playwright tests
         run: xvfb-run npm run test:e2e

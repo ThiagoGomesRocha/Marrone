@@ -17,12 +17,12 @@ function normalizeExportedContent(content: any) {
   if (content.info) {
     // Replace dynamic fields with fixed values for comparison
     content.info.exportedAt = '2024-01-01T00:00:00.000Z';
-    content.info.exportedUsing = 'Bruno/v1.0.0';
+    content.info.exportedUsing = 'Marrone/v1.0.0';
   }
   // Handle individual environment files that have info at the root level
   if (content.name && content.variables && content.info) {
     content.info.exportedAt = '2024-01-01T00:00:00.000Z';
-    content.info.exportedUsing = 'Bruno/v1.0.0';
+    content.info.exportedUsing = 'Marrone/v1.0.0';
   }
   // Global environments are read back with fs.readdirSync, whose order differs per filesystem,
   // so compare against the name-sorted fixture.
@@ -58,7 +58,7 @@ test.describe.serial('Global Environment Export Tests', () => {
         await page.locator('button[title="Export environment"]').click();
 
         // Verify export modal opens
-        const exportModal = page.locator('.bruno-modal').filter({ hasText: 'Export Environments' });
+        const exportModal = page.locator('.marrone-modal').filter({ hasText: 'Export Environments' });
         await expect(exportModal).toBeVisible();
 
         // Deselect all environments first
@@ -85,7 +85,7 @@ test.describe.serial('Global Environment Export Tests', () => {
 
         // Verify file content matches expected fixture
         const exportedContent = await readExportedJson(exportedFile);
-        const expectedContent = loadExpectedFixture('bruno-global-environments/local.json');
+        const expectedContent = loadExpectedFixture('marrone-global-environments/local.json');
 
         expect(normalizeExportedContent(exportedContent)).toEqual(expectedContent);
       });
@@ -132,7 +132,7 @@ test.describe.serial('Global Environment Export Tests', () => {
 
       await test.step('Verify exported files and content', async () => {
         // Verify exported files exist
-        const exportPath = path.join(exportDir, 'bruno-global-environments');
+        const exportPath = path.join(exportDir, 'marrone-global-environments');
         expect(fs.existsSync(exportPath)).toBe(true);
 
         const expectedFiles = [
@@ -146,7 +146,7 @@ test.describe.serial('Global Environment Export Tests', () => {
 
           // Verify file content matches expected fixture
           const content = await readExportedJson(filePath);
-          const expectedContent = loadExpectedFixture(`bruno-global-environments/${fileName}`);
+          const expectedContent = loadExpectedFixture(`marrone-global-environments/${fileName}`);
           expect(normalizeExportedContent(content)).toEqual(expectedContent);
         }
       });
@@ -160,7 +160,7 @@ test.describe.serial('Global Environment Export Tests', () => {
 
       await test.step('Setup existing export directory to simulate conflict', async () => {
         // Create existing export directory and file to simulate conflict
-        const existingExportPath = path.join(exportDir, 'bruno-global-environments');
+        const existingExportPath = path.join(exportDir, 'marrone-global-environments');
         fs.mkdirSync(existingExportPath, { recursive: true });
         fs.writeFileSync(path.join(existingExportPath, 'local.json'), '{}');
       });
@@ -196,12 +196,12 @@ test.describe.serial('Global Environment Export Tests', () => {
 
       await test.step('Verify unique naming and file content', async () => {
         // Verify original folder still exists
-        const existingExportPath = path.join(exportDir, 'bruno-global-environments');
+        const existingExportPath = path.join(exportDir, 'marrone-global-environments');
         expect(fs.existsSync(existingExportPath)).toBe(true);
         expect(fs.existsSync(path.join(existingExportPath, 'local.json'))).toBe(true);
 
         // Verify new folder with unique name was created
-        const uniqueExportPath = path.join(exportDir, 'bruno-global-environments copy');
+        const uniqueExportPath = path.join(exportDir, 'marrone-global-environments copy');
         expect(fs.existsSync(uniqueExportPath)).toBe(true);
 
         // Verify the new file exists in the unique folder
@@ -210,7 +210,7 @@ test.describe.serial('Global Environment Export Tests', () => {
 
         // Verify file content matches expected fixture
         const exportedContent = await readExportedJson(newExportedFile);
-        const expectedContent = loadExpectedFixture('bruno-global-environments/local.json');
+        const expectedContent = loadExpectedFixture('marrone-global-environments/local.json');
         expect(normalizeExportedContent(exportedContent)).toEqual(expectedContent);
       });
     });
@@ -313,12 +313,12 @@ test.describe.serial('Global Environment Export Tests', () => {
 
       await test.step('Verify exported file and content', async () => {
         // Verify exported file exists
-        const exportedFile = path.join(exportDir, 'bruno-global-environments.json');
+        const exportedFile = path.join(exportDir, 'marrone-global-environments.json');
         expect(fs.existsSync(exportedFile)).toBe(true);
 
         // Verify file content matches expected fixture
         const content = await readExportedJson(exportedFile);
-        const expectedContent = loadExpectedFixture('bruno-global-environments.json');
+        const expectedContent = loadExpectedFixture('marrone-global-environments.json');
         expect(normalizeExportedContent(content)).toEqual(expectedContent);
       });
     });
@@ -421,8 +421,8 @@ test.describe.serial('Global Environment Export Tests', () => {
       await environment.exportModal.submit().click();
       await expect(environment.exportModal.root()).toBeHidden();
 
-      const exported = await readExportedJson(path.join(exportDir, 'bruno-global-environments.json'));
-      const expected = loadExpectedFixture('bruno-global-environments.json');
+      const exported = await readExportedJson(path.join(exportDir, 'marrone-global-environments.json'));
+      const expected = loadExpectedFixture('marrone-global-environments.json');
 
       expect(findEnvironmentByName(exported.environments, 'derived')).toEqual(
         findEnvironmentByName(expected.environments, 'derived')

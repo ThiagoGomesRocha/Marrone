@@ -13,10 +13,10 @@ const selectAllShortcut = process.platform === 'darwin' ? 'Meta+a' : 'Control+a'
 
 /**
  * E2E test for multipart/mixed boundary preservation
- * Regression test for: https://github.com/usebruno/bruno/issues/7523
+ * Regression test for: https://github.com/marrone/marrone/issues/7523
  *
  * When a user specifies a boundary parameter in their Content-Type header
- * for multipart/mixed requests with TEXT body mode, Bruno should preserve
+ * for multipart/mixed requests with TEXT body mode, Marrone should preserve
  * the user-defined boundary instead of generating a new one.
  */
 test.describe.serial('Multipart boundary preservation', () => {
@@ -139,7 +139,7 @@ value1\r
     await test.step('Set body to Multipart Form mode and add a field', async () => {
       await selectRequestPaneTab(page, 'Body');
 
-      // Select Multipart Form body mode so Bruno has data to create FormData from
+      // Select Multipart Form body mode so Marrone has data to create FormData from
       await locators.request.bodyModeSelector().click();
       await locators.dropdown.item('Multipart Form').click();
 

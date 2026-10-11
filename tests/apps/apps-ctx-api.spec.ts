@@ -185,13 +185,13 @@ test.describe('Apps - ctx API', () => {
     await previewApp(page);
     await waitForGuestReady(page, electronApp);
 
-    // Read the document from the guest itself: the `bruno-app://` scheme is
+    // Read the document from the guest itself: the `marrone-app://` scheme is
     // internal to Electron, so the test runner cannot fetch the URL.
     const html = await guestEval(page, electronApp, 'document.documentElement.outerHTML');
     // ctx API surface is present in the injected bootstrap
     expect(html).toContain('window.bru');
     expect(html).toContain('submitRequest');
-    expect(html).toContain('__brunoReceive');
+    expect(html).toContain('__marroneReceive');
     // user code is present
     expect(html).toContain('window.__send');
     expect(html).toContain('window.__log');

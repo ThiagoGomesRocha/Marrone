@@ -54,11 +54,11 @@ test('migration clears stale tabs for the same collection in another workspace',
   await test.step('Create a bru collection and persist ReqA in the default workspace', async () => {
     await createCollection(page, 'SharedCol', collectionParentPath, 'bru');
     await createRequest(page, 'ReqA', 'SharedCol', {
-      url: 'https://echo.usebruno.com',
+      url: 'https://echo.marrone.com',
       method: 'GET'
     });
     await createRequest(page, 'ReqB', 'SharedCol', {
-      url: 'https://echo.usebruno.com',
+      url: 'https://echo.marrone.com',
       method: 'GET'
     });
     await openRequest(page, 'SharedCol', 'ReqA', { persist: true });

@@ -1,7 +1,7 @@
 import { test, expect } from '../../../playwright';
 import { closeAllCollections, openCollection } from '../../utils/page';
 
-const DISMISSED_LOCAL_STORAGE_KEY = 'bruno.migrateToYmlPill.dismissed';
+const DISMISSED_LOCAL_STORAGE_KEY = 'marrone.migrateToYmlPill.dismissed';
 
 test.describe('Migrate-to-YML pill in collection toolbar', () => {
   test.afterAll(async ({ page }) => {
@@ -38,13 +38,13 @@ test.describe('Migrate-to-YML pill in collection toolbar', () => {
 
     await test.step('Clicking the pill body opens the migrate-to-yml modal without dismissing', async () => {
       await pill.click();
-      const migrateModal = page.locator('.bruno-modal-card', { hasText: 'Migrate to YML format' });
+      const migrateModal = page.locator('.marrone-modal-card', { hasText: 'Migrate to YML format' });
       await expect(migrateModal).toBeVisible();
       // Pill should still be visible — clicking the body opens the modal, it should not dismiss
       await expect(pill).toBeVisible();
       // Close the modal so the next step can interact with the pill
       await page.keyboard.press('Escape');
-      await expect(page.locator('.bruno-modal-backdrop')).toHaveCount(0);
+      await expect(page.locator('.marrone-modal-backdrop')).toHaveCount(0);
     });
 
     await test.step('Dismiss the pill via the cross icon', async () => {

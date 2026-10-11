@@ -314,7 +314,7 @@ export const openFolderRunModal = async (page: Page, collectionName: string, fol
     await runMenuItem.waitFor({ state: 'visible' });
     await runMenuItem.click();
 
-    const modal = page.locator('.bruno-modal');
+    const modal = page.locator('.marrone-modal');
     await expect(modal).toBeVisible();
     return modal;
   });
@@ -353,7 +353,7 @@ const FOLDER_RUN_COUNT_TEST_IDS: Record<FolderRunMode, string> = {
  * @returns void
  */
 export const dismissFolderRunModal = async (page: Page) => {
-  const modal = page.locator('.bruno-modal').first();
+  const modal = page.locator('.marrone-modal').first();
   if (!(await modal.isVisible())) {
     return;
   }

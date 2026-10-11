@@ -1,5 +1,5 @@
 import { test, expect, Page, ElectronApplication } from '../../../playwright';
-import { collectionSlug } from '../../../packages/bruno-app/src/utils/collections/collectionSlug';
+import { collectionSlug } from '../../../packages/marrone-app/src/utils/collections/collectionSlug';
 
 /**
  * Collection tree item structure for assertions

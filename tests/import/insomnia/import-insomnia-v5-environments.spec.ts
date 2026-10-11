@@ -28,7 +28,7 @@ test.describe('Import Insomnia v5 Collection - Environment Import', () => {
 
       const importModal = page.getByTestId('import-collection-modal');
       await importModal.waitFor({ state: 'visible' });
-      await expect(importModal.locator('.bruno-modal-header-title')).toContainText('Import Collection');
+      await expect(importModal.locator('.marrone-modal-header-title')).toContainText('Import Collection');
 
       await page.setInputFiles('input[type="file"]', insomniaFile);
 

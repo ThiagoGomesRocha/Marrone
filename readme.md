@@ -1,14 +1,14 @@
 <br />
 <img src="assets/images/logo-transparent.png" width="80"/>
 
-### Bruno - Opensource IDE for exploring and testing APIs.
+### Marrone - Opensource IDE for exploring and testing APIs.
 
-[![GitHub version](https://badge.fury.io/gh/usebruno%2Fbruno.svg)](https://badge.fury.io/gh/usebruno%2Fbruno)
-[![CI](https://github.com/usebruno/bruno/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/usebruno/bruno/actions/workflows/tests.yml)
-[![Commit Activity](https://img.shields.io/github/commit-activity/m/usebruno/bruno)](https://github.com/usebruno/bruno/pulse)
-[![X](https://img.shields.io/twitter/follow/use_bruno?style=social&logo=x)](https://twitter.com/use_bruno)
-[![Website](https://img.shields.io/badge/Website-Visit-blue)](https://www.usebruno.com)
-[![Download](https://img.shields.io/badge/Download-Latest-brightgreen)](https://www.usebruno.com/downloads)
+[![GitHub version](https://badge.fury.io/gh/marrone%2Fmarrone.svg)](https://badge.fury.io/gh/marrone%2Fmarrone)
+[![CI](https://github.com/marrone/marrone/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/marrone/marrone/actions/workflows/tests.yml)
+[![Commit Activity](https://img.shields.io/github/commit-activity/m/marrone/marrone)](https://github.com/marrone/marrone/pulse)
+[![X](https://img.shields.io/twitter/follow/use_marrone?style=social&logo=x)](https://twitter.com/use_marrone)
+[![Website](https://img.shields.io/badge/Website-Visit-blue)](https://www.marrone.com)
+[![Download](https://img.shields.io/badge/Download-Latest-brightgreen)](https://www.marrone.com/downloads)
 
 **English**
 | [Українська](docs/readme/readme_ua.md)
@@ -32,32 +32,32 @@
 | [فارسی](docs/readme/readme_fa.md)
 | [हिन्दी](docs/readme/readme_hi.md)
 
-Bruno is a new and innovative API client, aimed at revolutionizing the status quo represented by Postman and similar tools out there.
+Marrone is a new and innovative API client, aimed at revolutionizing the status quo represented by Postman and similar tools out there.
 
-Bruno stores your collections directly in a folder on your filesystem. We use a plain text markup language, Bru, to save information about API requests.
+Marrone stores your collections directly in a folder on your filesystem. We use a plain text markup language, Bru, to save information about API requests.
 
 You can use Git or any version control of your choice to collaborate over your API collections.
 
-Bruno is offline-only. There are no plans to add cloud-sync to Bruno, ever. We value your data privacy and believe it should stay on your device. Read our long-term vision [here](https://github.com/usebruno/bruno/discussions/269)
+Marrone is offline-only. There are no plans to add cloud-sync to Marrone, ever. We value your data privacy and believe it should stay on your device. Read our long-term vision [here](https://github.com/marrone/marrone/discussions/269)
 
-[Download Bruno](https://www.usebruno.com/downloads)
+[Download Marrone](https://www.marrone.com/downloads)
 
 📢 Watch our recent talk at India FOSS 3.0 Conference [here](https://www.youtube.com/watch?v=7bSMFpbcPiY)
 
-![bruno](assets/images/landing-2-dark.png#gh-light-mode-only)
-![bruno](assets/images/landing-2-light.png#gh-dark-mode-only) <br /><br />
+![marrone](assets/images/landing-2-dark.png#gh-light-mode-only)
+![marrone](assets/images/landing-2-light.png#gh-dark-mode-only) <br /><br />
 
 ## Commercial Versions ✨
 
 Majority of our features are free and open source.
-We strive to strike a harmonious balance between [open-source principles and sustainability](https://github.com/usebruno/bruno/discussions/269)
+We strive to strike a harmonious balance between [open-source principles and sustainability](https://github.com/marrone/marrone/discussions/269)
 
-You can explore our [paid versions](https://www.usebruno.com/pricing) to see if there are additional features that you or your team may find useful! <br/>
+You can explore our [paid versions](https://www.marrone.com/pricing) to see if there are additional features that you or your team may find useful! <br/>
 
 ## Table of Contents
 
 - [Installation](#installation)
-- [Bruno CLI](#bruno-cli)
+- [Marrone CLI](#marrone-cli)
 - [Run with Docker](#run-with-docker)
 - [Features](#features)
   - [Run across multiple platforms 🖥️](#run-across-multiple-platforms-%EF%B8%8F)
@@ -74,116 +74,116 @@ You can explore our [paid versions](https://www.usebruno.com/pricing) to see if 
 
 ## Installation
 
-Bruno is available as binary download [on our website](https://www.usebruno.com/downloads) for Mac, Windows and Linux.
+Marrone is available as binary download [on our website](https://www.marrone.com/downloads) for Mac, Windows and Linux.
 
-You can also install Bruno via package managers like Homebrew, Chocolatey, Scoop, Snap, Flatpak and Apt.
+You can also install Marrone via package managers like Homebrew, Chocolatey, Scoop, Snap, Flatpak and Apt.
 
 ```sh
 # On Mac via Homebrew
-brew install bruno
+brew install marrone
 
 # On Windows via Chocolatey
-choco install bruno
+choco install marrone
 
 # On Windows via Scoop
 scoop bucket add extras
-scoop install bruno
+scoop install marrone
 
 # On Windows via winget
-winget install Bruno.Bruno
+winget install Marrone.Marrone
 
 # On Linux via Snap
-snap install bruno
+snap install marrone
 
 # On Linux via Flatpak
-flatpak install com.usebruno.Bruno
+flatpak install com.marrone.Marrone
 
 # On Arch Linux via AUR
-yay -S bruno
+yay -S marrone
 
 # On Linux via Apt
 sudo mkdir -p /etc/apt/keyrings
 sudo apt update && sudo apt install gpg curl
 curl -fsSL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x9FA6017ECABE0266" \
   | gpg --dearmor \
-  | sudo tee /etc/apt/keyrings/bruno.gpg > /dev/null
-sudo chmod 644 /etc/apt/keyrings/bruno.gpg
-echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/bruno.gpg] http://debian.usebruno.com/ bruno stable" \
-  | sudo tee /etc/apt/sources.list.d/bruno.list
-sudo apt update && sudo apt install bruno
+  | sudo tee /etc/apt/keyrings/marrone.gpg > /dev/null
+sudo chmod 644 /etc/apt/keyrings/marrone.gpg
+echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/marrone.gpg] http://debian.marrone.com/ marrone stable" \
+  | sudo tee /etc/apt/sources.list.d/marrone.list
+sudo apt update && sudo apt install marrone
 ```
 
-## Bruno CLI
+## Marrone CLI
 
-The **Bruno CLI** lets you run your API collections from the command line, which is ideal for automated testing and CI/CD pipelines. Install it from npm using the package manager of your choice:
+The **Marrone CLI** lets you run your API collections from the command line, which is ideal for automated testing and CI/CD pipelines. Install it from npm using the package manager of your choice:
 
 ```sh
-npm install -g @usebruno/cli
+npm install -g @marrone/cli
 ```
 
 Navigate to the directory containing your collection and run it:
 
 ```sh
 # Run every request in the collection
-bru run
+marrone run
 
 # Run a single request
-bru run request.bru
+marrone run request.bru
 
 # Run a folder against a specific environment
-bru run folder --env Local
+marrone run folder --env Local
 ```
 
-For the full command reference, see the [Bruno CLI documentation](https://docs.usebruno.com/bru-cli/overview).
+For the full command reference, see the [Marrone CLI documentation](https://docs.marrone.com/bru-cli/overview).
 
 ## Run with Docker
 
-Official Docker images for the **Bruno CLI** let you run API collections in CI/CD pipelines and locally without installing Node.js or npm on the host. Images are published to both [Docker Hub](https://hub.docker.com/r/usebruno/cli) and the [GitHub Container Registry](https://ghcr.io/usebruno/cli) on every CLI release, with `alpine` and `debian` variants for `linux/amd64` and `linux/arm64`.
+Official Docker images for the **Marrone CLI** let you run API collections in CI/CD pipelines and locally without installing Node.js or npm on the host. Images are published to both [Docker Hub](https://hub.docker.com/r/marrone/cli) and the [GitHub Container Registry](https://ghcr.io/marrone/cli) on every CLI release, with `alpine` and `debian` variants for `linux/amd64` and `linux/arm64`.
 
 ```sh
 # Pull from Docker Hub
-docker pull usebruno/cli:latest
+docker pull marrone/cli:latest
 
 # Or pull from the GitHub Container Registry
-docker pull ghcr.io/usebruno/cli:latest
+docker pull ghcr.io/marrone/cli:latest
 
 # Run a collection by mounting the current directory
-docker run -v $(pwd):/bruno usebruno/cli run
+docker run -v $(pwd):/marrone marrone/cli run
 ```
 
-For variants, tag matrix, environment files, and CI examples (GitHub Actions, GitLab CI, Jenkins), see the full [Bruno CLI Docker documentation](https://docs.usebruno.com/bru-cli/docker).
+For variants, tag matrix, environment files, and CI examples (GitHub Actions, GitLab CI, Jenkins), see the full [Marrone CLI Docker documentation](https://docs.marrone.com/bru-cli/docker).
 
 ## Features
 
 ### Run across multiple platforms 🖥️
 
-![bruno](assets/images/run-anywhere.png) <br /><br />
+![marrone](assets/images/run-anywhere.png) <br /><br />
 
 ### Collaborate via Git 👩‍💻🧑‍💻
 
 Or any version control system of your choice
 
-![bruno](assets/images/version-control.png) <br /><br />
+![marrone](assets/images/version-control.png) <br /><br />
 
 ## Important Links 📌
 
-- [Our Long Term Vision](https://github.com/usebruno/bruno/discussions/269)
-- [Roadmap](https://www.usebruno.com/roadmap)
-- [Documentation](https://docs.usebruno.com)
-- [Stack Overflow](https://stackoverflow.com/questions/tagged/bruno)
-- [Website](https://www.usebruno.com)
-- [Pricing](https://www.usebruno.com/pricing)
-- [Download](https://www.usebruno.com/downloads)
+- [Our Long Term Vision](https://github.com/marrone/marrone/discussions/269)
+- [Roadmap](https://www.marrone.com/roadmap)
+- [Documentation](https://docs.marrone.com)
+- [Stack Overflow](https://stackoverflow.com/questions/tagged/marrone)
+- [Website](https://www.marrone.com)
+- [Pricing](https://www.marrone.com/pricing)
+- [Download](https://www.marrone.com/downloads)
 
 ## Showcase 🎥
 
-- [Testimonials](https://github.com/usebruno/bruno/discussions/343)
-- [Knowledge Hub](https://github.com/usebruno/bruno/discussions/386)
-- [Scriptmania](https://github.com/usebruno/bruno/discussions/385)
+- [Testimonials](https://github.com/marrone/marrone/discussions/343)
+- [Knowledge Hub](https://github.com/marrone/marrone/discussions/386)
+- [Scriptmania](https://github.com/marrone/marrone/discussions/385)
 
 ## Share Testimonials 📣
 
-If Bruno has helped you at work and your teams, please don't forget to share your [testimonials on our GitHub discussion](https://github.com/usebruno/bruno/discussions/343)
+If Marrone has helped you at work and your teams, please don't forget to share your [testimonials on our GitHub discussion](https://github.com/marrone/marrone/discussions/343)
 
 ## Publishing to New Package Managers
 
@@ -191,16 +191,16 @@ Please see [here](publishing.md) for more information.
 
 ## Stay in touch 🌐
 
-[𝕏 (Twitter)](https://twitter.com/use_bruno) <br />
-[Website](https://www.usebruno.com) <br />
+[𝕏 (Twitter)](https://twitter.com/use_marrone) <br />
+[Website](https://www.marrone.com) <br />
 [Discord](https://discord.com/invite/KgcZUncpjq) <br />
-[LinkedIn](https://www.linkedin.com/company/usebruno)
+[LinkedIn](https://www.linkedin.com/company/marrone)
 
 ## Trademark
 
 **Name**
 
-`Bruno` is a trademark held by [Anoop M D](https://www.helloanoop.com/)
+`Marrone` is a trademark held by [Anoop M D](https://www.helloanoop.com/)
 
 **Logo**
 
@@ -208,15 +208,15 @@ The logo is sourced from [OpenMoji](https://openmoji.org/library/emoji-1F436/). 
 
 ## Contribute 👩‍💻🧑‍💻
 
-I am happy that you are looking to improve bruno. Please check out the [contributing guide](contributing.md)
+I am happy that you are looking to improve marrone. Please check out the [contributing guide](contributing.md)
 
 Even if you are not able to make contributions via code, please don't hesitate to file bugs and feature requests that needs to be implemented to solve your use case.
 
 ## Authors
 
 <div align="center">
-    <a href="https://github.com/usebruno/bruno/graphs/contributors">
-        <img src="https://contrib.rocks/image?repo=usebruno/bruno" />
+    <a href="https://github.com/marrone/marrone/graphs/contributors">
+        <img src="https://contrib.rocks/image?repo=marrone/marrone" />
     </a>
 </div>
 

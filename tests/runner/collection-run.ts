@@ -2,18 +2,18 @@ import { test, expect } from '../../playwright';
 import { setSandboxMode, runCollection, validateRunnerResults, getRunnerResultCounts } from '../utils/page/index';
 
 test.describe.parallel('Collection Run', () => {
-  test('Run bruno-testbench in Developer Mode', async ({ pageWithUserData: page }) => {
+  test('Run marrone-testbench in Developer Mode', async ({ pageWithUserData: page }) => {
     test.setTimeout(2 * 60 * 1000);
 
     // Set up developer mode
-    await setSandboxMode(page, 'bruno-testbench', 'developer');
+    await setSandboxMode(page, 'marrone-testbench', 'developer');
 
     // Select environment
     await page.locator('.environment-selector').nth(1).click();
     await page.locator('.dropdown-item').getByText('Prod').click();
 
     // Run the collection
-    await runCollection(page, 'bruno-testbench');
+    await runCollection(page, 'marrone-testbench');
 
     // Validate test results
     await validateRunnerResults(page, {
@@ -21,13 +21,13 @@ test.describe.parallel('Collection Run', () => {
     });
   });
 
-  test.fixme('Run bruno-testbench in Safe Mode', async ({ pageWithUserData: page }) => {
+  test.fixme('Run marrone-testbench in Safe Mode', async ({ pageWithUserData: page }) => {
     test.setTimeout(2 * 60 * 1000);
 
-    await page.getByText('bruno-testbench').click();
+    await page.getByText('marrone-testbench').click();
     await page.locator('.environment-selector').nth(1).click();
     await page.locator('.dropdown-item').getByText('Prod').click();
-    const collectionContainer = page.getByTestId('collections').locator('.collection-name').filter({ hasText: 'bruno-testbench' });
+    const collectionContainer = page.getByTestId('collections').locator('.collection-name').filter({ hasText: 'marrone-testbench' });
     await collectionContainer.hover();
     await collectionContainer.locator('.collection-actions .icon').waitFor({ state: 'visible' });
     await collectionContainer.locator('.collection-actions .icon').click();

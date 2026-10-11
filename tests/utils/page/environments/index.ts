@@ -22,7 +22,7 @@ const varRowByName = (page: Page, name: string) =>
     .or(page.getByTestId(/^collection-vars-(req|res)$/).locator(`tr[data-row-name="${name}"]`));
 
 const environmentItemLocator = (page: Page, name: string) => page.locator('.environment-item').filter({ hasText: name });
-const exportModalRoot = (page: Page) => page.locator('.bruno-modal').filter({ hasText: 'Export Environments' });
+const exportModalRoot = (page: Page) => page.locator('.marrone-modal').filter({ hasText: 'Export Environments' });
 
 export const buildEnvironmentLocators = (page: Page) => ({
   selector: () => page.getByTestId('environment-selector-trigger'),

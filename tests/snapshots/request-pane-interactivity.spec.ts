@@ -264,7 +264,7 @@ test.describe('Snapshot: Request Pane Interactivity', () => {
       await page.getByTestId('graphql-request').click();
       await page.getByTestId('request-name').fill('ReqGraphSnapshot');
       await page.getByTestId('new-request-url').locator('.CodeMirror').click();
-      await page.keyboard.type('https://echo.usebruno.com/graphql');
+      await page.keyboard.type('https://echo.marrone.com/graphql');
       await locators.modal.button('Create').click();
 
       await openRequest(page, 'TestCol', 'ReqGraphSnapshot', { persist: true });

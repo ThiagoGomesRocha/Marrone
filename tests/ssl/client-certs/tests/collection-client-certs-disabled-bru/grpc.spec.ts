@@ -4,7 +4,7 @@ import { buildGrpcCommonLocators } from '../../../../utils/page/locators';
 
 const COLLECTION = 'client-certs-disabled-bru';
 
-// The collection's client certificate is present but flagged `disabled: true`, so Bruno
+// The collection's client certificate is present but flagged `disabled: true`, so Marrone
 // withholds it over gRPC TLS. The server rejects the connection at the handshake and the
 // call fails with a non-OK status.
 test.describe('grpc with collection client certificate (disabled, bru)', () => {

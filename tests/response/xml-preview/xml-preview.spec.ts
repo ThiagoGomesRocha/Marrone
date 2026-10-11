@@ -49,7 +49,7 @@ test.describe('XML Preview - well-formed responses', () => {
       await expect(xmlTree).toContainText('_id');
       await expect(xmlTree).toContainText('b1');
       await expect(xmlTree).toContainText('title');
-      await expect(xmlTree).toContainText('Bruno');
+      await expect(xmlTree).toContainText('Marrone');
     });
   });
 

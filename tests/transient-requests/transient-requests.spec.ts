@@ -131,7 +131,7 @@ test.describe.serial('Transient Requests', () => {
 
     await test.step('Fill in save dialog', async () => {
       // Wait for save modal to appear
-      const saveModal = page.locator('.bruno-modal-card').filter({ hasText: 'Save Request' });
+      const saveModal = page.locator('.marrone-modal-card').filter({ hasText: 'Save Request' });
       await expect(saveModal).toBeVisible({ timeout: 5000 });
 
       // Fill in request name
@@ -178,7 +178,7 @@ test.describe.serial('Transient Requests', () => {
     });
 
     await test.step('Fill in save dialog', async () => {
-      const saveModal = page.locator('.bruno-modal-card').filter({ hasText: 'Save Request' });
+      const saveModal = page.locator('.marrone-modal-card').filter({ hasText: 'Save Request' });
       await expect(saveModal).toBeVisible({ timeout: 5000 });
 
       const requestNameInput = saveModal.locator('#request-name');

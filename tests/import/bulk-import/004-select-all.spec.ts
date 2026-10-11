@@ -41,13 +41,13 @@ test.describe('Bulk Import - Select all', () => {
 
     const importModal = page.getByRole('dialog');
     await importModal.waitFor({ state: 'visible' });
-    await expect(importModal.locator('.bruno-modal-header-title')).toContainText('Import Collection');
+    await expect(importModal.locator('.marrone-modal-header-title')).toContainText('Import Collection');
 
     await page.setInputFiles('input[type="file"]', importFiles);
     await page.locator('#import-collection-loader').waitFor({ state: 'hidden' });
 
     const bulkImportModal = page.getByRole('dialog');
-    await expect(bulkImportModal.locator('.bruno-modal-header-title')).toContainText('Bulk Import');
+    await expect(bulkImportModal.locator('.marrone-modal-header-title')).toContainText('Bulk Import');
 
     const collectionsSection = bulkImportModal.getByTestId('selection-section-collections');
     await expect(collectionsSection.getByTestId('selection-count')).toHaveText(String(totalCollections));
@@ -132,6 +132,6 @@ test.describe('Bulk Import - Select all', () => {
     });
 
     await page.getByTestId('modal-close-button').click();
-    await expect(page.locator('.bruno-modal-backdrop')).toHaveCount(0);
+    await expect(page.locator('.marrone-modal-backdrop')).toHaveCount(0);
   });
 });

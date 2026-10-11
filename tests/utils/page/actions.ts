@@ -1,5 +1,5 @@
 import { test, expect, Page, Locator, ElectronApplication, waitForReadyPage as waitForReadyPageImpl } from '../../../playwright';
-import { collectionSlug } from '../../../packages/bruno-app/src/utils/collections/collectionSlug';
+import { collectionSlug } from '../../../packages/marrone-app/src/utils/collections/collectionSlug';
 import process from 'node:process';
 import * as path from 'path';
 import * as fs from 'fs';
@@ -97,7 +97,7 @@ const closeAllCollections = async (page) => {
       await removeMenuItem.click();
 
       // Wait for modal to appear - could be either regular remove or drafts confirmation
-      const removeModal = page.locator('.bruno-modal').filter({ hasText: /Remove Collections?/ });
+      const removeModal = page.locator('.marrone-modal').filter({ hasText: /Remove Collections?/ });
       await removeModal.waitFor({ state: 'visible', timeout: 5000 });
 
       // Check if it's the drafts confirmation modal (has "Discard All and Remove" button)
@@ -111,7 +111,7 @@ const closeAllCollections = async (page) => {
         await page.getByRole('button', { name: 'Discard All and Remove' }).click({ force: true });
       } else {
         // Regular modal - click the submit button
-        await page.locator('.bruno-modal-footer .submit').click();
+        await page.locator('.marrone-modal-footer .submit').click();
       }
 
       // Wait for modal to close
@@ -191,7 +191,7 @@ const createCollection = async (
     await inlineCreator.waitFor({ state: 'visible', timeout: 5000 });
     await inlineCreator.locator('.cog-btn').click();
 
-    const createCollectionModal = page.locator('.bruno-modal-card').filter({ hasText: 'Create Collection' });
+    const createCollectionModal = page.locator('.marrone-modal-card').filter({ hasText: 'Create Collection' });
     await createCollectionModal.waitFor({ state: 'visible', timeout: 5000 });
 
     // Fill location FIRST — some modals auto-derive the name from the path,
@@ -247,7 +247,7 @@ const createCollection = async (
     // which only runs after Yup validation passes — so this waitFor is the
     // signal that the form actually submitted
     await createCollectionModal.waitFor({ state: 'hidden', timeout: 5000 });
-    await expect(page.locator('.bruno-modal-backdrop')).toHaveCount(0);
+    await expect(page.locator('.marrone-modal-backdrop')).toHaveCount(0);
     // Wait for the collection name to appear in the sidebar before proceeding
     await page.locator('#sidebar-collection-name').filter({ hasText: collectionName }).waitFor({ state: 'visible', timeout: 5000 });
     await openCollection(page, collectionName);
@@ -528,13 +528,13 @@ const createRequest = async (
     await page.getByPlaceholder('Request Name').fill(requestName);
 
     if (method && hasMethodSelector) {
-      await page.locator('.bruno-modal .method-selector').click();
+      await page.locator('.marrone-modal .method-selector').click();
       const isStandardMethod = STANDARD_HTTP_METHODS.includes(method.toUpperCase());
       if (isStandardMethod) {
         await locators.modal.newRequestMethodOption(method).click();
       } else {
         await locators.modal.newRequestMethodOption('add-custom').click();
-        await page.locator('.bruno-modal .method-selector input').fill(method);
+        await page.locator('.marrone-modal .method-selector input').fill(method);
         await page.keyboard.press('Enter');
       }
       await page.waitForTimeout(200);
@@ -634,7 +634,7 @@ const deleteCollectionFromOverview = async (page: Page, collectionName: string) 
     await page.locator('.dropdown-item').filter({ hasText: 'Delete' }).click();
 
     // Wait for delete confirmation modal
-    const deleteModal = page.locator('.bruno-modal').filter({ hasText: 'Delete Collection' });
+    const deleteModal = page.locator('.marrone-modal').filter({ hasText: 'Delete Collection' });
     await deleteModal.waitFor({ state: 'visible', timeout: 5000 });
 
     // Type 'delete' to confirm
@@ -678,7 +678,7 @@ const importCollection = async (
     // Wait for import modal
     const importModal = page.getByRole('dialog');
     await importModal.waitFor({ state: 'visible' });
-    await expect(importModal.locator('.bruno-modal-header-title')).toContainText('Import Collection');
+    await expect(importModal.locator('.marrone-modal-header-title')).toContainText('Import Collection');
 
     // Set the file
     await page.setInputFiles('input[type="file"]', filePath);
@@ -686,7 +686,7 @@ const importCollection = async (
     // Wait for location modal to appear
     const locationModal = page.locator('[data-testid="import-collection-location-modal"]');
     await locationModal.waitFor({ state: 'visible', timeout: 10000 });
-    await expect(locationModal.locator('.bruno-modal-header-title')).toContainText('Import Collection');
+    await expect(locationModal.locator('.marrone-modal-header-title')).toContainText('Import Collection');
 
     // Verify expected collection name if provided
     if (options.expectedCollectionName) {
@@ -776,7 +776,7 @@ const removeCollection = async (page: Page, collectionName: string) => {
     await locators.dropdown.item('Remove').click();
 
     // Wait for modal to appear - could be either regular remove or drafts confirmation
-    const removeModal = page.locator('.bruno-modal').filter({ hasText: /Remove Collections?/ });
+    const removeModal = page.locator('.marrone-modal').filter({ hasText: /Remove Collections?/ });
     await removeModal.waitFor({ state: 'visible', timeout: 5000 });
 
     // Check if it's the drafts confirmation modal (has "Discard All and Remove" button)
@@ -1095,7 +1095,7 @@ const copyEnvironment = async (page: Page, newName: string) => {
     const locators = buildCommonLocators(page);
     await locators.environment.copyAction().click();
 
-    const modal = page.locator('.bruno-modal').filter({ hasText: 'Copy Environment' });
+    const modal = page.locator('.marrone-modal').filter({ hasText: 'Copy Environment' });
     await modal.locator('#environment-name').fill(newName);
     await modal.getByRole('button', { name: 'Copy', exact: true }).click();
     await modal.waitFor({ state: 'hidden' });
@@ -1112,7 +1112,7 @@ const deleteEnvironment = async (page: Page) => {
     const locators = buildCommonLocators(page);
     await locators.environment.deleteAction().click();
 
-    const modal = page.locator('.bruno-modal').filter({ hasText: 'Delete Environment' });
+    const modal = page.locator('.marrone-modal').filter({ hasText: 'Delete Environment' });
     await modal.getByRole('button', { name: 'Delete', exact: true }).click();
     await modal.waitFor({ state: 'hidden' });
   });
@@ -1411,7 +1411,7 @@ const deleteAllGlobalEnvironments = async (page: Page) => {
 
     const envItems = page.locator('.environment-item');
     const deleteBtn = page.locator('button[title="Delete"]');
-    const modal = page.locator('.bruno-modal').filter({ hasText: 'Delete Environment' });
+    const modal = page.locator('.marrone-modal').filter({ hasText: 'Delete Environment' });
 
     await page.locator('.environments-container').first().waitFor({ state: 'visible' }).catch(() => { });
 
@@ -2384,7 +2384,7 @@ const closeAllOpenTabs = async (page: Page, saveChanges = false) => {
   await test.step(`Close all tabs, ${saveChanges ? 'saving' : 'discarding'} changes`, async () => {
     const locators = buildCommonLocators(page);
     const closableTabs = locators.tabs.closableTabs();
-    const confirmClose = page.locator('.bruno-modal').filter({ hasText: 'Unsaved changes' });
+    const confirmClose = page.locator('.marrone-modal').filter({ hasText: 'Unsaved changes' });
     const resolveButton = saveChanges
       ? confirmClose.getByRole('button', { name: /^Save( All)?$/ })
       : confirmClose.getByRole('button', { name: 'Don\'t Save' });
@@ -3559,7 +3559,7 @@ const createApp = async (
 
     await page.locator('.tippy-box:visible .dropdown-item').filter({ hasText: 'New App' }).click();
 
-    const modal = page.locator('.bruno-modal').filter({ hasText: 'New App' });
+    const modal = page.locator('.marrone-modal').filter({ hasText: 'New App' });
     await expect(modal).toBeVisible({ timeout: 5000 });
     await modal.locator('input[name="appName"]').fill(appName);
     await modal.getByRole('button', { name: 'Create', exact: true }).click();

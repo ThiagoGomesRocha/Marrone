@@ -1,7 +1,7 @@
 import { exec } from 'child_process';
 import * as path from 'path';
 
-const BRU_BIN = path.resolve(__dirname, '../../packages/bruno-cli/bin/bru.js');
+const BRU_BIN = path.resolve(__dirname, '../../packages/marrone-cli/bin/marrone.js');
 
 // An in-process test server can only keep serving while the CLI runs if the event loop stays free.
 export const runCLIAsync = (cwd: string, args: string): Promise<{ code: number; stdout: string; stderr: string }> =>

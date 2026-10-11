@@ -53,13 +53,13 @@ test.describe('Bulk Import Selection List', () => {
 
     const importModal = page.getByRole('dialog');
     await importModal.waitFor({ state: 'visible' });
-    await expect(importModal.locator('.bruno-modal-header-title')).toContainText('Import Collection');
+    await expect(importModal.locator('.marrone-modal-header-title')).toContainText('Import Collection');
 
     await page.setInputFiles('input[type="file"]', importFiles);
     await page.locator('#import-collection-loader').waitFor({ state: 'hidden' });
 
     const bulkImportModal = page.getByRole('dialog');
-    await expect(bulkImportModal.locator('.bruno-modal-header-title')).toContainText('Bulk Import');
+    await expect(bulkImportModal.locator('.marrone-modal-header-title')).toContainText('Bulk Import');
     const collectionsHeading = bulkImportModal.getByTestId('selection-heading').filter({ hasText: 'Collections' });
     await expect(collectionsHeading).toBeVisible();
     await expect(collectionsHeading.getByTestId('selection-count')).toHaveText('10');
@@ -89,6 +89,6 @@ test.describe('Bulk Import Selection List', () => {
     // worker-wide via the worker-scoped electronApp fixture, so the modal
     // backdrop would otherwise intercept clicks in the next test.
     await page.getByTestId('modal-close-button').click();
-    await expect(page.locator('.bruno-modal-backdrop')).toHaveCount(0);
+    await expect(page.locator('.marrone-modal-backdrop')).toHaveCount(0);
   });
 });

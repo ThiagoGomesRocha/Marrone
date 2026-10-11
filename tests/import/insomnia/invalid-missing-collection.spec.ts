@@ -11,7 +11,7 @@ test.describe('Invalid Insomnia Collection - Missing Collection Array', () => {
     // Wait for import collection modal to be ready
     const importModal = page.getByRole('dialog');
     await importModal.waitFor({ state: 'visible' });
-    await expect(importModal.locator('.bruno-modal-header-title')).toContainText('Import Collection');
+    await expect(importModal.locator('.marrone-modal-header-title')).toContainText('Import Collection');
 
     await page.setInputFiles('input[type="file"]', insomniaFile);
 

@@ -22,13 +22,13 @@ test.describe('Transient Requests - Quit Flow', () => {
         }
       });
 
-      const unsavedChangesModal = page.locator('.bruno-modal-card').filter({ hasText: 'Unsaved changes' });
+      const unsavedChangesModal = page.locator('.marrone-modal-card').filter({ hasText: 'Unsaved changes' });
       await expect(unsavedChangesModal).toBeVisible({ timeout: 10000 });
       await unsavedChangesModal.getByRole('button', { name: 'Save', exact: true }).click();
     });
 
     await test.step('Save transient request using existing Save Request flow', async () => {
-      const saveTransientModal = page.locator('.bruno-modal-card').filter({ hasText: 'Save Request' });
+      const saveTransientModal = page.locator('.marrone-modal-card').filter({ hasText: 'Save Request' });
       await expect(saveTransientModal).toBeVisible({ timeout: 10000 });
 
       const requestNameInput = saveTransientModal.locator('#request-name');

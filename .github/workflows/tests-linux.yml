@@ -52,8 +52,8 @@ jobs:
         with:
           check_name: CLI Test Results (Linux)
           files: |
-            packages/bruno-tests/collection/junit.xml
-            packages/bruno-tests/safe-mode/junit.xml
+            packages/marrone-tests/collection/junit.xml
+            packages/marrone-tests/safe-mode/junit.xml
           comment_mode: always
           check_run: false
 
@@ -83,8 +83,8 @@ jobs:
         with:
           check_name: CLI Test Results with experimental-cache-modules (Linux)
           files: |
-            packages/bruno-tests/collection/junit.xml
-            packages/bruno-tests/safe-mode/junit.xml
+            packages/marrone-tests/collection/junit.xml
+            packages/marrone-tests/safe-mode/junit.xml
           comment_mode: always
           check_run: false
 
