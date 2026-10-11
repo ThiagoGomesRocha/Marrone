@@ -1,225 +1,83 @@
-<br />
-<img src="assets/images/logo-transparent.png" width="80"/>
-
-### Marrone - Opensource IDE for exploring and testing APIs.
-
-[![GitHub version](https://badge.fury.io/gh/marrone%2Fmarrone.svg)](https://badge.fury.io/gh/marrone%2Fmarrone)
-[![CI](https://github.com/marrone/marrone/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/marrone/marrone/actions/workflows/tests.yml)
-[![Commit Activity](https://img.shields.io/github/commit-activity/m/marrone/marrone)](https://github.com/marrone/marrone/pulse)
-[![X](https://img.shields.io/twitter/follow/use_marrone?style=social&logo=x)](https://twitter.com/use_marrone)
-[![Website](https://img.shields.io/badge/Website-Visit-blue)](https://www.marrone.com)
-[![Download](https://img.shields.io/badge/Download-Latest-brightgreen)](https://www.marrone.com/downloads)
-
-**English**
-| [Українська](docs/readme/readme_ua.md)
-| [Русский](docs/readme/readme_ru.md)
-| [Türkçe](docs/readme/readme_tr.md)
-| [Deutsch](docs/readme/readme_de.md)
-| [Français](docs/readme/readme_fr.md)
-| [Português (BR)](docs/readme/readme_pt_br.md)
-| [한국어](docs/readme/readme_kr.md)
-| [বাংলা](docs/readme/readme_bn.md)
-| [Español](docs/readme/readme_es.md)
-| [Italiano](docs/readme/readme_it.md)
-| [Română](docs/readme/readme_ro.md)
-| [Polski](docs/readme/readme_pl.md)
-| [简体中文](docs/readme/readme_cn.md)
-| [正體中文](docs/readme/readme_zhtw.md)
-| [العربية](docs/readme/readme_ar.md)
-| [日本語](docs/readme/readme_ja.md)
-| [ქართული](docs/readme/readme_ka.md)
-| [Nederlands](docs/readme/readme_nl.md)
-| [فارسی](docs/readme/readme_fa.md)
-| [हिन्दी](docs/readme/readme_hi.md)
-
-Marrone is a new and innovative API client, aimed at revolutionizing the status quo represented by Postman and similar tools out there.
-
-Marrone stores your collections directly in a folder on your filesystem. We use a plain text markup language, Bru, to save information about API requests.
-
-You can use Git or any version control of your choice to collaborate over your API collections.
-
-Marrone is offline-only. There are no plans to add cloud-sync to Marrone, ever. We value your data privacy and believe it should stay on your device. Read our long-term vision [here](https://github.com/marrone/marrone/discussions/269)
-
-[Download Marrone](https://www.marrone.com/downloads)
-
-📢 Watch our recent talk at India FOSS 3.0 Conference [here](https://www.youtube.com/watch?v=7bSMFpbcPiY)
-
-![marrone](assets/images/landing-2-dark.png#gh-light-mode-only)
-![marrone](assets/images/landing-2-light.png#gh-dark-mode-only) <br /><br />
-
-## Commercial Versions ✨
-
-Majority of our features are free and open source.
-We strive to strike a harmonious balance between [open-source principles and sustainability](https://github.com/marrone/marrone/discussions/269)
-
-You can explore our [paid versions](https://www.marrone.com/pricing) to see if there are additional features that you or your team may find useful! <br/>
-
-## Table of Contents
-
-- [Installation](#installation)
-- [Marrone CLI](#marrone-cli)
-- [Run with Docker](#run-with-docker)
-- [Features](#features)
-  - [Run across multiple platforms 🖥️](#run-across-multiple-platforms-%EF%B8%8F)
-  - [Collaborate via Git 👩‍💻🧑‍💻](#collaborate-via-git-%E2%80%8D%E2%80%8D)
-- [Important Links 📌](#important-links-)
-- [Showcase 🎥](#showcase-)
-- [Share Testimonials 📣](#share-testimonials-)
-- [Publishing to New Package Managers](#publishing-to-new-package-managers)
-- [Stay in touch 🌐](#stay-in-touch-)
-- [Trademark](#trademark)
-- [Contribute 👩‍💻🧑‍💻](#contribute-%E2%80%8D%E2%80%8D)
-- [Authors](#authors)
-- [License 📄](#license-)
-
-## Installation
-
-Marrone is available as binary download [on our website](https://www.marrone.com/downloads) for Mac, Windows and Linux.
-
-You can also install Marrone via package managers like Homebrew, Chocolatey, Scoop, Snap, Flatpak and Apt.
-
-```sh
-# On Mac via Homebrew
-brew install marrone
-
-# On Windows via Chocolatey
-choco install marrone
-
-# On Windows via Scoop
-scoop bucket add extras
-scoop install marrone
-
-# On Windows via winget
-winget install Marrone.Marrone
-
-# On Linux via Snap
-snap install marrone
-
-# On Linux via Flatpak
-flatpak install com.marrone.Marrone
-
-# On Arch Linux via AUR
-yay -S marrone
-
-# On Linux via Apt
-sudo mkdir -p /etc/apt/keyrings
-sudo apt update && sudo apt install gpg curl
-curl -fsSL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x9FA6017ECABE0266" \
-  | gpg --dearmor \
-  | sudo tee /etc/apt/keyrings/marrone.gpg > /dev/null
-sudo chmod 644 /etc/apt/keyrings/marrone.gpg
-echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/marrone.gpg] http://debian.marrone.com/ marrone stable" \
-  | sudo tee /etc/apt/sources.list.d/marrone.list
-sudo apt update && sudo apt install marrone
-```
-
-## Marrone CLI
-
-The **Marrone CLI** lets you run your API collections from the command line, which is ideal for automated testing and CI/CD pipelines. Install it from npm using the package manager of your choice:
-
-```sh
-npm install -g @marrone/cli
-```
-
-Navigate to the directory containing your collection and run it:
-
-```sh
-# Run every request in the collection
-marrone run
-
-# Run a single request
-marrone run request.bru
-
-# Run a folder against a specific environment
-marrone run folder --env Local
-```
-
-For the full command reference, see the [Marrone CLI documentation](https://docs.marrone.com/bru-cli/overview).
-
-## Run with Docker
-
-Official Docker images for the **Marrone CLI** let you run API collections in CI/CD pipelines and locally without installing Node.js or npm on the host. Images are published to both [Docker Hub](https://hub.docker.com/r/marrone/cli) and the [GitHub Container Registry](https://ghcr.io/marrone/cli) on every CLI release, with `alpine` and `debian` variants for `linux/amd64` and `linux/arm64`.
-
-```sh
-# Pull from Docker Hub
-docker pull marrone/cli:latest
-
-# Or pull from the GitHub Container Registry
-docker pull ghcr.io/marrone/cli:latest
-
-# Run a collection by mounting the current directory
-docker run -v $(pwd):/marrone marrone/cli run
-```
-
-For variants, tag matrix, environment files, and CI examples (GitHub Actions, GitLab CI, Jenkins), see the full [Marrone CLI Docker documentation](https://docs.marrone.com/bru-cli/docker).
-
-## Features
-
-### Run across multiple platforms 🖥️
-
-![marrone](assets/images/run-anywhere.png) <br /><br />
-
-### Collaborate via Git 👩‍💻🧑‍💻
-
-Or any version control system of your choice
-
-![marrone](assets/images/version-control.png) <br /><br />
-
-## Important Links 📌
-
-- [Our Long Term Vision](https://github.com/marrone/marrone/discussions/269)
-- [Roadmap](https://www.marrone.com/roadmap)
-- [Documentation](https://docs.marrone.com)
-- [Stack Overflow](https://stackoverflow.com/questions/tagged/marrone)
-- [Website](https://www.marrone.com)
-- [Pricing](https://www.marrone.com/pricing)
-- [Download](https://www.marrone.com/downloads)
-
-## Showcase 🎥
-
-- [Testimonials](https://github.com/marrone/marrone/discussions/343)
-- [Knowledge Hub](https://github.com/marrone/marrone/discussions/386)
-- [Scriptmania](https://github.com/marrone/marrone/discussions/385)
-
-## Share Testimonials 📣
-
-If Marrone has helped you at work and your teams, please don't forget to share your [testimonials on our GitHub discussion](https://github.com/marrone/marrone/discussions/343)
-
-## Publishing to New Package Managers
-
-Please see [here](publishing.md) for more information.
-
-## Stay in touch 🌐
-
-[𝕏 (Twitter)](https://twitter.com/use_marrone) <br />
-[Website](https://www.marrone.com) <br />
-[Discord](https://discord.com/invite/KgcZUncpjq) <br />
-[LinkedIn](https://www.linkedin.com/company/marrone)
-
-## Trademark
-
-**Name**
-
-`Marrone` is a trademark held by [Anoop M D](https://www.helloanoop.com/)
-
-**Logo**
-
-The logo is sourced from [OpenMoji](https://openmoji.org/library/emoji-1F436/). License: CC [BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
-
-## Contribute 👩‍💻🧑‍💻
-
-I am happy that you are looking to improve marrone. Please check out the [contributing guide](contributing.md)
-
-Even if you are not able to make contributions via code, please don't hesitate to file bugs and feature requests that needs to be implemented to solve your use case.
-
-## Authors
-
 <div align="center">
-    <a href="https://github.com/marrone/marrone/graphs/contributors">
-        <img src="https://contrib.rocks/image?repo=marrone/marrone" />
-    </a>
+
+# 🐝 Marrone
+
+**Cliente de API gratuito e open source — um fork do [Bruno](https://github.com/usebruno/bruno)**
+
+[![Versão](https://img.shields.io/github/v/release/ThiagoGomesRocha/Marrone?label=última%20versão)](https://github.com/ThiagoGomesRocha/Marrone/releases)
+[![Licença](https://img.shields.io/badge/licença-MIT-blue.svg)](license.md)
+[![Download](https://img.shields.io/badge/download-Windows%20(x64)-brightgreen)](https://github.com/ThiagoGomesRocha/Marrone/releases/latest)
+
 </div>
 
-## License 📄
+## O que é o Marrone?
 
-[MIT](license.md)
+O **Marrone** é um cliente de API para você testar, organizar e documentar suas requisições HTTP — uma alternativa ao Postman e ao Insomnia, **100% gratuita e open source**.
+
+Ele nasceu como um **fork do [Bruno](https://github.com/usebruno/bruno)** e mantém total compatibilidade com ele, mas com identidade própria e melhorias no relatório de execução.
+
+### Por que usar?
+
+- 🗂️ **Coleções em arquivos** — suas coleções ficam em pastas no seu disco, no formato `.bru` (o mesmo do Bruno). Dá para versionar com Git normalmente.
+- 📄 **Relatório HTML bonito** — gera um relatório com o **CURL de cada requisição** (com botão de copiar), logo personalizável e dashboard.
+- 🔒 **Seguro por padrão** — o CURL do relatório omite cabeçalhos sensíveis (`Authorization`, `Cookie`, `API Key`) a menos que você ative a opção.
+- 🔌 **Importa de tudo** — Postman, Insomnia, OpenAPI, WSDL e o próprio formato do Bruno.
+- 🖥️ **Desktop + CLI** — interface gráfica (Windows, macOS, Linux) e linha de comando (`marrone`).
+
+## Instalação
+
+### Windows (instalador)
+
+Baixe o instalador mais recente na página de releases:
+
+👉 **[marrone-setup-1.0.0.exe](https://github.com/ThiagoGomesRocha/Marrone/releases/latest)**
+
+### CLI (linha de comando)
+
+A CLI `marrone` está no código-fonte. Para instalar a partir do repositório:
+
+```bash
+git clone https://github.com/ThiagoGomesRocha/Marrone.git
+cd Marrone
+npm install
+npm install -g ./packages/marrone-cli
+marrone --version
+```
+
+## Primeiros passos
+
+1. **Crie uma coleção** no app — ou **importe** uma existente (veja abaixo).
+2. **Adicione uma requisição**: escolha o método, digite a URL, os cabeçalhos e o corpo.
+3. **Execute** e veja a resposta na hora.
+4. **Gere o relatório HTML** pelo botão *Export* — ou direto no terminal:
+
+```bash
+marrone run ./minha-colecao --reporter-html relatorio.html
+```
+
+## Vindo do Bruno ou do Postman?
+
+- **Do Bruno**: suas coleções `.bru` abrem **direto, sem conversão** — é o mesmo formato. É só apontar para a pasta da coleção.
+- **Do Postman, Insomnia, OpenAPI ou WSDL**: use **Importar** no app (ou `marrone import` no CLI). A conversão traduz os scripts (`pm.*` → `bru.*`) e os testes automaticamente.
+
+## CLI
+
+Alguns comandos úteis:
+
+```bash
+marrone run ./minha-colecao                      # roda a coleção inteira
+marrone run ./minha-colecao --reporter-html relatorio.html   # gera o relatório HTML
+marrone import openapi --source api.yaml --output ./colecao  # importa uma spec OpenAPI
+```
+
+A ajuda completa está em `marrone --help`.
+
+## Contribuindo
+
+Pull requests são bem-vindos! Abra uma *issue* ou envie um PR — toda contribuição conta. 💛
+
+## Licença
+
+[MIT](license.md).
+
+Este projeto é um fork do **[Bruno](https://github.com/usebruno/bruno)** — © 2022 Anoop M D, Anusree P S e colaboradores — e mantém a atribuição original aos seus criadores.
