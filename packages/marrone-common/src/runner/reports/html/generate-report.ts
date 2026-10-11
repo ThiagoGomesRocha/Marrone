@@ -33,23 +33,21 @@ const redactDatabaseParameters = (parameters: unknown, includeSensitive: boolean
 const collectDatabaseOperations = (runnerResults: T_RunnerResults[], includeSensitive: boolean): unknown[] => {
   return runnerResults.flatMap(({ results }) =>
     (results || []).flatMap((result) => {
-      const operations = (result as { databaseOperations?: unknown[] })?.databaseOperations;
+      const operations = result?.databaseOperations;
 
       if (!Array.isArray(operations)) {
         return [];
       }
 
-      return operations.map((operation) => {
-        const typed = operation as Record<string, unknown> & { parameters?: unknown };
-
-        return {
-          ...typed,
-          parameters: redactDatabaseParameters(typed.parameters, includeSensitive),
-          requestName: result?.request?.name || null,
-          requestUrl: result?.request?.url || null,
-          requestMethod: result?.request?.method || null
-        };
-      });
+      return operations.map((operation) => ({
+        ...operation,
+        parameters: redactDatabaseParameters(operation.parameters, includeSensitive),
+        // O NOME da requisição está no RESULTADO, não dentro de `request` (que carrega só
+        // method/url/headers/data). Ler de `request.name` devolvia null sempre.
+        requestName: result?.name || null,
+        requestUrl: result?.request?.url || null,
+        requestMethod: result?.request?.method || null
+      }));
     })
   );
 };

@@ -36,7 +36,12 @@ const buildRunnerResults = (databaseOperations: any[] = []) => [
     },
     results: [
       {
-        request: { name: 'Pedido', method: 'POST', url: 'https://api.local/pedidos', headers: {} },
+        // ATENÇÃO À POSIÇÃO DO `name`: ele fica no RESULTADO, não dentro de `request`.
+        // `request` carrega só method/url/headers/data (ver T_EmptyRequest/T_Request em
+        // runner/types). Uma fixture que coloca `name` dentro de `request` faz o teste
+        // CONCORDAR com o bug que ele deveria pegar — foi o que aconteceu aqui.
+        name: 'Pedido',
+        request: { method: 'POST', url: 'https://api.local/pedidos', headers: {} },
         response: { status: 200, headers: {}, data: {} },
         runDuration: 0.1,
         databaseOperations

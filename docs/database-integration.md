@@ -259,8 +259,18 @@ Quando você roda uma coleção, cada operação de banco vai para o relatório,
 - filtros por SGBD e por status;
 - o resultado resumido (por exemplo, "3 registro(s)").
 
-Isso vale tanto para o relatório gerado pelo app quanto para o `--reporter html` do CLI: o
-CLI coleta as operações de cada requisição e as inclui no mesmo payload.
+Isso vale tanto para o relatório gerado pelo app quanto para o relatório do CLI, que coleta as
+operações de cada requisição e as inclui no mesmo payload:
+
+```bash
+marrone run minha-colecao --reporter-html resultado.html
+```
+
+> ⚠️ O relatório do CLI é gerado pelo pacote **`@marrone/common`**, que é TypeScript — o CLI
+> consome o `dist` **construído**. Se você mexer no gerador do relatório e não rodar
+> `npm run build:marrone-common`, o CLI continua escrevendo o relatório **antigo**. Foi
+> exatamente assim que a aba "Database Operations" ficou de fora do relatório do CLI mesmo com
+> o código-fonte já correto.
 
 ### Parâmetros são redigidos
 

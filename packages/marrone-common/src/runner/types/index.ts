@@ -80,6 +80,30 @@ type T_Response = {
   isHtml?: boolean;
 };
 
+/**
+ * Operação de banco executada por um script de pré/pós-requisição (RF08).
+ *
+ * Os parâmetros já chegam REDIGIDOS do host (`***`). A redação é repetida no gerador do
+ * relatório de propósito: o relatório é um artefato compartilhável, e a garantia não pode
+ * depender de quem montou o payload.
+ */
+export type T_DatabaseOperation = {
+  timestamp: string;
+  sgbd: string;
+  /** null nas operações de ciclo de vida (connect/disconnect). */
+  sql: string | null;
+  /** Presente nas operações de ciclo de vida: connect, disconnect, begin, commit, rollback. */
+  operation?: string;
+  parameters?: unknown[];
+  /** Sem credenciais, por construção. Presente só no registro de `connect`. */
+  connectionString?: string;
+  durationMs: number;
+  status: 'success' | 'error';
+  resultSummary?: string;
+  error?: { code?: string | number | null; message?: string };
+  scope?: unknown;
+};
+
 // result type
 export type T_RunnerRequestExecutionResult = {
   iterationIndex: number;
@@ -95,6 +119,8 @@ export type T_RunnerRequestExecutionResult = {
   testResults?: T_TestResult[];
   preRequestTestResults?: T_TestResult[];
   postResponseTestResults?: T_TestResult[];
+  /** Operações de banco que os scripts desta requisição executaram (RF08). */
+  databaseOperations?: T_DatabaseOperation[];
   runDuration: number;
 };
 

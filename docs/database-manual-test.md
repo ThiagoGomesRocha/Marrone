@@ -197,8 +197,12 @@ atravessou o caminho todo até o driver.
 
 ```bash
 MARRONE_DB_POSTGRES_USER=joao MARRONE_DB_POSTGRES_PASSWORD='segredo' \
-node packages/marrone-cli/bin/marrone.js run ./minha-colecao --reporter html
+node packages/marrone-cli/bin/marrone.js run ./minha-colecao --reporter-html resultado.html
 ```
+
+Confira no arquivo gerado: a aba existe, o SQL aparece, e os **valores dos parâmetros estão como
+`***`**. O relatório é gerado pelo `@marrone/common` — se ele for alterado e o
+`npm run build:marrone-common` não rodar, o CLI escreve o relatório antigo (sem a aba).
 
 ---
 
