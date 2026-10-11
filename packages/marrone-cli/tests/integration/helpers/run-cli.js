@@ -1,7 +1,7 @@
 const path = require('path');
 const { spawn } = require('child_process');
 
-const CLI_BIN = path.resolve(__dirname, '..', '..', '..', 'bin', 'bru.js');
+const CLI_BIN = path.resolve(__dirname, '..', '..', '..', 'bin', 'marrone.js');
 
 // spawnSync blocks jest's event loop, starving any in-process HTTP server → ECONNREFUSED.
 // Use async spawn so the server stays responsive.

@@ -4,7 +4,7 @@ const os = require('os');
 const path = require('path');
 const { spawn } = require('child_process');
 
-const CLI_BIN = path.resolve(__dirname, '..', '..', 'bin', 'bru.js');
+const CLI_BIN = path.resolve(__dirname, '..', '..', 'bin', 'marrone.js');
 
 const runCli = (args, cwd) =>
   new Promise((resolve, reject) => {

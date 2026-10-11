@@ -7,6 +7,9 @@ module.exports = {
     '/node_modules/(?!strip-json-comments|nanoid|xml-formatter)/'
   ],
   moduleNameMapper: {
+    // jsdom faz require('canvas') opcional; o binário nativo não é construído neste fork,
+    // então sem este stub o suite inteiro falha ao carregar. Ver jest.canvasMock.js.
+    '^canvas$': '<rootDir>/jest.canvasMock.js',
     '\\.(css|less|scss|sass)$': '<rootDir>/jest.cssMock.js',
     '^assets/(.*)$': '<rootDir>/src/assets/$1',
     '^components/(.*)$': '<rootDir>/src/components/$1',
@@ -20,7 +23,9 @@ module.exports = {
   },
   clearMocks: true,
   moduleDirectories: ['node_modules', 'src'],
-  testEnvironment: 'jsdom',
+  // Ambiente jsdom customizado: neutraliza o require('canvas') do jsdom, que sem isso
+  // derruba o suite inteiro da app. Ver jest.jsdomEnvironment.js.
+  testEnvironment: '<rootDir>/jest.jsdomEnvironment.js',
   setupFilesAfterEnv: ['@testing-library/jest-dom'],
   setupFiles: [
     '<rootDir>/jest.setup.js'

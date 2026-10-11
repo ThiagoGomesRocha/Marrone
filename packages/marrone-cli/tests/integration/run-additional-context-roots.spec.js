@@ -5,7 +5,7 @@ const path = require('path');
 const http = require('http');
 const { spawn } = require('child_process');
 
-const CLI_BIN = path.resolve(__dirname, '..', '..', 'bin', 'bru.js');
+const CLI_BIN = path.resolve(__dirname, '..', '..', 'bin', 'marrone.js');
 const FIXTURE_WORKSPACE = path.resolve(
   __dirname, '..', '..', '..', '..',
   'tests', 'scripting', 'additional-context-roots', 'fixtures', 'workspace'

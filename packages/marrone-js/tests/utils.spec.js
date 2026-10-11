@@ -78,7 +78,8 @@ describe('utils', () => {
     it('should pick variables from complex expressions', () => {
       const expr = 'res.data.pets.map(pet => pet.length)';
       const result = evaluateJsExpression(expr, context);
-      expect(result).toEqual([5, 3]);
+      // 'marrone'.length === 7 (era 5 quando o fixture era 'bruno', antes do rebrand)
+      expect(result).toEqual([7, 3]);
       expect(cache.get(expr).toString()).toContain('let { res, pet } = __marrone__functionInnerContext;');
     });
 
