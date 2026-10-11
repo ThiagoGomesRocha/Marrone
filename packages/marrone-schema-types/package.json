@@ -2,7 +2,7 @@
   "name": "@marrone/schema-types",
   "version": "0.0.1",
   "description": "TypeScript types for Marrone schema",
-  "author": "Marrone Software Inc.",
+  "author": "Bruno Software Inc.",
   "main": "dist/schema-types.js",
   "types": "dist/schema-types.d.ts",
   "files": [
