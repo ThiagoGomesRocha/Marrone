@@ -3,8 +3,8 @@ require('dotenv').config({ path: process.env.DOTENV_PATH });
 const isBenchmark = process.env.BRUNO_BENCHMARK === 'true';
 
 const config = {
-  appId: 'com.usebruno.app',
-  productName: isBenchmark ? 'Bruno Benchmark' : 'Bruno',
+  appId: 'com.marrone.app',
+  productName: isBenchmark ? 'Marrone Benchmark' : 'Marrone',
   extraMetadata: {
     brunoBuild: {
       benchmark: isBenchmark,
@@ -102,7 +102,7 @@ const config = {
     ]
   },
   win: {
-    artifactName: '${name}_${version}_${arch}_win.${ext}',
+    artifactName: 'marrone-setup-${version}.${ext}',
     icon: 'resources/icons/win/icon.ico',
     target: [
       {
@@ -111,7 +111,7 @@ const config = {
       }
     ],
     sign: null,
-    publisherName: 'Bruno Software Inc'
+    publisherName: 'Marrone'
   },
   nsis: {
     include: 'resources/installer.nsh',

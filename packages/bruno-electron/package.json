@@ -1,7 +1,7 @@
 {
   "version": "2.0.0",
-  "name": "bruno",
-  "description": "Opensource API Client for Exploring and Testing APIs",
+  "name": "marrone",
+  "description": "Marrone - Cliente API gratuito com relatórios HTML",
   "homepage": "https://www.usebruno.com",
   "repository": {
     "type": "git",

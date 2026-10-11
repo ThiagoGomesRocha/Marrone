@@ -19,6 +19,8 @@ const { format } = require('url');
 const { BrowserWindow, app, session, Menu, globalShortcut, ipcMain, nativeTheme, shell } = require('electron');
 const { setContentSecurityPolicy } = require('electron-util');
 
+app.setName('Marrone');
+
 if (isDev && process.env.ELECTRON_USER_DATA_PATH) {
   console.debug('`ELECTRON_USER_DATA_PATH` found, modifying `userData` path: \n'
     + `\t${app.getPath('userData')} -> ${process.env.ELECTRON_USER_DATA_PATH}`);
@@ -260,7 +262,7 @@ app.on('ready', async () => {
       preload: path.join(__dirname, 'preload.js'),
       webviewTag: true
     },
-    title: 'Bruno',
+    title: 'Marrone',
     icon: path.join(__dirname, 'about/256x256.png'),
     titleBarStyle: isMac ? 'hiddenInset' : isWindows ? 'hidden' : undefined,
     frame: isLinux ? false : true,
