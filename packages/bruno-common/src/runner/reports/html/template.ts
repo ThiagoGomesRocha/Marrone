@@ -23,7 +23,7 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
     <!-- Would use latest version, you'd better specify a version -->
     <script src="https://unpkg.com/naive-ui"></script>
 
-    <title>Bruno</title>
+    <title>Marrone</title>
     <style>
       .error > .status {
         color: red;
@@ -76,6 +76,18 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
         word-wrap: break-word;
         overflow-wrap: break-word;
       }
+
+      .curl-command {
+        background: rgba(0, 0, 0, 0.04);
+        padding: 12px;
+        border-radius: 6px;
+        overflow-x: auto;
+        white-space: pre-wrap;
+        word-break: break-all;
+        font-family: 'Fira Code', 'Cascadia Code', Consolas, 'Courier New', monospace;
+        font-size: 0.8rem;
+        margin: 0;
+      }
     </style>
   </head>
   <body>
@@ -84,10 +96,11 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
         <n-layout embedded position="absolute" content-style="padding: 24px;">
           <n-card>
             <n-flex>
-              <n-page-header title="Bruno run dashboard">
+              <n-page-header title="Marrone run dashboard">
                 <template #avatar>
                   <n-avatar size="large" style="background-color: transparent">
-                    <svg id="emoji" width="34" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+                    <img v-if="logo" :src="logo" alt="logo" style="max-height: 40px; max-width: 160px; object-fit: contain;" />
+                    <svg v-else id="emoji" width="34" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
                       <g id="color">
                         <path
                           fill="#F4AA41"
@@ -382,6 +395,12 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
               </n-card>
             </n-gi>
           </n-grid>
+          <n-card v-if="result.curl" title="CURL COMMAND">
+            <template #header-extra>
+              <n-button size="tiny" quaternary @click="copyCurl">Copy</n-button>
+            </template>
+            <pre class="curl-command"><code class="language-bash">{{ result.curl }}</code></pre>
+          </n-card>
           <n-alert v-if="hasError || (result.response.status === 'skipped' && result.error)" title="Error" type="error">
             {{result.error}}
           </n-alert>
@@ -483,6 +502,10 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
             return rawResults.version || '-';
           });
 
+          const logo = computed(() => {
+            return rawResults.logo || '';
+          });
+
           const environment = computed(() => {
             return rawResults.environment || '-';
           });
@@ -565,6 +588,7 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
             darkModeRailStyle: () => ({ background: 'var(--n-rail-color)' }),
             currentTab,
             brunoVersion,
+            logo,
             environment,
             totalDuration,
             totalDataReceived,
@@ -686,6 +710,12 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
         template: '#result-component',
         props: ['result', 'index'],
         setup(props) {
+          const copyCurl = () => {
+            const text = props?.result?.curl || '';
+            if (text && navigator.clipboard) {
+              navigator.clipboard.writeText(text);
+            }
+          };
           const headerColumns = [
             {
               title: 'Header Name',
@@ -808,6 +838,7 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
             resultTitle,
             resultSummary,
             getAlertType,
+            copyCurl,
             iterationIndex: props?.result?.iterationIndex
           };
         }

@@ -36,7 +36,7 @@ type T_TestFailResult = {
 
 type T_TestResult = T_TestPassResult | T_TestFailResult;
 
-type T_EmptyRequest = {
+export type T_EmptyRequest = {
   method?: null | undefined;
   url?: null | undefined;
   headers?: null | undefined;
@@ -45,7 +45,7 @@ type T_EmptyRequest = {
 };
 
 // request types
-type T_Request = {
+export type T_Request = {
   method: string;
   url: string;
   headers: Record<string, string | number | undefined>;
