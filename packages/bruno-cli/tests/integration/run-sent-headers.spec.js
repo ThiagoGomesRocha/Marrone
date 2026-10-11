@@ -98,7 +98,7 @@ ${extra}`;
       'Host': `127.0.0.1:${port}`,
       'Connection': 'keep-alive',
       'Accept-Encoding': 'gzip, compress, deflate, br',
-      'User-Agent': expect.stringMatching(/^bruno-runtime\//),
+      'User-Agent': expect.stringMatching(/^marrone-runtime\//),
       'my-header-1': 'my-value-1'
     });
   });

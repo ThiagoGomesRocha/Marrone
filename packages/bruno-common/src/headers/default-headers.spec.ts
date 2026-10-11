@@ -38,7 +38,7 @@ describe('bruno default headers catalog', () => {
   });
 
   it('builds the runtime User-Agent', () => {
-    expect(getBrunoRuntimeUserAgent('2.14.0')).toBe('bruno-runtime/2.14.0');
+    expect(getBrunoRuntimeUserAgent('2.14.0')).toBe('marrone-runtime/2.14.0');
   });
 });
 

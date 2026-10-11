@@ -164,6 +164,15 @@ const builder = async (yargs) => {
       describe: 'Path to write html file results to',
       type: 'string'
     })
+    .option('reporter-html-logo', {
+      describe: 'Path to a logo image (png/jpeg/webp) embedded in the HTML report header',
+      type: 'string'
+    })
+    .option('reporter-include-sensitive', {
+      type: 'boolean',
+      description: 'Include sensitive headers (Authorization, Cookie, API keys) in the CURL commands of the HTML report',
+      default: false
+    })
     .option('insecure', {
       type: 'boolean',
       description: 'Allow insecure server connections'
@@ -246,6 +255,14 @@ const builder = async (yargs) => {
       'Run all requests in a folder recursively with skipped headers from the reporter output'
     )
     .example(
+      '$0 run --reporter-html results.html --reporter-html-logo logo.png',
+      'Run all requests and write an HTML report with a custom logo in the header'
+    )
+    .example(
+      '$0 run --reporter-html results.html --reporter-include-sensitive',
+      'Run all requests and include sensitive headers in the CURL commands of the HTML report'
+    )
+    .example(
       '$0 run request.bru --env local --env-var secret=xxx',
       'Run a request with the environment set to local and overwrite the variable secret with value xxx'
     )
@@ -324,6 +341,8 @@ const handler = async function (argv) {
       reporterSkipRequestBody,
       reporterSkipResponseBody,
       reporterSkipBody,
+      reporterHtmlLogo,
+      reporterIncludeSensitive,
       clientCertConfig,
       noproxy,
       cacheSslSession,
@@ -368,6 +387,14 @@ const handler = async function (argv) {
       } catch (err) {
         console.error(chalk.red(`Unexpected error: ${err.message}`));
         process.exit(constants.EXIT_STATUS.ERROR_GENERIC);
+      }
+    }
+
+    if (reporterHtmlLogo) {
+      const logoExists = await exists(reporterHtmlLogo);
+      if (!logoExists) {
+        console.error(chalk.red(`Logo file "${reporterHtmlLogo}" does not exist.`));
+        process.exit(constants.EXIT_STATUS.ERROR_FILE_NOT_FOUND);
       }
     }
 
@@ -960,7 +987,10 @@ const handler = async function (argv) {
       const reporters = {
         json: (path) => fs.writeFileSync(path, JSON.stringify(outputJson, null, 2)),
         junit: (path) => makeJUnitOutput(results, path),
-        html: (path) => makeHtmlOutput(outputJson, path, runCompletionTime, environmentName)
+        html: (path) => makeHtmlOutput(outputJson, path, runCompletionTime, environmentName, {
+          logoPath: reporterHtmlLogo,
+          includeSensitive: reporterIncludeSensitive
+        })
       };
 
       for (const formatter of Object.keys(formats)) {

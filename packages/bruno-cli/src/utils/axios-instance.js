@@ -108,7 +108,7 @@ function makeAxiosInstance({
   // axios.create() preserves defaults.headers.common = { Accept: 'application/json, text/plain, */*' }.
   // Assigning a new object (= { 'User-Agent': ... }) would nuke that default, causing servers that
   // rely on content-negotiation to receive requests with no Accept header.
-  instance.defaults.headers.common['User-Agent'] = `bruno-runtime/${CLI_VERSION}`;
+  instance.defaults.headers.common['User-Agent'] = `marrone-runtime/${CLI_VERSION}`;
 
   instance.interceptors.request.use((config) => {
     config.metadata = config.metadata || {};

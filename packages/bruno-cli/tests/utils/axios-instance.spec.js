@@ -27,13 +27,13 @@ describe('makeAxiosInstance', () => {
     expect(stubAdapter.getConfig().headers['Accept']).toMatch(/application\/json/);
   });
 
-  it('sets User-Agent header to bruno-runtime version', async () => {
+  it('sets User-Agent header to marrone-runtime version', async () => {
     const stubAdapter = createStubAdapter();
     const instance = makeAxiosInstance();
 
     await instance({ url: 'https://api.example.com/test', method: 'get', adapter: stubAdapter });
 
-    expect(stubAdapter.getConfig().headers['User-Agent']).toMatch(/^bruno-runtime\//);
+    expect(stubAdapter.getConfig().headers['User-Agent']).toMatch(/^marrone-runtime\//);
   });
 
   it('omits default headers listed in settings.omitHeaders', async () => {

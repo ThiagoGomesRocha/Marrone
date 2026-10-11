@@ -20,9 +20,9 @@ tests {
     expect(accept).to.include("application/json");
   });
 
-  test("sends User-Agent header with bruno-runtime prefix", function() {
+  test("sends User-Agent header with marrone-runtime prefix", function() {
     const userAgent = res.getHeaders()["user-agent"];
     expect(userAgent).to.be.a("string");
-    expect(userAgent).to.match(/^bruno-runtime\//);
+    expect(userAgent).to.match(/^marrone-runtime\//);
   });
 }
