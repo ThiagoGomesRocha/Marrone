@@ -99,6 +99,37 @@ const StyledWrapper = styled.div`
       text-decoration: underline;
     }
   }
+
+  .report-logo-upload {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .report-logo-preview {
+    max-height: 4rem;
+    max-width: 12rem;
+    object-fit: contain;
+  }
+
+  .report-logo-select,
+  .report-logo-remove {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.25rem 0.5rem;
+    font-size: ${(props) => props.theme.font.size.base};
+    line-height: 1.25;
+    color: ${(props) => props.theme.text};
+    border: 1px solid ${(props) => props.theme.input.border};
+    border-radius: ${(props) => props.theme.border.radius.sm};
+    background: none;
+    cursor: pointer;
+
+    &:not(:disabled):hover {
+      border-color: ${(props) => props.theme.input.focusBorder};
+    }
+  }
 `;
 
 export default StyledWrapper;

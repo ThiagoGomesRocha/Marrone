@@ -17,6 +17,7 @@ const General = () => {
   const dispatch = useDispatch();
   // The file input is hidden; the visible button forwards its click here.
   const inputFileCaCertificateRef = useRef();
+  const inputFileLogoRef = useRef();
 
   const preferencesSchema = Yup.object().shape({
     sslVerification: Yup.boolean(),
@@ -59,7 +60,9 @@ const General = () => {
     oauth2: Yup.object({
       useSystemBrowser: Yup.boolean()
     }),
-    defaultLocation: Yup.string().max(1024)
+    defaultLocation: Yup.string().max(1024),
+    reportLogo: Yup.string(),
+    reportDefaultDir: Yup.string().max(1024)
   });
 
   const formik = useFormik({
@@ -82,7 +85,9 @@ const General = () => {
       oauth2: {
         useSystemBrowser: get(preferences, 'request.oauth2.useSystemBrowser', false)
       },
-      defaultLocation: get(preferences, 'general.defaultLocation', '')
+      defaultLocation: get(preferences, 'general.defaultLocation', ''),
+      reportLogo: get(preferences, 'report.logo', ''),
+      reportDefaultDir: get(preferences, 'report.defaultDir', '')
     },
     validationSchema: preferencesSchema,
     onSubmit: async (values) => {
@@ -122,6 +127,11 @@ const General = () => {
         },
         general: {
           defaultLocation: newPreferences.defaultLocation
+        },
+        report: {
+          logo: newPreferences.reportLogo || '',
+          defaultDir: newPreferences.reportDefaultDir || '',
+          includeSensitive: get(preferences, 'report.includeSensitive', false)
         }
       }))
       .catch((err) => console.log(err) && toast.error('Failed to update preferences'));
@@ -173,6 +183,42 @@ const General = () => {
         // cancelling resolves false, so this is a real failure: keep the existing value
         console.error(error);
         toast.error('Failed to browse for a default location');
+      });
+  };
+
+  const handleLogoUpload = (e) => {
+    const file = e?.target?.files?.[0];
+    if (!file) {
+      return;
+    }
+    if (!['image/png', 'image/jpeg'].includes(file.type)) {
+      toast.error('Only PNG or JPEG images are supported');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      formik.setFieldValue('reportLogo', reader.result);
+    };
+    reader.onerror = () => {
+      toast.error('Failed to read the image');
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const removeLogo = () => {
+    formik.setFieldValue('reportLogo', '');
+  };
+
+  const browseReportDir = () => {
+    dispatch(browseDirectory())
+      .then((dirPath) => {
+        if (typeof dirPath === 'string') {
+          formik.setFieldValue('reportDefaultDir', dirPath);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error('Failed to browse for a report directory');
       });
   };
 
@@ -356,6 +402,58 @@ const General = () => {
               data-testid="general-browse-default-location"
               onClick={browseDefaultLocation}
             >
+              Browse
+            </button>
+          </SettingsField>
+        </SettingsGroup>
+
+        <SettingsGroup
+          title="Report"
+          description="Customize the generated HTML reports"
+        >
+          <SettingsField label="Report Logo" htmlFor="reportLogo">
+            <div className="report-logo-upload">
+              {formik.values.reportLogo ? (
+                <>
+                  <img className="report-logo-preview" src={formik.values.reportLogo} alt="Report logo" />
+                  <button type="button" className="report-logo-remove" onClick={removeLogo}>
+                    Remove
+                  </button>
+                </>
+              ) : (
+                <button type="button" className="report-logo-select" onClick={() => inputFileLogoRef.current.click()}>
+                  <IconUpload strokeWidth={1.5} size={14} aria-hidden="true" />
+                  Upload Logo
+                </button>
+              )}
+              <input
+                id="reportLogo"
+                type="file"
+                accept="image/png,image/jpeg"
+                className="hidden"
+                ref={inputFileLogoRef}
+                onChange={handleLogoUpload}
+              />
+            </div>
+          </SettingsField>
+
+          <SettingsField label="Report Export Directory" htmlFor="reportDefaultDir">
+            <input
+              type="text"
+              name="reportDefaultDir"
+              id="reportDefaultDir"
+              className="textbox cursor-pointer default-location-input"
+              autoComplete="off"
+              autoCorrect="off"
+              autoCapitalize="off"
+              spellCheck="false"
+              readOnly={true}
+              onChange={formik.handleChange}
+              value={formik.values.reportDefaultDir || ''}
+              onClick={browseReportDir}
+              placeholder="Click to browse for report directory"
+            />
+            <button type="button" className="default-location-browse" onClick={browseReportDir}>
               Browse
             </button>
           </SettingsField>

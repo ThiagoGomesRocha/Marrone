@@ -59,6 +59,11 @@ const initialState = {
     general: {
       defaultLocation: ''
     },
+    report: {
+      logo: '',
+      defaultDir: '',
+      includeSensitive: false
+    },
     onboarding: {
       hasLaunchedBefore: false,
       hasSeenWelcomeModal: true,

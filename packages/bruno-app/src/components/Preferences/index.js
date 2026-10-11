@@ -11,7 +11,8 @@ import {
   IconZoomQuestion,
   IconSquareLetterB,
   IconDatabase,
-  IconCertificate
+  IconCertificate,
+  IconShieldLock
 } from '@tabler/icons';
 
 import IconSparkles from 'components/Icons/IconSparkles';
@@ -25,6 +26,7 @@ import Beta from './Beta';
 import AI from './AI';
 
 import ClientCertSettings from './ClientCertSettings';
+import Security from './Security';
 
 import StyledWrapper from './StyledWrapper';
 import Cache from './Cache/index';
@@ -84,6 +86,10 @@ const Preferences = () => {
       case 'clientCert': {
         return <ClientCertSettings />;
       }
+
+      case 'security': {
+        return <Security />;
+      }
     }
   };
 
@@ -110,6 +116,10 @@ const Preferences = () => {
           <div className={getTabClassname('clientCert')} role="tab" onClick={() => setTab('clientCert')}>
             <IconCertificate size={16} strokeWidth={1.5} />
             Client Certificates
+          </div>
+          <div className={getTabClassname('security')} role="tab" onClick={() => setTab('security')}>
+            <IconShieldLock size={16} strokeWidth={1.5} />
+            Security
           </div>
           <div className={getTabClassname('keybindings')} role="tab" onClick={() => setTab('keybindings')}>
             <IconKeyboard size={16} strokeWidth={1.5} />
