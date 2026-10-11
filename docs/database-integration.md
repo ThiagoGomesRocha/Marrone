@@ -235,6 +235,18 @@ Os valores são convertidos para tipos seguros antes de chegar ao seu script:
 Se uma coluna `DECIMAL` voltar como `"19.90"` em vez de `19.9`, **isso é intencional**:
 converter para número perderia a precisão e a formatação original.
 
+> ⚠️ **Exceção: SQL Server.** O driver `tedious` converte `DECIMAL`/`NUMERIC` para `number` do
+> JavaScript **antes** de o Marrone ver o valor, e não há opção de configuração para mudar
+> isso (a leitura é fixa em `readNumeric`). Como um `number` não representa
+> `12345678901234567890.1234567890` sem arredondar, **no SQL Server a garantia acima não
+> vale para colunas decimais**. Medido em servidor real: um
+> `CAST(... AS DECIMAL(38,10))` voltou como `12345678901234567000`. Se a precisão importa,
+> converta para texto no próprio SQL:
+>
+> ```sql
+> SELECT CAST(saldo AS VARCHAR(50)) AS saldo FROM contas
+> ```
+
 ---
 
 ## 5. Operações no relatório HTML
@@ -288,7 +300,8 @@ fora do escopo.
 **4. Por que valores com casas decimais voltam como texto?**
 Para não perder precisão. Um `DECIMAL(20,10)` não cabe num número de JavaScript sem
 arredondamento, então o valor é mantido como string exatamente como o banco devolveu. A
-mesma lógica protege inteiros acima de 2^53.
+mesma lógica protege inteiros acima de 2^53. **No SQL Server isto não se aplica** — veja a
+exceção na seção 4.
 
 **5. O que significa o erro `DRIVER_NOT_INSTALLED`?**
 Que o pacote npm do driver daquele SGBD não está instalado. A mensagem diz exatamente o
@@ -303,6 +316,13 @@ precisa instalar os que vai usar.
 - **O relatório precisa de internet** para renderizar (ver seção 5).
 - **O testar-conexão exige o driver instalado**; sem ele, a mensagem de erro aponta o
   pacote que falta.
+- **SQL Server: o driver alterna entre *SQL batch* e RPC para `sp_executesql`.** Sem
+  placeholders a instrução vai como *batch*; com `@p1`, `@p2`, como RPC (é o único jeito de
+  ligar parâmetros). Isso corrigiu um defeito real medido em servidor: usando `sp_executesql`
+  para tudo, o SQL Server tratava cada requisição como **procedure** e derrubava, ao retornar,
+  tabela temporária local, `SET` de sessão e a transação aberta (erro 266, "mismatching number
+  of BEGIN and COMMIT"). É transparente no uso — a única ressalva que sobra é a de `DECIMAL`
+  (seção 4).
 - **`ibm_db` (DB2) é o único driver nativo**, e o único que exige cuidado no empacotamento.
   Três detalhes, todos verificados rodando o aplicativo **empacotado** de verdade:
   - é N-API, então **não** precisa de recompilação contra o ABI do Electron;

@@ -51,6 +51,37 @@ node -e "require('pg'); console.log('driver ok')"
 > `npm install-scripts approve ibm_db oracledb` e depois `npm rebuild ibm_db oracledb`.
 > Sem isso o `require` falha e a suíte de drivers mente para você.
 
+### Do lado do banco: o login precisa de acesso ao database
+
+Antes de culpar o Marrone: **criar o login no servidor não dá acesso a um banco.** O login
+precisa de um *usuário* mapeado dentro do database de destino — e é comum que o banco padrão
+do login seja exatamente aquele que ele não consegue abrir. O sintoma é um erro de logon mesmo
+com usuário e senha corretos:
+
+```text
+Falha de logon do usuário 'marrone'.
+```
+
+A mensagem vem do próprio servidor (o Marrone não a reescreve), então ela aparece no idioma
+configurado no banco. Diagnóstico, conectado ao `master` com um login administrador:
+
+```sql
+SELECT name, state_desc FROM sys.databases ORDER BY name;   -- o banco está ONLINE?
+SELECT name, is_disabled, default_database_name
+FROM sys.server_principals WHERE name = 'marrone';          -- o login existe? qual o banco padrão?
+```
+
+Correção, uma vez por database, também com um login administrador:
+
+```sql
+USE MeuBanco;
+CREATE USER marrone FOR LOGIN marrone;
+ALTER ROLE db_owner ADD MEMBER marrone;  -- ou db_datareader/db_datawriter, se preferir restringir
+```
+
+O equivalente nos outros SGBDs: no MySQL é `GRANT` no schema; no PostgreSQL,
+`GRANT CONNECT ON DATABASE` mais os privilégios de tabela; no Oracle o usuário *é* o schema.
+
 Crie uma coleção de teste com uma requisição qualquer (um `GET https://httpbin.org/get` basta)
 e um script de pré-requisição — é nele que o `bru.db` vai rodar.
 
@@ -200,10 +231,11 @@ Testar o caminho triste é metade do aceite; cada um destes já tem o comportame
 | 4 | Driver do SGBD não instalado | Mensagem diz **qual** `npm install` rodar |
 | 5 | Tabela inexistente | Erro do banco propagado, sem stack trace interna vazando |
 | 6 | Banco fora do ar | Erro de conexão em segundos (não pendura) |
-| 7 | `DECIMAL(20,10)` no SELECT | Volta como **string** — precisão não pode ser perdida |
+| 7 | `DECIMAL(20,10)` no SELECT | Volta como **string** (pg/MySQL/Oracle/DB2) — precisão não pode ser perdida. **No SQL Server volta como `number`**: ver a exceção na seção 4 de `database-integration.md` |
 | 8 | Colunas do Oracle | Voltam em MAIÚSCULAS, sem renomear (é o que o banco devolveu) |
 | 9 | `ibm_db` com conexão pendente ao encerrar | Exit 139 — **defeito conhecido**, evite não fechando |
 | 10 | Script roda no CLI sem env var | Erro cita `MARRONE_DB_<SGBD>_USER`, não a interface |
+| 11 | Login sem usuário mapeado no database | Erro de logon mesmo com senha correta — ver "Do lado do banco", seção 1 |
 
 ---
 
