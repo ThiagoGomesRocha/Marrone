@@ -3,54 +3,53 @@
     "uid": "1igyn4u00000000000232",
     "name": "Sample API Collection",
     "items": [
-      {
-        "uid": "1igyn4u00000000000001",
-        "type": "http-request",
-        "name": "Get Users",
-        "seq": 1,
-        "request": {
-          "url": "https://jsonplaceholder.typicode.com/users",
-          "method": "GET",
-          "headers": [],
-          "params": [],
-          "body": {
-            "mode": "none"
-          },
-          "auth": {
-            "mode": "none"
-          },
-          "script": {
-            "req": "",
-            "res": ""
-          },
-          "vars": {
-            "req": [],
-            "res": []
-          },
-          "assertions": [],
-          "tests": "",
-          "docs": "This request retrieves a list of users from the JSONPlaceholder API."
+        {
+            "uid": "1igyn4u00000000000001",
+            "type": "http-request",
+            "name": "Get Users",
+            "seq": 1,
+            "request": {
+                "url": "https://jsonplaceholder.typicode.com/users",
+                "method": "GET",
+                "headers": [],
+                "params": [],
+                "body": {
+                    "mode": "none"
+                },
+                "auth": {
+                    "mode": "none"
+                },
+                "script": {
+                    "req": "",
+                    "res": ""
+                },
+                "vars": {
+                    "req": [],
+                    "res": []
+                },
+                "assertions": [],
+                "tests": "// ============================================\n// 1. Estrutura geral da resposta\n// ============================================\ntest(\"deve retornar status 200\", function () {\n  expect(res.getStatus()).to.equal(200);\n});\n\ntest(\"o body deve ser um array\", function () {\n  const body = res.getBody();\n  expect(body).to.be.an(\"array\");\n});\n\ntest(\"o array deve ter exatamente 10 usuários\", function () {\n  const body = res.getBody();\n  expect(body).to.have.lengthOf(10);\n});\n\n\n// ============================================\n// 2. Validação de cada usuário (todos os itens)\n// ============================================\ntest(\"todos os usuários devem ter os campos obrigatórios\", function () {\n  const body = res.getBody();\n  body.forEach((user, index) => {\n    expect(user, `usuário no índice ${index}`).to.have.property(\"id\");\n    expect(user, `usuário no índice ${index}`).to.have.property(\"name\");\n    expect(user, `usuário no índice ${index}`).to.have.property(\"username\");\n    expect(user, `usuário no índice ${index}`).to.have.property(\"email\");\n    expect(user, `usuário no índice ${index}`).to.have.property(\"address\");\n    expect(user, `usuário no índice ${index}`).to.have.property(\"phone\");\n    expect(user, `usuário no índice ${index}`).to.have.property(\"website\");\n    expect(user, `usuário no índice ${index}`).to.have.property(\"company\");\n  });\n});\n\ntest(\"os IDs devem ser sequenciais de 1 a 10\", function () {\n  const body = res.getBody();\n  const ids = body.map((u) => u.id);\n  expect(ids).to.deep.equal([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);\n});\n\ntest(\"todos os IDs devem ser números\", function () {\n  const body = res.getBody();\n  body.forEach((user) => {\n    expect(user.id).to.be.a(\"number\");\n  });\n});\n\ntest(\"todos os emails devem ser strings não vazias\", function () {\n  const body = res.getBody();\n  body.forEach((user) => {\n    expect(user.email).to.be.a(\"string\");\n    expect(user.email.length).to.be.greaterThan(0);\n  });\n});\n\n\n// ============================================\n// 3. Validação do objeto aninhado (address)\n// ============================================\ntest(\"todos os usuários devem ter um endereço válido\", function () {\n  const body = res.getBody();\n  body.forEach((user) => {\n    expect(user.address).to.be.an(\"object\");\n    expect(user.address).to.have.property(\"street\");\n    expect(user.address).to.have.property(\"suite\");\n    expect(user.address).to.have.property(\"city\");\n    expect(user.address).to.have.property(\"zipcode\");\n  });\n});\n\ntest(\"todos os endereços devem ter coordenadas geo (lat/lng)\", function () {\n  const body = res.getBody();\n  body.forEach((user) => {\n    expect(user.address.geo).to.have.property(\"lat\");\n    expect(user.address.geo).to.have.property(\"lng\");\n    expect(user.address.geo.lat).to.be.a(\"string\");\n    expect(user.address.geo.lng).to.be.a(\"string\");\n  });\n});\n\n\n// ============================================\n// 4. Validação do objeto aninhado (company)\n// ============================================\ntest(\"todos os usuários devem ter uma empresa válida\", function () {\n  const body = res.getBody();\n  body.forEach((user) => {\n    expect(user.company).to.be.an(\"object\");\n    expect(user.company).to.have.property(\"name\");\n    expect(user.company).to.have.property(\"catchPhrase\");\n    expect(user.company).to.have.property(\"bs\");\n  });\n});\n\n\n// ============================================\n// 5. Validação de usuários específicos\n// ============================================\ntest(\"o primeiro usuário deve ser a Leanne Graham\", function () {\n  const body = res.getBody();\n  const primeiro = body[0];\n  expect(primeiro.name).to.equal(\"Leanne Graham\");\n  expect(primeiro.username).to.equal(\"Bret\");\n  expect(primeiro.email).to.equal(\"Sincere@april.biz\");\n});\n\ntest(\"o último usuário deve ser a Clementina DuBuque\", function () {\n  const body = res.getBody();\n  const ultimo = body[9];\n  expect(ultimo.name).to.equal(\"Clementina DuBuque\");\n  expect(ultimo.username).to.equal(\"Moriah.Stanton\");\n});\n\n\n// ============================================\n// 6. Teste de unicidade\n// ============================================\ntest(\"não deve haver IDs duplicados\", function () {\n  const body = res.getBody();\n  const ids = body.map((u) => u.id);\n  const idsUnicos = new Set(ids);\n  expect(idsUnicos.size).to.equal(ids.length);\n});\n\ntest(\"não deve haver emails duplicados\", function () {\n  const body = res.getBody();\n  const emails = body.map((u) => u.email.toLowerCase());\n  const emailsUnicos = new Set(emails);\n  expect(emailsUnicos.size).to.equal(emails.length);\n});\n",
+                "docs": "This request retrieves a list of users from the JSONPlaceholder API."
+            }
         }
-      }
     ],
     "environments": [],
     "activeEnvironmentUid": null,
     "root": {
-      "request": {
-        "headers": [],
-        "auth": {
-          "mode": "none"
-        },
-        "script": {
-          "req": "",
-          "res": ""
-        },
-        "vars": {
-          "req": [],
-          "res": []
-        },
-        "tests": ""
-      }
+        "request": {
+            "headers": [],
+            "auth": {
+                "mode": "none"
+            },
+            "script": {
+                "req": "",
+                "res": ""
+            },
+            "vars": {
+                "req": [],
+                "res": []
+            },
+            "tests": ""
+        }
     }
-  }
-  
+}

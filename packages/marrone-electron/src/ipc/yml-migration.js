@@ -17,7 +17,7 @@ const { getCollectionFormat, getCollectionStats, writeFile } = require('../utils
 const { openCollection } = require('../app/collections');
 const snapshotManager = require('../services/snapshot');
 const { unmount, clearCollectionIndex } = require('./mount');
-const { clearBrunoConfig } = require('../store/marrone-config');
+const { clearBrunoConfig } = require('../store/bruno-config');
 const { clearRequestUidsForCollection } = require('../cache/requestUids');
 
 const MIGRATION_CANCELLED_MESSAGE = 'Migration cancelled';

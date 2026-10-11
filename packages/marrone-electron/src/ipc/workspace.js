@@ -570,7 +570,7 @@ const registerWorkspaceIpc = (mainWindow, workspaceWatcher) => {
         collectionWatcher.removeWatcher(collectionPath, mainWindow, collectionUid);
         await require('./mount').unmount(collectionUid).catch(() => {});
         require('./mount').clearCollectionIndex(collectionPath);
-        require('../store/marrone-config').clearBrunoConfig(collectionUid);
+        require('../store/bruno-config').clearBrunoConfig(collectionUid);
         require('../cache/requestUids').clearRequestUidsForCollection(collectionPath);
       }
 

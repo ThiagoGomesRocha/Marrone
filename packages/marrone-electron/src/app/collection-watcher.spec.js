@@ -71,7 +71,7 @@ jest.mock('./dotenv-watcher', () => ({
   removeCollectionWatcher: jest.fn()
 }));
 
-const { getBrunoConfig } = require('../store/marrone-config');
+const { getBrunoConfig } = require('../store/bruno-config');
 const collectionWatcher = require('./collection-watcher');
 
 describe('CollectionWatcher', () => {

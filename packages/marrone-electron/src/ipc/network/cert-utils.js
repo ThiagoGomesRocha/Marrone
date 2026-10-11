@@ -3,7 +3,7 @@ const path = require('path');
 const { get } = require('lodash');
 const { getCACertificates } = require('@marrone/requests');
 const { preferencesUtil } = require('../../store/preferences');
-const { getBrunoConfig } = require('../../store/marrone-config');
+const { getBrunoConfig } = require('../../store/bruno-config');
 const { getCachedSystemProxy } = require('../../store/system-proxy');
 const { interpolateString, interpolateObject } = require('./interpolate-string');
 

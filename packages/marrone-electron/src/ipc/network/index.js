@@ -37,7 +37,7 @@ const { findItemInCollectionByPathname, sortFolder, getAllRequestsInFolderRecurs
 const { getOAuth2TokenUsingAuthorizationCode, getOAuth2TokenUsingClientCredentials, getOAuth2TokenUsingPasswordCredentials, getOAuth2TokenUsingImplicitGrant, updateCollectionOauth2Credentials, clearOauth2CredentialsByCredentialsId } = require('../../utils/oauth2');
 const { preferencesUtil } = require('../../store/preferences');
 const { getProcessEnvVars } = require('../../store/process-env');
-const { getBrunoConfig } = require('../../store/marrone-config');
+const { getBrunoConfig } = require('../../store/bruno-config');
 const Oauth2Store = require('../../store/oauth2');
 const { isRequestTagsIncluded } = require('@marrone/common');
 const { cookiesStore } = require('../../store/cookies');

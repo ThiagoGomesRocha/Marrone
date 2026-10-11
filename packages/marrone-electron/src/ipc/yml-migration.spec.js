@@ -18,7 +18,7 @@ jest.mock('../services/snapshot', () => ({
   setCollection: jest.fn(),
   remapCollectionTabPaths: jest.fn()
 }));
-jest.mock('../store/marrone-config', () => ({
+jest.mock('../store/bruno-config', () => ({
   clearBrunoConfig: jest.fn()
 }));
 jest.mock('../cache/requestUids', () => ({

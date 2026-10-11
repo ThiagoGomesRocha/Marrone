@@ -47,7 +47,7 @@ const sendTree = async (collectionUid, collectionPath, tree, emit) => {
   if (tree.brunoConfig) {
     try {
       const { transformBrunoConfigAfterRead } = require('../../utils/transformBrunoConfig');
-      const { setBrunoConfig } = require('../../store/marrone-config');
+      const { setBrunoConfig } = require('../../store/bruno-config');
       const transformed = await transformBrunoConfigAfterRead(tree.brunoConfig, collectionPath);
       tree.brunoConfig = transformed;
       setBrunoConfig(collectionUid, transformed);

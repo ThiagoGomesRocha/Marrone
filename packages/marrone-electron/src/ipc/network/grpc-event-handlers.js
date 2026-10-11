@@ -12,7 +12,7 @@ const { normalizeAndResolvePath } = require('../../utils/filesystem');
 const { configureRequest, buildGrpcRequest, interpolateGrpcRequest } = require('./prepare-grpc-request');
 const { shouldUseProxy } = require('../../utils/proxy-util');
 const { getPacResolver } = require('@marrone/requests');
-const { getBrunoConfig } = require('../../store/marrone-config');
+const { getBrunoConfig } = require('../../store/bruno-config');
 const { getJsSandboxRuntime } = require('../../utils/collection');
 const { createGrpcScriptOrchestration } = require('./grpc-script-orchestration');
 
