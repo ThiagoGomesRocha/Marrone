@@ -24,6 +24,8 @@ interface FakeState {
   connectOptions: DriverConnectOptions[];
   statements: string[];
   closed: number;
+  /** Linhas devolvidas pelo driver falso. Sem valor, devolve 1 registro. */
+  rows?: unknown[];
 }
 
 let fake: FakeState;
@@ -36,7 +38,7 @@ const makeFakeDriver = (): DatabaseDriver => ({
 
     return {
       sgbd: 'postgres',
-      query: async () => [{ id: 1, nome: 'João' }],
+      query: async () => fake.rows ?? [{ id: 1, nome: 'João' }],
       execute: async (sql) => {
         fake.statements.push(sql);
         return { affectedRows: 1, rows: [] };
@@ -216,6 +218,63 @@ describe('createSandboxCapability', () => {
     expect(typeof queryEntry!.durationMs).toBe('number');
     expect(JSON.stringify(recorded)).not.toContain('minha-senha');
     expect(JSON.stringify(recorded)).not.toContain('segredo');
+  });
+
+  test('grava no máximo 20 linhas e informa o total e o corte', async () => {
+    const recorded: Record<string, unknown>[] = [];
+    const capability = createSandboxCapability({
+      credentialsProvider: providerWith({ username: 'joao', password: 'segredo' }),
+      record: (entry) => recorded.push(entry)
+    });
+
+    fake.rows = Array.from({ length: 137 }, (_, index) => ({ userID: index + 1 }));
+
+    const handle = await capability.connect('postgres', 'postgres://localhost:5432/mydb');
+    await capability.query(handle, 'SELECT * FROM users');
+
+    const queryEntry = recorded.find((entry) => entry.sql === 'SELECT * FROM users')!;
+    const rows = queryEntry.resultRows as unknown[];
+
+    // O teto existe para o relatório não virar um dump de tabela...
+    expect(rows).toHaveLength(20);
+    expect(rows[0]).toEqual({ userID: 1 });
+    // ...mas o total real e o aviso de corte ficam registrados, para avisar quem lê.
+    expect(queryEntry.resultRowsTotal).toBe(137);
+    expect(queryEntry.resultRowsTruncated).toBe(true);
+  });
+
+  test('não marca corte quando o resultado cabe no teto', async () => {
+    const recorded: Record<string, unknown>[] = [];
+    const capability = createSandboxCapability({
+      credentialsProvider: providerWith({ username: 'u', password: 'p' }),
+      record: (entry) => recorded.push(entry)
+    });
+
+    fake.rows = Array.from({ length: 3 }, (_, index) => ({ id: index + 1 }));
+
+    const handle = await capability.connect('postgres', 'postgres://localhost:5432/mydb');
+    await capability.query(handle, 'SELECT id FROM pedidos');
+
+    const queryEntry = recorded.find((entry) => entry.sql === 'SELECT id FROM pedidos')!;
+    expect(queryEntry.resultRows).toHaveLength(3);
+    expect(queryEntry.resultRowsTotal).toBe(3);
+    expect(queryEntry.resultRowsTruncated).toBe(false);
+  });
+
+  test('query com 1 registro grava a linha única (formatResult devolve objeto)', async () => {
+    const recorded: Record<string, unknown>[] = [];
+    const capability = createSandboxCapability({
+      credentialsProvider: providerWith({ username: 'u', password: 'p' }),
+      record: (entry) => recorded.push(entry)
+    });
+
+    const handle = await capability.connect('postgres', 'postgres://localhost:5432/mydb');
+    await capability.query(handle, 'SELECT * FROM usuarios WHERE id = $1', [1]);
+
+    const queryEntry = recorded.find((entry) => String(entry.sql).startsWith('SELECT * FROM usuarios'))!;
+    // 1 registro chega como objeto; ainda assim precisa virar uma linha no relatório.
+    expect(queryEntry.resultRows).toEqual([{ id: 1, nome: 'João' }]);
+    expect(queryEntry.resultRowsTotal).toBe(1);
   });
 
   test('execute registra o statement', async () => {

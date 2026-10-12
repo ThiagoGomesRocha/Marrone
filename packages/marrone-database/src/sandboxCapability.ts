@@ -232,6 +232,53 @@ export const createSandboxCapability = ({
     return connection;
   };
 
+  /**
+   * Teto de linhas gravadas por operação.
+   *
+   * O relatório é um artefato que circula: sem teto, um `SELECT *` sem WHERE o transformaria
+   * num dump de tabela (tamanho e dado pessoal). Acima do teto, `resultRowsTruncated` fica
+   * true e o relatório avisa quantas linhas ficaram de fora.
+   */
+  const MAX_RECORDED_ROWS = 20;
+
+  /** Extrai as linhas devolvidas pela operação, para o relatório poder exibi-las. */
+  const extractRecordedRows = (
+    result: unknown
+  ): { rows: unknown[]; truncated: boolean; total: number } => {
+    const collect = (rows: unknown[]) => ({
+      rows: rows.slice(0, MAX_RECORDED_ROWS),
+      truncated: rows.length > MAX_RECORDED_ROWS,
+      total: rows.length
+    });
+
+    if (result === null || result === undefined) {
+      return collect([]);
+    }
+
+    if (Array.isArray(result)) {
+      return collect(result);
+    }
+
+    if (typeof result === 'object') {
+      const asRecord = result as { rows?: unknown; affectedRows?: unknown };
+
+      // execute() devolve { affectedRows, rows }
+      if (Array.isArray(asRecord.rows)) {
+        return collect(asRecord.rows);
+      }
+
+      // execute() de DDL: só affectedRows, nenhuma linha
+      if ('affectedRows' in asRecord) {
+        return collect([]);
+      }
+
+      // query() com exatamente 1 registro devolve o próprio objeto
+      return collect([result]);
+    }
+
+    return collect([]);
+  };
+
   const withRecording = async <T>({
     sgbd,
     sql,
@@ -250,6 +297,7 @@ export const createSandboxCapability = ({
 
     try {
       const result = await run();
+      const recordedRows = extractRecordedRows(result);
       record?.({
         timestamp,
         sgbd,
@@ -258,6 +306,9 @@ export const createSandboxCapability = ({
         durationMs: Date.now() - startedAt,
         status: 'success',
         resultSummary: summarizeResult(result),
+        resultRows: recordedRows.rows,
+        resultRowsTotal: recordedRows.total,
+        resultRowsTruncated: recordedRows.truncated,
         scope
       });
       return result;

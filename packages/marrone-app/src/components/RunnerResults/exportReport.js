@@ -38,6 +38,10 @@ const mapItemToRunnerResult = (item, exchange) => {
     testResults: item?.testResults || [],
     preRequestTestResults: item?.preRequestTestResults || [],
     postResponseTestResults: item?.postResponseTestResults || [],
+    // Operações de banco (SQL + resultado) registradas pelos scripts. Sem esta linha o
+    // relatório exportado pela interface perde a aba "Database Operations" inteira,
+    // porque o gerador só a cria quando recebe o campo em algum resultado.
+    databaseOperations: item?.databaseOperations || [],
     runDuration: responseReceived?.duration || responseReceived?.responseTime || 0
   };
 };

@@ -191,7 +191,7 @@ describe('relatório — seção Database Operations', () => {
     test('collectDatabaseOperations achata iterações e anexa o contexto', () => {
       const operations = collectDatabaseOperations(buildRunnerResults([
         { sgbd: 'oracle', sql: 'SELECT 1 FROM DUAL', parameters: ['***'], durationMs: 9, status: 'success' }
-      ]) as any, false);
+      ]) as any, false, true);
 
       expect(operations).toHaveLength(1);
       expect((operations[0] as any).sgbd).toBe('oracle');
@@ -201,13 +201,59 @@ describe('relatório — seção Database Operations', () => {
       const withoutOperations = buildRunnerResults([]);
       withoutOperations[0].results[0].databaseOperations = undefined;
 
-      expect(collectDatabaseOperations(withoutOperations as any, false)).toEqual([]);
+      expect(collectDatabaseOperations(withoutOperations as any, false, true)).toEqual([]);
     });
 
     test('redactDatabaseParameters nunca lança com entrada estranha', () => {
       expect(redactDatabaseParameters(undefined, false)).toEqual([]);
       expect(redactDatabaseParameters('não é array', false)).toEqual([]);
       expect(redactDatabaseParameters([1, 2], true)).toEqual([1, 2]);
+    });
+
+    test('as linhas devolvidas pela consulta entram no payload por padrão', () => {
+      const operations = collectDatabaseOperations(buildRunnerResults([
+        {
+          sgbd: 'mssql',
+          sql: 'SELECT * FROM users WHERE userID = @p1',
+          parameters: ['***'],
+          durationMs: 12,
+          status: 'success',
+          resultSummary: '1 registro',
+          resultRows: [{ userID: 1, name: 'Thiago' }],
+          resultRowsTotal: 1,
+          resultRowsTruncated: false
+        }
+      ]) as any, false, true);
+
+      expect((operations[0] as any).resultRows).toEqual([{ userID: 1, name: 'Thiago' }]);
+      expect((operations[0] as any).resultRowsTotal).toBe(1);
+      expect((operations[0] as any).resultRowsTruncated).toBe(false);
+    });
+
+    test('includeDbRows=false remove as linhas mas preserva SQL, parâmetros e resumo', () => {
+      const operations = collectDatabaseOperations(buildRunnerResults([
+        {
+          sgbd: 'mssql',
+          sql: 'SELECT * FROM pedidos',
+          parameters: ['***'],
+          durationMs: 40,
+          status: 'success',
+          resultSummary: '137 registro(s)',
+          resultRows: [{ id: 1 }],
+          resultRowsTotal: 137,
+          resultRowsTruncated: true
+        }
+      ]) as any, false, false);
+
+      const operation = operations[0] as any;
+      // As linhas somem (o relatório vira só metadados)...
+      expect(operation.resultRows).toBeUndefined();
+      expect(operation.resultRowsTotal).toBeUndefined();
+      expect(operation.resultRowsTruncated).toBeUndefined();
+      // ...mas o resto continua, inclusive o resumo com a contagem.
+      expect(operation.sql).toBe('SELECT * FROM pedidos');
+      expect(operation.parameters).toEqual(['***']);
+      expect(operation.resultSummary).toBe('137 registro(s)');
     });
   });
 });

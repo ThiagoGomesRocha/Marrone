@@ -30,7 +30,11 @@ const redactDatabaseParameters = (parameters: unknown, includeSensitive: boolean
  * da requisição em que cada uma rodou (nome, método e url), para o relatório poder
  * dizer de onde veio cada SQL.
  */
-const collectDatabaseOperations = (runnerResults: T_RunnerResults[], includeSensitive: boolean): unknown[] => {
+const collectDatabaseOperations = (
+  runnerResults: T_RunnerResults[],
+  includeSensitive: boolean,
+  includeDbRows: boolean
+): unknown[] => {
   return runnerResults.flatMap(({ results }) =>
     (results || []).flatMap((result) => {
       const operations = result?.databaseOperations;
@@ -39,15 +43,28 @@ const collectDatabaseOperations = (runnerResults: T_RunnerResults[], includeSens
         return [];
       }
 
-      return operations.map((operation) => ({
-        ...operation,
-        parameters: redactDatabaseParameters(operation.parameters, includeSensitive),
-        // O NOME da requisição está no RESULTADO, não dentro de `request` (que carrega só
-        // method/url/headers/data). Ler de `request.name` devolvia null sempre.
-        requestName: result?.name || null,
-        requestUrl: result?.request?.url || null,
-        requestMethod: result?.request?.method || null
-      }));
+      return operations.map((operation) => {
+        const mapped: Record<string, unknown> = {
+          ...operation,
+          parameters: redactDatabaseParameters(operation.parameters, includeSensitive),
+          // O NOME da requisição está no RESULTADO, não dentro de `request` (que carrega só
+          // method/url/headers/data). Ler de `request.name` devolvia null sempre.
+          requestName: result?.name || null,
+          requestUrl: result?.request?.url || null,
+          requestMethod: result?.request?.method || null
+        };
+
+        // As linhas do resultado saem quando o relatório é montado SEM dados de linha.
+        // O padrão é incluir (limitado a 20 por operação, ver @marrone/database), mas o
+        // relatório circula e um SELECT pode trazer dado pessoal — daí o interruptor.
+        if (!includeDbRows) {
+          delete mapped.resultRows;
+          delete mapped.resultRowsTotal;
+          delete mapped.resultRowsTruncated;
+        }
+
+        return mapped;
+      });
     })
   );
 };
@@ -58,7 +75,8 @@ const generateHtmlReport = ({
   environment = null, // Default environment if not provided
   runCompletionTime = '', // Default run completion time if not provided
   logo = '', // Optional data-URL (data:image/png;base64,...) shown in the report header
-  includeSensitive = false // Whether to include credential headers/query params in generated CURL commands
+  includeSensitive = false, // Whether to include credential headers/query params in generated CURL commands
+  includeDbRows = true // Whether the Database Operations tab carries the rows the queries returned
 }: {
   runnerResults: T_RunnerResults[];
   version?: string;
@@ -66,6 +84,7 @@ const generateHtmlReport = ({
   runCompletionTime?: string;
   logo?: string;
   includeSensitive?: boolean;
+  includeDbRows?: boolean;
 }): string => {
   const resultsWithSummaryAndCleanData = runnerResults.map(({ iterationIndex, results, summary }) => {
     return {
@@ -103,7 +122,7 @@ const generateHtmlReport = ({
 
   // Seção "Database Operations" (RF08 / P4). Os SQL executados pelos scripts de pré e
   // pós-requisição vêm de bru.databaseOperations, serializado pelo runtime.
-  const databaseOperations = collectDatabaseOperations(runnerResults, includeSensitive);
+  const databaseOperations = collectDatabaseOperations(runnerResults, includeSensitive, includeDbRows);
 
   const htmlString = htmlTemplateString(encodeBase64(JSON.stringify({
     results: resultsWithSummaryAndCleanData,

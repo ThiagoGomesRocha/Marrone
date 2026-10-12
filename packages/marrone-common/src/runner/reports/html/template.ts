@@ -153,6 +153,24 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
         opacity: 0.8;
       }
 
+      /* Linhas devolvidas pela consulta (aba Database Operations) */
+      .db-rows {
+        margin-top: 8px;
+      }
+
+      .db-rows-header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 4px;
+      }
+
+      .db-rows-json {
+        max-height: 320px;
+        overflow-y: auto;
+      }
+
       .curl-command {
         background: rgba(0, 0, 0, 0.04);
         padding: 12px;
@@ -276,6 +294,16 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
             <div class="db-details">
               <span>Parâmetros: {{ formatParameters(operation) }}</span>
               <span>Resultado: {{ operation.resultSummary || (operation.operation ? operation.operation : '-') }}</span>
+            </div>
+
+            <div v-if="operation.resultRows && operation.resultRows.length" class="db-rows">
+              <div class="db-rows-header">
+                <span class="metadata-label">Linhas</span>
+                <span class="db-meta" v-if="operation.resultRowsTruncated">
+                  mostrando {{ operation.resultRows.length }} de {{ operation.resultRowsTotal }} — as demais foram omitidas
+                </span>
+              </div>
+              <pre class="db-sql db-rows-json">{{ formatRows(operation.resultRows) }}</pre>
             </div>
 
             <n-alert v-if="operation.status === 'error' && operation.error" type="error" size="small">
@@ -659,6 +687,11 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
             return operation.parameters.join(', ');
           };
 
+          // Linhas devolvidas pela consulta. Já vêm normalizadas pelo host (Date → ISO,
+          // Buffer → base64) e limitadas a 20 por operação (MAX_RECORDED_ROWS, em
+          // @marrone/database); o total real vem em resultRowsTotal para o aviso de corte.
+          const formatRows = (rows) => JSON.stringify(rows, null, 2);
+
           const copySql = async (operation, index) => {
             const sql = operation.sql || operation.operation || '';
             try {
@@ -669,7 +702,7 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
             }
           };
 
-          return { sgbdFilter, statusFilter, sgbdOptions, statusOptions, filtered, formatParameters, copySql, copiedIndex };
+          return { sgbdFilter, statusFilter, sgbdOptions, statusOptions, filtered, formatParameters, formatRows, copySql, copiedIndex };
         }
       });
 

@@ -927,6 +927,7 @@ export const collectionsSlice = createSlice({
           item.preRequestTestResults = [];
           item.postResponseTestResults = [];
           item.testResults = [];
+          item.databaseOperations = [];
           item.beforeCallStartTestResults = [];
           item.afterCallEndTestResults = [];
           item.beforeMessageSendTestResults = [];
@@ -3382,6 +3383,7 @@ export const collectionsSlice = createSlice({
       item.requestUid = requestUid;
       item.requestStartTime = Date.now();
       item.testResults = [];
+      item.databaseOperations = [];
       item.preRequestTestResults = [];
       item.postResponseTestResults = [];
       item.assertionResults = [];
@@ -3487,6 +3489,21 @@ export const collectionsSlice = createSlice({
             item.assertionResults = results;
           }
 
+          // As operações de banco das três fases (pré, pós e tests) chegam em eventos
+          // separados; aqui elas viram uma lista só no item. É o que permite ao relatório
+          // exportado montar a aba "Database Operations" — sem isto o campo se perde e a
+          // aba nunca aparece no relatório gerado pelo app (só no do CLI).
+          if (
+            type === 'test-results'
+            || type === 'test-results-pre-request'
+            || type === 'test-results-post-response'
+          ) {
+            const operations = action.payload.databaseOperations;
+            if (Array.isArray(operations) && operations.length > 0) {
+              item.databaseOperations = [...(item.databaseOperations || []), ...operations];
+            }
+          }
+
           if (type === 'test-results') {
             const { results } = action.payload;
             item.testResults = results;
@@ -3575,6 +3592,25 @@ export const collectionsSlice = createSlice({
           const item = collection.runnerResult.items.findLast((i) => i.uid === request.uid);
           item.status = 'completed';
           item.responseReceived = action.payload.responseReceived;
+        }
+
+        // Mesma agregação do fluxo de requisição única (ver acima): o item do runner também
+        // precisa das operações de banco para o relatório exportado pela interface.
+        if (
+          type === 'test-results'
+          || type === 'test-results-pre-request'
+          || type === 'test-results-post-response'
+        ) {
+          const operations = action.payload.databaseOperations;
+          if (Array.isArray(operations) && operations.length > 0) {
+            const dbOperationItem = collection.runnerResult.items.findLast((i) => i.uid === request.uid);
+            if (dbOperationItem) {
+              dbOperationItem.databaseOperations = [
+                ...(dbOperationItem.databaseOperations || []),
+                ...operations
+              ];
+            }
+          }
         }
 
         if (type === 'test-results') {

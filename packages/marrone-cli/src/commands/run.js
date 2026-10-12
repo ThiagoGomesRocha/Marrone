@@ -173,6 +173,11 @@ const builder = async (yargs) => {
       description: 'Include sensitive headers (Authorization, Cookie, API keys) in the CURL commands of the HTML report',
       default: false
     })
+    .option('reporter-hide-db-rows', {
+      type: 'boolean',
+      description: 'Omit the rows returned by database queries from the HTML report (keeps the SQL, parameters and summary only)',
+      default: false
+    })
     .option('insecure', {
       type: 'boolean',
       description: 'Allow insecure server connections'
@@ -343,6 +348,7 @@ const handler = async function (argv) {
       reporterSkipBody,
       reporterHtmlLogo,
       reporterIncludeSensitive,
+      reporterHideDbRows,
       clientCertConfig,
       noproxy,
       cacheSslSession,
@@ -994,7 +1000,8 @@ const handler = async function (argv) {
         junit: (path) => makeJUnitOutput(results, path),
         html: (path) => makeHtmlOutput(outputJson, path, runCompletionTime, environmentName, {
           logoPath: reporterHtmlLogo,
-          includeSensitive: reporterIncludeSensitive
+          includeSensitive: reporterIncludeSensitive,
+          includeDbRows: reporterHideDbRows !== true
         })
       };
 

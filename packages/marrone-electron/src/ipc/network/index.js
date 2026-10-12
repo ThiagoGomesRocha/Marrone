@@ -982,6 +982,7 @@ const registerNetworkIpc = (mainWindow) => {
         mainWindow.webContents.send('main:run-request-event', {
           type: 'test-results-pre-request',
           results: preRequestScriptResult.results,
+          databaseOperations: preRequestScriptResult.databaseOperations || [],
           itemUid: item.uid,
           requestUid,
           collectionUid
@@ -1182,6 +1183,7 @@ const registerNetworkIpc = (mainWindow) => {
           mainWindow.webContents.send('main:run-request-event', {
             type: 'test-results-post-response',
             results: postResponseScriptResult.results,
+            databaseOperations: postResponseScriptResult.databaseOperations || [],
             itemUid: item.uid,
             requestUid,
             collectionUid
@@ -1261,6 +1263,7 @@ const registerNetworkIpc = (mainWindow) => {
           !runInBackground && mainWindow.webContents.send('main:run-request-event', {
             type: 'test-results',
             results: testResults.results,
+            databaseOperations: testResults.databaseOperations || [],
             itemUid: item.uid,
             requestUid,
             collectionUid
@@ -1773,6 +1776,7 @@ const registerNetworkIpc = (mainWindow) => {
               mainWindow.webContents.send('main:run-folder-event', {
                 type: 'test-results-pre-request',
                 preRequestTestResults: preRequestScriptResult.results,
+                databaseOperations: preRequestScriptResult.databaseOperations || [],
                 ...eventData
               });
             }
@@ -2051,6 +2055,7 @@ const registerNetworkIpc = (mainWindow) => {
               mainWindow.webContents.send('main:run-folder-event', {
                 type: 'test-results-post-response',
                 postResponseTestResults: postResponseScriptResult.results,
+                databaseOperations: postResponseScriptResult.databaseOperations || [],
                 ...eventData
               });
             }
@@ -2128,6 +2133,7 @@ const registerNetworkIpc = (mainWindow) => {
               mainWindow.webContents.send('main:run-folder-event', {
                 type: 'test-results',
                 testResults: testResults.results,
+                databaseOperations: testResults.databaseOperations || [],
                 ...eventData
               });
 

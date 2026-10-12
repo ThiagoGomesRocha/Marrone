@@ -100,6 +100,12 @@ export type T_DatabaseOperation = {
   durationMs: number;
   status: 'success' | 'error';
   resultSummary?: string;
+  /** Linhas devolvidas pela consulta. Limitadas a 20 por operação (MAX_RECORDED_ROWS, no @marrone/database). */
+  resultRows?: unknown[];
+  /** Total real de linhas antes do corte, para o relatório poder avisar quanto ficou de fora. */
+  resultRowsTotal?: number;
+  /** true quando a consulta devolveu mais linhas do que o teto gravado. */
+  resultRowsTruncated?: boolean;
   error?: { code?: string | number | null; message?: string };
   scope?: unknown;
 };

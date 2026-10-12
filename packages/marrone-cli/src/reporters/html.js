@@ -41,7 +41,10 @@ const makeHtmlOutput = async (results, outputPath, runCompletionTime, environmen
     environment: environment,
     runCompletionTime: runCompletionTime,
     logo: readLogoAsDataUrl(options.logoPath),
-    includeSensitive: options.includeSensitive === true
+    includeSensitive: options.includeSensitive === true,
+    // Linhas do resultado na aba Database Operations: incluidas por padrao (o teto de 20
+    // e' aplicado no host). Use --reporter-hide-db-rows para gerar um relatorio so com metadados.
+    includeDbRows: options.includeDbRows !== false
   });
   fs.writeFileSync(outputPath, htmlString);
 };
