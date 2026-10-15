@@ -117,6 +117,20 @@
             "PNG_JPEG_ONLY": "Only PNG or JPEG images are supported",
             "READ_IMAGE_FAILED": "Failed to read the image",
             "BROWSE_REPORT_FAILED": "Failed to browse for a report directory"
+        },
+        "TABS": {
+            "GENERAL": "General",
+            "THEMES": "Themes",
+            "DISPLAY": "Display",
+            "PROXY": "Proxy",
+            "CLIENT_CERTIFICATES": "Client Certificates",
+            "SECURITY": "Security",
+            "DATABASE": "Database",
+            "KEYBINDINGS": "Keybindings",
+            "AI": "AI",
+            "CACHE": "Cache",
+            "SUPPORT": "Support",
+            "BETA": "Beta"
         }
     }
 }
