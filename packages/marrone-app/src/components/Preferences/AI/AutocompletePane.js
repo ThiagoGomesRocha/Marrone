@@ -1,4 +1,5 @@
 import { IconChevronDown } from '@tabler/icons';
+import { useTranslation } from 'react-i18next';
 import ToggleSwitch from 'components/ToggleSwitch';
 import { getPlatformModifierKey } from 'utils/common/platform';
 
@@ -15,18 +16,18 @@ import { getPlatformModifierKey } from 'utils/common/platform';
 const TRIGGER_MODES = [
   {
     value: 'aggressive',
-    label: 'Aggressive',
-    description: 'Suggest after every keystroke'
+    label: 'PREFERENCES.AI.AGGRESSIVE_LABEL',
+    description: 'PREFERENCES.AI.AGGRESSIVE_DESC'
   },
   {
     value: 'debounced',
-    label: 'Debounced',
-    description: 'Suggest after you pause typing (default)'
+    label: 'PREFERENCES.AI.DEBOUNCED_LABEL',
+    description: 'PREFERENCES.AI.DEBOUNCED_DESC'
   },
   {
     value: 'manual',
-    label: 'Manual',
-    description: `Only on ${getPlatformModifierKey()}+\\`
+    label: 'PREFERENCES.AI.MANUAL_LABEL',
+    description: 'PREFERENCES.AI.MANUAL_DESC'
   }
 ];
 
@@ -41,11 +42,13 @@ const AutocompletePane = ({
   onChangeModel,
   onChangeTriggerMode
 }) => {
+  const { t } = useTranslation();
+
   if (!aiEnabled) {
     return (
       <div className="autocomplete-tab flex flex-col gap-3">
         <div className="ai-empty-notice px-3.5 py-3 text-xs">
-          Turn on AI in the Configuration tab to use autocomplete.
+          {t('PREFERENCES.AI.AUTOCOMPLETE_DISABLED_NOTICE')}
         </div>
       </div>
     );
@@ -59,9 +62,9 @@ const AutocompletePane = ({
   // get suggestions yet.
   let blockerMessage = null;
   if (!hasConfiguredProvider) {
-    blockerMessage = 'Add a provider API key in the Configuration tab to enable autocomplete.';
+    blockerMessage = t('PREFERENCES.AI.BLOCKER_ADD_KEY');
   } else if (!hasUsableModel) {
-    blockerMessage = 'No models are available. Enable a model on its provider card in Configuration.';
+    blockerMessage = t('PREFERENCES.AI.BLOCKER_NO_MODELS');
   }
 
   return (
@@ -69,9 +72,9 @@ const AutocompletePane = ({
       <div className="autocomplete-card">
         <div className="autocomplete-header flex items-center justify-between gap-3 px-3.5 py-3">
           <div className="flex flex-col gap-0.5 min-w-0">
-            <span className="text-[12.5px] font-semibold">Inline Autocomplete</span>
+            <span className="text-[12.5px] font-semibold">{t('PREFERENCES.AI.INLINE_AUTOCOMPLETE')}</span>
             <span className="autocomplete-sub text-[11px]">
-              Ghost-text suggestions in Pre-Request, Post-Response, and Tests scripts
+              {t('PREFERENCES.AI.AUTOCOMPLETE_SUB')}
             </span>
           </div>
           <ToggleSwitch
@@ -92,11 +95,11 @@ const AutocompletePane = ({
 
         <div className="autocomplete-row flex items-center justify-between gap-3 px-3.5 py-3">
           <div className="flex flex-col gap-0.5 min-w-0">
-            <span className="text-[11.5px] font-medium">Model</span>
+            <span className="text-[11.5px] font-medium">{t('PREFERENCES.AI.MODEL')}</span>
             <span className="autocomplete-sub text-[10.5px]">
               {hasUsableModel
-                ? 'Lightweight models are recommended for speed'
-                : 'No model available yet'}
+                ? t('PREFERENCES.AI.MODEL_RECOMMENDED')
+                : t('PREFERENCES.AI.MODEL_NOT_AVAILABLE')}
             </span>
           </div>
           <div className="model-select-wrap relative inline-flex items-center">
@@ -105,10 +108,10 @@ const AutocompletePane = ({
               value={model || ''}
               disabled={!isInteractive}
               onChange={(e) => onChangeModel(e.target.value)}
-              aria-label="Autocomplete model"
+              aria-label={t('PREFERENCES.AI.AUTOCOMPLETE_MODEL_ARIA')}
               data-testid="ai-autocomplete-model-select"
             >
-              <option value="">Auto (fastest available)</option>
+              <option value="">{t('PREFERENCES.AI.AUTO_FASTEST')}</option>
               {availableModels.map((m) => (
                 <option key={m.id} value={m.id}>{m.label}</option>
               ))}
@@ -119,12 +122,12 @@ const AutocompletePane = ({
 
         <div className="autocomplete-row flex items-center justify-between gap-3 px-3.5 py-3">
           <div className="flex flex-col gap-0.5 min-w-0">
-            <span className="text-[11.5px] font-medium">Trigger</span>
+            <span className="text-[11.5px] font-medium">{t('PREFERENCES.AI.TRIGGER')}</span>
             <span className="autocomplete-sub text-[10.5px]">
-              {activeTrigger?.description}
+              {t(activeTrigger?.description, { modifier: getPlatformModifierKey() })}
             </span>
           </div>
-          <div className="trigger-pills inline-flex" role="radiogroup" aria-label="Trigger mode">
+          <div className="trigger-pills inline-flex" role="radiogroup" aria-label={t('PREFERENCES.AI.TRIGGER_MODE_ARIA')}>
             {TRIGGER_MODES.map((m) => {
               const isSelected = (triggerMode || 'debounced') === m.value;
               return (
@@ -138,7 +141,7 @@ const AutocompletePane = ({
                   onClick={() => onChangeTriggerMode(m.value)}
                   data-testid={`ai-autocomplete-trigger-${m.value}`}
                 >
-                  {m.label}
+                  {t(m.label)}
                 </button>
               );
             })}
@@ -147,9 +150,9 @@ const AutocompletePane = ({
 
         <div className="autocomplete-row px-3.5 py-3">
           <div className="flex flex-col gap-1">
-            <span className="text-[11.5px] font-medium">Keymap</span>
+            <span className="text-[11.5px] font-medium">{t('PREFERENCES.AI.KEYMAP')}</span>
             <div className="autocomplete-keymap text-[10.5px]">
-              <kbd>Tab</kbd> accept · <kbd>{getPlatformModifierKey()}</kbd>+<kbd>→</kbd> accept word · <kbd>Esc</kbd> dismiss · <kbd>{getPlatformModifierKey()}</kbd>+<kbd>\</kbd> trigger
+              <kbd>Tab</kbd> {t('PREFERENCES.AI.KEYMAP_ACCEPT')} · <kbd>{getPlatformModifierKey()}</kbd>+<kbd>→</kbd> {t('PREFERENCES.AI.KEYMAP_ACCEPT_WORD')} · <kbd>Esc</kbd> {t('PREFERENCES.AI.KEYMAP_DISMISS')} · <kbd>{getPlatformModifierKey()}</kbd>+<kbd>\</kbd> {t('PREFERENCES.AI.KEYMAP_TRIGGER')}
             </div>
           </div>
         </div>

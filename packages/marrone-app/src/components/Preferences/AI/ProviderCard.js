@@ -12,6 +12,7 @@ import {
   IconX
 } from '@tabler/icons';
 import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 import { clearAiApiKey, getAiApiKey, setAiApiKey, testAiProvider } from 'utils/ai';
 
 const OpenAiLogo = (props) => (
@@ -42,6 +43,7 @@ const ProviderCard = ({
   onToggleModel,
   onStatusChange
 }) => {
+  const { t } = useTranslation();
   const Logo = PROVIDER_LOGOS[provider.id];
 
   const [expanded, setExpanded] = useState(false);
@@ -76,9 +78,9 @@ const ProviderCard = ({
       setKeyDraft('');
       setShowKey(false);
       setEditing(false);
-      setFeedback({ type: 'success', message: 'API key saved' });
+      setFeedback({ type: 'success', message: t('PREFERENCES.AI.API_KEY_SAVED') });
     } catch (err) {
-      setFeedback({ type: 'error', message: err.message || 'Failed to save API key' });
+      setFeedback({ type: 'error', message: err.message || t('PREFERENCES.AI.FAILED_TO_SAVE_API_KEY') });
     } finally {
       setSaving(false);
     }
@@ -103,12 +105,12 @@ const ProviderCard = ({
     try {
       const result = await testAiProvider({ providerId: provider.id });
       if (result.ok) {
-        setFeedback({ type: 'success', message: 'Connection successful' });
+        setFeedback({ type: 'success', message: t('PREFERENCES.AI.CONNECTION_SUCCESSFUL') });
       } else {
-        setFeedback({ type: 'error', message: result.error || 'Connection failed' });
+        setFeedback({ type: 'error', message: result.error || t('PREFERENCES.AI.CONNECTION_FAILED') });
       }
     } catch (err) {
-      setFeedback({ type: 'error', message: err.message || 'Connection failed' });
+      setFeedback({ type: 'error', message: err.message || t('PREFERENCES.AI.CONNECTION_FAILED') });
     } finally {
       setTesting(false);
     }
@@ -167,8 +169,8 @@ const ProviderCard = ({
           <span className={`provider-status inline-flex items-center gap-1.5 text-[11px] ${provider.configured ? 'configured' : ''}`}>
             <span className={`status-dot w-[7px] h-[7px] rounded-full ${provider.configured ? 'configured' : ''}`} />
             {provider.configured
-              ? `${enabledModelsCount}/${models.length} models`
-              : 'Not configured'}
+              ? t('PREFERENCES.AI.MODELS_COUNT', { count: enabledModelsCount, total: models.length })
+              : t('PREFERENCES.AI.NOT_CONFIGURED')}
           </span>
           <span className="flex items-center" onClick={stopBubble}>
             {providerToggle}
@@ -185,7 +187,7 @@ const ProviderCard = ({
             {/* API key */}
             <div>
               <div className="key-section-label flex items-center justify-between gap-2 text-[11px] mb-1">
-                <span>API Key</span>
+                <span>{t('PREFERENCES.AI.API_KEY')}</span>
               </div>
 
               {!isEditing ? (
@@ -200,8 +202,8 @@ const ProviderCard = ({
                       className="btn-icon w-7 h-7 box-border inline-flex items-center justify-center cursor-pointer"
                       onClick={handleTest}
                       disabled={testing || !providerEnabled}
-                      title="Test connection"
-                      aria-label="Test connection"
+                      title={t('PREFERENCES.AI.TEST_CONNECTION')}
+                      aria-label={t('PREFERENCES.AI.TEST_CONNECTION')}
                     >
                       {testing ? <IconLoader2 size={15} className="spin" /> : <IconBolt size={15} />}
                     </button>
@@ -209,8 +211,8 @@ const ProviderCard = ({
                       type="button"
                       className="btn-icon w-7 h-7 box-border inline-flex items-center justify-center cursor-pointer"
                       onClick={handleStartEdit}
-                      title="Replace key"
-                      aria-label="Replace key"
+                      title={t('PREFERENCES.AI.REPLACE_KEY')}
+                      aria-label={t('PREFERENCES.AI.REPLACE_KEY')}
                     >
                       <IconPencil size={15} />
                     </button>
@@ -218,8 +220,8 @@ const ProviderCard = ({
                       type="button"
                       className="btn-icon danger w-7 h-7 box-border inline-flex items-center justify-center cursor-pointer"
                       onClick={handleClear}
-                      title="Remove key"
-                      aria-label="Remove key"
+                      title={t('PREFERENCES.AI.REMOVE_KEY')}
+                      aria-label={t('PREFERENCES.AI.REMOVE_KEY')}
                     >
                       <IconTrash size={15} />
                     </button>
@@ -249,7 +251,7 @@ const ProviderCard = ({
                       className="key-eye-btn absolute right-1 p-1 inline-flex items-center cursor-pointer"
                       onClick={() => setShowKey(!showKey)}
                       tabIndex={-1}
-                      aria-label={showKey ? 'Hide API key' : 'Show API key'}
+                      aria-label={showKey ? t('PREFERENCES.AI.HIDE_API_KEY') : t('PREFERENCES.AI.SHOW_API_KEY')}
                     >
                       {showKey ? <IconEyeOff size={14} /> : <IconEye size={14} />}
                     </button>
@@ -262,14 +264,14 @@ const ProviderCard = ({
                     data-testid={`ai-provider-${provider.id}-save`}
                   >
                     {saving ? <IconLoader2 size={13} className="spin" /> : <IconCheck size={13} />}
-                    Save
+                    {t('PREFERENCES.AI.SAVE')}
                   </button>
                   {provider.configured && (
                     <button
                       type="button"
                       className="btn-icon w-7 h-7 box-border inline-flex items-center justify-center cursor-pointer"
                       onClick={handleCancelEdit}
-                      title="Cancel"
+                      title={t('PREFERENCES.AI.CANCEL')}
                     >
                       <IconX size={15} />
                     </button>
@@ -292,11 +294,11 @@ const ProviderCard = ({
             {models.length > 0 && (
               <div className="flex flex-col gap-1.5">
                 <div className="models-label-row flex items-center justify-between text-[11px]">
-                  <span>Models</span>
+                  <span>{t('PREFERENCES.AI.MODELS')}</span>
                   {!provider.configured && (
                     <span className="keyless-hint flex items-center gap-1.5 text-[11px] py-1">
                       <IconAlertCircle size={12} />
-                      Add an API key to enable
+                      {t('PREFERENCES.AI.ADD_AN_API_KEY_TO_ENABLE')}
                     </span>
                   )}
                 </div>
