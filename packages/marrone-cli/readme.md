@@ -4,7 +4,7 @@ With Marrone CLI, you can now run your API collections with ease using simple co
 
 This makes it easier to test your APIs in different environments, automate your testing process, and integrate your API tests with your continuous integration and deployment workflows.
 
-For detailed documentation, visit [Marrone CLI Documentation](https://docs.marrone.com/bru-cli/overview).
+For detailed documentation, visit the [Marrone wiki](https://github.com/ThiagoGomesRocha/Marrone/wiki). It links to the [Bruno docs](https://docs.usebruno.com), which remains the reference for the collection format, scripting, runner and CLI options.
 
 ## Installation
 
@@ -142,7 +142,7 @@ Marrone cli returns the following exit status codes:
 
 ## Support
 
-If you encounter any issues or have any feedback or suggestions, please raise them on our [GitHub repository](https://github.com/marrone/marrone)
+If you encounter any issues or have any feedback or suggestions, please raise them on our [GitHub repository](https://github.com/ThiagoGomesRocha/Marrone)
 
 Thank you for using Marrone CLI!
 
@@ -150,7 +150,7 @@ Thank you for using Marrone CLI!
 
 <!-- An absolute link is used here because npm treats links differently -->
 
-See [https://github.com/marrone/marrone/releases](https://github.com/marrone/marrone/releases)
+See [https://github.com/ThiagoGomesRocha/Marrone/releases](https://github.com/ThiagoGomesRocha/Marrone/releases)
 
 ## License
 

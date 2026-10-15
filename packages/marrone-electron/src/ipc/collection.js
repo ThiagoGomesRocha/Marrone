@@ -82,7 +82,7 @@ const { getOAuth2TokenUsingAuthorizationCode, getOAuth2TokenUsingClientCredentia
 const { getCertsAndProxyConfig } = require('./network/cert-utils');
 const collectionWatcher = require('../app/collection-watcher');
 const { transformBrunoConfigBeforeSave, transformBrunoConfigAfterRead } = require('../utils/transformBrunoConfig');
-const { REQUEST_TYPES } = require('../utils/constants');
+const { REQUEST_TYPES, MARRONE_DOCS_URL } = require('../utils/constants');
 const { cancelOAuth2AuthorizationRequest, isOauth2AuthorizationRequestInProgress } = require('../utils/oauth2-protocol-handler');
 const { findUniqueFolderName } = require('../utils/collection-import');
 const { renameEnvironmentExtendsReferences } = require('../utils/environments');
@@ -2812,8 +2812,8 @@ const registerMainEventHandlers = (mainWindow) => {
   ipcMain.on('menu:open-collection', triggerOpenCollection);
 
   ipcMain.on('main:open-docs', () => {
-    const docsURL = 'https://docs.marrone.com';
-    shell.openExternal(docsURL);
+    // A documentação do Marrone é a wiki do repositório.
+    shell.openExternal(MARRONE_DOCS_URL);
   });
 
   ipcMain.on('main:collection-opened', async (win, pathname, uid, brunoConfig) => {

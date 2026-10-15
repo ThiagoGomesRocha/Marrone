@@ -40,7 +40,12 @@ jest.mock('../cache/requestUids', () => ({
 }));
 
 jest.mock('../utils/constants', () => ({
-  REQUEST_TYPES: ['http-request', 'graphql-request', 'grpc-request', 'ws-request']
+  REQUEST_TYPES: ['http-request', 'graphql-request', 'grpc-request', 'ws-request'],
+  // O módulo real também exporta os links do projeto; manter o mock em sincronia evita
+  // que um teste do handler 'main:open-docs' chame shell.openExternal(undefined).
+  MARRONE_REPO_URL: 'https://github.com/ThiagoGomesRocha/Marrone',
+  MARRONE_DOCS_URL: 'https://github.com/ThiagoGomesRocha/Marrone/wiki',
+  MARRONE_ISSUES_URL: 'https://github.com/ThiagoGomesRocha/Marrone/issues'
 }));
 
 jest.mock('../app/collection-watcher', () => {

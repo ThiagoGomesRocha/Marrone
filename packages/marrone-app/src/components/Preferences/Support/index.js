@@ -1,16 +1,20 @@
 import React from 'react';
-import {
-  IconSpeakerphone,
-  IconBrandTwitter,
-  IconBrandGithub,
-  IconBrandDiscord,
-  IconBrandLinkedin,
-  IconBook,
-  IconExternalLink
-} from '@tabler/icons';
+import { IconSpeakerphone, IconBook, IconExternalLink } from '@tabler/icons';
 import StyledWrapper from './StyledWrapper';
 import { useTranslation } from 'react-i18next';
+import { MARRONE_DOCS_URL, MARRONE_ISSUES_URL } from 'utils/common/constants';
 
+/**
+ * Links de ajuda do Marrone.
+ *
+ * O grupo "Community" (GitHub, Discord, Twitter, LinkedIn) foi REMOVIDO: aqueles eram os
+ * canais do Bruno, não deste fork. Discord e Twitter apontavam para contas do projeto de
+ * origem, e o LinkedIn para uma empresa que não tem relação com o Marrone. Manter canais
+ * de terceiros numa tela de suporte do próprio produto confunde quem está pedindo ajuda.
+ *
+ * Ficamos com os dois caminhos que existem de verdade: a documentação (a wiki do repo) e
+ * o rastreador de issues do repositório.
+ */
 const SUPPORT_GROUPS = [
   {
     key: 'help',
@@ -19,50 +23,16 @@ const SUPPORT_GROUPS = [
       {
         key: 'documentation',
         icon: IconBook,
-        url: 'https://docs.marrone.com',
+        url: MARRONE_DOCS_URL,
         label: 'COMMON.DOCUMENTATION',
         description: 'SUPPORT.DOCUMENTATION_DESCRIPTION'
       },
       {
         key: 'report-issues',
         icon: IconSpeakerphone,
-        url: 'https://github.com/marrone/marrone/issues',
+        url: MARRONE_ISSUES_URL,
         label: 'COMMON.REPORT_ISSUES',
         description: 'SUPPORT.REPORT_ISSUES_DESCRIPTION'
-      }
-    ]
-  },
-  {
-    key: 'community',
-    label: 'SUPPORT.COMMUNITY',
-    links: [
-      {
-        key: 'github',
-        icon: IconBrandGithub,
-        url: 'https://github.com/marrone/marrone',
-        label: 'COMMON.GITHUB',
-        description: 'SUPPORT.GITHUB_DESCRIPTION'
-      },
-      {
-        key: 'discord',
-        icon: IconBrandDiscord,
-        url: 'https://discord.com/invite/KgcZUncpjq',
-        label: 'COMMON.DISCORD',
-        description: 'SUPPORT.DISCORD_DESCRIPTION'
-      },
-      {
-        key: 'twitter',
-        icon: IconBrandTwitter,
-        url: 'https://twitter.com/use_marrone',
-        label: 'COMMON.TWITTER',
-        description: 'SUPPORT.TWITTER_DESCRIPTION'
-      },
-      {
-        key: 'linkedin',
-        icon: IconBrandLinkedin,
-        url: 'https://in.linkedin.com/company/marrone',
-        label: 'COMMON.LINKEDIN',
-        description: 'SUPPORT.LINKEDIN_DESCRIPTION'
       }
     ]
   }

@@ -1,8 +1,11 @@
 blank_issues_enabled: false
+# "Discussions" foi removido daqui: as Discussions do repositório não estão habilitadas,
+# então o link respondia 404. O contato passa a ser o próprio rastreador de issues.
+# O canal de Discord do Bruno também saiu: era comunidade do projeto de origem, não deste fork.
 contact_links:
-  - name: Discussions
-    url: https://github.com/marrone/marrone/discussions
+  - name: Documentation
+    url: https://github.com/ThiagoGomesRocha/Marrone/wiki
+    about: Guias, exemplos de testes automatizados e de scripts de banco de dados (bru.db).
+  - name: Questions and feedback
+    url: https://github.com/ThiagoGomesRocha/Marrone/issues
     about: You can ask general questions or give feedback here.
-  - name: Discord Server
-    url: https://discord.com/invite/KgcZUncpjq
-    about: Join our Discord community to chat about Marrone.

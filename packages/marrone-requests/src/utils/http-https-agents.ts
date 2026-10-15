@@ -615,7 +615,7 @@ const getHttpHttpsAgents = async ({
   });
 
   /**
-   * @see https://github.com/marrone/marrone/issues/211 set keepAlive to true, this should fix socket hang up errors
+   * @see https://github.com/usebruno/bruno/issues/211 set keepAlive to true, this should fix socket hang up errors
    * @see https://github.com/nodejs/node/pull/43522 keepAlive was changed to true globally on Node v19+
    */
   const httpsAgentRequestFields: HttpsAgentRequestFields = { keepAlive: true };

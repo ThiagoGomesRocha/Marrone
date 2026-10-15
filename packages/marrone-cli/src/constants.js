@@ -1,6 +1,9 @@
 const { version } = require('../package.json');
 
-const CLI_EPILOGUE = `Documentation: https://docs.marrone.com (v${version})`;
+// A documentação do Marrone é a wiki do repositório, editada versionada em docs/wiki/.
+// NÃO use `docs.marrone.com`: esse domínio não existe (o rename bruno -> marrone inventou
+// a URL).
+const CLI_EPILOGUE = `Documentation: https://github.com/ThiagoGomesRocha/Marrone/wiki (v${version})`;
 const CLI_VERSION = version;
 const COLORS = {
   ORANGE: '#FFA500'

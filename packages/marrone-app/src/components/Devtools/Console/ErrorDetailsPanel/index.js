@@ -9,6 +9,7 @@ import {
   IconBrandGithub
 } from '@tabler/icons';
 import { clearSelectedError } from 'providers/ReduxStore/slices/logs';
+import { MARRONE_NEW_ISSUE_URL } from 'utils/common/constants';
 import { useApp } from 'providers/App';
 import platformLib from 'platform';
 import StyledWrapper from './StyledWrapper';
@@ -67,7 +68,7 @@ ${error.args ? error.args.map((arg, index) => {
     const encodedTitle = encodeURIComponent(title);
     const encodedBody = encodeURIComponent(body);
 
-    return `https://github.com/marrone/marrone/issues/new?template=BLANK_ISSUE&title=${encodedTitle}&body=${encodedBody}`;
+    return `${MARRONE_NEW_ISSUE_URL}?template=BLANK_ISSUE&title=${encodedTitle}&body=${encodedBody}`;
   };
 
   const handleReportIssue = () => {

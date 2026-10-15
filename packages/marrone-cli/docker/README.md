@@ -1,6 +1,6 @@
 # Marrone CLI Docker Images
 
-Official Docker images for [Marrone CLI](https://www.marrone.com), enabling container-native API collection runs in CI/CD pipelines and local environments without requiring Node.js or npm on the host. See the [Marrone CLI docs](https://docs.marrone.com/bru-cli/overview) for CLI usage.
+Official Docker images for [Marrone CLI](https://github.com/ThiagoGomesRocha/Marrone), enabling container-native API collection runs in CI/CD pipelines and local environments without requiring Node.js or npm on the host. See the [Marrone wiki](https://github.com/ThiagoGomesRocha/Marrone/wiki) for CLI usage.
 
 ## Registries
 
@@ -15,8 +15,8 @@ docker pull ghcr.io/marrone/cli:latest
 
 | Variant | Base image | Details |
 |---------|-----------|---------|
-| **Alpine** (default) | `node:22-alpine` | [→ Alpine README](https://github.com/marrone/marrone/blob/main/packages/marrone-cli/docker/images/alpine/README.md) |
-| **Debian** | `node:22-slim` | [→ Debian README](https://github.com/marrone/marrone/blob/main/packages/marrone-cli/docker/images/debian/README.md) |
+| **Alpine** (default) | `node:22-alpine` | [→ Alpine README](https://github.com/ThiagoGomesRocha/Marrone/blob/HEAD/packages/marrone-cli/docker/images/alpine/README.md) |
+| **Debian** | `node:22-slim` | [→ Debian README](https://github.com/ThiagoGomesRocha/Marrone/blob/HEAD/packages/marrone-cli/docker/images/debian/README.md) |
 
 ### Quick choice
 
@@ -92,7 +92,7 @@ docker run --rm marrone/cli --version
 
 > **Cross-platform note:** the examples below use `$(pwd)` which works in Bash / Zsh / Git Bash / WSL. On Windows native shells, substitute `$(pwd)` with `${PWD}` (PowerShell) or `%cd%` (CMD).
 
-> **Adding `bru` options:** The examples below show docker-specific flags. For all `marrone run` options — recurse (`-r`), environments, variables, reporters, bail, and more — see the [Marrone CLI docs](https://docs.marrone.com/bru-cli/overview).
+> **Adding `bru` options:** The examples below show docker-specific flags. For all `marrone run` options — recurse (`-r`), environments, variables, reporters, bail, and more — see the [Marrone wiki](https://github.com/ThiagoGomesRocha/Marrone/wiki).
 
 ```bash
 # run every request in the Marrone collection (current dir)
@@ -208,7 +208,7 @@ The `/path/to/reports:/reports` mount catches the JSON, JUnit XML, and HTML repo
 
 ### Try it from this repo
 
-A ready-to-run `docker-compose.yml` lives in this repo at [`packages/marrone-tests/docker-compose.yml`](https://github.com/marrone/marrone/blob/main/packages/marrone-tests/docker-compose.yml). It mounts the sibling `collection/` directory into the container, runs the `echo` folder against the `Prod` environment, and writes JSON, JUnit XML, and HTML reports into `packages/marrone-tests/reports/`:
+A ready-to-run `docker-compose.yml` lives in this repo at [`packages/marrone-tests/docker-compose.yml`](https://github.com/ThiagoGomesRocha/Marrone/blob/HEAD/packages/marrone-tests/docker-compose.yml). It mounts the sibling `collection/` directory into the container, runs the `echo` folder against the `Prod` environment, and writes JSON, JUnit XML, and HTML reports into `packages/marrone-tests/reports/`:
 
 ```bash
 cd packages/marrone-tests

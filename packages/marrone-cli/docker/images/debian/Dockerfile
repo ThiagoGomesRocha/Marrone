@@ -5,13 +5,13 @@ LABEL maintainer="Marrone <support@marrone.com>"
 ARG MARRONE_VERSION
 ENV MARRONE_VERSION=${MARRONE_VERSION}
 
-LABEL org.opencontainers.image.source="https://github.com/marrone/marrone"
+LABEL org.opencontainers.image.source="https://github.com/ThiagoGomesRocha/Marrone"
 LABEL org.opencontainers.image.description="Marrone CLI - Open source IDE for exploring and testing APIs"
 LABEL org.opencontainers.image.licenses="MIT"
 LABEL org.opencontainers.image.title="Marrone CLI"
 LABEL org.opencontainers.image.version="${MARRONE_VERSION}"
-LABEL org.opencontainers.image.url="https://www.marrone.com"
-LABEL org.opencontainers.image.documentation="https://docs.marrone.com/bru-cli/overview"
+LABEL org.opencontainers.image.url="https://github.com/ThiagoGomesRocha/Marrone"
+LABEL org.opencontainers.image.documentation="https://github.com/ThiagoGomesRocha/Marrone/wiki"
 
 ENV LC_ALL="en_US.UTF-8" \
     LANG="en_US.UTF-8" \

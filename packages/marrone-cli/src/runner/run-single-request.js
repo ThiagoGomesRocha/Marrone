@@ -395,7 +395,7 @@ const runSingleRequest = async function (
     interpolateVars(request, envVariables, runtimeVariables, processEnvVars);
 
     // if this is a graphql request, parse the variables, only after interpolation
-    // https://github.com/marrone/marrone/issues/884
+    // https://github.com/usebruno/bruno/issues/884
     if (request.mode === 'graphql' && typeof request.data?.variables === 'string') {
       try {
         request.data.variables = JSON.parse(request.data.variables);

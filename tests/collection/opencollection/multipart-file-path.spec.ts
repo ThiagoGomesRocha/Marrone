@@ -98,7 +98,7 @@ const expectRequestFileNotToContainPayload = async (requestFilePath: string, pay
 };
 
 test.describe('OpenCollection multipart file paths', () => {
-  // Regression coverage for https://github.com/marrone/marrone/issues/8937
+  // Regression coverage for https://github.com/usebruno/bruno/issues/8937
   test('keeps a multipart file relative and sends it as multipart after restart', async ({
     launchElectronApp,
     createTmpDir

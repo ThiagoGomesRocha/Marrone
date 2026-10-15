@@ -14,6 +14,7 @@ import { toggleCollectionItem, toggleCollection } from 'providers/ReduxStore/sli
 import { mountCollection } from 'providers/ReduxStore/slices/collections/actions';
 import { getDefaultRequestPaneTab } from 'utils/collections';
 import { normalizePath } from 'utils/common/path';
+import { MARRONE_DOCS_URL } from 'utils/common/constants';
 import { normalizeQuery, isValidQuery, highlightText, sortResults, getTypeLabel, getItemPath } from './utils/searchUtils';
 import { SEARCH_TYPES, MATCH_TYPES, SEARCH_CONFIG, DOCUMENTATION_RESULT } from './constants';
 import StyledWrapper from './StyledWrapper';
@@ -250,7 +251,7 @@ const GlobalSearchModal = ({ isOpen, onClose }) => {
     ensureCollectionIsMounted(targetCollection);
 
     if (result.type === SEARCH_TYPES.DOCUMENTATION) {
-      window.open('https://docs.marrone.com/', '_blank');
+      window.open(MARRONE_DOCS_URL, '_blank');
       onClose();
       return;
     }

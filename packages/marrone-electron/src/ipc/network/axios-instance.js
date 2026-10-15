@@ -183,7 +183,7 @@ function makeAxiosInstance({
 
     // Resolve all *.localhost to localhost and check if it should use IPv6 or IPv4
     // RFC: 6761 section 6.3 (https://tools.ietf.org/html/rfc6761#section-6.3)
-    // @see https://github.com/marrone/marrone/issues/124
+    // @see https://github.com/usebruno/bruno/issues/124
     if (url.hostname === LOCAL_IPV4) {
       config.lookup = (hostname, options, callback) => {
         callback(null, LOCAL_IPV4, 4);

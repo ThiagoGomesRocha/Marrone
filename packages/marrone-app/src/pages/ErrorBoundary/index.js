@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Marrone from 'components/Marrone/index';
+import { MARRONE_ISSUES_URL } from 'utils/common/constants';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -56,10 +57,10 @@ class ErrorBoundary extends React.Component {
               Please report this under:
               <a
                 className="text-link hover:underline cursor-pointer ml-2"
-                href="https://github.com/marrone/marrone/issues"
+                href={MARRONE_ISSUES_URL}
                 target="_blank"
               >
-                https://github.com/marrone/marrone/issues
+                {MARRONE_ISSUES_URL}
               </a>
             </p>
 

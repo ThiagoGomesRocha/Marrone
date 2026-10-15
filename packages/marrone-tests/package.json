@@ -16,15 +16,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/marrone/marrone-testbench.git"
+    "url": "git+https://github.com/ThiagoGomesRocha/Marrone.git"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/marrone/marrone-testbench/issues"
+    "url": "https://github.com/ThiagoGomesRocha/Marrone/issues"
   },
-  "homepage": "https://github.com/marrone/marrone-testbench#readme",
+  "homepage": "https://github.com/ThiagoGomesRocha/Marrone#readme",
   "dependencies": {
     "@grpc/grpc-js": "^1.14.4",
     "@grpc/proto-loader": "^0.7.15",

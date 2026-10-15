@@ -1,41 +1,32 @@
 import React from 'react';
 import Modal from 'components/Modal/index';
-import { IconSpeakerphone, IconBrandTwitter, IconBrandGithub, IconBrandDiscord, IconBook } from '@tabler/icons';
+import { IconSpeakerphone, IconBook } from '@tabler/icons';
 import StyledWrapper from './StyledWrapper';
+import { MARRONE_DOCS_URL, MARRONE_ISSUES_URL } from 'utils/common/constants';
 
+/**
+ * ATENÇÃO: este componente não está montado em lugar nenhum (a tela de suporte em uso é
+ * `components/Preferences/Support`). Ele foi mantido aqui com os links corretos para que
+ * uma eventual religação não traga de volta a organização inexistente `marrone/marrone`.
+ *
+ * Os itens de comunidade (Discord, Twitter, GitHub) foram removidos pelo mesmo motivo da
+ * tela de Support: eram canais do Bruno, o projeto de origem.
+ */
 const MarroneSupport = ({ onClose }) => {
   return (
     <StyledWrapper>
       <Modal size="sm" title="Support" handleCancel={onClose} hideFooter={true}>
         <div className="collection-options">
           <div className="mt-2">
-            <a href="https://docs.marrone.com" target="_blank" className="flex items-end">
+            <a href={MARRONE_DOCS_URL} target="_blank" rel="noreferrer" className="flex items-end">
               <IconBook size={18} strokeWidth={2} />
               <span className="label ml-2">Documentation</span>
             </a>
           </div>
           <div className="mt-2">
-            <a href="https://github.com/marrone/marrone/issues" target="_blank" className="flex items-end">
+            <a href={MARRONE_ISSUES_URL} target="_blank" rel="noreferrer" className="flex items-end">
               <IconSpeakerphone size={18} strokeWidth={2} />
               <span className="label ml-2">Report Issues</span>
-            </a>
-          </div>
-          <div className="mt-2">
-            <a href="https://discord.com/invite/KgcZUncpjq" target="_blank" className="flex items-end">
-              <IconBrandDiscord size={18} strokeWidth={2} />
-              <span className="label ml-2">Discord</span>
-            </a>
-          </div>
-          <div className="mt-2">
-            <a href="https://github.com/marrone/marrone" target="_blank" className="flex items-end">
-              <IconBrandGithub size={18} strokeWidth={2} />
-              <span className="label ml-2">GitHub</span>
-            </a>
-          </div>
-          <div className="mt-2">
-            <a href="https://twitter.com/use_marrone" target="_blank" className="flex items-end">
-              <IconBrandTwitter size={18} strokeWidth={2} />
-              <span className="label ml-2">Twitter</span>
             </a>
           </div>
         </div>

@@ -19,7 +19,7 @@ script:pre-request {
 }
 
 tests {
-  // https://github.com/marrone/marrone/issues/5813
+  // https://github.com/usebruno/bruno/issues/5813
   test("req.setBody() with object - request body", function() {
     const data = req.getBody();
     expect(data).to.eql("key=value%20with%20spaces&name=marrone&array=test&array=value");

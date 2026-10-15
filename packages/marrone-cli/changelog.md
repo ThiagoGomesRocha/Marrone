@@ -4,11 +4,11 @@
 
 Going forward, we will release a new version of CLI for every new release of Marrone.
 This will help us keep the CLI in sync with the Marrone App.
-For the release notes please see https://github.com/marrone/marrone/releases
+For the release notes please see https://github.com/ThiagoGomesRocha/Marrone/releases
 
 ## 1.4.1
 
-- Fixing [bug](https://github.com/marrone/marrone/issues/1487)
+- Fixing [bug](https://github.com/usebruno/bruno/issues/1487)
 
 ## 1.4.0
 

@@ -108,7 +108,7 @@ test.describe('Import Postman Collection with partial import issues', () => {
 
       const openedUrl = await page.evaluate(() => (window as any).__capturedOpenUrl as string);
 
-      expect(openedUrl).toContain('https://github.com/marrone/marrone/issues/new');
+      expect(openedUrl).toContain('https://github.com/ThiagoGomesRocha/Marrone/issues/new');
       expect(openedUrl).toContain('title=');
       expect(openedUrl).toContain('Postman+import');
       expect(openedUrl).toContain('labels=bug');

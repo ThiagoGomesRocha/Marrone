@@ -9,6 +9,50 @@ adota [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 > mudança de conteúdo entre as duas candidatas e a versão estável — os itens abaixo são o
 > conteúdo somado das três, reunido numa única seção.
 
+## [Não publicado]
+
+### Added
+
+- **Wiki do repositório (`docs/wiki/`).** Reúne [Testes
+  automatizados](docs/wiki/testes.md) — unitário com Jest, integração com banco (opt-in) e
+  E2E com Playwright, além dos `test()` que rodam dentro de uma coleção — e [Scripts de banco
+  de dados](docs/wiki/banco-de-dados.md), com os placeholders de cada SGBD e o padrão de
+  validar no banco depois da requisição. A página inicial traz o link para a
+  [documentação do Bruno](https://docs.usebruno.com), que segue sendo a referência de
+  formato de coleção, scripting e runner. Tudo que a wiki afirma foi conferido contra o
+  repositório (nomes de fixtures, comandos, exemplos que a própria aplicação exibe).
+
+### Fixed
+
+- **O aplicativo e a documentação apontavam para um repositório que não existe.** O rename
+  de bruno para marrone trocou `usebruno/bruno` por `marrone/marrone` numa substituição
+  global, e essa organização não existe (`github.com/marrone/marrone` responde **404**); o
+  mesmo aconteceu com `docs.marrone.com` e `www.marrone.com`, que não resolvem. Como cada
+  componente trazia a URL escrita à mão, o estrago apareceu em vários pontos ao mesmo tempo:
+  tela de suporte, busca global, barra de status, painel de console (relatar erro), tela de
+  erro fatal, aviso de importação com problemas, handler de *Documentation* do menu,
+  `package.json` da aplicação e do CLI, README do CLI, imagens Docker e os templates de
+  issue/PR. As URLs agora saem de um lugar único (`marrone-app/src/utils/common/constants.js`
+  e `marrone-electron/src/utils/constants.js`) — havia sido exatamente a dispersão que
+  deixou os links quebrados sem ninguém notar.
+- **O item "Documentation" passou a apontar para a wiki do repositório.** Era
+  `docs.marrone.com`, domínio que o rename inventou e que não existe. As páginas da wiki
+  são editadas versionadas em `docs/wiki/` e publicadas na wiki do GitHub — o link do app,
+  do CLI (`marrone --help`), do README, das imagens Docker e dos templates apontam para lá.
+- **Os comentários de código que citam issues do Bruno voltaram a apontar para o Bruno.**
+  O sed global também reescreveu `usebruno/bruno/issues/<n>` para `marrone/marrone/issues/<n>`,
+  transformando referências legítimas ao projeto de origem em links quebrados.
+- **O grupo "Community" saiu da tela de suporte.** GitHub, Discord, Twitter e LinkedIn eram
+  os canais do Bruno, não deste fork: o Discord e o Twitter apontavam para contas de outro
+  projeto, e o LinkedIn para uma empresa sem relação com o Marrone.
+- **Dois testes E2E de importação por URL baixavam de um endereço que não existe.**
+  `insomnia-url-import` e `postman-url-import` buscavam a fixture em
+  `raw.githubusercontent.com/marrone/marrone` (404); passaram a apontar para o repositório
+  real — e para `feature/marrone`, que é o branch padrão aqui, não `main`.
+- **O spec de links de suporte afirmava as URLs erradas.** Ele comparava o link com o mesmo
+  texto errado que o componente usava, então passava nos dois erros. Agora o valor esperado
+  é literal no teste, e o teste também verifica que os itens de community não voltaram.
+
 ## [1.1.0] - 2026-10-15
 
 **Stable Release.** Primeira versão estável com acesso a banco de dados pelos scripts e

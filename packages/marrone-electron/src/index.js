@@ -6,6 +6,7 @@ const os = require('os');
 const { initializeShellEnv, waitForShellEnv } = require('./store/shell-env-state');
 const { percentageToZoomLevel } = require('@marrone/common');
 const { isBenchmarkEnabled } = require('./utils/benchmark');
+const { MARRONE_ISSUES_URL } = require('./utils/constants');
 
 if (isDev) {
   if (!fs.existsSync(path.join(__dirname, '../../marrone-js/src/sandbox/bundle-browser-rollup.js'))) {
@@ -31,7 +32,7 @@ if (isDev && process.env.ELECTRON_USER_DATA_PATH) {
 // Command line switches
 if (os.platform() === 'linux') {
   // Use portal version 4 that supports current_folder option
-  // to address https://github.com/marrone/marrone/issues/5471
+  // to address https://github.com/usebruno/bruno/issues/5471
   // Runtime sets the default version to 3, refs https://github.com/electron/electron/pull/44426
   app.commandLine.appendSwitch('xdg-portal-required-version', '4');
 }
@@ -270,7 +271,7 @@ app.on('ready', async () => {
     frame: isLinux ? false : true,
     trafficLightPosition: isMac ? { x: 12, y: 10 } : undefined
     // we will bring this back
-    // see https://github.com/marrone/marrone/issues/440
+    // see https://github.com/usebruno/bruno/issues/440
     // autoHideMenuBar: true
   });
 
@@ -394,7 +395,7 @@ app.on('ready', async () => {
     } else {
       console.error(
         'If you are using an official production build: the above error is most likely a bug! '
-        + ' Please report this under: https://github.com/marrone/marrone/issues'
+        + ` Please report this under: ${MARRONE_ISSUES_URL}`
       );
     }
   });

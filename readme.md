@@ -57,6 +57,17 @@ marrone --version
 marrone run ./minha-colecao --reporter-html relatorio.html
 ```
 
+## Documentação
+
+A documentação pública é a **[wiki do Marrone](https://github.com/ThiagoGomesRocha/Marrone/wiki)**:
+
+- **[Testes automatizados](https://github.com/ThiagoGomesRocha/Marrone/wiki/Testes)** — testes de componente, de banco e E2E, e os `test()` que rodam dentro de uma coleção.
+- **[Scripts de banco de dados](https://github.com/ThiagoGomesRocha/Marrone/wiki/Banco-de-Dados)** — `bru.db` para MySQL, PostgreSQL, SQL Server, Oracle e DB2, sem colocar senha no `.bru`.
+
+O conteúdo das páginas é versionado em [`docs/wiki/`](docs/wiki/readme.md) neste repositório — a wiki é publicada a partir dali.
+
+Como o Marrone mantém o mesmo formato de coleção do Bruno, a **[documentação do Bruno](https://docs.usebruno.com)** continua sendo a referência para coleções, ambientes, variáveis, scripting e runner.
+
 ## Vindo do Bruno ou do Postman?
 
 - **Do Bruno**: suas coleções `.bru` abrem **direto, sem conversão** — é o mesmo formato. É só apontar para a pasta da coleção.

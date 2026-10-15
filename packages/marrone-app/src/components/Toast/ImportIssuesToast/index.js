@@ -2,8 +2,9 @@ import React, { useState, useMemo } from 'react';
 import toast from 'react-hot-toast';
 import { IconAlertCircle, IconBrandGithub, IconCopy, IconX } from '@tabler/icons';
 import StyledWrapper from './StyledWrapper';
+import { MARRONE_NEW_ISSUE_URL } from 'utils/common/constants';
 
-const GITHUB_ISSUES_URL = 'https://github.com/marrone/marrone/issues/new';
+const GITHUB_ISSUES_URL = MARRONE_NEW_ISSUE_URL;
 const MAX_URL_LENGTH = 8000;
 
 const ImportIssuesToastContent = ({ t, issues, summary }) => {

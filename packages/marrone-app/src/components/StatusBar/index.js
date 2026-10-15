@@ -12,6 +12,7 @@ import ThemeDropdown from './ThemeDropdown';
 import { openConsole } from 'providers/ReduxStore/slices/logs';
 import { addTab } from 'providers/ReduxStore/slices/tabs';
 import { useApp } from 'providers/App';
+import { MARRONE_REPO_URL } from 'utils/common/constants';
 import StyledWrapper from './StyledWrapper';
 
 const StatusBar = () => {
@@ -105,7 +106,7 @@ const StatusBar = () => {
               <button
                 className="status-bar-button"
                 onClick={() => {
-                  window?.ipcRenderer?.openExternal('https://github.com/marrone/marrone');
+                  window?.ipcRenderer?.openExternal(MARRONE_REPO_URL);
                 }}
                 tabIndex={0}
                 aria-label="Open GitHub Repository"

@@ -4,6 +4,32 @@ export const DEFAULT_COLLECTION_FORMAT = 'yml';
 
 export const MAX_RENDERABLE_RESPONSE_BYTES = 50 * 1024 * 1024;
 
+/**
+ * Links oficiais do projeto — fonte ÚNICA.
+ *
+ * POR QUE ESTÃO AQUI: cada componente trazia a URL escrita à mão. O rename
+ * bruno -> marrone (commit 437c5872, "[FASE 6] Renomeio interno completo") passou um sed
+ * global e trocou `usebruno/bruno` por `marrone/marrone` — uma organização que NÃO existe
+ * (github.com/marrone/marrone responde 404) — em vários arquivos ao mesmo tempo. Como não
+ * havia um lugar único para olhar, os links ficaram quebrados sem ninguém notar.
+ * Ao apontar para outro lugar, mude AQUI.
+ *
+ * A documentação do Marrone é a **wiki do repositório** (`<repo>/wiki`). As páginas dela
+ * são editadas e revisadas versionadas em `docs/wiki/` e publicadas na wiki do GitHub —
+ * esta constante é o link que o usuário abre. É da wiki que sai o link para a documentação
+ * do Bruno, o projeto de origem: a referência de DSL, scripting, runner e CLI continua
+ * sendo a dele.
+ *
+ * A wiki tem URL própria e independe do branch, então este link não depende do `HEAD` (o
+ * branch padrão aqui é `feature/marrone`, NÃO `main`: `blob/main/...` responde 404).
+ */
+export const MARRONE_REPO_URL = 'https://github.com/ThiagoGomesRocha/Marrone';
+export const MARRONE_DOCS_URL = `${MARRONE_REPO_URL}/wiki`;
+export const MARRONE_ISSUES_URL = `${MARRONE_REPO_URL}/issues`;
+export const MARRONE_NEW_ISSUE_URL = `${MARRONE_ISSUES_URL}/new`;
+export const BRUNO_REPO_URL = 'https://github.com/usebruno/bruno';
+export const BRUNO_DOCS_URL = 'https://docs.usebruno.com';
+
 export const DEFAULT_SIDEBAR_WIDTH = 250;
 export const DEFAULT_SIDEBAR_COLLAPSED = false;
 

@@ -7,11 +7,11 @@
     "marrone": "./bin/marrone.js"
   },
   "bugs": {
-    "url": "https://github.com/marrone/marrone/issues"
+    "url": "https://github.com/ThiagoGomesRocha/Marrone/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/marrone/marrone.git"
+    "url": "git+https://github.com/ThiagoGomesRocha/Marrone.git"
   },
   "keywords": [
     "API",

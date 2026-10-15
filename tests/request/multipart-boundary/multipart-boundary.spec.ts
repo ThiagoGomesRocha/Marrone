@@ -13,7 +13,7 @@ const selectAllShortcut = process.platform === 'darwin' ? 'Meta+a' : 'Control+a'
 
 /**
  * E2E test for multipart/mixed boundary preservation
- * Regression test for: https://github.com/marrone/marrone/issues/7523
+ * Regression test for: https://github.com/usebruno/bruno/issues/7523
  *
  * When a user specifies a boundary parameter in their Content-Type header
  * for multipart/mixed requests with TEXT body mode, Marrone should preserve

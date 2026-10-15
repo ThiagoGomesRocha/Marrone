@@ -1,7 +1,7 @@
 # Claude Config
 
 The [Claude Code](https://docs.claude.com/en/docs/claude-code) configuration for
-[Marrone](https://github.com/marrone/marrone) — the project context, architecture notes, coding
+[Marrone](https://github.com/ThiagoGomesRocha/Marrone) — the project context, architecture notes, coding
 rules, and review/test skills the team has tuned while working on Marrone. Claude picks it up
 automatically when you launch from the project root.
 
