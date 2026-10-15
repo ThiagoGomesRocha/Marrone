@@ -131,6 +131,18 @@
             "CACHE": "Cache",
             "SUPPORT": "Support",
             "BETA": "Beta"
+        },
+        "SECURITY": {
+            "TITLE": "Security",
+            "REPORTS": "Reports",
+            "REPORTS_DESC": "Control how credentials are exposed in generated reports",
+            "INCLUDE_CREDENTIALS": "Include credentials (Authorization, Cookie, API Key) in CURL commands within reports"
+        },
+        "DISPLAY": {
+            "TITLE": "Display",
+            "CODE_FONT": "Code Editor Font",
+            "FONT_SIZE": "Font Size",
+            "INTERFACE_ZOOM": "Interface Zoom"
         }
     }
 }

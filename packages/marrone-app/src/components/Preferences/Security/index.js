@@ -1,11 +1,13 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import get from 'lodash/get';
 import { savePreferences } from 'providers/ReduxStore/slices/app';
 import StyledWrapper from './StyledWrapper';
 import { SettingsGroup, CheckboxSetting } from '../SettingsLayout';
 
 const Security = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const preferences = useSelector((state) => state.app.preferences);
   const includeSensitive = get(preferences, 'report.includeSensitive', false);
@@ -24,15 +26,15 @@ const Security = () => {
 
   return (
     <StyledWrapper>
-      <div className="section-header">Security</div>
+      <div className="section-header">{t('PREFERENCES.SECURITY.TITLE')}</div>
       <SettingsGroup
-        title="Reports"
-        description="Control how credentials are exposed in generated reports"
+        title={t('PREFERENCES.SECURITY.REPORTS')}
+        description={t('PREFERENCES.SECURITY.REPORTS_DESC')}
       >
         <CheckboxSetting
           id="includeSensitive"
           name="includeSensitive"
-          label="Include credentials (Authorization, Cookie, API Key) in CURL commands within reports"
+          label={t('PREFERENCES.SECURITY.INCLUDE_CREDENTIALS')}
           checked={includeSensitive}
           onChange={handleToggle}
         />

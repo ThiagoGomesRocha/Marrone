@@ -131,6 +131,18 @@
             "CACHE": "Cache",
             "SUPPORT": "Suporte",
             "BETA": "Beta"
+        },
+        "SECURITY": {
+            "TITLE": "Segurança",
+            "REPORTS": "Relatórios",
+            "REPORTS_DESC": "Controle como as credenciais são expostas nos relatórios gerados",
+            "INCLUDE_CREDENTIALS": "Incluir credenciais (Authorization, Cookie, API Key) nos comandos CURL dos relatórios"
+        },
+        "DISPLAY": {
+            "TITLE": "Exibição",
+            "CODE_FONT": "Fonte do Editor de Código",
+            "FONT_SIZE": "Tamanho da Fonte",
+            "INTERFACE_ZOOM": "Zoom da Interface"
         }
     }
 }
