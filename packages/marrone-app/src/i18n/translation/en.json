@@ -143,6 +143,24 @@
             "CODE_FONT": "Code Editor Font",
             "FONT_SIZE": "Font Size",
             "INTERFACE_ZOOM": "Interface Zoom"
+        },
+        "THEMES": {
+            "TITLE": "Appearance",
+            "LIGHT": "Light",
+            "DARK": "Dark",
+            "SYSTEM": "System",
+            "LIGHT_THEME": "Light Theme",
+            "DARK_THEME": "Dark Theme"
+        },
+        "CACHE": {
+            "TITLE": "Cache",
+            "FILE_CACHE": "File cache",
+            "BETA": "Beta",
+            "FILE_CACHE_DESC": "Loads your workspace faster by caching opened collections. Marrone refreshes the cache when your collection changes. Clearing it won't affect your original files.",
+            "CACHE_SIZE": "Cache size",
+            "CLEAR_CACHE": "Clear cache",
+            "SSL_CACHE": "SSL session cache",
+            "SSL_CACHE_DESC": "Reuses TLS sessions and connections across requests for faster handshakes. Disable to create a fresh connection for every request."
         }
     }
 }

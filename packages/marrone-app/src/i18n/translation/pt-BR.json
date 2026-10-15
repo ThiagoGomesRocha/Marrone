@@ -143,6 +143,24 @@
             "CODE_FONT": "Fonte do Editor de Código",
             "FONT_SIZE": "Tamanho da Fonte",
             "INTERFACE_ZOOM": "Zoom da Interface"
+        },
+        "THEMES": {
+            "TITLE": "Aparência",
+            "LIGHT": "Claro",
+            "DARK": "Escuro",
+            "SYSTEM": "Sistema",
+            "LIGHT_THEME": "Tema Claro",
+            "DARK_THEME": "Tema Escuro"
+        },
+        "CACHE": {
+            "TITLE": "Cache",
+            "FILE_CACHE": "Cache de arquivos",
+            "BETA": "Beta",
+            "FILE_CACHE_DESC": "Carrega seu workspace mais rápido armazenando as coleções abertas em cache. O Marrone atualiza o cache quando sua coleção muda. Limpar o cache não afeta seus arquivos originais.",
+            "CACHE_SIZE": "Tamanho do cache",
+            "CLEAR_CACHE": "Limpar cache",
+            "SSL_CACHE": "Cache de sessão SSL",
+            "SSL_CACHE_DESC": "Reutiliza sessões e conexões TLS entre requisições para handshakes mais rápidos. Desative para criar uma nova conexão a cada requisição."
         }
     }
 }
