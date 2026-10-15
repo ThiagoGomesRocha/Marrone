@@ -11,6 +11,7 @@ import toast from 'react-hot-toast';
 import { IconTrash, IconUpload } from '@tabler/icons';
 import path from 'utils/common/path';
 import { SettingsGroup, CheckboxSetting, SettingsField } from '../SettingsLayout';
+import i18n from '../../../i18n';
 
 const General = () => {
   const preferences = useSelector((state) => state.app.preferences);
@@ -61,6 +62,7 @@ const General = () => {
       useSystemBrowser: Yup.boolean()
     }),
     defaultLocation: Yup.string().max(1024),
+    language: Yup.string().oneOf(['en', 'pt-BR']),
     reportLogo: Yup.string(),
     reportDefaultDir: Yup.string().max(1024)
   });
@@ -86,6 +88,7 @@ const General = () => {
         useSystemBrowser: get(preferences, 'request.oauth2.useSystemBrowser', false)
       },
       defaultLocation: get(preferences, 'general.defaultLocation', ''),
+      language: get(preferences, 'general.language', 'en'),
       reportLogo: get(preferences, 'report.logo', ''),
       reportDefaultDir: get(preferences, 'report.defaultDir', '')
     },
@@ -126,7 +129,8 @@ const General = () => {
           interval: newPreferences.autoSave.interval
         },
         general: {
-          defaultLocation: newPreferences.defaultLocation
+          defaultLocation: newPreferences.defaultLocation,
+          language: newPreferences.language
         },
         report: {
           logo: newPreferences.reportLogo || '',
@@ -236,6 +240,28 @@ const General = () => {
     <StyledWrapper className="w-full">
       <div className="section-header">General Settings</div>
       <form className="marrone-form settings-form" onSubmit={formik.handleSubmit}>
+        <SettingsGroup
+          title="Language"
+          description="Interface and report language"
+        >
+          <SettingsField label="Language" htmlFor="language">
+            <select
+              id="language"
+              name="language"
+              className="textbox"
+              value={formik.values.language}
+              onChange={(e) => {
+                const lang = e.target.value;
+                i18n.changeLanguage(lang);
+                formik.setFieldValue('language', lang);
+              }}
+            >
+              <option value="en">English</option>
+              <option value="pt-BR">Português (Brasil)</option>
+            </select>
+          </SettingsField>
+        </SettingsGroup>
+
         <SettingsGroup title="Certificates">
           <CheckboxSetting
             id="sslVerification"

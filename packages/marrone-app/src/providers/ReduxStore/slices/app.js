@@ -57,7 +57,8 @@ const initialState = {
       codeFont: 'default'
     },
     general: {
-      defaultLocation: ''
+      defaultLocation: '',
+      language: 'en'
     },
     report: {
       logo: '',

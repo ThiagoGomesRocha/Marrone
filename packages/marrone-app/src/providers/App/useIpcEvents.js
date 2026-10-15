@@ -5,6 +5,7 @@ import {
   setGitVersion,
   setIsOpeningCollection
 } from 'providers/ReduxStore/slices/app';
+import i18n from '../../i18n';
 import {
   updateServerStatus,
   addRequestLogEntries,
@@ -338,6 +339,9 @@ const useIpcEvents = () => {
 
     const removePreferencesUpdatesListener = ipcRenderer.on('main:load-preferences', (val) => {
       dispatch(updatePreferences(val));
+      // Aplica o idioma persistido ao i18n assim que as preferências chegam do main.
+      const language = val?.general?.language || 'en';
+      i18n.changeLanguage(language);
     });
 
     const removeCookieUpdateListener = ipcRenderer.on('main:cookies-update', (val) => {

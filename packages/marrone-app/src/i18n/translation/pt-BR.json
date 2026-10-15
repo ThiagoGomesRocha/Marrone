@@ -1,0 +1,34 @@
+{
+    "COMMON": {
+        "COLLECTIONS": "Coleções",
+        "DOCUMENTATION": "Documentação",
+        "REPORT_ISSUES": "Reportar Problemas",
+        "GITHUB": "GitHub",
+        "DISCORD": "Discord",
+        "TWITTER": "Twitter",
+        "LINKEDIN": "LinkedIn"
+    },
+    "WELCOME": {
+        "ABOUT_MARRONE": "IDE open source para explorar e testar APIs",
+        "LINKS": "Links",
+        "CREATE_COLLECTION": "Criar Coleção",
+        "OPEN_COLLECTION": "Abrir Coleção",
+        "IMPORT_COLLECTION": "Importar Coleção",
+        "COLLECTION_IMPORT_SUCCESS": "Coleção importada com sucesso",
+        "COLLECTION_IMPORT_ERROR": "Ocorreu um erro ao importar a coleção. Verifique os logs para mais informações.",
+        "COLLECTION_OPEN_ERROR": "Ocorreu um erro ao abrir a coleção",
+        "GLOBAL_SEARCH_TIP_PART1": "Pressione",
+        "GLOBAL_SEARCH_TIP_PART2": "(mac) ou",
+        "GLOBAL_SEARCH_TIP_PART3": "(windows) a qualquer momento para pesquisar rapidamente coleções, pastas e requisições"
+    },
+    "SUPPORT": {
+        "HELP": "Ajuda",
+        "COMMUNITY": "Comunidade",
+        "DOCUMENTATION_DESCRIPTION": "Guias, referências e exemplos",
+        "REPORT_ISSUES_DESCRIPTION": "Relate um bug ou solicite um recurso",
+        "DISCORD_DESCRIPTION": "Tire dúvidas, fale com a equipe",
+        "GITHUB_DESCRIPTION": "Código-fonte, releases e discussões",
+        "TWITTER_DESCRIPTION": "Notas de release e anúncios",
+        "LINKEDIN_DESCRIPTION": "Notícias e novidades da empresa"
+    }
+}
