@@ -28,4 +28,4 @@ muito mais completos.
 
 ---
 
-Para a lista completa de mudanças, veja o [CHANGELOG](https://github.com/ThiagoGomesRocha/Marrone/blob/feature/marrone/CHANGELOG.md).
+Para a lista completa de mudanças, veja o [CHANGELOG](https://github.com/ThiagoGomesRocha/Marrone/blob/HEAD/CHANGELOG.md).

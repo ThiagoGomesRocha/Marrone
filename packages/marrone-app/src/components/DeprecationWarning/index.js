@@ -9,8 +9,11 @@ const DeprecationWarning = ({ featureName, learnMoreUrl }) => {
         <IconAlertTriangleFilled className="warning-icon" size={16} />
         <span className="warning-text">
           {featureName} will be removed in <strong>v3.0.0</strong>. They are deprecated and will no longer be supported. Learn more in{' '}
-          <a href={learnMoreUrl} target="_blank" rel="noreferrer">this post</a> or contact us at{' '}
-          <a href="mailto:support@marrone.com">support@marrone.com</a> with questions.
+          <a href={learnMoreUrl} target="_blank" rel="noreferrer">this post</a> or open an issue at{' '}
+          <a href="https://github.com/ThiagoGomesRocha/Marrone/issues" target="_blank" rel="noreferrer">
+            github.com/ThiagoGomesRocha/Marrone/issues
+          </a>{' '}
+          with questions.
         </span>
       </div>
     </StyledWrapper>

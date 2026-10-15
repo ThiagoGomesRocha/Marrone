@@ -52,6 +52,40 @@ adota [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 - **O spec de links de suporte afirmava as URLs erradas.** Ele comparava o link com o mesmo
   texto errado que o componente usava, então passava nos dois erros. Agora o valor esperado
   é literal no teste, e o teste também verifica que os itens de community não voltaram.
+- **Os demais links inventados pelo rename passaram a apontar para alvos que existem.** O
+  mesmo `sed` global criou hosts que não resolvem (`link.marrone.com`, `blog.marrone.com`,
+  `www.marrone.com`) em lugares que não eram só GitHub: os links de documentação das features
+  beta (`Preferences > Beta`), o "Learn more" do editor de apps (`EmptyAppState`), o post
+  sobre YML na migração de formato e o `support@marrone.com` do aviso de depreciação. Cada
+  alvo novo foi **verificado com requisição HTTP** antes de entrar: a documentação do Bruno
+  (que é a referência do projeto) e o post do blog, que existe em `blog.usebruno.com`. Onde
+  não há página específica verificável, o link aponta para a raiz da documentação em vez de
+  um caminho plausível que daria 404. O `support@` virou o rastreador de issues — um e-mail
+  em domínio inexistente é um beco sem saída.
+- **O link do CHANGELOG dentro do app tinha o branch escrito à mão** (`blob/feature/marrone`).
+  Funcionava, mas quebraria se o branch padrão fosse renomeado; passou a usar `blob/HEAD`.
+- **`npm run build:electron:win` não funcionava no Windows.** O npm executa scripts pelo
+  `cmd.exe`, que não entende `./scripts/build-electron.sh` — o comando morria com
+  `'.' não é reconhecido como um comando interno ou externo`. Os scripts de empacotamento
+  agora invocam `bash ./scripts/build-electron.sh <alvo>`, que funciona tanto no Windows
+  quanto no macOS e no Linux.
+
+### Observado, ainda não tratado
+
+- **`MARRONE_OAUTH2_CALLBACK_URL` aponta para `https://oauth.marrone.com/callback`**, e não é
+  decorativo: é o `redirect_uri` padrão enviado ao servidor de autorização quando o usuário
+  não configura um callback no pedido. Ou seja, o fluxo OAuth2 *Authorization Code* sem
+  callback configurado aponta para um host inexistente. O Bruno mantém um relay em
+  `oauth.usebruno.com/callback` para isso; o fork não tem. As saídas possíveis (usar o relay
+  do Bruno, exigir que o usuário configure o callback, ou hospedar um relay próprio) mudam
+  comportamento e por isso ficaram **fora** desta correção.
+- **`appinfo.marrone.com`** (endpoint das notificações, com override por `MARRONE_INFO_ENDPOINT`)
+  também não existe: a busca falha e o erro é engolido num `console.error`. Efeito visível:
+  nenhum, o sino nunca mostra nada.
+- **O botão *Buy* do `GoldenEdition`** aponta para `www.marrone.com/pricing` (morto) e o
+  modal exibe o preço do Bruno (`$19`, licença perpétua). Não é um link que se conserte
+  apontando para outro lugar — é uma feature comercial do projeto de origem que não existe
+  neste fork.
 
 ## [1.1.0] - 2026-10-15
 

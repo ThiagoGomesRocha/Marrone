@@ -39,6 +39,13 @@ import { getDocsUrlWithVersion } from 'utils/url';
  *
  * When the array is empty, the Beta tab shows "No beta features are currently available",
  * so a feature can be hidden by simply removing or commenting out its entry.
+ *
+ * Sobre `docsUrl`: o Marrone não tem site de documentação próprio — a referência é a
+ * documentação do Bruno (o projeto de origem), que é para onde estes links apontam. As
+ * URLs curtas `link.marrone.com/docs/*` que existiam aqui foram inventadas pelo rename e
+ * não resolvem. Os caminhos abaixo foram conferidos (respondem 200); onde não há página
+ * específica verificável, o link vai para a raiz da documentação de propósito — melhor
+ * levar a um lugar real do que a um 404.
  */
 const BETA_FEATURES = [
   {
@@ -47,7 +54,7 @@ const BETA_FEATURES = [
     description:
       'Generate scripts, tests, and documentation directly from the request tab. Includes contextual chat, scripting autocomplete, and support for OpenAI, Anthropic, and OpenAI-compatible providers using your own API key.',
     action: { label: 'Go to AI settings', tab: 'ai' },
-    docsUrl: 'https://link.marrone.com/docs/ai'
+    docsUrl: 'https://docs.usebruno.com/ai/bruno-ai/introduction'
   },
   {
     id: BETA_FEATURE_IDS.FILE_CACHE,
@@ -61,7 +68,7 @@ const BETA_FEATURES = [
     label: 'Akamai EdgeGrid',
     description:
       'Sign requests with the Akamai EdgeGrid authentication scheme. Select it from the Auth type dropdown on any request, folder, or collection.',
-    docsUrl: 'https://link.marrone.com/docs/auth'
+    docsUrl: 'https://docs.usebruno.com/auth/overview'
   },
   {
     id: BETA_FEATURE_IDS.MOCK_SERVER,
@@ -69,13 +76,13 @@ const BETA_FEATURES = [
     description: 'Run a local mock server using response examples defined in your collection. Serve mock API responses for frontend development without a real backend.',
     toggle: true,
     defaultEnabled: true,
-    docsUrl: 'https://link.marrone.com/docs/mock-server'
+    docsUrl: 'https://docs.usebruno.com'
   },
   {
     id: BETA_FEATURE_IDS.GRPC_SCRIPTING,
     label: 'gRPC Scripting',
     description: 'Write scripts for gRPC requests. Inspect messages, metadata, and status across the call lifecycle.',
-    docsUrl: 'https://link.marrone.com/docs/grpc-scripting'
+    docsUrl: 'https://docs.usebruno.com'
   }
 ];
 

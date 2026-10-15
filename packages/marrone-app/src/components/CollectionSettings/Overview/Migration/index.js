@@ -41,7 +41,7 @@ const Migration = ({ collection }) => {
               This collection is stored in BRU format.{' '}
               Switch to YML.{' '}
               <a
-                href="https://blog.marrone.com/making-yaml-the-default-in-marrone-v3.1"
+                href="https://blog.usebruno.com/making-yaml-the-default-in-bruno-v3.1"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-link hover:underline"
