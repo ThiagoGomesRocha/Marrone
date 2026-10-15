@@ -15,6 +15,7 @@ import { IconCaretDown } from '@tabler/icons';
 import StyledWrapper from './StyledWrapper';
 import Button from 'ui/Button';
 import { useTranslation } from 'react-i18next';
+import i18n from '../../../i18n';
 
 const NewFolder = ({ collectionUid, item, onClose }) => {
   const { t } = useTranslation();
@@ -35,19 +36,19 @@ const NewFolder = ({ collectionUid, item, onClose }) => {
     validationSchema: Yup.object({
       folderName: Yup.string()
         .trim()
-        .min(1, 'must be at least 1 character')
-        .required('name is required'),
+        .min(1, () => i18n.t('VALIDATION.MIN_1_CHAR'))
+        .required(() => i18n.t('VALIDATION.NAME_REQUIRED')),
       directoryName: Yup.string()
         .trim()
-        .min(1, 'must be at least 1 character')
-        .required('foldername is required')
+        .min(1, () => i18n.t('VALIDATION.MIN_1_CHAR'))
+        .required(() => i18n.t('VALIDATION.FOLDER_NAME_REQUIRED'))
         .test('is-valid-folder-name', function (value) {
           const isValid = validateName(value);
           return isValid ? true : this.createError({ message: validateNameError(value) });
         })
         .test({
           name: 'folderName',
-          message: 'The folder name "environments" at the root of the collection is reserved in marrone',
+          message: () => i18n.t('VALIDATION.RESERVED_ENVIRONMENTS_FOLDER'),
           test: (value) => {
             if (item?.uid) return true;
             return value && !value.trim().toLowerCase().includes('environments');
@@ -57,10 +58,10 @@ const NewFolder = ({ collectionUid, item, onClose }) => {
     onSubmit: (values) => {
       dispatch(newFolder(values.folderName, values.directoryName, collectionUid, item ? item.uid : null))
         .then(() => {
-          toast.success('New folder created!');
+          toast.success(i18n.t('TOASTS.FOLDER_CREATED'));
           onClose();
         })
-        .catch((err) => toast.error(err ? err.message : 'An error occurred while adding the folder'));
+        .catch((err) => toast.error(err ? err.message : i18n.t('TOASTS.ERROR_ADDING_FOLDER')));
     }
   });
 

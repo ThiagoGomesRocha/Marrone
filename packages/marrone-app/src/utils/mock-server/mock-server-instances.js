@@ -1,3 +1,4 @@
+import i18n from '../../i18n';
 import get from 'lodash/get';
 import { normalizePath } from 'utils/common/path';
 import { addTab, closeTabs, updateTabMeta } from 'providers/ReduxStore/slices/tabs';
@@ -19,21 +20,21 @@ export const getMockServerPortRangeError = (port) => {
   const trimmedPort = typeof port === 'string' ? port.trim() : port;
 
   if (trimmedPort === '' || trimmedPort === null || trimmedPort === undefined) {
-    return 'Port is required';
+    return i18n.t('VALIDATION.PORT_REQUIRED');
   }
 
   const normalizedPort = Number(trimmedPort);
 
   if (!Number.isInteger(normalizedPort)) {
-    return 'Port must be a whole number';
+    return i18n.t('VALIDATION.PORT_WHOLE_NUMBER');
   }
 
   if (normalizedPort < MOCK_SERVER_PORT_MIN) {
-    return 'Port must be at least 1';
+    return i18n.t('VALIDATION.PORT_MIN_1');
   }
 
   if (normalizedPort > MOCK_SERVER_PORT_MAX) {
-    return 'Port must be 65535 or less';
+    return i18n.t('VALIDATION.PORT_MAX_65535');
   }
 
   return null;
@@ -185,7 +186,7 @@ export const saveMockServerInstance = (instance) => async (dispatch, getState) =
   });
 
   if (!result?.success) {
-    throw new Error(result?.error || 'Failed to save mock server');
+    throw new Error(result?.error || i18n.t('TOASTS.FAILED_SAVE_MOCK_SERVER'));
   }
 
   const savedInstance = result.instance || instance;
@@ -405,11 +406,11 @@ export const getMockServerNameError = (name) => {
   const value = name == null ? '' : String(name).trim();
 
   if (!value.length) {
-    return 'Name is required';
+    return i18n.t('VALIDATION.NAME_REQUIRED');
   }
 
   if (value.length > 255) {
-    return 'Must be 255 characters or less';
+    return i18n.t('VALIDATION.MAX_255_CHARS');
   }
 
   return '';
@@ -463,14 +464,14 @@ export const getMockServerPortError = (portCheck, port) => {
   const normalizedPort = Number(port);
 
   if (portCheck.reason === 'system') {
-    return `Port ${normalizedPort} is already in use on this system.`;
+    return i18n.t('VALIDATION.PORT_IN_USE_SYSTEM', { port: normalizedPort });
   }
 
   if (portCheck.reason === 'marrone' || portCheck.reason === 'marrone-config') {
-    return `Port ${normalizedPort} is already used by another mock server in Marrone.`;
+    return i18n.t('VALIDATION.PORT_IN_USE_MARRONE', { port: normalizedPort });
   }
 
-  return 'Port must be between 1 and 65535.';
+  return i18n.t('VALIDATION.PORT_BETWEEN');
 };
 
 export const suggestAvailableMockServerPort = async (instances, { excludeUid, startPort } = {}) => {

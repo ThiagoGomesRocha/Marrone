@@ -3,9 +3,10 @@ import { IconDotsVertical } from '@tabler/icons';
 import { useEffect, useRef } from 'react';
 import Dropdown from 'components/Dropdown';
 import { TABS } from '../hooks/useNotifications';
+import i18n from '../../../i18n';
 
 const menuIcon = (
-  <span className="notif-menu-trigger" aria-label="Notifications menu">
+  <span className="notif-menu-trigger" aria-label={i18n.t('UI.NOTIFICATIONS_MENU')}>
     <IconDotsVertical size={16} strokeWidth={1.5} />
   </span>
 );

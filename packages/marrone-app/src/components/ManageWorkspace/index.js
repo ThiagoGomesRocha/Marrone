@@ -17,6 +17,7 @@ import MenuDropdown from 'ui/MenuDropdown/index';
 import Button from 'ui/Button';
 import { getRevealInFolderLabel } from 'utils/common/platform';
 import { openDevtoolsAndSwitchToTerminal } from 'utils/terminal';
+import i18n from '../../i18n';
 
 const ManageWorkspace = () => {
   const dispatch = useDispatch();
@@ -39,13 +40,13 @@ const ManageWorkspace = () => {
   const handleOpenWorkspace = (workspace) => {
     dispatch(switchWorkspace(workspace.uid));
     dispatch(showHomePage());
-    toast.success(`Switched to ${workspace.name}`);
+    toast.success(i18n.t('TOASTS.SWITCHED_TO', { name: workspace.name }));
   };
 
   const handleShowInFolder = (workspace) => {
     if (workspace.pathname) {
       dispatch(showInFolder(workspace.pathname)).catch(() => {
-        toast.error('Error opening the folder');
+        toast.error(i18n.t('TOASTS.ERROR_OPENING_FOLDER'));
       });
     }
   };
@@ -56,7 +57,7 @@ const ManageWorkspace = () => {
 
   const handleCloseClick = (workspace) => {
     if (workspace.type === 'default') {
-      toast.error('Cannot remove the default workspace');
+      toast.error(i18n.t('TOASTS.CANNOT_REMOVE_DEFAULT_WORKSPACE'));
       return;
     }
     setDeleteWorkspaceModal({ open: true, workspace });
@@ -72,7 +73,7 @@ const ManageWorkspace = () => {
     try {
       await dispatch(createWorkspaceWithUniqueName(defaultLocation));
     } catch (error) {
-      toast.error(error?.message || 'Failed to create workspace');
+      toast.error(error?.message || i18n.t('TOASTS.FAILED_CREATE_WORKSPACE'));
     }
   };
 

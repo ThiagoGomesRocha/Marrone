@@ -16,6 +16,7 @@ import ToolHint from 'components/ToolHint';
 import { interpolateUrl } from 'utils/url';
 import useDebounce from 'hooks/useDebounce';
 import get from 'lodash/get';
+import i18n from '../../../i18n';
 
 const CONNECTION_STATUS = {
   CONNECTING: 'connecting',
@@ -75,13 +76,13 @@ const WsQueryUrl = ({ item, collection, handleRun }) => {
     try {
       const result = await closeWsConnection(item.uid);
       if (!result?.success) {
-        throw new Error(result?.error || 'Failed to close WebSocket connection');
+        throw new Error(result?.error || i18n.t('TOASTS.FAILED_CLOSE_WS'));
       }
-      notify && toast.success('WebSocket connection closed');
+      notify && toast.success(i18n.t('TOASTS.WS_CONNECTION_CLOSED'));
       setConnectionStatus(CONNECTION_STATUS.DISCONNECTED);
     } catch (err) {
       console.error('Failed to close WebSocket connection:', err);
-      notify && toast.error('Failed to close WebSocket connection');
+      notify && toast.error(i18n.t('TOASTS.FAILED_CLOSE_WS'));
       const statusResult = await getWsConnectionStatus(item.uid);
       setConnectionStatus(statusResult?.status ?? CONNECTION_STATUS.DISCONNECTED);
     }
@@ -91,7 +92,7 @@ const WsQueryUrl = ({ item, collection, handleRun }) => {
     e?.stopPropagation();
     if (UNINTERACTIVE_STATES.includes(connectionStatus)) return;
     if (!url) {
-      toast.error('Please enter a valid WebSocket URL');
+      toast.error(i18n.t('TOASTS.INVALID_WS_URL'));
       return;
     }
     handleRun(e);

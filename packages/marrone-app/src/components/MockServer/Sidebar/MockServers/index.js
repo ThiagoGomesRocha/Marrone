@@ -26,6 +26,7 @@ import MockResponseSidebarItem from './MockResponseSidebarItem';
 import MenuDropdown from 'ui/MenuDropdown';
 import ActionIcon from 'ui/ActionIcon';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../../i18n';
 
 const EMPTY_RESPONSES = [];
 
@@ -107,18 +108,18 @@ const MockServerItem = React.memo(({
       });
       const result = await dispatch(startMockServer(payload)).unwrap();
 
-      toast.success(`Mock server started at ${result.baseUrl}`);
+      toast.success(i18n.t('TOASTS.MOCK_STARTED_AT', { url: result.baseUrl }));
     } catch (err) {
-      toast.error(err.message || 'Failed to start mock server');
+      toast.error(err.message || i18n.t('TOASTS.FAILED_START_MOCK_SERVER'));
     }
   };
 
   const handleStop = async () => {
     try {
       await dispatch(stopMockServer({ mockServerUid: instance.uid })).unwrap();
-      toast.success('Mock server stopped');
+      toast.success(i18n.t('TOASTS.MOCK_SERVER_STOPPED'));
     } catch (err) {
-      toast.error(err.message || 'Failed to stop mock server');
+      toast.error(err.message || i18n.t('TOASTS.FAILED_STOP_MOCK_SERVER'));
     }
   };
 

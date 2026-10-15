@@ -5,16 +5,17 @@ import Modal from 'components/Modal/index';
 import { useDispatch } from 'react-redux';
 import StyledWrapper from './StyledWrapper';
 import { deleteGlobalEnvironment } from 'providers/ReduxStore/slices/global-environments';
+import i18n from '../../../../i18n';
 
 const DeleteEnvironment = ({ onClose, environment }) => {
   const dispatch = useDispatch();
   const onConfirm = () => {
     dispatch(deleteGlobalEnvironment({ environmentUid: environment.uid }))
       .then(() => {
-        toast.success('Environment deleted successfully');
+        toast.success(i18n.t('TOASTS.ENV_DELETED'));
         onClose();
       })
-      .catch(() => toast.error('An error occurred while deleting the environment'));
+      .catch(() => toast.error(i18n.t('TOASTS.ERROR_DELETING_ENVIRONMENT')));
   };
 
   return (
@@ -22,8 +23,8 @@ const DeleteEnvironment = ({ onClose, environment }) => {
       <StyledWrapper>
         <Modal
           size="md"
-          title="Delete Environment"
-          confirmText="Delete"
+          title={i18n.t('UI.DELETE_ENVIRONMENT')}
+          confirmText={i18n.t('UI.DELETE')}
           handleConfirm={onConfirm}
           handleCancel={onClose}
         >

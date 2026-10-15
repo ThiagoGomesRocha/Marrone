@@ -1,3 +1,4 @@
+import i18n from '../../../i18n';
 import React, { useEffect, useRef, useMemo, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { useFormik } from 'formik';
@@ -244,14 +245,14 @@ const CreateMockServerModal = ({
   const validationSchema = useMemo(() => Yup.object({
     name: Yup.string()
       .trim()
-      .min(1, 'Must be at least 1 character')
-      .max(255, 'Must be 255 characters or less')
+      .min(1, () => i18n.t('VALIDATION.MIN_1_CHAR'))
+      .max(255, () => i18n.t('VALIDATION.MAX_255_CHARS'))
       .test('is-valid-name', function (value) {
         const error = getMockServerNameError(value);
         return error ? this.createError({ message: error }) : true;
       })
-      .required('Name is required')
-      .test('duplicate-name', 'A mock server with this name already exists', (value) => {
+      .required(() => i18n.t('VALIDATION.NAME_REQUIRED'))
+      .test('duplicate-name', () => i18n.t('VALIDATION.MOCK_SERVER_NAME_EXISTS'), (value) => {
         const normalized = value?.trim().toLowerCase();
         return !existingInstances.some((instance) => (
           instance.name.trim().toLowerCase() === normalized && instance.uid !== editingInstance?.uid
@@ -260,12 +261,12 @@ const CreateMockServerModal = ({
     sourceType: Yup.string().oneOf(['collection', 'spec', 'manual']),
     collectionUid: Yup.string().when('sourceType', {
       is: 'collection',
-      then: (schema) => schema.required('Collection is required'),
+      then: (schema) => schema.required(() => i18n.t('VALIDATION.COLLECTION_REQUIRED')),
       otherwise: (schema) => schema.notRequired()
     }),
     specUid: Yup.string().when('sourceType', {
       is: 'spec',
-      then: (schema) => schema.required('API spec is required'),
+      then: (schema) => schema.required(() => i18n.t('VALIDATION.API_SPEC_REQUIRED')),
       otherwise: (schema) => schema.notRequired()
     }),
     port: Yup.mixed().test('port-range', function (value) {
@@ -276,7 +277,7 @@ const CreateMockServerModal = ({
       const error = getMockServerPortRangeError(value);
       return error ? this.createError({ message: error }) : true;
     }),
-    globalDelay: Yup.number().min(0, 'Delay cannot be negative'),
+    globalDelay: Yup.number().min(0, () => i18n.t('VALIDATION.DELAY_NOT_NEGATIVE')),
     syncOnCreate: Yup.boolean()
   }), [requiresPortField, existingInstances, editingInstance?.uid]);
 
@@ -299,7 +300,7 @@ const CreateMockServerModal = ({
     validationSchema,
     onSubmit: async (values, { setFieldError, setFieldTouched }) => {
       if (!activeWorkspaceUid) {
-        toast.error('No active workspace found');
+        toast.error(i18n.t('TOASTS.NO_ACTIVE_WORKSPACE'));
         return;
       }
 
@@ -403,13 +404,13 @@ const CreateMockServerModal = ({
         }
 
         if (syncError) {
-          toast.error(syncError.message || 'Mock server created, but syncing responses failed');
+          toast.error(syncError.message || i18n.t('TOASTS.MOCK_SERVER_CREATED_SYNC_FAILED'));
         } else {
-          toast.success(isEditing ? 'Mock server settings saved' : 'Mock server created');
+          toast.success(isEditing ? i18n.t('TOASTS.MOCK_SERVER_SETTINGS_SAVED') : i18n.t('TOASTS.MOCK_SERVER_CREATED'));
         }
         onClose();
       } catch {
-        toast.error('Failed to save mock server');
+        toast.error(i18n.t('TOASTS.FAILED_SAVE_MOCK_SERVER'));
       }
     }
   });

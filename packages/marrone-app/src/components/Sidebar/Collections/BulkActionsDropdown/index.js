@@ -7,6 +7,7 @@ import { collapseCollection, collapseItem, expandCollection, expandItem, clearSi
 import toast from 'react-hot-toast';
 import { getBulkActionsSelection, isSelectionEntryCollapsed } from 'utils/collections/index';
 import { mountCollection } from 'providers/ReduxStore/slices/collections/actions';
+import i18n from '../../../../i18n';
 
 const selectBulkActionsSelection = createSelector(
   [
@@ -79,7 +80,7 @@ const BulkActionsDropdown = ({ visible, onClose, position, onRequestRemoveCollec
       });
       clearAndClose();
     } catch (err) {
-      toast.error('An error occurred while toggling collections');
+      toast.error(i18n.t('TOASTS.ERROR_TOGGLING_COLLECTIONS'));
     }
   }, [dispatch, clearAndClose]);
 

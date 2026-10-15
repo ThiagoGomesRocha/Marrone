@@ -8,6 +8,7 @@ import TruncatedText from 'components/TruncatedText';
 import { updateResponseExampleName, updateResponseExampleDescription } from 'providers/ReduxStore/slices/collections';
 import get from 'lodash/get';
 import Button from 'ui/Button';
+import i18n from '../../../i18n';
 
 const ResponseExampleTopBar = ({
   item,
@@ -114,7 +115,7 @@ const ResponseExampleTopBar = ({
                     value={example?.name || ''}
                     onChange={handleNameChange}
                     className="example-input example-input-name"
-                    placeholder="Enter example name"
+                    placeholder={i18n.t('UI.ENTER_EXAMPLE_NAME')}
                     autoFocus
                     data-testid="response-example-name-input"
                   />
@@ -124,7 +125,7 @@ const ResponseExampleTopBar = ({
                     value={example?.description || ''}
                     onChange={handleDescriptionChange}
                     className="example-input example-input-description"
-                    placeholder="Enter example description"
+                    placeholder={i18n.t('UI.ENTER_EXAMPLE_DESC')}
                     rows={3}
                     data-testid="response-example-description-input"
                   />
@@ -187,7 +188,7 @@ const ResponseExampleTopBar = ({
               size="sm"
               icon={<IconCode size={16} color={theme.examples.buttonIconColor} />}
               onClick={handleGenerateCode}
-              title="Generate Code"
+              title={i18n.t('UI.GENERATE_CODE')}
               data-testid="response-example-generate-code-btn"
             />
             <Button
@@ -206,7 +207,7 @@ const ResponseExampleTopBar = ({
               icon={<IconPlayerPlay size={16} />}
               onClick={onTryExample}
               loading={isTryPending}
-              title="Open this example as a new request and send it"
+              title={i18n.t('UI.OPEN_THIS_EXAMPLE')}
               data-testid="response-example-try-btn"
             >
               Try

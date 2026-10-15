@@ -11,6 +11,7 @@ import { get } from 'lodash';
 import toast from 'react-hot-toast';
 import Button from 'ui/Button';
 import { useTheme } from 'providers/Theme';
+import i18n from '../../../i18n';
 
 const ProxySettings = ({ collection }) => {
   const dispatch = useDispatch();
@@ -40,7 +41,7 @@ const ProxySettings = ({ collection }) => {
 
   const validateHostnameOnChange = (hostname) => {
     if (hostname && hostname.length > 1024) {
-      toast.error('Hostname must be less than 1024 characters');
+      toast.error(i18n.t('TOASTS.HOSTNAME_TOO_LONG'));
       return false;
     }
     return true;
@@ -52,11 +53,11 @@ const ProxySettings = ({ collection }) => {
     }
     const portNum = Number(port);
     if (isNaN(portNum)) {
-      toast.error('Port must be a valid number');
+      toast.error(i18n.t('TOASTS.PORT_INVALID'));
       return false;
     }
     if (portNum < 1 || portNum > 65535) {
-      toast.error('Port must be between 1 and 65535');
+      toast.error(i18n.t('TOASTS.PORT_RANGE'));
       return false;
     }
     return true;
@@ -64,7 +65,7 @@ const ProxySettings = ({ collection }) => {
 
   const validateAuthUsernameOnChange = (username) => {
     if (username && username.length > 1024) {
-      toast.error('Username must be less than 1024 characters');
+      toast.error(i18n.t('TOASTS.USERNAME_TOO_LONG'));
       return false;
     }
     return true;
@@ -72,7 +73,7 @@ const ProxySettings = ({ collection }) => {
 
   const validateAuthPasswordOnChange = (password) => {
     if (password && password.length > 1024) {
-      toast.error('Password must be less than 1024 characters');
+      toast.error(i18n.t('TOASTS.PASSWORD_TOO_LONG'));
       return false;
     }
     return true;
@@ -80,7 +81,7 @@ const ProxySettings = ({ collection }) => {
 
   const validateBypassProxyOnChange = (bypassProxy) => {
     if (bypassProxy && bypassProxy.length > 1024) {
-      toast.error('Bypass proxy must be less than 1024 characters');
+      toast.error(i18n.t('TOASTS.BYPASS_PROXY_TOO_LONG'));
       return false;
     }
     return true;

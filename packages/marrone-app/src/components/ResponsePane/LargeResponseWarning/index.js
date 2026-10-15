@@ -6,6 +6,7 @@ import StyledWrapper from './StyledWrapper';
 import { formatSize } from 'utils/common/index';
 import Button from 'ui/Button/index';
 import { MAX_RENDERABLE_RESPONSE_BYTES } from 'utils/common/constants';
+import i18n from '../../../i18n';
 
 const LargeResponseWarning = ({ item, responseSize, onRevealResponse }) => {
   const { ipcRenderer } = window;
@@ -18,12 +19,12 @@ const LargeResponseWarning = ({ item, responseSize, onRevealResponse }) => {
         .invoke('renderer:save-response-to-file', response, item.requestSent.url, item.pathname)
         .then((result) => {
           if (result && result.success) {
-            toast.success('Response downloaded to file');
+            toast.success(i18n.t('TOASTS.RESPONSE_DOWNLOADED'));
           }
           resolve();
         })
         .catch((err) => {
-          toast.error(get(err, 'error.message') || 'Something went wrong!');
+          toast.error(get(err, 'error.message') || i18n.t('TOASTS.SOMETHING_WRONG'));
           resolve();
         });
     });
@@ -36,12 +37,12 @@ const LargeResponseWarning = ({ item, responseSize, onRevealResponse }) => {
         : JSON.stringify(response.data, null, 2);
 
       navigator.clipboard.writeText(textToCopy).then(() => {
-        toast.success('Response copied to clipboard');
+        toast.success(i18n.t('TOASTS.RESPONSE_COPIED'));
       }).catch(() => {
-        toast.error('Failed to copy response');
+        toast.error(i18n.t('TOASTS.FAILED_COPY_RESPONSE'));
       });
     } catch (error) {
-      toast.error('Failed to copy response');
+      toast.error(i18n.t('TOASTS.FAILED_COPY_RESPONSE'));
     }
   };
 
@@ -77,7 +78,7 @@ const LargeResponseWarning = ({ item, responseSize, onRevealResponse }) => {
           onClick={onRevealResponse}
           disabled={isDownloadOnly}
           data-testid="large-response-view"
-          title="Show response content"
+          title={i18n.t('UI.SHOW_RESPONSE_CONTENT')}
           color="secondary"
           size="sm"
         >
@@ -89,7 +90,7 @@ const LargeResponseWarning = ({ item, responseSize, onRevealResponse }) => {
           onClick={downloadResponseToFile}
           disabled={!response.dataBuffer && !response.storedRequestUid}
           data-testid="large-response-download"
-          title="Download response to file"
+          title={i18n.t('UI.DOWNLOAD_RESPONSE')}
           color="secondary"
           size="sm"
         >
@@ -101,7 +102,7 @@ const LargeResponseWarning = ({ item, responseSize, onRevealResponse }) => {
           onClick={copyResponse}
           disabled={isDownloadOnly || !response.data}
           data-testid="large-response-copy"
-          title="Copy response to clipboard"
+          title={i18n.t('UI.COPY_RESPONSE')}
           color="secondary"
           size="sm"
         >

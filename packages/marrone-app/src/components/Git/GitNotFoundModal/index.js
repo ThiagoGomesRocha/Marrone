@@ -1,6 +1,7 @@
 import React from 'react';
 import Modal from 'components/Modal/index';
 import Portal from 'components/Portal/index';
+import i18n from '../../../i18n';
 
 const getOSName = () => {
   const platform = window.navigator.userAgentData?.platform || '';
@@ -36,7 +37,7 @@ const GitNotFoundModal = ({ onClose }) => {
     <Portal>
       <Modal
         size="sm"
-        title="Git Not Found"
+        title={i18n.t('UI.GIT_NOT_FOUND')}
         handleCancel={onClose}
         hideFooter={true}
       >

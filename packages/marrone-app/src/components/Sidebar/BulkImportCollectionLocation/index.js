@@ -24,6 +24,7 @@ import { showImportIssuesToast } from 'components/Toast/ImportIssuesToast';
 import get from 'lodash/get';
 import { useTranslation } from 'react-i18next';
 import { DEFAULT_COLLECTION_FORMAT } from 'utils/common/constants';
+import i18n from '../../../i18n';
 
 const STATUS = {
   LOADING: 'loading',
@@ -297,9 +298,9 @@ export const BulkImportCollectionLocation = ({
     },
     validationSchema: Yup.object({
       collectionLocation: Yup.string()
-        .min(1, 'must be at least 1 character')
-        .max(500, 'must be 500 characters or less')
-        .required('Location is required')
+        .min(1, () => i18n.t('VALIDATION.MIN_1_CHAR'))
+        .max(500, () => i18n.t('VALIDATION.MAX_500_CHARS'))
+        .required(() => i18n.t('VALIDATION.LOCATION_REQUIRED'))
     }),
     onSubmit: async (values) => {
       let filteredCollections = [];
@@ -684,9 +685,9 @@ export const BulkImportCollectionLocation = ({
                                     .join('\n');
                                   try {
                                     await navigator.clipboard.writeText(text);
-                                    toast.success('Copied to clipboard', { duration: 2000 });
+                                    toast.success(i18n.t('TOASTS.COPIED_CLIPBOARD'), { duration: 2000 });
                                   } catch (err) {
-                                    toast.error('Failed to copy to clipboard', { duration: 3000 });
+                                    toast.error(i18n.t('TOASTS.FAILED_COPY_CLIPBOARD'), { duration: 3000 });
                                   }
                                 }}
                                 className="text-yellow-600 text-xs hover:underline"

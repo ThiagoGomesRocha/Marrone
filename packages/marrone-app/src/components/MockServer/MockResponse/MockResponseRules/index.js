@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef } from 'react';
 import EditableTable from 'components/EditableTable';
 import { uuid } from 'utils/common';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../../i18n';
 
 const TARGET_OPTIONS = [
   { value: 'header', label: 'Header' },
@@ -97,7 +98,7 @@ const MockResponseRules = ({ rules, editMode, onChange, onAddRule }) => {
           value={value || DEFAULT_CONDITION.target}
           disabled={!editMode}
           onChange={(event) => onCellChange(event.target.value)}
-          aria-label="Rule target"
+          aria-label={i18n.t('UI.RULE_TARGET')}
         >
           {TARGET_OPTIONS.map((option) => (
             <option key={option.value} value={option.value}>{option.label}</option>
@@ -134,7 +135,7 @@ const MockResponseRules = ({ rules, editMode, onChange, onAddRule }) => {
           value={value === 'regex' ? 'matches' : (value || DEFAULT_CONDITION.operator)}
           disabled={!editMode}
           onChange={(event) => onCellChange(event.target.value)}
-          aria-label="Rule operator"
+          aria-label={i18n.t('UI.RULE_OPERATOR')}
         >
           {OPERATOR_OPTIONS.map((option) => (
             <option key={option.value} value={option.value}>{option.label}</option>

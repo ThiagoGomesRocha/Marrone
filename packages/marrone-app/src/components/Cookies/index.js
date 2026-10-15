@@ -10,9 +10,10 @@ import StyledWrapper from './StyledWrapper';
 import moment from 'moment';
 import { Tooltip } from 'react-tooltip';
 import Button from 'ui/Button';
+import i18n from '../../i18n';
 
 const ClearDomainCookiesModal = ({ onClose, domain, onClear }) => (
-  <Modal onClose={onClose} handleCancel={onClose} title="Clear Domain Cookies" hideFooter={true}>
+  <Modal onClose={onClose} handleCancel={onClose} title={i18n.t('UI.CLEAR_DOMAIN_COOKIES')} hideFooter={true}>
     <div className="flex items-center font-normal">
       <IconAlertTriangle size={32} strokeWidth={1.5} className="warning-icon" />
       <h1 className="ml-2 text-lg font-medium">Hold on..</h1>
@@ -37,7 +38,7 @@ const ClearDomainCookiesModal = ({ onClose, domain, onClear }) => (
 );
 
 const DeleteCookieModal = ({ onClose, cookieName, onDelete }) => (
-  <Modal onClose={onClose} handleCancel={onClose} title="Delete Cookie" hideFooter={true}>
+  <Modal onClose={onClose} handleCancel={onClose} title={i18n.t('UI.DELETE_COOKIE')} hideFooter={true}>
     <div className="flex items-center font-normal">
       <IconAlertTriangle size={32} strokeWidth={1.5} className="warning-icon" />
       <h1 className="ml-2 text-lg font-medium">Hold on..</h1>
@@ -90,9 +91,9 @@ const CollectionProperties = ({ onClose }) => {
   const clearDomainCookiesAction = () => {
     dispatch(deleteCookiesForDomain(domainToClear))
       .then(() => {
-        toast.success('Domain cookies cleared successfully');
+        toast.success(i18n.t('TOASTS.DOMAIN_COOKIES_CLEARED'));
       })
-      .catch((err) => console.log(err) && toast.error('Failed to clear domain cookies'));
+      .catch((err) => console.log(err) && toast.error(i18n.t('TOASTS.FAILED_CLEAR_DOMAIN_COOKIES')));
     setDomainToClear(null);
   };
 
@@ -105,9 +106,9 @@ const CollectionProperties = ({ onClose }) => {
       const { domain, path, key } = cookieToDelete;
       dispatch(deleteCookie(domain, path, key))
         .then(() => {
-          toast.success('Cookie deleted successfully');
+          toast.success(i18n.t('TOASTS.COOKIE_DELETED'));
         })
-        .catch((err) => console.log(err) && toast.error('Failed to delete cookie'));
+        .catch((err) => console.log(err) && toast.error(i18n.t('TOASTS.FAILED_DELETE_COOKIE')));
     }
     setCookieToDelete(null);
   };
@@ -126,7 +127,7 @@ const CollectionProperties = ({ onClose }) => {
     <>
       <Modal
         size="xl"
-        title="Cookies"
+        title={i18n.t('UI.COOKIES')}
         hideFooter={true}
         handleCancel={onClose}
         customHeader={shouldShowHeader ? (
@@ -134,7 +135,7 @@ const CollectionProperties = ({ onClose }) => {
             <h2 className="text-xs font-medium">Cookies</h2>
             <input
               type="search"
-              placeholder="Search by domain"
+              placeholder={i18n.t('UI.SEARCH_BY_DOMAIN')}
               value={searchText || ''}
               onChange={(e) => setSearchText(e.target.value)}
               className="block textbox non-passphrase-input ml-auto font-normal"

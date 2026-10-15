@@ -8,6 +8,7 @@ import filter from 'lodash/filter';
 import marronePath from 'utils/common/path';
 import ConfirmMoveDrafts from './ConfirmMoveDrafts';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../../../i18n';
 
 const MoveToWorkspace = ({ onClose, collectionUid }) => {
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ const MoveToWorkspace = ({ onClose, collectionUid }) => {
 
   const onConfirm = () => {
     if (!collection) {
-      toast.error('Collection not found');
+      toast.error(i18n.t('TOASTS.COLLECTION_NOT_FOUND'));
       onClose();
       return;
     }
@@ -36,11 +37,11 @@ const MoveToWorkspace = ({ onClose, collectionUid }) => {
     setIsMoving(true);
     dispatch(moveCollectionToWorkspace(collection.uid))
       .then(() => {
-        toast.success('Collection moved into workspace');
+        toast.success(i18n.t('TOASTS.COLLECTION_MOVED'));
         onClose();
       })
       .catch((err) => {
-        toast.error(err?.message || 'An error occurred while moving the collection');
+        toast.error(err?.message || i18n.t('TOASTS.ERROR_MOVING_COLLECTION'));
         setIsMoving(false);
       });
   };
@@ -64,7 +65,7 @@ const MoveToWorkspace = ({ onClose, collectionUid }) => {
     <StyledWrapper>
       <Modal
         size="sm"
-        title="Move into Workspace"
+        title={i18n.t('UI.MOVE_INTO_WORKSPACE')}
         confirmText={isMoving ? 'Moving...' : 'Move'}
         confirmDisabled={isMoving}
         handleConfirm={onConfirm}

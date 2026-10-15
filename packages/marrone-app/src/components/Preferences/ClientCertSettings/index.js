@@ -15,6 +15,7 @@ import Button from 'ui/Button';
 import ActionIcon from 'ui/ActionIcon';
 import ListGroup from 'ui/ListGroup';
 import ToggleSwitch from 'components/ToggleSwitch';
+import i18n from '../../../i18n';
 
 const CertField = ({ label, value, title, action }) => (
   <div className="cert-field">
@@ -99,7 +100,7 @@ const ClientCertSettings = () => {
           }
         }
       })
-    ).catch(() => toast.error('Failed to save preferences'));
+    ).catch(() => toast.error(i18n.t('TOASTS.FAILED_SAVE_PREFERENCES')));
   };
 
   const formik = useFormik({
@@ -115,7 +116,7 @@ const ClientCertSettings = () => {
       domain: Yup.string()
         .required()
         .trim()
-        .test('not-empty-after-trim', 'Domain is required', (value) => value && value.trim().length > 0),
+        .test('not-empty-after-trim', () => i18n.t('VALIDATION.DOMAIN_REQUIRED'), (value) => value && value.trim().length > 0),
       type: Yup.string().required().oneOf(['cert', 'pfx']),
       certFilePath: Yup.string().when('type', {
         is: (type) => type == 'cert',

@@ -7,6 +7,7 @@ import {
 import { resolveMockServerWorkspacePath } from 'utils/mock-server/mock-server-instances';
 import { validateName, validateNameError } from 'utils/common/regex';
 import { extractMockRoutePath, getMockResponseRouteKey } from '@marrone/common/utils';
+import i18n from '../../i18n';
 
 export { extractMockRoutePath as extractMockResponseRoutePath, getMockResponseRouteKey };
 
@@ -254,7 +255,7 @@ export const tryMockResponseRequest = async (options) => {
   const result = await window.ipcRenderer.invoke('renderer:mock-server-try-request', payload);
 
   if (!result?.success) {
-    throw new Error(result?.error || 'Could not reach the mock server');
+    throw new Error(result?.error || i18n.t('TOASTS.MOCK_SERVER_UNREACHABLE'));
   }
 
   return result;
@@ -339,7 +340,7 @@ export const getMockResponseDescriptionError = (description) => {
   const value = description == null ? '' : String(description).trim();
 
   if (value.length > MOCK_RESPONSE_DESCRIPTION_MAX_LENGTH) {
-    return `Description must be ${MOCK_RESPONSE_DESCRIPTION_MAX_LENGTH} characters or less`;
+    return i18n.t('VALIDATION.DESCRIPTION_MAX_LENGTH', { length: MOCK_RESPONSE_DESCRIPTION_MAX_LENGTH });
   }
 
   return null;

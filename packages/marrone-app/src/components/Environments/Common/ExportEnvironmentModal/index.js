@@ -10,6 +10,7 @@ import { getInheritedEnvironments } from '@marrone/common/utils';
 import StyledWrapper from './StyledWrapper';
 import Button from 'ui/Button';
 import { useTranslation } from 'react-i18next';
+import i18n from '../../../../i18n';
 
 const ExportEnvironmentModal = ({ onClose, environments = [], environmentType }) => {
   const { t } = useTranslation();
@@ -138,12 +139,12 @@ const ExportEnvironmentModal = ({ onClose, environments = [], environmentType })
       setIsExporting(true);
 
       if (!filePath) {
-        toast.error('Please select a location to save the files');
+        toast.error(i18n.t('TOASTS.SELECT_LOCATION'));
         return;
       }
 
       if (selectedCount === 0) {
-        toast.error('Please select at least one environment to export');
+        toast.error(i18n.t('TOASTS.SELECT_ENVIRONMENT_EXPORT'));
         return;
       }
 
@@ -156,7 +157,7 @@ const ExportEnvironmentModal = ({ onClose, environments = [], environmentType })
       onClose();
     } catch (error) {
       console.error('Export error:', error);
-      toast.error(error.message || 'Failed to export environments');
+      toast.error(error.message || i18n.t('TOASTS.FAILED_EXPORT_ENVIRONMENTS'));
     } finally {
       setIsExporting(false);
     }

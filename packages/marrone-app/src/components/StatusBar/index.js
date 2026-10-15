@@ -14,6 +14,7 @@ import { addTab } from 'providers/ReduxStore/slices/tabs';
 import { useApp } from 'providers/App';
 import { MARRONE_REPO_URL } from 'utils/common/constants';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../i18n';
 
 const StatusBar = () => {
   const dispatch = useDispatch();
@@ -79,7 +80,7 @@ const StatusBar = () => {
                 data-trigger="preferences"
                 onClick={handlePreferencesClick}
                 tabIndex={0}
-                aria-label="Open Preferences"
+                aria-label={i18n.t('UI.OPEN_PREFERENCES')}
               >
                 <IconSettings size={16} strokeWidth={1.5} aria-hidden="true" />
               </button>
@@ -90,7 +91,7 @@ const StatusBar = () => {
                 className="status-bar-button"
                 data-trigger="theme"
                 tabIndex={0}
-                aria-label="Change Theme"
+                aria-label={i18n.t('UI.CHANGE_THEME')}
               >
                 <IconPalette size={16} strokeWidth={1.5} aria-hidden="true" />
               </button>
@@ -109,7 +110,7 @@ const StatusBar = () => {
                   window?.ipcRenderer?.openExternal(MARRONE_REPO_URL);
                 }}
                 tabIndex={0}
-                aria-label="Open GitHub Repository"
+                aria-label={i18n.t('UI.OPEN_GITHUB_REPO')}
               >
                 <IconBrandGithub size={16} strokeWidth={1.5} aria-hidden="true" />
               </button>
@@ -124,7 +125,7 @@ const StatusBar = () => {
               data-trigger="search"
               onClick={openGlobalSearch}
               tabIndex={0}
-              aria-label="Global Search"
+              aria-label={i18n.t('UI.GLOBAL_SEARCH')}
             >
               <div className="console-button-content">
                 <IconSearch size={16} strokeWidth={1.5} aria-hidden="true" />
@@ -137,7 +138,7 @@ const StatusBar = () => {
               data-trigger="cookies"
               onClick={() => setCookiesOpen(true)}
               tabIndex={0}
-              aria-label="Open Cookies"
+              aria-label={i18n.t('UI.OPEN_COOKIES')}
             >
               <div className="console-button-content">
                 <IconCookie size={16} strokeWidth={1.5} aria-hidden="true" />

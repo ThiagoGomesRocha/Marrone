@@ -18,6 +18,7 @@ import { MARRONE_DOCS_URL } from 'utils/common/constants';
 import { normalizeQuery, isValidQuery, highlightText, sortResults, getTypeLabel, getItemPath } from './utils/searchUtils';
 import { SEARCH_TYPES, MATCH_TYPES, SEARCH_CONFIG, DOCUMENTATION_RESULT } from './constants';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../i18n';
 
 const GlobalSearchModal = ({ isOpen, onClose }) => {
   const [query, setQuery] = useState('');
@@ -390,7 +391,7 @@ const GlobalSearchModal = ({ isOpen, onClose }) => {
               <input
                 ref={inputRef}
                 type="text"
-                placeholder="Search collections, requests, or documentation..."
+                placeholder={i18n.t('UI.SEARCH_COLLECTIONS_REQUESTS')}
                 value={query}
                 onChange={handleQueryChange}
                 onKeyDown={handleKeyNavigation}
@@ -399,7 +400,7 @@ const GlobalSearchModal = ({ isOpen, onClose }) => {
                 autoCorrect="off"
                 autoCapitalize="off"
                 spellCheck="false"
-                aria-label="Search collections, requests, or documentation"
+                aria-label={i18n.t('UI.SEARCH_COLLECTIONS_REQUESTS_ARIA')}
                 aria-expanded={results.length > 0}
                 aria-controls="search-results"
                 aria-activedescendant={results.length > 0 ? `search-result-${selectedIndex}` : undefined}
@@ -411,7 +412,7 @@ const GlobalSearchModal = ({ isOpen, onClose }) => {
                 <button
                   onClick={clearSearch}
                   className="clear-button"
-                  aria-label="Clear search query"
+                  aria-label={i18n.t('UI.CLEAR_SEARCH_QUERY')}
                   type="button"
                 >
                   <IconX size={16} aria-hidden="true" />
@@ -425,7 +426,7 @@ const GlobalSearchModal = ({ isOpen, onClose }) => {
             ref={resultsRef}
             id="search-results"
             role="listbox"
-            aria-label="Search results"
+            aria-label={i18n.t('UI.SEARCH_RESULTS')}
           >
             {results.length === 0 && query ? (
               <div className="no-results">
@@ -504,17 +505,17 @@ const GlobalSearchModal = ({ isOpen, onClose }) => {
           </div>
 
           <div className="command-k-footer">
-            <div className="keyboard-hints" role="region" aria-label="Keyboard shortcuts">
-              <span aria-label="Use up and down arrows to navigate">
+            <div className="keyboard-hints" role="region" aria-label={i18n.t('UI.KEYBOARD_SHORTCUTS')}>
+              <span aria-label={i18n.t('UI.ARROWS_NAVIGATE')}>
                 <span className="keycap" aria-hidden="true">↑</span>
                 <span className="keycap" aria-hidden="true">↓</span>
                 <span className="hint-label">to navigate</span>
               </span>
-              <span aria-label="Press Enter to select">
+              <span aria-label={i18n.t('UI.ENTER_SELECT')}>
                 <span className="keycap" aria-hidden="true">↵</span>
                 <span className="hint-label">to select</span>
               </span>
-              <span aria-label="Press Escape to close">
+              <span aria-label={i18n.t('UI.ESCAPE_CLOSE')}>
                 <span className="keycap" aria-hidden="true">esc</span>
                 <span className="hint-label">to close</span>
               </span>

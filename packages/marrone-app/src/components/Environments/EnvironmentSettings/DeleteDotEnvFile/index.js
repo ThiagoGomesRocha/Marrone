@@ -2,6 +2,7 @@ import React from 'react';
 import Portal from 'components/Portal/index';
 import Modal from 'components/Modal/index';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../../i18n';
 
 const DeleteDotEnvFile = ({ onClose, onConfirm, filename = '.env' }) => {
   const handleConfirm = () => {
@@ -15,7 +16,7 @@ const DeleteDotEnvFile = ({ onClose, onConfirm, filename = '.env' }) => {
         <Modal
           size="sm"
           title={`Delete ${filename} File`}
-          confirmText="Delete"
+          confirmText={i18n.t('UI.DELETE')}
           handleConfirm={handleConfirm}
           handleCancel={onClose}
           confirmButtonColor="danger"

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, forwardRef } from 'react';
 import Button from 'ui/Button';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../../i18n';
 
 const EditorLinkEditPopover = forwardRef(({ isOpen, onClose, onSubmit, initialText, initialUrl }, ref) => {
   const [text, setText] = useState(initialText || '');
@@ -82,7 +83,7 @@ const EditorLinkEditPopover = forwardRef(({ isOpen, onClose, onSubmit, initialTe
             className="popover-input"
             value={text}
             onChange={(e) => setText(e.target.value)}
-            placeholder="Text to display"
+            placeholder={i18n.t('UI.TEXT_TO_DISPLAY')}
             autoComplete="off"
             spellCheck="false"
           />

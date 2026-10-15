@@ -5,6 +5,7 @@ import { generateUniqueRequestName } from 'utils/collections';
 import { sanitizeName } from 'utils/common/regex';
 import { formatIpcError } from 'utils/common/error';
 import toast from 'react-hot-toast';
+import i18n from '../../i18n';
 
 const createRequest = async ({ dispatch, collection, itemUid, requestType }) => {
   try {
@@ -42,7 +43,7 @@ const createRequest = async ({ dispatch, collection, itemUid, requestType }) => 
         break;
     }
   } catch (err) {
-    toast.error(formatIpcError(err) || 'An error occurred while adding the request');
+    toast.error(formatIpcError(err) || i18n.t('TOASTS.ERROR_ADDING_REQUEST'));
   }
 };
 

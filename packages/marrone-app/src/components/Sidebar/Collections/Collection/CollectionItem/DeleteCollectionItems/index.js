@@ -6,6 +6,7 @@ import { deleteItem, closeTabs, saveRequest } from 'providers/ReduxStore/slices/
 import { clearSidebarSelection, deleteResponseExample } from 'providers/ReduxStore/slices/collections';
 import { recursivelyGetAllItemUids, isItemAFolder, isItemARequest } from 'utils/collections/index';
 import { pluralizeWord } from 'utils/common';
+import i18n from '../../../../../../i18n';
 
 const DeleteCollectionItems = ({ entries, onClose }) => {
   const dispatch = useDispatch();
@@ -94,7 +95,7 @@ const DeleteCollectionItems = ({ entries, onClose }) => {
     <Modal
       size="md"
       title={title}
-      confirmText="Delete"
+      confirmText={i18n.t('UI.DELETE')}
       confirmButtonColor="danger"
       handleConfirm={onConfirm}
       handleCancel={onClose}

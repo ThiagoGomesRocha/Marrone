@@ -18,6 +18,7 @@ import { IconAlertTriangle } from '@tabler/icons';
 import Modal from 'components/Modal';
 import Button from 'ui/Button';
 import toast from 'react-hot-toast';
+import i18n from '../../../i18n';
 
 const SaveRequestsModal = ({ onClose, forceCloseTabs = false, tabUidsToClose = [] }) => {
   const MAX_UNSAVED_ITEMS_TO_SHOW = 5;
@@ -271,8 +272,8 @@ const SaveRequestsModal = ({ onClose, forceCloseTabs = false, tabUidsToClose = [
           hasSkippedEnvs = true;
           toast.error(
             isEnvironmentValidationError(err)
-              ? `Cannot save environment "${draft.name}": ${err.message}`
-              : `Failed to save environment "${draft.name}"`
+              ? i18n.t('TOASTS.CANNOT_SAVE_ENV_NAME', { name: draft.name }) + ': ' + err.message
+              : i18n.t('TOASTS.FAILED_SAVE_ENV_NAME', { name: draft.name })
           );
         }
       }
@@ -299,8 +300,8 @@ const SaveRequestsModal = ({ onClose, forceCloseTabs = false, tabUidsToClose = [
   return (
     <Modal
       size="md"
-      title="Unsaved changes"
-      confirmText="Save and Close"
+      title={i18n.t('UI.UNSAVED_CHANGES')}
+      confirmText={i18n.t('UI.SAVE_AND_CLOSE')}
       cancelText="Close without saving"
       handleCancel={onClose}
       disableEscapeKey={true}

@@ -12,6 +12,7 @@ import Network from 'components/ResponsePane/Timeline/TimelineItem/Network';
 import { sentHeadersFromTimeline } from 'utils/timeline';
 import StyledWrapper from './StyledWrapper';
 import { uuid } from 'utils/common/index';
+import i18n from '../../../../i18n';
 
 const formatHeaders = (headers) => {
   if (!headers) return [];
@@ -69,7 +70,7 @@ const RequestTab = ({ request, response }) => {
             </table>
           </div>
         ) : (
-          <div className="empty-state">No headers</div>
+          <div className="empty-state">{i18n.t('UI.NO_HEADERS')}</div>
         )}
       </div>
 
@@ -108,7 +109,7 @@ const ResponseTab = ({ response, request, collection }) => {
             </table>
           </div>
         ) : (
-          <div className="empty-state">No headers</div>
+          <div className="empty-state">{i18n.t('UI.NO_HEADERS')}</div>
         )}
       </div>
 
@@ -200,7 +201,7 @@ const RequestDetailsPanel = () => {
         <button
           className="close-button"
           onClick={handleClose}
-          title="Close details panel"
+          title={i18n.t('UI.CLOSE_DETAILS_PANEL')}
         >
           <IconX size={16} strokeWidth={1.5} />
         </button>

@@ -11,6 +11,7 @@ import {
 } from '@tabler/icons';
 import MenuDropdown from 'ui/MenuDropdown';
 import { EDITOR_MENU_DROPDOWN_PROPS } from '../../utils/editorToolbarUi';
+import i18n from '../../../../i18n';
 
 const TABLE_MENU_GROUPS = [
   {
@@ -125,7 +126,7 @@ const EditorTableMenu = ({ editor }) => {
       <button
         type="button"
         className="heading-dropdown-trigger is-active"
-        aria-label="Table options"
+        aria-label={i18n.t('UI.TABLE_OPTIONS')}
         data-testid="toolbar-table-menu"
       >
         <IconTableOptions size={16} strokeWidth={1.5} />

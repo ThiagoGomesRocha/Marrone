@@ -7,6 +7,7 @@ import { replaceSingle, replaceAll } from './replaceUtils';
 import { findSearchMatches, createCacheKey } from './searchUtils';
 import { markViewportMatches, clearMarks } from './markingUtils';
 import { useSearchBarHandle } from './useSearchBarHandle';
+import i18n from '../../i18n';
 
 const CodeMirrorSearch = forwardRef(({ visible, editor, readOnly, onClose }, ref) => {
   const [searchText, setSearchText] = useState('');
@@ -330,7 +331,7 @@ const CodeMirrorSearch = forwardRef(({ visible, editor, readOnly, onClose }, ref
               className="mousetrap"
               value={searchText}
               onChange={(e) => handleSearchTextChange(e.target.value)}
-              placeholder="Search..."
+              placeholder={i18n.t('UI.SEARCH_DOTS')}
               spellCheck={false}
               data-testid="codemirror-search-input"
               onKeyDown={(e) => {
@@ -357,9 +358,9 @@ const CodeMirrorSearch = forwardRef(({ visible, editor, readOnly, onClose }, ref
             <ToolHint text="Whole word" toolhintId="searchbar-wholeword-toolhint" place="top">
               <button type="button" className={`searchbar-icon-btn ${wholeWord ? 'active' : ''}`} onClick={handleToggleWholeWord} data-testid="codemirror-search-wholeword-btn"><IconLetterW size={14} /></button>
             </ToolHint>
-            <button type="button" className="searchbar-icon-btn" title="Previous (Shift+Enter)" onClick={handlePrev} data-testid="codemirror-search-prev-btn"><IconArrowUp size={14} /></button>
-            <button type="button" className="searchbar-icon-btn" title="Next (Enter)" onClick={handleNext} data-testid="codemirror-search-next-btn"><IconArrowDown size={14} /></button>
-            <button type="button" className="searchbar-icon-btn" title="Close" onClick={handleSearchBarClose} data-testid="codemirror-search-close-btn"><IconX size={14} /></button>
+            <button type="button" className="searchbar-icon-btn" title={i18n.t('UI.PREVIOUS_SHIFT_ENTER')} onClick={handlePrev} data-testid="codemirror-search-prev-btn"><IconArrowUp size={14} /></button>
+            <button type="button" className="searchbar-icon-btn" title={i18n.t('UI.NEXT_ENTER')} onClick={handleNext} data-testid="codemirror-search-next-btn"><IconArrowDown size={14} /></button>
+            <button type="button" className="searchbar-icon-btn" title={i18n.t('UI.CLOSE')} onClick={handleSearchBarClose} data-testid="codemirror-search-close-btn"><IconX size={14} /></button>
           </div>
           {replaceVisible && !readOnly && (
             <div className="replace-row">
@@ -369,7 +370,7 @@ const CodeMirrorSearch = forwardRef(({ visible, editor, readOnly, onClose }, ref
                 className="mousetrap"
                 value={replaceText}
                 onChange={(e) => setReplaceText(e.target.value)}
-                placeholder="Replace..."
+                placeholder={i18n.t('UI.REPLACE_DOTS')}
                 spellCheck={false}
                 data-testid="codemirror-search-replace-input"
                 onKeyDown={(e) => {
@@ -385,10 +386,10 @@ const CodeMirrorSearch = forwardRef(({ visible, editor, readOnly, onClose }, ref
                 }}
               />
               <ToolHint text="Replace" toolhintId="searchbar-replace-toolhint" place="top">
-                <button type="button" aria-label="Replace" aria-disabled={isReplaceDisabled} className="searchbar-icon-btn searchbar-replace-btn" onClick={handleReplace} data-testid="codemirror-search-replace-btn"><IconReplace size={15} /></button>
+                <button type="button" aria-label={i18n.t('UI.REPLACE')} aria-disabled={isReplaceDisabled} className="searchbar-icon-btn searchbar-replace-btn" onClick={handleReplace} data-testid="codemirror-search-replace-btn"><IconReplace size={15} /></button>
               </ToolHint>
               <ToolHint text="Replace all" toolhintId="searchbar-replaceall-toolhint" place="top">
-                <button type="button" aria-label="Replace all" aria-disabled={isReplaceDisabled} className="searchbar-icon-btn searchbar-replace-btn" onClick={handleReplaceAll} data-testid="codemirror-search-replaceall-btn"><IconArrowsExchange2 size={15} /></button>
+                <button type="button" aria-label={i18n.t('UI.REPLACE_ALL')} aria-disabled={isReplaceDisabled} className="searchbar-icon-btn searchbar-replace-btn" onClick={handleReplaceAll} data-testid="codemirror-search-replaceall-btn"><IconArrowsExchange2 size={15} /></button>
               </ToolHint>
             </div>
           )}

@@ -17,6 +17,7 @@ import {
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { clearAiApiKey, getAiApiKey, setAiApiKey, testAiProvider } from 'utils/ai';
+import i18n from '../../../i18n';
 
 const stopBubble = (e) => e.stopPropagation();
 
@@ -82,9 +83,9 @@ const CompatEndpointCard = ({
       onStatusChange?.(status);
       setEditing(false);
       setKeyDraft('');
-      toast.success(`${endpoint.name || 'Endpoint'} API key removed`);
+      toast.success(i18n.t('TOASTS.API_KEY_REMOVED', { name: endpoint.name || 'Endpoint' }));
     } catch (err) {
-      toast.error(err.message || 'Failed to clear API key');
+      toast.error(err.message || i18n.t('TOASTS.FAILED_CLEAR_API_KEY'));
     }
   };
 

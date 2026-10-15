@@ -18,6 +18,7 @@ import CompatEndpointCard from './CompatEndpointCard';
 import AutocompletePane from './AutocompletePane';
 import SecurityPane from './SecurityPane';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../i18n';
 
 const OPENAI_COMPATIBLE_PREFIX = 'openai-compatible:';
 const isCompatProviderId = (id) => typeof id === 'string' && id.startsWith(OPENAI_COMPATIBLE_PREFIX);
@@ -155,7 +156,7 @@ const AI = () => {
         .then(() => refreshStatus())
         .catch((err) => {
           console.error('Failed to save AI preferences:', err);
-          toast.error('Failed to save AI preferences');
+          toast.error(i18n.t('TOASTS.FAILED_SAVE_AI_PREFERENCES'));
           throw err;
         }),
     [dispatch, preferences, refreshStatus]

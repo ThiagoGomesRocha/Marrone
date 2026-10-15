@@ -15,6 +15,7 @@ import ActionIcon from 'ui/ActionIcon/index';
 import MenuDropdown from 'ui/MenuDropdown';
 import Help from 'components/Help';
 import { isHttpUrl } from 'utils/url/index';
+import i18n from '../../../i18n';
 
 const OpenAPISyncHeader = ({
   collection, spec, sourceUrl, syncStatus, onViewSpec,
@@ -48,10 +49,10 @@ const OpenAPISyncHeader = ({
       } else {
         await navigator.clipboard.writeText(sourceUrl);
       }
-      toast.success(sourceIsLocal ? 'Path copied to clipboard' : 'URL copied to clipboard');
+      toast.success(sourceIsLocal ? i18n.t('TOASTS.PATH_COPIED') : i18n.t('TOASTS.URL_COPIED_CLIPBOARD'));
     } catch (err) {
       console.error('Error copying to clipboard:', err);
-      toast.error('Failed to copy to clipboard');
+      toast.error(i18n.t('TOASTS.FAILED_COPY_CLIPBOARD'));
     }
   };
 
@@ -62,7 +63,7 @@ const OpenAPISyncHeader = ({
       await window.ipcRenderer.invoke('renderer:show-in-folder', absolutePath);
     } catch (err) {
       console.error('Error revealing in folder:', err);
-      toast.error('Failed to open in file manager');
+      toast.error(i18n.t('TOASTS.FAILED_OPEN_FILE_MANAGER'));
     }
   };
 
@@ -120,7 +121,7 @@ const OpenAPISyncHeader = ({
         {sourceIsLocal ? (
           <button
             className="spec-url-value spec-file-reveal"
-            title="Reveal in file manager"
+            title={i18n.t('UI.REVEAL_IN_FILE_MANAGER')}
             type="button"
             onClick={revealInFolder}
           >

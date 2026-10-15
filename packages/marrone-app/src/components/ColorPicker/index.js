@@ -5,6 +5,7 @@ import ColorBadge from 'components/ColorBadge';
 import StyledWrapper from './StyledWrapper';
 import { parseToRgb, toColorString } from 'polished';
 import ColorRangePicker from 'components/ColorRange/index';
+import i18n from '../../i18n';
 
 const PRESET_COLORS = [
   '#CE4F3B',
@@ -105,7 +106,7 @@ const ColorPicker = ({ color, onChange, icon }) => {
   };
 
   const defaultIcon = (
-    <div className="cursor-pointer flex items-center" title="Change color">
+    <div className="cursor-pointer flex items-center" title={i18n.t('UI.CHANGE_COLOR')}>
       <ColorPickerIcon color={color} />
     </div>
   );
@@ -117,7 +118,7 @@ const ColorPicker = ({ color, onChange, icon }) => {
           <div
             className="w-5 h-5 cursor-pointer flex items-center justify-center transition-transform duration-100 hover:scale-110"
             onClick={() => handleColorSelect(null)}
-            title="No color"
+            title={i18n.t('UI.NO_COLOR')}
           >
             <IconBan size={20} strokeWidth={1.5} />
           </div>
@@ -139,7 +140,7 @@ const ColorPicker = ({ color, onChange, icon }) => {
             className="w-5 h-5 rounded-full flex-shrink-0 cursor-pointer"
             style={{ backgroundColor: customColor }}
             onClick={() => handleColorSelect(customColor)}
-            title="Custom color"
+            title={i18n.t('UI.CUSTOM_COLOR')}
           />
           <ColorRangePicker
             className="flex-1 flex"

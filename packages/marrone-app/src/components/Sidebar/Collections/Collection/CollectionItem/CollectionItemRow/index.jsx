@@ -72,6 +72,7 @@ import useKeybindingDisplayText from 'hooks/useKeybindingDisplayText';
 import useSidebarSelectionClick from 'hooks/useSidebarSelectionClick';
 import { startBlockedDragTracking } from 'utils/dragBlockedCursor';
 import { clearSidebarSelection } from 'providers/ReduxStore/slices/collections/index';
+import i18n from '../../../../../../i18n';
 
 const CollectionItemRow = ({
   item,
@@ -584,7 +585,7 @@ const CollectionItemRow = ({
   const handleShowInFolder = () => {
     dispatch(showInFolder(item.pathname)).catch((error) => {
       console.error('Error opening the folder', error);
-      toast.error('Error opening the folder');
+      toast.error(i18n.t('TOASTS.ERROR_OPENING_FOLDER'));
     });
   };
 
@@ -629,7 +630,7 @@ const CollectionItemRow = ({
       openInEditMode: true
     }));
 
-    toast.success(`Example "${name}" created successfully`);
+    toast.success(i18n.t('TOASTS.EXAMPLE_CREATED', { name }));
     setCreateExampleModalOpen(false);
   };
 
@@ -640,7 +641,7 @@ const CollectionItemRow = ({
     ) {
       setGenerateCodeItemModalOpen(true);
     } else {
-      toast.error('URL is required');
+      toast.error(i18n.t('TOASTS.URL_REQUIRED'));
     }
   };
 
@@ -663,7 +664,7 @@ const CollectionItemRow = ({
 
   const handleCopyItem = () => {
     dispatch(copyRequest(item));
-    toast.success(`${getItemTypeLabel(item)} copied`);
+    toast.success(i18n.t('TOASTS.ITEM_COPIED', { type: getItemTypeLabel(item) }));
   };
 
   // One-click clone: display name becomes "<source> copy"; the filesystem name
@@ -685,10 +686,10 @@ const CollectionItemRow = ({
 
     dispatch(pasteItem(collectionUid, targetFolderUid))
       .then(() => {
-        toast.success('Item pasted successfully');
+        toast.success(i18n.t('TOASTS.ITEM_PASTED'));
       })
       .catch((err) => {
-        toast.error(formatIpcError(err) || 'An error occurred while pasting the item');
+        toast.error(formatIpcError(err) || i18n.t('TOASTS.ERROR_PASTING_ITEM'));
       });
   };
 

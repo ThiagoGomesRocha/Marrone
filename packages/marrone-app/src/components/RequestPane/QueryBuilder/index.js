@@ -6,6 +6,7 @@ import QueryBuilderTree from './QueryBuilderTree';
 import ErrorBoundary from './ErrorBoundary';
 import Button from 'ui/Button';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../i18n';
 
 const QueryBuilder = ({ schema, onQueryChange, editorValue, onVariablesChange, variablesValue, loadSchema, isSchemaLoading, schemaError }) => {
   const {
@@ -173,7 +174,7 @@ const QueryBuilder = ({ schema, onQueryChange, editorValue, onVariablesChange, v
         <div className="query-builder-search">
           <input
             type="text"
-            placeholder="Search operations..."
+            placeholder={i18n.t('UI.SEARCH_OPERATIONS')}
             value={searchText}
             className="mousetrap"
             onChange={(e) => setSearchText(e.target.value)}

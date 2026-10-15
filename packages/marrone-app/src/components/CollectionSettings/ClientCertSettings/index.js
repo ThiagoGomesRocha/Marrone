@@ -18,6 +18,7 @@ import Button from 'ui/Button';
 import ActionIcon from 'ui/ActionIcon';
 import ListGroup from 'ui/ListGroup';
 import ToggleSwitch from 'components/ToggleSwitch';
+import i18n from '../../../i18n';
 
 const CertField = ({ label, value, title, action }) => (
   <div className="cert-field">
@@ -102,7 +103,7 @@ const ClientCertSettings = ({ collection }) => {
       domain: Yup.string()
         .required()
         .trim()
-        .test('not-empty-after-trim', 'Domain is required', (value) => value && value.trim().length > 0),
+        .test('not-empty-after-trim', () => i18n.t('VALIDATION.DOMAIN_REQUIRED'), (value) => value && value.trim().length > 0),
       type: Yup.string().required().oneOf(['cert', 'pfx']),
       certFilePath: Yup.string().when('type', {
         is: (type) => type == 'cert',
@@ -326,8 +327,8 @@ const ClientCertSettings = ({ collection }) => {
       {showAddCertModal && (
         <Modal
           size="md"
-          title="Add Client Certificate"
-          confirmText="Add"
+          title={i18n.t('UI.ADD_CLIENT_CERTIFICATE')}
+          confirmText={i18n.t('UI.ADD')}
           dataTestId="add-client-cert-modal"
           handleConfirm={formik.handleSubmit}
           handleCancel={() => setShowAddCertModal(false)}

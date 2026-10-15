@@ -4,6 +4,7 @@ import Dropdown from 'components/Dropdown';
 import ToolHint from 'components/ToolHint';
 import path, { normalizePath } from 'utils/common/path';
 import Wrapper, { OverflowList } from './StyledWrapper';
+import i18n from '../../i18n';
 
 const basename = (filePath) => (filePath ? path.basename(normalizePath(String(filePath))) : '');
 
@@ -185,7 +186,7 @@ const MultipartFileChipsCell = ({ files, onRemove, onAdd, editMode = true }) => 
           data-testid="multipart-file-upload"
           className="upload-btn ml-1"
           onClick={onAdd}
-          title="Add files"
+          title={i18n.t('UI.ADD_FILES')}
         >
           <IconUpload size={16} />
         </button>

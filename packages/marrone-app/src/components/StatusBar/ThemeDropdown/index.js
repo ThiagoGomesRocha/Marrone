@@ -5,6 +5,7 @@ import ToolHint from 'components/ToolHint';
 import { useTheme } from 'providers/Theme';
 import { getLightThemes, getDarkThemes } from 'themes/index';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../i18n';
 
 // Constants
 const MODES = ['light', 'dark', 'system'];
@@ -274,7 +275,7 @@ const ThemeDropdown = ({ children }) => {
         ref={menuRef}
         className={`theme-menu ${isSystemMode ? 'two-columns' : ''}`}
         role="dialog"
-        aria-label="Theme selector"
+        aria-label={i18n.t('UI.THEME_SELECTOR')}
       >
         <div className="mode-section">
           <div className="mode-label" id="mode-label">Appearance</div>

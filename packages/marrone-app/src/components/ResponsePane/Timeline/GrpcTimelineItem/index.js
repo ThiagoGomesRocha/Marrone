@@ -15,6 +15,7 @@ import {
 } from '@tabler/icons';
 import StyledWrapper from './StyledWrapper';
 import { usePersistedState } from 'hooks/usePersistedState/index';
+import i18n from '../../../../i18n';
 
 // Event type display names
 const EventTypeNames = {
@@ -183,7 +184,7 @@ const GrpcTimelineItem = ({ timestamp, request, response, eventType, collection,
                   {JSON.stringify(response.responses[response.responses.length - 1], null, 2)}
                 </pre>
               ) : (
-                <div className="empty-text">Empty message</div>
+                <div className="empty-text">{i18n.t('UI.EMPTY_MESSAGE')}</div>
               )}
             </div>
           </div>

@@ -11,6 +11,7 @@ import DotEnvTableView from './DotEnvTableView';
 import DotEnvRawView from './DotEnvRawView';
 import DotEnvEmptyState from './DotEnvEmptyState';
 import { variablesToRaw, rawToVariables, MIN_TABLE_HEIGHT } from './utils';
+import i18n from '../../../i18n';
 
 const DotEnvFileEditor = ({
   variables,
@@ -205,14 +206,14 @@ const DotEnvFileEditor = ({
     });
 
     if (hasValidationErrors) {
-      toast.error('Please fix validation errors before saving');
+      toast.error(i18n.t('TOASTS.FIX_VALIDATION_ERRORS'));
       return;
     }
 
     setIsSaving(true);
     onSave(variablesToSave)
       .then(() => {
-        toast.success('Changes saved successfully');
+        toast.success(i18n.t('TOASTS.CHANGES_SAVED'));
         const newValues = [
           ...variablesToSave,
           { uid: uuid(), name: '', value: '' }
@@ -223,7 +224,7 @@ const DotEnvFileEditor = ({
       })
       .catch((error) => {
         console.error(error);
-        toast.error('An error occurred while saving the changes');
+        toast.error(i18n.t('TOASTS.ERROR_SAVING_CHANGES'));
         window.dispatchEvent(new Event('dotenv-save-failed'));
       })
       .finally(() => {
@@ -235,20 +236,20 @@ const DotEnvFileEditor = ({
     if (isSaving) return;
 
     if (!onSaveRaw) {
-      toast.error('Raw save is not supported');
+      toast.error(i18n.t('TOASTS.RAW_SAVE_NOT_SUPPORTED'));
       return;
     }
 
     setIsSaving(true);
     onSaveRaw(rawValue)
       .then(() => {
-        toast.success('Changes saved successfully');
+        toast.success(i18n.t('TOASTS.CHANGES_SAVED'));
         setIsModified(false);
         window.dispatchEvent(new Event('dotenv-save-complete'));
       })
       .catch((error) => {
         console.error(error);
-        toast.error('An error occurred while saving the changes');
+        toast.error(i18n.t('TOASTS.ERROR_SAVING_CHANGES'));
         window.dispatchEvent(new Event('dotenv-save-failed'));
       })
       .finally(() => {

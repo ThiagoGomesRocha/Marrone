@@ -9,6 +9,7 @@ import ActionIcon from 'ui/ActionIcon/index';
 import { usePersistedState } from 'hooks/usePersistedState';
 import { useTrackScroll } from 'hooks/useTrackScroll';
 import DocsEditor from 'components/Documentation/DocsEditor';
+import i18n from '../../../i18n';
 
 const WorkspaceDocs = ({ workspace }) => {
   const dispatch = useDispatch();
@@ -52,17 +53,17 @@ const WorkspaceDocs = ({ workspace }) => {
 
   const onSave = async () => {
     if (!workspace) {
-      toast.error('Workspace not found');
+      toast.error(i18n.t('TOASTS.WORKSPACE_NOT_FOUND'));
       return;
     }
 
     try {
       await dispatch(saveWorkspaceDocs(workspace.uid, localDocs));
-      toast.success('Documentation saved successfully');
+      toast.success(i18n.t('TOASTS.DOCUMENTATION_SAVED'));
       toggleViewMode();
     } catch (error) {
       console.error('Error saving workspace docs:', error);
-      toast.error('Failed to save documentation');
+      toast.error(i18n.t('TOASTS.FAILED_SAVE_DOCUMENTATION'));
     }
   };
 
@@ -122,9 +123,9 @@ const WorkspaceDocs = ({ workspace }) => {
             </p>
             <p className="empty-subtext">You can include:</p>
             <ul className="suggestions-list">
-              <li>Project overview</li>
-              <li>Setup instructions</li>
-              <li>Key workflows</li>
+              <li>{i18n.t('UI.PROJECT_OVERVIEW')}</li>
+              <li>{i18n.t('UI.SETUP_INSTRUCTIONS')}</li>
+              <li>{i18n.t('UI.KEY_WORKFLOWS')}</li>
               <li>Resources & FAQs</li>
             </ul>
             <Button color="light" size="sm" icon={<IconPlus size={14} strokeWidth={1.5} />} onClick={handleAddDocumentation}>

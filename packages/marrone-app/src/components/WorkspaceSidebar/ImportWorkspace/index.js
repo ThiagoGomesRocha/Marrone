@@ -12,6 +12,7 @@ import { formatIpcError } from 'utils/common/error';
 import { multiLineMsg } from 'utils/common/index';
 import Help from 'components/Help';
 import { useTranslation } from 'react-i18next';
+import i18n from '../../../i18n';
 
 const ImportWorkspace = ({ onClose }) => {
   const { t } = useTranslation();
@@ -31,7 +32,7 @@ const ImportWorkspace = ({ onClose }) => {
       workspaceLocation: defaultLocation
     },
     validationSchema: Yup.object({
-      workspaceLocation: Yup.string().min(1, 'location is required').required('location is required')
+      workspaceLocation: Yup.string().min(1, () => i18n.t('VALIDATION.LOCATION_REQUIRED')).required(() => i18n.t('VALIDATION.LOCATION_REQUIRED'))
     }),
     onSubmit: async (values) => {
       if (isSubmitting || !selectedFile) return;
@@ -39,10 +40,10 @@ const ImportWorkspace = ({ onClose }) => {
       try {
         setIsSubmitting(true);
         await dispatch(importWorkspaceAction(selectedFile.path, values.workspaceLocation));
-        toast.success('Workspace imported successfully!');
+        toast.success(i18n.t('TOASTS.WORKSPACE_IMPORTED'));
         onClose();
       } catch (error) {
-        toast.error(multiLineMsg('Failed to import workspace', formatIpcError(error)));
+        toast.error(multiLineMsg(i18n.t('TOASTS.FAILED_IMPORT_WORKSPACE'), formatIpcError(error)));
       } finally {
         setIsSubmitting(false);
       }
@@ -69,13 +70,13 @@ const ImportWorkspace = ({ onClose }) => {
 
     const isZip = file.name.endsWith('.zip') || file.type === 'application/zip' || file.type === 'application/x-zip-compressed';
     if (!isZip) {
-      toast.error('Please select a valid zip file');
+      toast.error(i18n.t('TOASTS.SELECT_VALID_ZIP'));
       return null;
     }
 
     const filePath = window?.ipcRenderer?.getFilePath(file);
     if (!filePath) {
-      toast.error('Could not get file path');
+      toast.error(i18n.t('TOASTS.COULD_NOT_GET_FILE_PATH'));
       return null;
     }
 

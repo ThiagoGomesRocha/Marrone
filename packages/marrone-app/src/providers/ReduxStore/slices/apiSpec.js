@@ -10,6 +10,7 @@ import {
   isApiSpecTabForPathname
 } from 'utils/api-specs';
 import path, { normalizePath } from 'utils/common/path';
+import i18n from '../../../i18n';
 
 const initialState = {
   apiSpecs: []
@@ -22,7 +23,7 @@ export const apiSpecSlice = createSlice({
     apiSpecAddFileEvent: (state, action) => {
       const { name, raw, uid, filename, pathname, json, resolvedJson } = action?.payload?.data || {};
       if (!uid) {
-        toast.error('Error adding API spec');
+        toast.error(i18n.t('TOASTS.ERROR_ADDING_API_SPEC'));
       }
       const apiSpec = findApiSpecByUid(state.apiSpecs, uid);
       if (apiSpec) {
@@ -112,7 +113,7 @@ export const openApiSpecTab = (apiSpec) => async (dispatch, getState) => {
   const workspace = getActiveWorkspace(getState());
 
   if (!pathname || !workspace) {
-    toast.error('Could not open the API spec');
+    toast.error(i18n.t('TOASTS.COULD_NOT_OPEN_SPEC'));
     return;
   }
 
@@ -129,7 +130,7 @@ export const openApiSpecTab = (apiSpec) => async (dispatch, getState) => {
   const uid = getApiSpecTabUid(collectionUid, pathname);
 
   if (!uid) {
-    toast.error('Could not open the API spec in this workspace');
+    toast.error(i18n.t('TOASTS.COULD_NOT_OPEN_SPEC_WORKSPACE'));
     return;
   }
 
@@ -179,7 +180,7 @@ export const saveApiSpecToFile
         const apiSpec = findApiSpecByUid(state.apiSpec.apiSpecs, uid);
 
         if (!apiSpec) {
-          if (!silent) toast.error('Error saving file');
+          if (!silent) toast.error(i18n.t('TOASTS.ERROR_SAVING_FILE'));
           return reject(new Error('API spec not found'));
         }
 
@@ -187,11 +188,11 @@ export const saveApiSpecToFile
           .invoke('renderer:save-api-spec', apiSpec.pathname, content)
           .then(() => {
             dispatch(saveApiSpec({ content, uid }));
-            if (!silent) toast.success('Saved API spec successfully!');
+            if (!silent) toast.success(i18n.t('TOASTS.API_SPEC_SAVED'));
             resolve();
           })
           .catch((error) => {
-            if (!silent) toast.error('Error saving file');
+            if (!silent) toast.error(i18n.t('TOASTS.ERROR_SAVING_FILE'));
             reject(error);
           });
       });

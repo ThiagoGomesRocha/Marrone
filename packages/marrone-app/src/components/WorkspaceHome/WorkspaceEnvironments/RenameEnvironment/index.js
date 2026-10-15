@@ -9,6 +9,7 @@ import { renameGlobalEnvironment } from 'providers/ReduxStore/slices/global-envi
 import { validateName, validateNameError } from 'utils/common/regex';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import i18n from '../../../../i18n';
 
 const RenameEnvironment = ({ onClose, environment }) => {
   const { t } = useTranslation();
@@ -29,14 +30,14 @@ const RenameEnvironment = ({ onClose, environment }) => {
     },
     validationSchema: Yup.object({
       name: Yup.string()
-        .min(1, 'must be at least 1 character')
-        .max(255, 'Must be 255 characters or less')
+        .min(1, () => i18n.t('VALIDATION.MIN_1_CHAR'))
+        .max(255, () => i18n.t('VALIDATION.MAX_255_CHARS'))
         .test('is-valid-filename', function (value) {
           const isValid = validateName(value);
           return isValid ? true : this.createError({ message: validateNameError(value) });
         })
-        .required('name is required')
-        .test('duplicate-name', 'Environment already exists', validateEnvironmentName)
+        .required(() => i18n.t('VALIDATION.NAME_REQUIRED'))
+        .test('duplicate-name', () => i18n.t('VALIDATION.ENVIRONMENT_ALREADY_EXISTS'), validateEnvironmentName)
     }),
     onSubmit: (values) => {
       if (values.name === environment.name) {
@@ -44,11 +45,11 @@ const RenameEnvironment = ({ onClose, environment }) => {
       }
       dispatch(renameGlobalEnvironment({ name: values.name, environmentUid: environment.uid }))
         .then(() => {
-          toast.success('Environment renamed successfully');
+          toast.success(i18n.t('TOASTS.ENV_RENAMED_SUCCESS'));
           onClose();
         })
         .catch((error) => {
-          toast.error('An error occurred while renaming the environment');
+          toast.error(i18n.t('TOASTS.ERROR_RENAMING_ENVIRONMENT'));
           console.error(error);
         });
     }

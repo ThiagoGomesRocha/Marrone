@@ -10,6 +10,7 @@ import SegmentedControl from 'ui/SegmentedControl';
 import { IconCaretDown } from '@tabler/icons';
 import { DEFAULT_PRESET_REQUEST_TYPE } from 'utils/common/constants';
 import { requestTypeItems } from './constants';
+import i18n from '../../../i18n';
 
 const PresetsSettings = ({ collection }) => {
   const dispatch = useDispatch();
@@ -89,7 +90,7 @@ const PresetsSettings = ({ collection }) => {
             data-testid="presets-request-url"
             type="text"
             name="requestUrl"
-            placeholder="Request URL"
+            placeholder={i18n.t('UI.REQUEST_URL')}
             className="block textbox preset-input mousetrap"
             autoComplete="off"
             autoCorrect="off"

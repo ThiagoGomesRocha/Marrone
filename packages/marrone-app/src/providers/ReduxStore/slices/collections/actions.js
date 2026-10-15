@@ -1,3 +1,4 @@
+import i18n from '../../../../i18n';
 import { collectionSchema, environmentSchema, itemSchema } from '@marrone/schema';
 import { parseQueryParams, extractPromptVariables, getDataTypeFromValue, resolveEnvironmentInheritance } from '@marrone/common/utils';
 import { DEFAULT_HTTP_ITEM_SETTINGS } from '@marrone/common';
@@ -128,7 +129,7 @@ export const renameCollection = (newName, collectionUid) => (dispatch, getState)
 
   return new Promise((resolve, reject) => {
     if (!collection) {
-      return reject(new Error('Collection not found'));
+      return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
     }
     const { ipcRenderer } = window;
     ipcRenderer.invoke('renderer:rename-collection', newName, collection.pathname).then(resolve).catch(reject);
@@ -141,7 +142,7 @@ export const saveRequest = (itemUid, collectionUid, silent = false) => (dispatch
   const tempDirectory = state.collections.tempDirectories?.[collectionUid];
   return new Promise((resolve, reject) => {
     if (!collection) {
-      return reject(new Error('Collection not found'));
+      return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
     }
 
     const collectionCopy = cloneDeep(collection);
@@ -164,7 +165,7 @@ export const saveRequest = (itemUid, collectionUid, silent = false) => (dispatch
       .then(() => ipcRenderer.invoke('renderer:save-request', item.pathname, itemToSave, collection.format))
       .then(() => {
         if (!silent) {
-          toast.success('Request saved successfully');
+          toast.success(i18n.t('TOASTS.REQUEST_SAVED'));
         }
         dispatch(
           _saveRequest({
@@ -175,7 +176,7 @@ export const saveRequest = (itemUid, collectionUid, silent = false) => (dispatch
       })
       .then(resolve)
       .catch((err) => {
-        toast.error(err.message || 'Failed to save request!');
+        toast.error(err.message || i18n.t('TOASTS.FAILED_SAVE_REQUEST_BANG'));
         reject(err);
       });
   });
@@ -187,7 +188,7 @@ export const saveFile = (content, itemUid, collectionUid, silent = false) => asy
   const tempDirectory = state.collections.tempDirectories?.[collectionUid];
 
   if (!collection) {
-    throw new Error('Collection not found');
+    throw new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND'));
   }
 
   const collectionCopy = cloneDeep(collection);
@@ -224,11 +225,11 @@ export const saveFile = (content, itemUid, collectionUid, silent = false) => asy
   try {
     await ipcRenderer.invoke('renderer:save-file', item.pathname, content);
     if (!silent) {
-      toast.success('File saved successfully!');
+      toast.success(i18n.t('TOASTS.FILE_SAVED'));
     }
   } catch (err) {
     if (!silent) {
-      toast.error('Failed to save file!');
+      toast.error(i18n.t('TOASTS.FAILED_SAVE_FILE'));
     }
     throw err;
   }
@@ -261,7 +262,7 @@ export const saveMultipleRequests = (items) => (dispatch, getState) => {
       .invoke('renderer:save-multiple-requests', itemsToSave)
       .then(resolve)
       .catch((err) => {
-        toast.error('Failed to save requests!');
+        toast.error(i18n.t('TOASTS.FAILED_SAVE_REQUESTS'));
         reject(err);
       });
   });
@@ -273,7 +274,7 @@ export const saveCollectionRoot = (collectionUid) => (dispatch, getState) => {
 
   return new Promise((resolve, reject) => {
     if (!collection) {
-      return reject(new Error('Collection not found'));
+      return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
     }
 
     const collectionCopy = cloneDeep(collection);
@@ -285,12 +286,12 @@ export const saveCollectionRoot = (collectionUid) => (dispatch, getState) => {
     ipcRenderer
       .invoke('renderer:save-collection-root', collectionCopy.pathname, collectionRootToSave, collectionCopy.brunoConfig)
       .then(() => {
-        toast.success('Collection Settings saved successfully');
+        toast.success(i18n.t('TOASTS.COLLECTION_SETTINGS_SAVED'));
         dispatch(saveCollectionDraft({ collectionUid }));
       })
       .then(resolve)
       .catch((err) => {
-        toast.error('Failed to save collection settings!');
+        toast.error(i18n.t('TOASTS.FAILED_SAVE_COLLECTION_SETTINGS'));
         reject(err);
       });
   });
@@ -302,7 +303,7 @@ export const saveCollectionVersion = (collectionUid, version) => (dispatch, getS
 
   return new Promise((resolve, reject) => {
     if (!collection) {
-      return reject(new Error('Collection not found'));
+      return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
     }
 
     const updatedVersion = typeof version === 'string' ? version.trim() : '';
@@ -320,11 +321,11 @@ export const saveCollectionVersion = (collectionUid, version) => (dispatch, getS
       .invoke('renderer:update-marrone-config', brunoConfigToSave, collection.pathname, collection.root)
       .then(() => {
         dispatch(_updateCollectionVersion({ collectionUid, version: updatedVersion }));
-        toast.success('Collection version updated');
+        toast.success(i18n.t('TOASTS.COLLECTION_VERSION_UPDATED'));
       })
       .then(resolve)
       .catch((err) => {
-        toast.error('Failed to update collection version');
+        toast.error(i18n.t('TOASTS.FAILED_UPDATE_COLLECTION_VERSION'));
         reject(err);
       });
   });
@@ -337,7 +338,7 @@ export const saveFolderRoot = (collectionUid, folderUid, silent = false) => (dis
 
   return new Promise((resolve, reject) => {
     if (!collection) {
-      return reject(new Error('Collection not found'));
+      return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
     }
 
     if (!folder) {
@@ -360,7 +361,7 @@ export const saveFolderRoot = (collectionUid, folderUid, silent = false) => (dis
       .invoke('renderer:save-folder-root', folderData)
       .then(() => {
         if (!silent) {
-          toast.success('Folder Settings saved successfully');
+          toast.success(i18n.t('TOASTS.FOLDER_SETTINGS_SAVED'));
         }
         // If there was a draft, save it to root and clear the draft
         if (folder.draft) {
@@ -369,7 +370,7 @@ export const saveFolderRoot = (collectionUid, folderUid, silent = false) => (dis
       })
       .then(resolve)
       .catch((err) => {
-        toast.error('Failed to save folder settings!');
+        toast.error(i18n.t('TOASTS.FAILED_SAVE_FOLDER_SETTINGS'));
         reject(err);
       });
   });
@@ -408,7 +409,7 @@ export const saveMultipleCollections = (collectionDrafts) => (dispatch, getState
     Promise.all(savePromises)
       .then(() => resolve())
       .catch((err) => {
-        toast.error('Failed to save collection settings!');
+        toast.error(i18n.t('TOASTS.FAILED_SAVE_COLLECTION_SETTINGS'));
         reject(err);
       });
   });
@@ -450,7 +451,7 @@ export const saveMultipleFolders = (folderDrafts) => (dispatch, getState) => {
     Promise.all(savePromises)
       .then(resolve)
       .catch((err) => {
-        toast.error('Failed to save folder settings!');
+        toast.error(i18n.t('TOASTS.FAILED_SAVE_FOLDER_SETTINGS'));
         reject(err);
       });
   });
@@ -463,7 +464,7 @@ export const sendCollectionOauth2Request = (collectionUid, itemUid) => (dispatch
 
   return new Promise((resolve, reject) => {
     if (!collection) {
-      return reject(new Error('Collection not found'));
+      return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
     }
 
     const collectionCopy = cloneDeep(collection);
@@ -485,7 +486,7 @@ export const sendCollectionOauth2Request = (collectionUid, itemUid) => (dispatch
         if (response?.data?.error) {
           toast.error(response?.data?.error);
         } else {
-          toast.success('Request made successfully');
+          toast.success(i18n.t('TOASTS.REQUEST_MADE'));
         }
         return response;
       })
@@ -503,7 +504,7 @@ export const wsConnectOnly = (item, collectionUid) => (dispatch, getState) => {
 
   return new Promise(async (resolve, reject) => {
     if (!collection) {
-      return reject(new Error('Collection not found'));
+      return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
     }
 
     const collectionCopy = cloneDeep(collection);
@@ -613,7 +614,7 @@ export const sendRequest = (item, collectionUid) => (dispatch, getState) => {
 
   return new Promise(async (resolve, reject) => {
     if (!collection) {
-      return reject(new Error('Collection not found'));
+      return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
     }
 
     if (item.response?.stream?.running && item.cancelTokenUid) {
@@ -759,7 +760,7 @@ export const runCollectionFolder
 
     return new Promise((resolve, reject) => {
       if (!collection) {
-        return reject(new Error('Collection not found'));
+        return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
       }
 
       const collectionCopy = cloneDeep(collection);
@@ -803,7 +804,7 @@ export const runCollectionFolder
         )
         .then(resolve)
         .catch((err) => {
-          toast.error(get(err, 'error.message') || 'Something went wrong!');
+          toast.error(get(err, 'error.message') || i18n.t('TOASTS.SOMETHING_WRONG'));
           reject(err);
         });
     });
@@ -817,7 +818,7 @@ export const newFolder = (folderName, directoryName, collectionUid, itemUid) => 
 
   return new Promise((resolve, reject) => {
     if (!collection) {
-      return reject(new Error('Collection not found'));
+      return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
     }
 
     // Resolve the parent directory: the collection root, or an existing folder.
@@ -850,7 +851,7 @@ export const newFolder = (folderName, directoryName, collectionUid, itemUid) => 
       .invoke('renderer:new-folder', { pathname: fullName, folderData, format: collection.format })
       .then(resolve)
       .catch((error) => {
-        toast.error('Failed to create a new folder!');
+        toast.error(i18n.t('TOASTS.FAILED_CREATE_FOLDER'));
         reject(error);
       });
   });
@@ -864,7 +865,7 @@ export const renameItem
 
       return new Promise((resolve, reject) => {
         if (!collection) {
-          return reject(new Error('Collection not found'));
+          return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
         }
 
         const collectionCopy = cloneDeep(collection);
@@ -877,9 +878,9 @@ export const renameItem
 
         const renameName = async () => {
           return ipcRenderer.invoke('renderer:rename-item-name', { itemPath: item.pathname, newName, collectionPathname: collection.pathname }).catch((err) => {
-            toast.error('Failed to rename the item name');
+            toast.error(i18n.t('TOASTS.FAILED_RENAME_ITEM'));
             console.error(err);
-            throw new Error('Failed to rename the item name');
+            throw new Error(i18n.t('TOASTS.FAILED_RENAME_ITEM'));
           });
         };
 
@@ -911,7 +912,7 @@ export const renameItem
 
         renameOperation()
           .then(() => {
-            toast.success('Item renamed successfully');
+            toast.success(i18n.t('TOASTS.ITEM_RENAMED'));
             resolve();
           })
           .catch((err) => reject(err));
@@ -924,7 +925,7 @@ export const cloneItem = (newName, newFilename, itemUid, collectionUid) => (disp
 
   return new Promise((resolve, reject) => {
     if (!collection) {
-      throw new Error('Collection not found');
+      throw new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND'));
     }
     const collectionCopy = cloneDeep(collection);
     const item = findItemInCollection(collectionCopy, itemUid);
@@ -1097,7 +1098,7 @@ export const deleteItem = (itemUid, collectionUid) => (dispatch, getState) => {
 
   return new Promise((resolve, reject) => {
     if (!collection) {
-      return reject(new Error('Collection not found'));
+      return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
     }
 
     const item = findItemInCollection(collection, itemUid);
@@ -1311,7 +1312,7 @@ export const handleMultipleCollectionItemsDrop
             if (!newPathname) continue;
             if (isPathOrDescendant(targetItemPathname, draggedItemPathname)) continue;
             if (isCrossFormatMove && isItemAFolder(draggedItem)) {
-              toast.error('Moving folders between collections with different formats is not supported');
+              toast.error(i18n.t('TOASTS.MOVE_FOLDERS_FORMAT'));
               continue;
             }
 
@@ -1380,7 +1381,7 @@ export const updateItemsSequences
         const collection = findCollectionByUid(state.collections.collections, collectionUid);
 
         if (!collection) {
-          return reject(new Error('Collection not found'));
+          return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
         }
 
         const { ipcRenderer } = window;
@@ -1429,7 +1430,7 @@ export const newHttpRequest = (options) => (dispatch, getState) => {
     const state = getState();
     const collection = findCollectionByUid(state.collections.collections, collectionUid);
     if (!collection) {
-      return reject(new Error('Collection not found'));
+      return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
     }
 
     // Get temp directory if isTransient is true
@@ -1562,7 +1563,7 @@ export const newGrpcRequest = (params) => (dispatch, getState) => {
     const state = getState();
     const collection = findCollectionByUid(state.collections.collections, collectionUid);
     if (!collection) {
-      return reject(new Error('Collection not found'));
+      return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
     }
 
     // Get temp directory if isTransient is true
@@ -1671,7 +1672,7 @@ export const newWsRequest = (params) => (dispatch, getState) => {
     const state = getState();
     const collection = findCollectionByUid(state.collections.collections, collectionUid);
     if (!collection) {
-      return reject(new Error('Collection not found'));
+      return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
     }
 
     // Get temp directory if isTransient is true
@@ -1780,7 +1781,7 @@ export const tryResponseExample = ({ itemUid, collectionUid, exampleUid }) => (d
   const state = getState();
   const collection = findCollectionByUid(state.collections.collections, collectionUid);
   if (!collection) {
-    return Promise.reject(new Error('Collection not found'));
+    return Promise.reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
   }
 
   const item = findItemInCollection(collection, itemUid);
@@ -1832,7 +1833,7 @@ export const openLinkedRequest = ({ url, collectionUid, requestType }) => (dispa
   const state = getState();
   const collection = findCollectionByUid(state.collections.collections, collectionUid);
   if (!collection || !url) {
-    return Promise.reject(new Error('Collection not found'));
+    return Promise.reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
   }
 
   const requestName = generateTransientRequestName(collection);
@@ -1896,7 +1897,7 @@ const DEFAULT_APP_STARTER = `<!DOCTYPE html>
 <body>
   <h2>Hello from a Marrone app</h2>
   <p>This app can list request in the collection.</p>
-  <button id="refresh">List requests</button>
+  <button id="refresh">{i18n.t('UI.LIST_REQUESTS')}</button>
   <pre id="out">click "List requests"</pre>
   <script>
     const out = document.getElementById('out');
@@ -1916,7 +1917,7 @@ export const newApp = (params) => (dispatch, getState) => {
     const state = getState();
     const collection = findCollectionByUid(state.collections.collections, collectionUid);
     if (!collection) {
-      return reject(new Error('Collection not found'));
+      return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
     }
 
     const item = {
@@ -1975,7 +1976,7 @@ export const loadGrpcMethodsFromReflection = (item, collectionUid, url) => async
 
   return new Promise(async (resolve, reject) => {
     if (!collection) {
-      return reject(new Error('Collection not found'));
+      return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
     }
 
     const itemCopy = cloneDeep(item);
@@ -2025,7 +2026,7 @@ export const generateGrpcurlCommand = (item, collectionUid) => async (dispatch, 
 
   return new Promise((resolve, reject) => {
     if (!collection) {
-      return reject(new Error('Collection not found'));
+      return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
     }
 
     const itemCopy = cloneDeep(item);
@@ -2055,7 +2056,7 @@ export const addEnvironment = (name, collectionUid) => (dispatch, getState) => {
     const state = getState();
     const collection = findCollectionByUid(state.collections.collections, collectionUid);
     if (!collection) {
-      return reject(new Error('Collection not found'));
+      return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
     }
 
     const { ipcRenderer } = window;
@@ -2082,7 +2083,7 @@ export const importEnvironment = ({ name, variables, color, extends: inheritedEn
     const state = getState();
     const collection = findCollectionByUid(state.collections.collections, collectionUid);
     if (!collection) {
-      return reject(new Error('Collection not found'));
+      return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
     }
 
     const sanitizedName = sanitizeName(name);
@@ -2111,7 +2112,7 @@ export const copyEnvironment = (name, baseEnvUid, collectionUid) => (dispatch, g
     const state = getState();
     const collection = findCollectionByUid(state.collections.collections, collectionUid);
     if (!collection) {
-      return reject(new Error('Collection not found'));
+      return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
     }
 
     const baseEnv = findEnvironmentInCollection(collection, baseEnvUid);
@@ -2148,7 +2149,7 @@ export const renameEnvironment = (newName, environmentUid, collectionUid) => (di
     const state = getState();
     const collection = findCollectionByUid(state.collections.collections, collectionUid);
     if (!collection) {
-      return reject(new Error('Collection not found'));
+      return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
     }
 
     const collectionCopy = cloneDeep(collection);
@@ -2175,7 +2176,7 @@ export const deleteEnvironment = (environmentUid, collectionUid) => (dispatch, g
     const state = getState();
     const collection = findCollectionByUid(state.collections.collections, collectionUid);
     if (!collection) {
-      return reject(new Error('Collection not found'));
+      return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
     }
 
     const collectionCopy = cloneDeep(collection);
@@ -2198,7 +2199,7 @@ export const saveEnvironment = (variables, environmentUid, collectionUid) => (di
     const state = getState();
     const collection = findCollectionByUid(state.collections.collections, collectionUid);
     if (!collection) {
-      return reject(new Error('Collection not found'));
+      return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
     }
 
     const collectionCopy = cloneDeep(collection);
@@ -2239,7 +2240,7 @@ export const updateEnvironmentColor = (environmentUid, color, collectionUid) => 
     const state = getState();
     const collection = findCollectionByUid(state.collections.collections, collectionUid);
     if (!collection) {
-      return reject(new Error('Collection not found'));
+      return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
     }
 
     const collectionCopy = cloneDeep(collection);
@@ -2264,7 +2265,7 @@ export const saveEnvironmentExtends = ({ environmentUid, inheritedEnvironmentNam
     const state = getState();
     const collection = findCollectionByUid(state.collections.collections, collectionUid);
     if (!collection) {
-      return reject(new Error('Collection not found'));
+      return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
     }
 
     const environment = findEnvironmentInCollection(collection, environmentUid);
@@ -2298,7 +2299,7 @@ const updateVariableInFile = (pathname, variable, scopeType, collectionUid, item
     const state = getState();
     const collection = findCollectionByUid(state.collections.collections, collectionUid);
     if (!collection) {
-      return reject(new Error('Collection not found'));
+      return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
     }
 
     const collectionCopy = cloneDeep(collection);
@@ -2389,7 +2390,7 @@ export const updateVariableInScope = (variableName, newValue, scopeInfo, collect
 
       // Validate collection for non-global scopes
       if (type !== 'global' && !collection) {
-        return reject(new Error('Collection not found'));
+        return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
       }
 
       switch (type) {
@@ -2638,7 +2639,7 @@ export const selectEnvironment = (environmentUid, collectionUid) => (dispatch, g
     const collection = findCollectionByUid(state.collections.collections, collectionUid);
     const activeWorkspace = state.workspaces.workspaces.find((w) => w.uid === state.workspaces.activeWorkspaceUid);
     if (!collection) {
-      return reject(new Error('Collection not found'));
+      return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
     }
 
     const collectionCopy = cloneDeep(collection);
@@ -2691,7 +2692,7 @@ export const removeCollection = (collectionUid) => (dispatch, getState) => {
     const state = getState();
     const collection = findCollectionByUid(state.collections.collections, collectionUid);
     if (!collection) {
-      return reject(new Error('Collection not found'));
+      return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
     }
     const { ipcRenderer } = window;
 
@@ -2750,14 +2751,14 @@ export const moveCollectionToWorkspace = (collectionUid) => (dispatch, getState)
     const state = getState();
     const collection = findCollectionByUid(state.collections.collections, collectionUid);
     if (!collection) {
-      return reject(new Error('Collection not found'));
+      return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
     }
 
     const { workspaces } = state;
     const activeWorkspace = workspaces.workspaces.find((w) => w.uid === workspaces.activeWorkspaceUid);
 
     if (!activeWorkspace || !activeWorkspace.pathname) {
-      return reject(new Error('No active workspace found'));
+      return reject(new Error(i18n.t('TOASTS.NO_ACTIVE_WORKSPACE')));
     }
 
     if (!isPathExternalToBasePath(activeWorkspace.pathname, collection.pathname)) {
@@ -2839,7 +2840,7 @@ export const saveCollectionSettings = (collectionUid, brunoConfig = null, silent
 
   return new Promise((resolve, reject) => {
     if (!collection) {
-      return reject(new Error('Collection not found'));
+      return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
     }
 
     const collectionCopy = cloneDeep(collection);
@@ -2862,13 +2863,13 @@ export const saveCollectionSettings = (collectionUid, brunoConfig = null, silent
     Promise.all(savePromises)
       .then(() => {
         if (!silent) {
-          toast.success('Collection Settings saved successfully');
+          toast.success(i18n.t('TOASTS.COLLECTION_SETTINGS_SAVED'));
         }
         dispatch(saveCollectionDraft({ collectionUid }));
       })
       .then(resolve)
       .catch((err) => {
-        toast.error('Failed to save collection settings!');
+        toast.error(i18n.t('TOASTS.FAILED_SAVE_COLLECTION_SETTINGS'));
         reject(err);
       });
   });
@@ -2881,7 +2882,7 @@ export const updateBrunoConfig = (brunoConfig, collectionUid) => (dispatch, getS
 
   return new Promise((resolve, reject) => {
     if (!collection) {
-      return reject(new Error('Collection not found'));
+      return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
     }
 
     const { ipcRenderer } = window;
@@ -2898,7 +2899,7 @@ export const ignoreFolder = (itemUid, collectionUid) => (dispatch, getState) => 
 
   return new Promise((resolve, reject) => {
     if (!collection) {
-      return reject(new Error('Collection not found'));
+      return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
     }
 
     const item = findItemInCollection(collection, itemUid);
@@ -2983,7 +2984,7 @@ export const openCollectionEvent = (uid, pathname, brunoConfig, options = {}) =>
 
     if (existingCollection && isAlreadyInWorkspace) {
       if (!options.silent) {
-        toast.success('Collection is already opened');
+        toast.success(i18n.t('TOASTS.COLLECTION_ALREADY_OPENED'));
       }
       resolve();
       return;
@@ -3000,12 +3001,12 @@ export const openCollectionEvent = (uid, pathname, brunoConfig, options = {}) =>
           .invoke('renderer:add-collection-to-workspace', activeWorkspace.pathname, workspaceCollection)
           .then(() => {
             if (!options.silent) {
-              toast.success('Collection added to workspace');
+              toast.success(i18n.t('TOASTS.COLLECTION_ADDED_WORKSPACE'));
             }
           })
           .catch((err) => {
             console.error('Failed to add collection to workspace', err);
-            toast.error('Failed to add collection to workspace');
+            toast.error(i18n.t('TOASTS.FAILED_ADD_COLLECTION_WORKSPACE'));
           });
       }
 
@@ -3067,7 +3068,7 @@ export const openCollectionEvent = (uid, pathname, brunoConfig, options = {}) =>
                 .invoke('renderer:add-collection-to-workspace', currentWorkspace.pathname, workspaceCollection)
                 .catch((err) => {
                   console.error('Failed to add collection to workspace', err);
-                  toast.error('Failed to add collection to workspace');
+                  toast.error(i18n.t('TOASTS.FAILED_ADD_COLLECTION_WORKSPACE'));
                 });
             }
           }
@@ -3133,7 +3134,7 @@ export const collectionAddEnvFileEvent = (payload) => (dispatch, getState) => {
     const shouldPersistSelectionFromLastAction = collection?.lastAction?.type === 'ADD_ENVIRONMENT'
       && collection?.lastAction?.payload === environment?.name;
     if (!collection) {
-      return reject(new Error('Collection not found'));
+      return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
     }
 
     environmentSchema
@@ -3508,7 +3509,7 @@ export const openCollectionSettings
 
       return new Promise((resolve, reject) => {
         if (!collection) {
-          return reject(new Error('Collection not found'));
+          return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
         }
 
         dispatch(updateSettingsSelectedTab({
@@ -3533,7 +3534,7 @@ export const saveDotEnvVariables = (collectionUid, variables, filename = '.env')
     const collection = findCollectionByUid(state.collections.collections, collectionUid);
 
     if (!collection) {
-      return reject(new Error('Collection not found'));
+      return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
     }
 
     ipcRenderer
@@ -3550,7 +3551,7 @@ export const saveDotEnvRaw = (collectionUid, content, filename = '.env') => (dis
     const collection = findCollectionByUid(state.collections.collections, collectionUid);
 
     if (!collection) {
-      return reject(new Error('Collection not found'));
+      return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
     }
 
     ipcRenderer
@@ -3567,7 +3568,7 @@ export const createDotEnvFile = (collectionUid, filename = '.env') => (dispatch,
     const collection = findCollectionByUid(state.collections.collections, collectionUid);
 
     if (!collection) {
-      return reject(new Error('Collection not found'));
+      return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
     }
 
     ipcRenderer
@@ -3584,7 +3585,7 @@ export const deleteDotEnvFile = (collectionUid, filename = '.env') => (dispatch,
     const collection = findCollectionByUid(state.collections.collections, collectionUid);
 
     if (!collection) {
-      return reject(new Error('Collection not found'));
+      return reject(new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND')));
     }
 
     ipcRenderer
@@ -3745,7 +3746,7 @@ export const migrateCollectionToYml = (collectionUid) => async (dispatch, getSta
 
   const collection = findCollectionByUid(state.collections.collections, collectionUid);
   if (!collection) {
-    throw new Error('Collection not found');
+    throw new Error(i18n.t('TOASTS.COLLECTION_NOT_FOUND'));
   }
   const collectionPathname = collection.pathname;
   const { workspaces } = state;
@@ -3794,7 +3795,7 @@ export const migrateCollectionToYml = (collectionUid) => async (dispatch, getSta
       collectionUid,
       type: 'collection-settings'
     }));
-    toast.success('Collection migrated to YML format successfully');
+    toast.success(i18n.t('TOASTS.COLLECTION_MIGRATED_YML'));
   } catch (err) {
     const wasCancelled = getState().collectionMigration.status === 'cancelling'
       || /migration cancelled/i.test(err?.message || '');
@@ -3806,7 +3807,7 @@ export const migrateCollectionToYml = (collectionUid) => async (dispatch, getSta
     // Main restored the disk and re-opened the original collection; hold the locked
     // modal open until it is back in the store so the sidebar never sits empty.
     await remountReopenedCollection().catch(() => {
-      toast.error('Collection could not be reopened automatically. Please reopen it manually.');
+      toast.error(i18n.t('TOASTS.COLLECTION_REOPEN_FAILED'));
     });
     throw err;
   } finally {

@@ -2,6 +2,7 @@ import React, { useCallback, useState, useMemo, useRef } from 'react';
 import { IconChevronRight, IconChevronDown, IconTrash, IconInfoCircle } from '@tabler/icons';
 import { nanoid } from 'nanoid';
 import { getInputObjectFields } from 'utils/graphql/queryBuilder';
+import i18n from '../../../i18n';
 
 const ListArgValueInput = ({ values, onChange, field, indent }) => {
   const [items, setItems] = useState(() => {
@@ -55,7 +56,7 @@ const ListArgValueInput = ({ values, onChange, field, indent }) => {
                   e.stopPropagation();
                   handleRemove(item.id);
                 }}
-                aria-label="Remove item"
+                aria-label={i18n.t('UI.REMOVE_ITEM')}
               >
                 <IconTrash size={13} strokeWidth={1.5} />
               </button>
@@ -71,7 +72,7 @@ const ArgValueInput = ({ value, onChange, field }) => {
   if (field.isEnum && field.enumValues) {
     return (
       <select value={value} onChange={(e) => onChange(e.target.value)} onClick={(e) => e.stopPropagation()}>
-        <option value="">Select option</option>
+        <option value="">{i18n.t('UI.SELECT_OPTION')}</option>
         {field.enumValues.map((v) => (
           <option key={v} value={v}>{v}</option>
         ))}
@@ -81,7 +82,7 @@ const ArgValueInput = ({ value, onChange, field }) => {
   if (field.isBoolean) {
     return (
       <select value={value} onChange={(e) => onChange(e.target.value)} onClick={(e) => e.stopPropagation()}>
-        <option value="">Select option</option>
+        <option value="">{i18n.t('UI.SELECT_OPTION')}</option>
         <option value="true">true</option>
         <option value="false">false</option>
       </select>
@@ -93,7 +94,7 @@ const ArgValueInput = ({ value, onChange, field }) => {
       value={value}
       onChange={(e) => onChange(e.target.value)}
       onClick={(e) => e.stopPropagation()}
-      placeholder="Enter value"
+      placeholder={i18n.t('UI.ENTER_VALUE')}
       className="mousetrap"
     />
   );
@@ -160,7 +161,7 @@ const InputObjectFields = ({ namedType, parentKey, fieldPath, indent, argValues,
           {field.isRequired && <span className="arg-required">!</span>}
           {(!isEnabled || field.isInputObject) && <span className="field-type">{field.typeLabel}</span>}
           {isListOfInputObject && (
-            <span className="list-complex-unsupported" title="List arguments for complex types are not currently supported.">
+            <span className="list-complex-unsupported" title={i18n.t('UI.LIST_ARGS_UNSUPPORTED')}>
               <IconInfoCircle size={13} strokeWidth={1.5} />
             </span>
           )}
@@ -312,7 +313,7 @@ const FieldNode = ({
                   <span className="arg-name">{arg.name}</span>
                   {arg.isRequired && <span className="arg-required">!</span>}
                   <span className="field-type">{arg.typeLabel}</span>
-                  <span className="list-complex-unsupported" title="List arguments for complex types are not currently supported.">
+                  <span className="list-complex-unsupported" title={i18n.t('UI.LIST_ARGS_UNSUPPORTED')}>
                     <IconInfoCircle size={13} strokeWidth={1.5} />
                   </span>
                 </div>

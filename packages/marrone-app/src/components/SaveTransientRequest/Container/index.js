@@ -9,6 +9,7 @@ import Modal from 'components/Modal';
 import Button from 'ui/Button';
 import SaveTransientRequest from 'components/SaveTransientRequest';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../i18n';
 
 const SaveTransientRequestContainer = () => {
   const dispatch = useDispatch();
@@ -62,7 +63,7 @@ const SaveTransientRequestContainer = () => {
   return (
     <Modal
       size="md"
-      title="Unsaved Transient Requests"
+      title={i18n.t('UI.UNSAVED_TRANSIENT_REQUESTS')}
       hideFooter={true}
       disableEscapeKey={true}
       disableCloseOnOutsideClick={true}

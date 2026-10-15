@@ -6,6 +6,7 @@ import { useEffect, useRef } from 'react';
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
+import i18n from '../../../../i18n';
 
 const CopyEnvironment = ({ collection, environment, onClose }) => {
   const dispatch = useDispatch();
@@ -17,17 +18,17 @@ const CopyEnvironment = ({ collection, environment, onClose }) => {
     },
     validationSchema: Yup.object({
       name: Yup.string()
-        .min(1, 'must be at least 1 character')
-        .max(50, 'must be 50 characters or less')
-        .required('name is required')
+        .min(1, () => i18n.t('VALIDATION.MIN_1_CHAR'))
+        .max(50, () => i18n.t('VALIDATION.MAX_50_CHARS'))
+        .required(() => i18n.t('VALIDATION.NAME_REQUIRED'))
     }),
     onSubmit: (values) => {
       dispatch(copyEnvironment(values.name, environment.uid, collection.uid))
         .then(() => {
-          toast.success('Environment created in collection');
+          toast.success(i18n.t('TOASTS.ENV_CREATED_IN_COLLECTION'));
           onClose();
         })
-        .catch(() => toast.error('An error occurred while created the environment'));
+        .catch(() => toast.error(i18n.t('TOASTS.ERROR_CREATING_ENVIRONMENT')));
     }
   });
 
@@ -43,7 +44,7 @@ const CopyEnvironment = ({ collection, environment, onClose }) => {
 
   return (
     <Portal>
-      <Modal size="sm" title="Copy Environment" confirmText="Copy" handleConfirm={onSubmit} handleCancel={onClose}>
+      <Modal size="sm" title={i18n.t('UI.COPY_ENVIRONMENT')} confirmText={i18n.t('UI.COPY')} handleConfirm={onSubmit} handleCancel={onClose}>
         <form className="marrone-form" onSubmit={(e) => e.preventDefault()}>
           <div>
             <label htmlFor="name" className="block font-medium">

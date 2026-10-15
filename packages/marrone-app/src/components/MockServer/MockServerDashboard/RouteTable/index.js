@@ -9,6 +9,7 @@ import MockSearchInput from 'components/MockServer/MockSearchInput';
 import MethodBadge from 'ui/MethodBadge';
 import { buildMockRouteTable, countMatchedRouteHits } from 'utils/mock-server/mock-responses';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../../i18n';
 
 const RouteTable = ({ mockServerUid }) => {
   const dispatch = useDispatch();
@@ -66,7 +67,7 @@ const RouteTable = ({ mockServerUid }) => {
       clearTimeout(copyResetTimeoutRef.current);
       copyResetTimeoutRef.current = setTimeout(() => setCopiedRouteUid(null), 1500);
     } catch {
-      toast.error('Failed to copy URL');
+      toast.error(i18n.t('TOASTS.FAILED_COPY_URL'));
     }
   };
 
@@ -93,8 +94,8 @@ const RouteTable = ({ mockServerUid }) => {
                 e.stopPropagation();
                 handleCopyRouteUrl(row.uid, value);
               }}
-              title="Copy route URL"
-              aria-label="Copy route URL"
+              title={i18n.t('UI.COPY_ROUTE_URL')}
+              aria-label={i18n.t('UI.COPY_ROUTE_URL')}
             >
               {copiedRouteUid === row.uid
                 ? <IconCheck size={13} strokeWidth={2} />
@@ -145,7 +146,7 @@ const RouteTable = ({ mockServerUid }) => {
       <div className="flex items-center gap-2 mb-4">
         <MockSearchInput
           className="flex-1"
-          placeholder="Search routes"
+          placeholder={i18n.t('UI.SEARCH_ROUTES')}
           value={searchQuery}
           onChange={setSearchQuery}
           data-testid="mock-server-route-search"

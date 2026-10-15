@@ -52,6 +52,7 @@ import { resolveMockServerInstance } from 'utils/mock-server/mock-server-instanc
 import CollapsedPanelIndicator from './CollapsedPanelIndicator';
 import { clampRequestHeightForResponse } from './paneSize';
 import { IconLoader2 } from '@tabler/icons';
+import i18n from '../../i18n';
 
 const MIN_LEFT_PANE_WIDTH = 350;
 const MIN_RIGHT_PANE_WIDTH = 490;
@@ -611,17 +612,17 @@ const RequestTabPanel = () => {
     const request = item.draft ? item.draft.request : item.request;
 
     if (isGrpcRequest && !request.url) {
-      toast.error('Please enter a valid gRPC server URL');
+      toast.error(i18n.t('TOASTS.INVALID_GRPC_URL'));
       return;
     }
 
     if (isGrpcRequest && !request.method) {
-      toast.error('Please select a gRPC method');
+      toast.error(i18n.t('TOASTS.SELECT_GRPC_METHOD'));
       return;
     }
 
     if (isWsRequest && !request.url) {
-      toast.error('Please enter a valid WebSocket URL');
+      toast.error(i18n.t('TOASTS.INVALID_WS_URL'));
       return;
     }
     if (item.requestState !== 'sending' && item.requestState !== 'queued') {
@@ -767,7 +768,7 @@ const RequestTabPanel = () => {
         {item.type === 'graphql-request' ? (
           <div className={`graphql-docs-explorer-container ${showGqlDocs ? '' : 'hidden'}`}>
             <DocExplorer schema={schema} ref={(r) => (docExplorerRef.current = r)}>
-              <button className="mr-2" data-testid="graphql-docs-close-button" onClick={() => toggleDocs(false)} aria-label="Close Documentation Explorer">
+              <button className="mr-2" data-testid="graphql-docs-close-button" onClick={() => toggleDocs(false)} aria-label={i18n.t('UI.CLOSE_DOC_EXPLORER')}>
                 {'\u2715'}
               </button>
             </DocExplorer>

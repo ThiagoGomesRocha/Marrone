@@ -17,6 +17,7 @@ import { toastError } from 'utils/common/error';
 import toast from 'react-hot-toast';
 import { getAbsoluteFilePath } from 'utils/common/path';
 import { prettifyJsonString } from 'utils/common/index';
+import i18n from '../../../i18n';
 
 const MessageToolbar = ({
   index,
@@ -152,7 +153,7 @@ const SingleGrpcMessage = ({ message, item, collection, index, methodType, handl
           itemUid: item.uid,
           collectionUid: collection.uid
         }));
-        toast.success('Sample message generated');
+        toast.success(i18n.t('TOASTS.SAMPLE_MESSAGE_GENERATED'));
       } else {
         toastError(new Error(result.error || 'Failed to generate sample message'));
       }

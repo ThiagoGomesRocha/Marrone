@@ -12,6 +12,7 @@ import 'moment-timezone';
 import { Tooltip } from 'react-tooltip';
 import { isEmpty } from 'lodash';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../i18n';
 
 const removeEmptyValues = (obj) => {
   return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined));
@@ -36,9 +37,9 @@ const ModifyCookieModal = ({ onClose, domain, cookie }) => {
       httpOnly: cookie?.httpOnly || false
     },
     validationSchema: Yup.object({
-      key: Yup.string().required('Key is required'),
-      value: Yup.string().required('Value is required'),
-      domain: Yup.string().required('Domain is required'),
+      key: Yup.string().required(() => i18n.t('VALIDATION.KEY_REQUIRED')),
+      value: Yup.string().required(() => i18n.t('VALIDATION.VALUE_REQUIRED')),
+      domain: Yup.string().required(() => i18n.t('VALIDATION.DOMAIN_REQUIRED')),
       secure: Yup.boolean(),
       httpOnly: Yup.boolean(),
       expires: Yup.mixed()
@@ -47,7 +48,7 @@ const ModifyCookieModal = ({ onClose, domain, cookie }) => {
           if (!value || value === '') return null;
           return moment(value).isValid() ? moment(value).toDate() : null;
         })
-        .test('future-date', 'Expiration date must be in the future', (value) => {
+        .test('future-date', () => i18n.t('VALIDATION.EXPIRATION_DATE_FUTURE'), (value) => {
           if (!value) return true;
           return moment(value).isAfter(moment());
         })
@@ -73,21 +74,21 @@ const ModifyCookieModal = ({ onClose, domain, cookie }) => {
     if (cookie) {
       dispatch(modifyCookie(domain, cookie, modValues))
         .then(() => {
-          toast.success('Cookie modified successfully');
+          toast.success(i18n.t('TOASTS.COOKIE_MODIFIED'));
           onClose();
         })
         .catch((err) => {
-          toast.error('An error occurred while modifying cookie');
+          toast.error(i18n.t('TOASTS.ERROR_MODIFYING_COOKIE'));
           console.error(err);
         });
     } else {
       dispatch(addCookie(domain, modValues))
         .then(() => {
-          toast.success('Cookie added successfully');
+          toast.success(i18n.t('TOASTS.COOKIE_ADDED'));
           onClose();
         })
         .catch((err) => {
-          toast.error('An error occurred while adding cookie');
+          toast.error(i18n.t('TOASTS.ERROR_ADDING_COOKIE'));
           console.error(err);
         });
     }
@@ -109,7 +110,7 @@ const ModifyCookieModal = ({ onClose, domain, cookie }) => {
         });
 
         if (!cookieObj) {
-          toast.error('Please enter a valid cookie string');
+          toast.error(i18n.t('TOASTS.INVALID_COOKIE_STRING'));
           return;
         }
 

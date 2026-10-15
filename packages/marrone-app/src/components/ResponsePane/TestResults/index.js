@@ -1,3 +1,4 @@
+import i18n from '../../../i18n';
 import React, { useState, useEffect, useRef } from 'react';
 import StyledWrapper from './StyledWrapper';
 import { usePersistedState } from 'hooks/usePersistedState';
@@ -15,9 +16,9 @@ const ResultIcon = ({ status }) => (
     className={`inline-flex items-center ${status === 'pass' ? 'test-success' : 'test-failure'}`}
   >
     {status === 'pass' ? (
-      <IconCircleCheck size={14} className="mr-1" aria-label="Test passed" />
+      <IconCircleCheck size={14} className="mr-1" aria-label={i18n.t('UI.TEST_PASSED')} />
     ) : (
-      <IconCircleX size={14} className="mr-1" aria-label="Test failed" />
+      <IconCircleX size={14} className="mr-1" aria-label={i18n.t('UI.TEST_FAILED')} />
     )}
   </span>
 );
@@ -125,7 +126,7 @@ const TestResults = ({ item, results, assertionResults, preRequestTestResults, p
   return (
     <StyledWrapper className="flex flex-col" ref={wrapperRef}>
       <TestSection
-        title="Pre-Request Tests"
+        title={i18n.t('UI.PRE_REQUEST_TESTS')}
         results={preRequestTestResults}
         isExpanded={expandedSections.preRequest}
         onToggle={() => toggleSection('preRequest')}
@@ -134,7 +135,7 @@ const TestResults = ({ item, results, assertionResults, preRequestTestResults, p
       />
 
       <TestSection
-        title="Post-Response Tests"
+        title={i18n.t('UI.POST_RESPONSE_TESTS')}
         results={postResponseTestResults}
         isExpanded={expandedSections.postResponse}
         onToggle={() => toggleSection('postResponse')}
@@ -143,7 +144,7 @@ const TestResults = ({ item, results, assertionResults, preRequestTestResults, p
       />
 
       <TestSection
-        title="Tests"
+        title={i18n.t('UI.TESTS')}
         results={results}
         isExpanded={expandedSections.tests}
         onToggle={() => toggleSection('tests')}
@@ -152,7 +153,7 @@ const TestResults = ({ item, results, assertionResults, preRequestTestResults, p
       />
 
       <TestSection
-        title="Assertions"
+        title={i18n.t('UI.ASSERTIONS')}
         results={assertionResults}
         isExpanded={expandedSections.assertions}
         onToggle={() => toggleSection('assertions')}

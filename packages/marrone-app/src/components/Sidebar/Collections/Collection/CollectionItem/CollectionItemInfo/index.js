@@ -2,6 +2,7 @@ import React from 'react';
 import Modal from 'components/Modal';
 import Help from 'components/Help';
 import { getItemTypeLabel } from 'utils/collections';
+import i18n from '../../../../../../i18n';
 
 const CollectionItemInfo = ({ item, onClose }) => {
   const { name, filename, type } = item;
@@ -10,7 +11,7 @@ const CollectionItemInfo = ({ item, onClose }) => {
   return (
     <Modal
       size="md"
-      title="Info"
+      title={i18n.t('UI.INFO')}
       handleCancel={onClose}
       hideCancel={true}
       hideFooter={true}

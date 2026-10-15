@@ -9,6 +9,7 @@ import SingleLineEditor from 'components/SingleLineEditor';
 import BulkEditor from 'components/BulkEditor';
 import InfoTip from 'components/InfoTip';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../../i18n';
 
 const ResponseExampleParams = ({ editMode, item, collection, exampleUid }) => {
   const dispatch = useDispatch();
@@ -195,7 +196,7 @@ const ResponseExampleParams = ({ editMode, item, collection, exampleUid }) => {
 
   return (
     <StyledWrapper className="w-full mt-4">
-      <div className="mb-3 title text-xs font-bold">Query parameters</div>
+      <div className="mb-3 title text-xs font-bold">{i18n.t('UI.QUERY_PARAMETERS')}</div>
       <EditableTable
         tableId="example-query-params"
         columns={queryColumns}
@@ -223,7 +224,7 @@ const ResponseExampleParams = ({ editMode, item, collection, exampleUid }) => {
       {pathParams && pathParams.length > 0 && (
         <>
           <div className="mb-3 title text-xs font-bold flex items-stretch mt-4">
-            <span>Path parameters</span>
+            <span>{i18n.t('UI.PATH_PARAMETERS')}</span>
             <InfoTip infotipId="path-param-InfoTip">
               <div>
                 Path variables are automatically added whenever the

@@ -15,6 +15,7 @@ import ToggleSwitch from 'components/ToggleSwitch';
 
 import { BETA_FEATURES as BETA_FEATURE_IDS } from 'utils/beta-features';
 import { getDocsUrlWithVersion } from 'utils/url';
+import i18n from '../../../i18n';
 
 /**
  * UI metadata for the Beta Features section in Preferences — one entry per toggle.
@@ -134,7 +135,7 @@ const Beta = ({ close }) => {
         }
       })
     )
-      .catch((err) => console.log(err) && toast.error('Failed to update beta preferences'));
+      .catch((err) => console.log(err) && toast.error(i18n.t('TOASTS.FAILED_UPDATE_BETA_PREFERENCES')));
   }, [dispatch, preferences]);
 
   const handleSaveRef = useRef(handleSave);

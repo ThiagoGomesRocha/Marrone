@@ -4,6 +4,7 @@ import Portal from 'components/Portal';
 import { useDispatch } from 'react-redux';
 import { deleteResponseExample } from 'providers/ReduxStore/slices/collections';
 import { saveRequest, closeTabs } from 'providers/ReduxStore/slices/collections/actions';
+import i18n from '../../../../../../../i18n';
 
 const DeleteResponseExampleModal = ({ onClose, example, item, collection }) => {
   const dispatch = useDispatch();
@@ -26,8 +27,8 @@ const DeleteResponseExampleModal = ({ onClose, example, item, collection }) => {
     <Portal>
       <Modal
         size="sm"
-        title="Delete Example"
-        confirmText="Delete"
+        title={i18n.t('UI.DELETE_EXAMPLE')}
+        confirmText={i18n.t('UI.DELETE')}
         handleConfirm={onConfirm}
         handleCancel={onClose}
         confirmButtonColor="danger"

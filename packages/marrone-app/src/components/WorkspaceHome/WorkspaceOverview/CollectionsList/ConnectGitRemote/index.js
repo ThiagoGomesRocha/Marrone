@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 import Modal from 'components/Modal';
 import { isGitRepositoryUrl } from 'utils/git';
 import { connectCollectionToGit } from 'providers/ReduxStore/slices/workspaces/actions';
+import i18n from '../../../../../i18n';
 
 const ConnectGitRemote = ({ collectionPath, collectionName, initialUrl = '', onClose }) => {
   const dispatch = useDispatch();
@@ -20,8 +21,8 @@ const ConnectGitRemote = ({ collectionPath, collectionName, initialUrl = '', onC
     validationSchema: Yup.object({
       remoteUrl: Yup.string()
         .trim()
-        .required('Git remote URL is required')
-        .test('is-git-url', 'Enter a valid Git URL', (value) => isGitRepositoryUrl(value))
+        .required(() => i18n.t('VALIDATION.GIT_REMOTE_URL_REQUIRED'))
+        .test('is-git-url', () => i18n.t('VALIDATION.GIT_URL_INVALID'), (value) => isGitRepositoryUrl(value))
     }),
     onSubmit: (values) => {
       dispatch(
@@ -32,7 +33,7 @@ const ConnectGitRemote = ({ collectionPath, collectionName, initialUrl = '', onC
         })
       )
         .then(() => {
-          toast.success('Git remote connected');
+          toast.success(i18n.t('TOASTS.GIT_REMOTE_CONNECTED'));
           onClose();
         })
         .catch(() => {

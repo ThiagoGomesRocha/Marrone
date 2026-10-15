@@ -32,6 +32,7 @@ import { variableNameRegex, validateName, validateNameError } from 'utils/common
 import { VARIABLE_ADD_SCOPES, SCOPE_ICON } from 'utils/common/constants';
 import { createAddToScopeSwitcher } from 'utils/codemirror/addToScopeSwitcher';
 import { goToVariableDefinition } from 'utils/codemirror/goToVariableDefinition';
+import i18n from '../../i18n';
 
 let CodeMirror;
 const SERVER_RENDERED = typeof window === 'undefined' || global['PREVENT_CODEMIRROR_RENDER'] === true;
@@ -712,7 +713,7 @@ export const renderVarInfo = (token, options) => {
         })
         .catch((err) => {
           console.error('Failed to update variable:', err);
-          toast.error(err?.message || 'Failed to update variable');
+          toast.error(err?.message || i18n.t('TOASTS.FAILED_UPDATE_VARIABLE'));
         });
     });
 
@@ -1292,7 +1293,7 @@ if (!SERVER_RENDERED) {
         const valueContainer = popup.querySelector('.var-value-container');
         if (valueContainer && typeof valueContainer._persistNewVariable === 'function') {
           valueContainer._persistNewVariable().catch((err) => {
-            toast.error(err?.message || 'Failed to save variable');
+            toast.error(err?.message || i18n.t('TOASTS.FAILED_SAVE_VARIABLE'));
           });
         }
 

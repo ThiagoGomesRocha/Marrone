@@ -13,6 +13,7 @@ import ThemeStep from './ThemeStep';
 import StorageStep from './StorageStep';
 import GetStartedStep from './GetStartedStep';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../i18n';
 
 const TOTAL_STEPS = 4;
 
@@ -53,7 +54,7 @@ const WelcomeModal = ({ onDismiss, onImportCollection, onCreateCollection, onOpe
         }
       };
       return dispatch(savePreferences(updatedPreferences)).catch(() => {
-        toast.error('Failed to save preferences');
+        toast.error(i18n.t('TOASTS.FAILED_SAVE_PREFERENCES'));
       });
     }
     return Promise.resolve();

@@ -26,6 +26,7 @@ import SkippedPathsWarning from 'components/SkippedPathsWarning';
 import toast from 'react-hot-toast';
 import get from 'lodash/get';
 import { useTranslation } from 'react-i18next';
+import i18n from '../../../i18n';
 
 const EMPTY_BRANCH_LISTING = { branches: [], defaultBranch: '', loading: false, failed: false };
 
@@ -96,7 +97,7 @@ const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null 
   };
 
   const cloneFinished = () => {
-    toast.success('Repository cloned successfully');
+    toast.success(i18n.t('TOASTS.REPO_CLONED'));
     setSteps((prev) =>
       prev.map((step) =>
         step.step === 'clone'
@@ -128,7 +129,7 @@ const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null 
   };
 
   const scanFinished = () => {
-    toast.success('Repository scanned successfully');
+    toast.success(i18n.t('TOASTS.REPO_SCANNED'));
     setSteps((prev) =>
       prev.map((step) =>
         step.step === 'scan' ? { ...step, title: t('MODALS.CLONE_GIT_REPOSITORY.SCAN_SUCCESS'), completed: true, info: '' } : step
@@ -144,8 +145,8 @@ const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null 
       branch: ''
     },
     validationSchema: Yup.object({
-      repositoryUrl: Yup.string().required('Repository URL is required'),
-      collectionLocation: Yup.string().min(1, 'Location is required').required('Location is required')
+      repositoryUrl: Yup.string().required(() => i18n.t('VALIDATION.REPOSITORY_URL_REQUIRED')),
+      collectionLocation: Yup.string().min(1, () => i18n.t('VALIDATION.LOCATION_REQUIRED')).required(() => i18n.t('VALIDATION.LOCATION_REQUIRED'))
     }),
     onSubmit: async (values) => {
       try {

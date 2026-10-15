@@ -24,6 +24,7 @@ import SingleLineEditor from 'components/SingleLineEditor/index';
 import { useTheme } from 'styled-components';
 import Button from 'ui/Button';
 import { useTranslation } from 'react-i18next';
+import i18n from '../../../i18n';
 
 const NewRequest = ({ collectionUid, item, isEphemeral, onClose }) => {
   const { t } = useTranslation();
@@ -119,31 +120,31 @@ const NewRequest = ({ collectionUid, item, isEphemeral, onClose }) => {
     validationSchema: Yup.object({
       requestName: Yup.string()
         .trim()
-        .min(1, 'must be at least 1 character')
-        .max(255, 'must be 255 characters or less')
-        .required('name is required'),
+        .min(1, () => i18n.t('VALIDATION.MIN_1_CHAR'))
+        .max(255, () => i18n.t('VALIDATION.MAX_255_CHARS'))
+        .required(() => i18n.t('VALIDATION.NAME_REQUIRED')),
       filename: Yup.string()
         .trim()
-        .min(1, 'must be at least 1 character')
-        .max(255, 'must be 255 characters or less')
-        .required('filename is required')
+        .min(1, () => i18n.t('VALIDATION.MIN_1_CHAR'))
+        .max(255, () => i18n.t('VALIDATION.MAX_255_CHARS'))
+        .required(() => i18n.t('VALIDATION.FILE_NAME_REQUIRED'))
         .test('is-valid-filename', function (value) {
           const isValid = validateName(value);
           return isValid ? true : this.createError({ message: validateNameError(value) });
         })
         .test(
           'not-reserved',
-          `The file names "collection" and "folder" are reserved in marrone`,
+          () => i18n.t('VALIDATION.RESERVED_NAMES'),
           (value) => !['collection', 'folder'].includes(value)
         ),
       curlCommand: Yup.string().when('requestType', {
         is: (requestType) => requestType === 'from-curl',
         then: Yup.string()
-          .min(1, 'must be at least 1 character')
-          .required('curlCommand is required')
+          .min(1, () => i18n.t('VALIDATION.MIN_1_CHAR'))
+          .required(() => i18n.t('VALIDATION.CURL_COMMAND_REQUIRED'))
           .test({
             name: 'curlCommand',
-            message: `Invalid cURL Command`,
+            message: () => i18n.t('VALIDATION.INVALID_CURL_COMMAND'),
             test: (value) => getRequestFromCurlCommand(value) !== null
           })
       })
@@ -165,10 +166,10 @@ const NewRequest = ({ collectionUid, item, isEphemeral, onClose }) => {
           })
         )
           .then(() => {
-            toast.success('New request created!');
+            toast.success(i18n.t('TOASTS.REQUEST_CREATED'));
             onClose();
           })
-          .catch((err) => toast.error(err ? err.message : 'An error occurred while adding the request'));
+          .catch((err) => toast.error(err ? err.message : i18n.t('TOASTS.ERROR_ADDING_REQUEST')));
 
         // will need to handle import from grpcurl command when we support it, now it is just for creating new requests
       } else if (isWsRequest) {
@@ -182,10 +183,10 @@ const NewRequest = ({ collectionUid, item, isEphemeral, onClose }) => {
           itemUid: item ? item.uid : null
         }))
           .then(() => {
-            toast.success('New request created!');
+            toast.success(i18n.t('TOASTS.REQUEST_CREATED'));
             onClose();
           })
-          .catch((err) => toast.error(err ? err.message : 'An error occurred while adding the request'));
+          .catch((err) => toast.error(err ? err.message : i18n.t('TOASTS.ERROR_ADDING_REQUEST')));
       } else if (isEphemeral) {
         const uid = uuid();
         dispatch(
@@ -209,7 +210,7 @@ const NewRequest = ({ collectionUid, item, isEphemeral, onClose }) => {
             );
             onClose();
           })
-          .catch((err) => toast.error(err ? err.message : 'An error occurred while adding the request'));
+          .catch((err) => toast.error(err ? err.message : i18n.t('TOASTS.ERROR_ADDING_REQUEST')));
       } else if (values.requestType === 'from-curl') {
         const request = getRequestFromCurlCommand(values.curlCommand, curlRequestTypeDetected);
         const settings = { encodeUrl: false, forwardAuthorizationHeader: false };
@@ -230,10 +231,10 @@ const NewRequest = ({ collectionUid, item, isEphemeral, onClose }) => {
           })
         )
           .then(() => {
-            toast.success('New request created!');
+            toast.success(i18n.t('TOASTS.REQUEST_CREATED'));
             onClose();
           })
-          .catch((err) => toast.error(err ? err.message : 'An error occurred while adding the request'));
+          .catch((err) => toast.error(err ? err.message : i18n.t('TOASTS.ERROR_ADDING_REQUEST')));
       } else {
         dispatch(
           newHttpRequest({
@@ -247,10 +248,10 @@ const NewRequest = ({ collectionUid, item, isEphemeral, onClose }) => {
           })
         )
           .then(() => {
-            toast.success('New request created!');
+            toast.success(i18n.t('TOASTS.REQUEST_CREATED'));
             onClose();
           })
-          .catch((err) => toast.error(err ? err.message : 'An error occurred while adding the request'));
+          .catch((err) => toast.error(err ? err.message : i18n.t('TOASTS.ERROR_ADDING_REQUEST')));
       }
     }
   });

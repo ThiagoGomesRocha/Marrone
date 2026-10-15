@@ -10,6 +10,7 @@ import { DEFAULT_COLLECTION_FORMAT } from 'utils/common/constants';
 import { multiLineMsg } from 'utils/common';
 import { formatIpcError } from 'utils/common/error';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../../i18n';
 
 const InlineCollectionCreator = ({ onComplete, onCancel, onOpenAdvanced }) => {
   const inputRef = useRef(null);
@@ -66,7 +67,7 @@ const InlineCollectionCreator = ({ onComplete, onCancel, onOpenAdvanced }) => {
       if (fromOutside) {
         onCancel();
       } else {
-        toast.error('Collection name is required');
+        toast.error(i18n.t('TOASTS.COLLECTION_NAME_REQUIRED'));
       }
       return;
     }
@@ -80,7 +81,7 @@ const InlineCollectionCreator = ({ onComplete, onCancel, onOpenAdvanced }) => {
     }
 
     if (!defaultLocation) {
-      toast.error('Please set a default location in Preferences > General');
+      toast.error(i18n.t('TOASTS.SET_DEFAULT_LOCATION'));
       onCancel();
       return;
     }
@@ -89,10 +90,10 @@ const InlineCollectionCreator = ({ onComplete, onCancel, onOpenAdvanced }) => {
     try {
       const folderName = sanitizeName(name);
       await dispatch(createCollection(name, folderName, defaultLocation, { format: DEFAULT_COLLECTION_FORMAT }));
-      toast.success('Collection created!');
+      toast.success(i18n.t('TOASTS.COLLECTION_CREATED'));
       onComplete();
     } catch (e) {
-      toast.error(multiLineMsg('An error occurred while creating the collection', formatIpcError(e)));
+      toast.error(multiLineMsg(i18n.t('TOASTS.ERROR_CREATING_COLLECTION'), formatIpcError(e)));
       setIsCreating(false);
     }
   }, [isCreating, defaultLocation, dispatch, onCancel, onComplete]);
@@ -142,7 +143,7 @@ const InlineCollectionCreator = ({ onComplete, onCancel, onOpenAdvanced }) => {
               openingAdvancedRef.current = true;
               onOpenAdvanced(inputRef.current?.value?.trim());
             }}
-            title="Advanced options"
+            title={i18n.t('UI.ADVANCED_OPTIONS')}
             disabled={isCreating}
           >
             <IconSettings size={13} strokeWidth={1.5} />
@@ -153,7 +154,7 @@ const InlineCollectionCreator = ({ onComplete, onCancel, onOpenAdvanced }) => {
             className="inline-action-btn save"
             onClick={handleCreate}
             onMouseDown={(e) => e.preventDefault()}
-            title="Create"
+            title={i18n.t('UI.CREATE')}
             disabled={isCreating}
           >
             <IconCheck size={14} strokeWidth={2} />
@@ -162,7 +163,7 @@ const InlineCollectionCreator = ({ onComplete, onCancel, onOpenAdvanced }) => {
             className="inline-action-btn cancel"
             onClick={handleCancel}
             onMouseDown={(e) => e.preventDefault()}
-            title="Cancel"
+            title={i18n.t('UI.CANCEL')}
             disabled={isCreating}
           >
             <IconX size={14} strokeWidth={2} />

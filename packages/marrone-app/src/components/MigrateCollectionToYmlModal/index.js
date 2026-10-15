@@ -33,6 +33,7 @@ import { isEnvironmentValidationError } from 'utils/environments';
 import Modal from 'components/Modal';
 import Button from 'ui/Button';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../i18n';
 
 const PHASE_LABELS = {
   parsing: 'Converting files',
@@ -163,10 +164,10 @@ const MigrateCollectionToYmlModal = () => {
         migration.collectionName
       );
       if (result?.success) {
-        toast.success('Collection backup exported');
+        toast.success(i18n.t('TOASTS.COLLECTION_BACKUP_EXPORTED'));
       }
     } catch (error) {
-      toast.error('Failed to export backup: ' + error.message);
+      toast.error(i18n.t('TOASTS.FAILED_EXPORT_BACKUP') + ': ' + error.message);
     } finally {
       setIsExporting(false);
     }
@@ -243,8 +244,8 @@ const MigrateCollectionToYmlModal = () => {
           hasSkippedEnvs = true;
           toast.error(
             isEnvironmentValidationError(err)
-              ? `Cannot save environment "${draft.name}": ${err.message}`
-              : `Failed to save environment "${draft.name}"`
+              ? i18n.t('TOASTS.CANNOT_SAVE_ENV_NAME', { name: draft.name }) + ': ' + err.message
+              : i18n.t('TOASTS.FAILED_SAVE_ENV_NAME', { name: draft.name })
           );
         }
       }
@@ -256,7 +257,7 @@ const MigrateCollectionToYmlModal = () => {
       setShowDraftsStep(false);
       startMigration();
     } catch (error) {
-      toast.error('Failed to save changes');
+      toast.error(i18n.t('TOASTS.FAILED_SAVE_CHANGES'));
     } finally {
       setIsResolvingDrafts(false);
     }
@@ -290,7 +291,7 @@ const MigrateCollectionToYmlModal = () => {
       <StyledWrapper>
         <Modal
           size="md"
-          title="Unsaved changes"
+          title={i18n.t('UI.UNSAVED_CHANGES')}
           dataTestId="migration-drafts-step"
           handleCancel={handleBackToConfirm}
           disableEscapeKey={true}
@@ -398,7 +399,7 @@ const MigrateCollectionToYmlModal = () => {
     <StyledWrapper>
       <Modal
         size="md"
-        title="Migrate to YML format"
+        title={i18n.t('UI.MIGRATE_TO_YML_FORMAT')}
         confirmText={isMigrating ? (isCancelling ? 'Cancelling…' : 'Cancel') : 'Migrate'}
         confirmButtonColor={isMigrating ? 'danger' : 'primary'}
         confirmDisabled={confirmDisabled}

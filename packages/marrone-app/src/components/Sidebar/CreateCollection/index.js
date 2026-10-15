@@ -19,6 +19,7 @@ import { DEFAULT_COLLECTION_FORMAT } from 'utils/common/constants';
 import StyledWrapper from './StyledWrapper';
 import get from 'lodash/get';
 import Button from 'ui/Button';
+import i18n from '../../../i18n';
 
 const CreateCollection = ({ onClose, defaultLocation: propDefaultLocation, initialCollectionName = '' }) => {
   const { t } = useTranslation();
@@ -48,19 +49,19 @@ const CreateCollection = ({ onClose, defaultLocation: propDefaultLocation, initi
     validationSchema: Yup.object({
       collectionName: Yup.string()
         .trim()
-        .min(1, 'Collection name can\'t be empty')
-        .max(255, 'Must be 255 characters or less')
-        .required('Collection name is required'),
+        .min(1, () => i18n.t('VALIDATION.COLLECTION_NAME_EMPTY'))
+        .max(255, () => i18n.t('VALIDATION.MAX_255_CHARS'))
+        .required(() => i18n.t('VALIDATION.COLLECTION_NAME_REQUIRED')),
       collectionFolderName: Yup.string()
-        .min(1, 'Must be at least 1 character')
-        .max(255, 'Must be 255 characters or less')
+        .min(1, () => i18n.t('VALIDATION.MIN_1_CHAR'))
+        .max(255, () => i18n.t('VALIDATION.MAX_255_CHARS'))
         .test('is-valid-collection-name', function (value) {
           const isValid = validateName(value);
           return isValid ? true : this.createError({ message: validateNameError(value) });
         })
-        .required('Folder name is required'),
-      collectionLocation: Yup.string().min(1, 'Location is required').required('Location is required'),
-      format: Yup.string().oneOf(['bru', 'yml'], 'invalid format').required('Format is required')
+        .required(() => i18n.t('VALIDATION.FOLDER_NAME_REQUIRED')),
+      collectionLocation: Yup.string().min(1, () => i18n.t('VALIDATION.LOCATION_REQUIRED')).required(() => i18n.t('VALIDATION.LOCATION_REQUIRED')),
+      format: Yup.string().oneOf(['bru', 'yml'], () => i18n.t('VALIDATION.INVALID_FORMAT')).required(() => i18n.t('VALIDATION.FORMAT_REQUIRED'))
     }),
     onSubmit: async (values) => {
       try {
@@ -69,10 +70,10 @@ const CreateCollection = ({ onClose, defaultLocation: propDefaultLocation, initi
           values.collectionLocation,
           { format: values.format }));
 
-        toast.success('Collection created!');
+        toast.success(i18n.t('TOASTS.COLLECTION_CREATED'));
         onClose();
       } catch (e) {
-        toast.error(multiLineMsg('An error occurred while creating the collection', formatIpcError(e)));
+        toast.error(multiLineMsg(i18n.t('TOASTS.ERROR_CREATING_COLLECTION'), formatIpcError(e)));
       }
     }
   });

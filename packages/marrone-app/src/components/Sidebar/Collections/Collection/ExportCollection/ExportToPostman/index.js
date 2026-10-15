@@ -13,6 +13,7 @@ import Dropdown from 'components/Dropdown';
 import { browseDirectory, exportCollectionToPostman } from 'providers/ReduxStore/slices/collections/actions';
 import { exportPostmanCollection } from 'utils/exporters/postman-collection';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../../../../i18n';
 
 const FILE_EXISTS_ERROR = 'Name already exists in this location.';
 
@@ -35,15 +36,15 @@ const ExportToPostman = ({ onClose, onExported, collection }) => {
     validationSchema: Yup.object({
       fileName: Yup.string()
         .trim()
-        .min(1, 'must be at least 1 character')
-        .max(255, 'must be 255 characters or less')
+        .min(1, () => i18n.t('VALIDATION.MIN_1_CHAR'))
+        .max(255, () => i18n.t('VALIDATION.MAX_255_CHARS'))
         .test('is-valid-name', function (value) {
           if (!value) return true;
           const isValid = validateName(value);
           return isValid ? true : this.createError({ message: validateNameError(value) });
         })
-        .required('Name is required'),
-      location: Yup.string().min(1, 'Location is required').required('Location is required')
+        .required(() => i18n.t('VALIDATION.NAME_REQUIRED')),
+      location: Yup.string().min(1, () => i18n.t('VALIDATION.LOCATION_REQUIRED')).required(() => i18n.t('VALIDATION.LOCATION_REQUIRED'))
     }),
     onSubmit: (values) => handleExport(values, false)
   });
@@ -58,7 +59,7 @@ const ExportToPostman = ({ onClose, onExported, collection }) => {
     try {
       const content = exportPostmanCollection(cloneDeep(collection), { preserveScripts });
       await dispatch(exportCollectionToPostman(values.location, `${values.fileName.trim()}.json`, content, overwrite));
-      toast.success('Collection exported successfully');
+      toast.success(i18n.t('TOASTS.COLLECTION_EXPORTED'));
       onExported();
     } catch (error) {
       const message = error?.message || String(error);
@@ -68,7 +69,7 @@ const ExportToPostman = ({ onClose, onExported, collection }) => {
         formik.setFieldError('fileName', FILE_EXISTS_ERROR);
         return;
       }
-      toast.error('Failed to export collection: ' + message);
+      toast.error(i18n.t('TOASTS.FAILED_EXPORT_COLLECTION') + ': ' + message);
     } finally {
       setIsExporting(false);
     }

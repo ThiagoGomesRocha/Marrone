@@ -9,6 +9,7 @@ import EditorLinkEditPopover from '../EditorLinkEditPopover';
 import StyledWrapper from './StyledWrapper';
 import Portal from 'ui/Portal';
 import { createPopper } from '@popperjs/core';
+import i18n from '../../../../i18n';
 
 /**
  * Resolves link text + doc range from the TipTap document for a given anchor element.
@@ -333,7 +334,7 @@ const EditorLinkPopover = ({ editor, onSubmit, onUnlink, containerEl, onLinkClic
                   className="action-icon-btn"
                   onClick={() => {
                     navigator.clipboard.writeText(hoverLink.url).then(() => {
-                      toast.success('Link copied to clipboard');
+                      toast.success(i18n.t('TOASTS.LINK_COPIED'));
                     });
                     setHoverOpen(false);
                   }}

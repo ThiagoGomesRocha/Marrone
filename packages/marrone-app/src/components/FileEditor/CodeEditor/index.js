@@ -14,6 +14,7 @@ import * as jsonlint from '@prantlf/jsonlint';
 import { JSHINT } from 'jshint';
 import CodeMirrorSearch from 'components/CodeMirrorSearch';
 import { buildSearchKeyBindings } from 'components/CodeMirrorSearch/searchKeyBindings';
+import i18n from '../../../i18n';
 let CodeMirror;
 const SERVER_RENDERED = typeof window === 'undefined' || global['PREVENT_CODEMIRROR_RENDER'] === true;
 
@@ -167,7 +168,7 @@ export default class CodeEditor extends React.Component {
     return (
       <StyledWrapper
         className="h-full w-full"
-        aria-label="Code Editor"
+        aria-label={i18n.t('UI.CODE_EDITOR')}
         font={this.props.font}
       >
         <CodeMirrorSearch

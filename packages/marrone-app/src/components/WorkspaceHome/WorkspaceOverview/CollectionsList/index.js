@@ -27,6 +27,7 @@ import StatusBadge from 'ui/StatusBadge';
 import ConnectGitRemote from './ConnectGitRemote';
 import RemoveGitRemote from './RemoveGitRemote';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../../i18n';
 
 const CollectionsList = ({ workspace }) => {
   const dispatch = useDispatch();
@@ -135,15 +136,15 @@ const CollectionsList = ({ workspace }) => {
     }
 
     if (collection.failedToOpen) {
-      toast.error(`Collection "${collection.name}" could not be opened`);
+      toast.error(i18n.t('TOASTS.COLLECTION_COULD_NOT_OPEN', { name: collection.name }));
       return;
     }
 
     if (collection.isLoaded === false) {
       if (collection.isGitBacked) {
-        toast.error(`Collection "${collection.name}" needs to be cloned first`);
+        toast.error(i18n.t('TOASTS.COLLECTION_NEEDS_CLONE', { name: collection.name }));
       } else {
-        toast.error(`Collection "${collection.name}" does not exist on disk`);
+        toast.error(i18n.t('TOASTS.COLLECTION_NOT_ON_DISK', { name: collection.name }));
       }
       return;
     }
@@ -168,7 +169,7 @@ const CollectionsList = ({ workspace }) => {
   const handleRenameCollection = (collection) => {
     dropdownRefs.current[collection.uid]?.hide();
     if (collection.isLoaded === false) {
-      toast.error('Cannot rename collections that are not cloned yet');
+      toast.error(i18n.t('TOASTS.CANNOT_RENAME_UNCLONED'));
       return;
     }
     setSelectedCollectionUid(collection.uid);
@@ -178,7 +179,7 @@ const CollectionsList = ({ workspace }) => {
   const handleShareCollection = (collection) => {
     dropdownRefs.current[collection.uid]?.hide();
     if (collection.isLoaded === false) {
-      toast.error('Please clone this collection first before sharing it');
+      toast.error(i18n.t('TOASTS.CLONE_BEFORE_SHARING'));
       return;
     }
 
@@ -198,12 +199,12 @@ const CollectionsList = ({ workspace }) => {
     dropdownRefs.current[collection.uid]?.hide();
     if (collection.failedToOpen || collection.notFoundLocally) {
       dispatch(removeCollectionFromWorkspaceAction(workspace.uid, collection.pathname))
-        .then(() => toast.success('Collection removed from workspace'))
-        .catch(() => toast.error('An error occurred while removing the collection'));
+        .then(() => toast.success(i18n.t('TOASTS.COLLECTION_REMOVED')))
+        .catch(() => toast.error(i18n.t('TOASTS.ERROR_REMOVING_COLLECTION')));
       return;
     }
     if (collection.isLoaded === false) {
-      toast.error('Cannot remove collections that are not loaded');
+      toast.error(i18n.t('TOASTS.CANNOT_REMOVE_UNLOADED'));
       return;
     }
     setSelectedCollectionUid(collection.uid);
@@ -213,7 +214,7 @@ const CollectionsList = ({ workspace }) => {
   const handleDeleteCollection = (collection) => {
     dropdownRefs.current[collection.uid]?.hide();
     if (collection.isLoaded === false) {
-      toast.error('Cannot delete collections that are not loaded');
+      toast.error(i18n.t('TOASTS.CANNOT_DELETE_UNLOADED'));
       return;
     }
     setSelectedCollectionUid(collection.uid);
@@ -224,14 +225,14 @@ const CollectionsList = ({ workspace }) => {
     dropdownRefs.current[collection.uid]?.hide();
     dispatch(showInFolder(collection.pathname)).catch((error) => {
       console.error('Error opening the folder', error);
-      toast.error('Error opening the folder');
+      toast.error(i18n.t('TOASTS.ERROR_OPENING_FOLDER'));
     });
   };
 
   const handleConnectGit = (collection) => {
     dropdownRefs.current[collection.uid]?.hide();
     if (collection.isLoaded === false) {
-      toast.error('Cannot connect a Git remote to a collection that is not present locally');
+      toast.error(i18n.t('TOASTS.CANNOT_CONNECT_GIT_REMOTE'));
       return;
     }
     setGitTarget({
@@ -257,9 +258,9 @@ const CollectionsList = ({ workspace }) => {
     if (!collection.gitRemoteUrl) return;
     try {
       await navigator.clipboard.writeText(collection.gitRemoteUrl);
-      toast.success('Git URL copied');
+      toast.success(i18n.t('TOASTS.GIT_URL_COPIED'));
     } catch (e) {
-      toast.error('Failed to copy URL');
+      toast.error(i18n.t('TOASTS.FAILED_COPY_URL'));
     }
   };
 
@@ -363,7 +364,7 @@ const CollectionsList = ({ workspace }) => {
                     <StatusBadge status="danger" size="xs">Failed to open</StatusBadge>
                   )}
                   {isNotCloned(collection) && (
-                    <StatusBadge status="warning" size="xs">Not cloned</StatusBadge>
+                    <StatusBadge status="warning" size="xs">{i18n.t('UI.NOT_CLONED')}</StatusBadge>
                   )}
                 </div>
                 <div className="collection-path">{collection.pathname}</div>

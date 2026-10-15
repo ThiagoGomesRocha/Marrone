@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { savePreferences } from 'providers/ReduxStore/slices/app';
 import StyledWrapper from './StyledWrapper';
 import toast from 'react-hot-toast';
+import i18n from '../../../../i18n';
 
 const Font = () => {
   const { t } = useTranslation();
@@ -36,7 +37,7 @@ const Font = () => {
         }
       })
     ).catch(() => {
-      toast.error('Failed to save preferences');
+      toast.error(i18n.t('TOASTS.FAILED_SAVE_PREFERENCES'));
     });
   }, [dispatch, preferences]);
 

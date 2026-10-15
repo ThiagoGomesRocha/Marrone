@@ -2,6 +2,7 @@ import { useDispatch } from 'react-redux';
 import toast from 'react-hot-toast';
 import MockConfirmModal from 'components/MockServer/MockConfirmModal';
 import { deleteMockServerInstance } from 'utils/mock-server/mock-server-instances';
+import i18n from '../../../i18n';
 
 const DeleteMockServerModal = ({ instance, onClose, onDeleted }) => {
   const dispatch = useDispatch();
@@ -9,18 +10,18 @@ const DeleteMockServerModal = ({ instance, onClose, onDeleted }) => {
   const handleConfirm = async () => {
     try {
       await dispatch(deleteMockServerInstance(instance.uid));
-      toast.success('Mock server deleted');
+      toast.success(i18n.t('TOASTS.MOCK_SERVER_DELETED'));
       onDeleted?.();
       onClose();
     } catch {
-      toast.error('Failed to delete mock server');
+      toast.error(i18n.t('TOASTS.FAILED_DELETE_MOCK_SERVER'));
     }
   };
 
   return (
     <MockConfirmModal
-      title="Delete Mock Server"
-      confirmText="Delete"
+      title={i18n.t('UI.DELETE_MOCK_SERVER')}
+      confirmText={i18n.t('UI.DELETE')}
       onConfirm={handleConfirm}
       onClose={onClose}
       confirmButtonColor="danger"

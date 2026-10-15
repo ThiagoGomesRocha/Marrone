@@ -38,10 +38,10 @@ const General = () => {
         return originalValue === '' ? undefined : value;
       })
       .nullable()
-      .test('isNumber', 'Request Timeout must be a number', (value) => {
+      .test('isNumber', () => i18n.t('VALIDATION.TIMEOUT_NOT_NUMBER'), (value) => {
         return value === undefined || !isNaN(value);
       })
-      .test('isValidTimeout', 'Request Timeout must be greater than or equal to 0', (value) => {
+      .test('isValidTimeout', () => i18n.t('VALIDATION.TIMEOUT_MIN'), (value) => {
         return value === undefined || Number(value) >= 0;
       }),
     autoSave: Yup.object({
@@ -50,13 +50,13 @@ const General = () => {
         .transform((value, originalValue) => {
           return originalValue === '' ? undefined : value;
         })
-        .test('isNumber', 'Save Delay must be a number', (value) => {
+        .test('isNumber', () => i18n.t('VALIDATION.SAVE_DELAY_NOT_NUMBER'), (value) => {
           return value === undefined || !isNaN(value);
         })
-        .test('isValidInterval', 'Save Delay must be at least 500ms', (value) => {
+        .test('isValidInterval', () => i18n.t('VALIDATION.SAVE_DELAY_MIN'), (value) => {
           return value === undefined || Number(value) >= 500;
         })
-        .test('intervalRequired', 'Save Delay is required when Auto Save is enabled', function (value) {
+        .test('intervalRequired', () => i18n.t('VALIDATION.SAVE_DELAY_REQUIRED'), function (value) {
           return !(this.parent.enabled && (value === undefined || value === ''));
         })
     }),
@@ -140,7 +140,7 @@ const General = () => {
           includeSensitive: get(preferences, 'report.includeSensitive', false)
         }
       }))
-      .catch((err) => console.log(err) && toast.error('Failed to update preferences'));
+      .catch((err) => console.log(err) && toast.error(i18n.t('TOASTS.FAILED_UPDATE_PREFERENCES')));
   }, [dispatch, preferences]);
 
   const handleSaveRef = useRef(handleSave);
@@ -188,7 +188,7 @@ const General = () => {
       .catch((error) => {
         // cancelling resolves false, so this is a real failure: keep the existing value
         console.error(error);
-        toast.error('Failed to browse for a default location');
+        toast.error(i18n.t('TOASTS.FAILED_BROWSE_DEFAULT_LOCATION'));
       });
   };
 
@@ -198,7 +198,7 @@ const General = () => {
       return;
     }
     if (!['image/png', 'image/jpeg'].includes(file.type)) {
-      toast.error('Only PNG or JPEG images are supported');
+      toast.error(i18n.t('TOASTS.PNG_JPEG_ONLY'));
       return;
     }
     const reader = new FileReader();
@@ -206,7 +206,7 @@ const General = () => {
       formik.setFieldValue('reportLogo', reader.result);
     };
     reader.onerror = () => {
-      toast.error('Failed to read the image');
+      toast.error(i18n.t('TOASTS.FAILED_READ_IMAGE'));
     };
     reader.readAsDataURL(file);
   };
@@ -224,7 +224,7 @@ const General = () => {
       })
       .catch((error) => {
         console.error(error);
-        toast.error('Failed to browse for a report directory');
+        toast.error(i18n.t('TOASTS.FAILED_BROWSE_REPORT_DIR'));
       });
   };
 

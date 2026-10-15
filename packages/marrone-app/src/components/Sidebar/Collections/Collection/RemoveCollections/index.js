@@ -9,6 +9,7 @@ import ConfirmCollectionCloseDrafts from './ConfirmCollectionCloseDrafts';
 import StyledWrapper from './StyledWrapper';
 import { clearSidebarSelection } from 'providers/ReduxStore/slices/collections';
 import Portal from 'ui/Portal';
+import i18n from '../../../../../i18n';
 
 const RemoveCollections = ({ onClose, collectionUid, collectionUids }) => {
   const dispatch = useDispatch();
@@ -32,7 +33,7 @@ const RemoveCollections = ({ onClose, collectionUid, collectionUids }) => {
 
   const onConfirm = () => {
     if (!collections.length) {
-      toast.error('Collection not found');
+      toast.error(i18n.t('TOASTS.COLLECTION_NOT_FOUND'));
       onClose();
       return;
     }

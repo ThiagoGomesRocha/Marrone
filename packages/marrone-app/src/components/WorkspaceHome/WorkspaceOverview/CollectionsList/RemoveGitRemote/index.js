@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 import Modal from 'components/Modal';
 import { disconnectCollectionFromGit } from 'providers/ReduxStore/slices/workspaces/actions';
+import i18n from '../../../../../i18n';
 
 const RemoveGitRemote = ({ collectionPath, collectionName, remoteUrl, onClose }) => {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const RemoveGitRemote = ({ collectionPath, collectionName, remoteUrl, onClose })
       })
     )
       .then(() => {
-        toast.success('Git remote removed');
+        toast.success(i18n.t('TOASTS.GIT_REMOTE_REMOVED'));
         onClose();
       })
       .catch(() => {
@@ -27,8 +28,8 @@ const RemoveGitRemote = ({ collectionPath, collectionName, remoteUrl, onClose })
   return (
     <Modal
       size="md"
-      title="Remove Git Remote"
-      confirmText="Remove"
+      title={i18n.t('UI.REMOVE_GIT_REMOTE')}
+      confirmText={i18n.t('UI.REMOVE')}
       confirmButtonColor="primary"
       handleConfirm={handleConfirm}
       handleCancel={onClose}

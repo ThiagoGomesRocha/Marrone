@@ -32,6 +32,7 @@ import ErrorDetailsPanel from './ErrorDetailsPanel';
 import Performance from '../Performance';
 import StyledWrapper from './StyledWrapper';
 import { useResizablePanel } from 'hooks/useResizablePanel';
+import i18n from '../../../i18n';
 
 const MIN_DETAILS_PANEL_WIDTH = 280;
 const DETAILS_PANEL_MAX_RATIO = 0.7;
@@ -380,7 +381,7 @@ const Console = () => {
                 onFilterToggle={handleFilterToggle}
                 onToggleAll={handleToggleAllFilters}
                 headerLabel="Filter by Type"
-                title="Filter logs by type"
+                title={i18n.t('UI.FILTER_LOGS_BY_TYPE')}
                 renderIcon={(type) => <LogIcon type={type} />}
               />
             </div>
@@ -388,7 +389,7 @@ const Console = () => {
               <button
                 className="control-button"
                 onClick={handleClearLogs}
-                title="Clear all logs"
+                title={i18n.t('UI.CLEAR_ALL_LOGS')}
               >
                 <IconTrash size={16} strokeWidth={1.5} />
               </button>
@@ -405,7 +406,7 @@ const Console = () => {
                 onFilterToggle={handleNetworkFilterToggle}
                 onToggleAll={handleToggleAllNetworkFilters}
                 headerLabel="Filter by Method"
-                title="Filter requests by method"
+                title={i18n.t('UI.FILTER_REQUESTS_BY_METHOD')}
               />
             </div>
           </div>
@@ -488,7 +489,7 @@ const Console = () => {
           <button
             className="control-button close-button"
             onClick={handlecloseConsole}
-            title="Close console"
+            title={i18n.t('UI.CLOSE_CONSOLE')}
           >
             <IconX size={16} strokeWidth={1.5} />
           </button>

@@ -14,6 +14,7 @@ import { formatIpcError } from 'utils/common/error';
 import { sanitizeName, validateName, validateNameError } from 'utils/common/regex';
 import get from 'lodash/get';
 import { useTranslation } from 'react-i18next';
+import i18n from '../../../i18n';
 
 const CreateWorkspace = ({ onClose }) => {
   const { t } = useTranslation();
@@ -35,18 +36,18 @@ const CreateWorkspace = ({ onClose }) => {
     validationSchema: Yup.object({
       workspaceName: Yup.string()
         .trim()
-        .min(1, 'Workspace name can\'t be empty')
-        .max(255, 'Must be 255 characters or less')
-        .required('Workspace name is required'),
+        .min(1, () => i18n.t('VALIDATION.WORKSPACE_NAME_EMPTY'))
+        .max(255, () => i18n.t('VALIDATION.MAX_255_CHARS'))
+        .required(() => i18n.t('VALIDATION.WORKSPACE_NAME_REQUIRED')),
       workspaceFolderName: Yup.string()
-        .min(1, 'Must be at least 1 character')
-        .max(255, 'Must be 255 characters or less')
+        .min(1, () => i18n.t('VALIDATION.MIN_1_CHAR'))
+        .max(255, () => i18n.t('VALIDATION.MAX_255_CHARS'))
         .test('is-valid-folder-name', function (value) {
           const isValid = validateName(value);
           return isValid ? true : this.createError({ message: validateNameError(value) });
         })
-        .required('Folder name is required'),
-      workspaceLocation: Yup.string().min(1, 'Location is required').required('Location is required')
+        .required(() => i18n.t('VALIDATION.FOLDER_NAME_REQUIRED')),
+      workspaceLocation: Yup.string().min(1, () => i18n.t('VALIDATION.LOCATION_REQUIRED')).required(() => i18n.t('VALIDATION.LOCATION_REQUIRED'))
     }),
     onSubmit: async (values) => {
       if (isSubmitting) return;
@@ -55,10 +56,10 @@ const CreateWorkspace = ({ onClose }) => {
         setIsSubmitting(true);
 
         await dispatch(createWorkspaceAction(values.workspaceName.trim(), values.workspaceFolderName, values.workspaceLocation));
-        toast.success('Workspace created!');
+        toast.success(i18n.t('TOASTS.WORKSPACE_CREATED'));
         onClose();
       } catch (error) {
-        toast.error(multiLineMsg('An error occurred while creating the workspace', formatIpcError(error)));
+        toast.error(multiLineMsg(i18n.t('TOASTS.ERROR_CREATING_WORKSPACE'), formatIpcError(error)));
       } finally {
         setIsSubmitting(false);
       }

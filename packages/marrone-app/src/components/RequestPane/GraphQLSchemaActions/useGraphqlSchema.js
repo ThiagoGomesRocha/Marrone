@@ -3,6 +3,7 @@ import toast from 'react-hot-toast';
 import { buildClientSchema, buildSchema, validateSchema } from 'graphql';
 import { fetchGqlSchema } from 'utils/network';
 import { simpleHash, safeParseJSON } from 'utils/common';
+import i18n from '../../../i18n';
 
 const buildAndValidateSchema = (data) => {
   let schema;
@@ -100,7 +101,7 @@ const useGraphqlSchema = (endpoint, environment, request, collection) => {
             duration: 5000
           });
         } else {
-          toast.success('GraphQL Schema loaded successfully');
+          toast.success(i18n.t('TOASTS.GRAPHQL_SCHEMA_LOADED'));
         }
       }
     } catch (err) {

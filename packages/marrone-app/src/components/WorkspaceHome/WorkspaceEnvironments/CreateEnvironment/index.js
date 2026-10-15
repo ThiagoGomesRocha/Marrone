@@ -8,6 +8,7 @@ import Modal from 'components/Modal';
 import { addGlobalEnvironment } from 'providers/ReduxStore/slices/global-environments';
 import { validateName, validateNameError } from 'utils/common/regex';
 import { useTranslation } from 'react-i18next';
+import i18n from '../../../../i18n';
 
 const CreateEnvironment = ({ onClose, onEnvironmentCreated }) => {
   const { t } = useTranslation();
@@ -27,26 +28,26 @@ const CreateEnvironment = ({ onClose, onEnvironmentCreated }) => {
     },
     validationSchema: Yup.object({
       name: Yup.string()
-        .min(1, 'Must be at least 1 character')
-        .max(255, 'Must be 255 characters or less')
+        .min(1, () => i18n.t('VALIDATION.MIN_1_CHAR'))
+        .max(255, () => i18n.t('VALIDATION.MAX_255_CHARS'))
         .test('is-valid-filename', function (value) {
           const isValid = validateName(value);
           return isValid ? true : this.createError({ message: validateNameError(value) });
         })
-        .required('Name is required')
-        .test('duplicate-name', 'Global environment already exists', validateEnvironmentName)
+        .required(() => i18n.t('VALIDATION.NAME_REQUIRED'))
+        .test('duplicate-name', () => i18n.t('VALIDATION.GLOBAL_ENVIRONMENT_ALREADY_EXISTS'), validateEnvironmentName)
     }),
     onSubmit: (values) => {
       dispatch(addGlobalEnvironment({ name: values.name }))
         .then(() => {
-          toast.success('Global environment created!');
+          toast.success(i18n.t('TOASTS.GLOBAL_ENV_CREATED'));
           onClose();
           // Call the callback if provided
           if (onEnvironmentCreated) {
             onEnvironmentCreated();
           }
         })
-        .catch(() => toast.error('An error occurred while creating the environment'));
+        .catch(() => toast.error(i18n.t('TOASTS.ERROR_CREATING_ENVIRONMENT')));
     }
   });
 

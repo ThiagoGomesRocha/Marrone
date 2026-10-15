@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { diffLines } from 'diff';
 import { IconCheck, IconX, IconCode, IconChevronDown, IconChevronUp } from '@tabler/icons';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../i18n';
 
 const CONTEXT_LINES = 2;
 const EXPAND_CHUNK_SIZE = 20;
@@ -114,10 +115,10 @@ const DiffView = ({ originalCode, newCode, onAccept, onReject, status, contentTy
     }
     return (
       <div className="diff-actions">
-        <button className="diff-btn reject" onClick={onReject} title="Dismiss changes">
+        <button className="diff-btn reject" onClick={onReject} title={i18n.t('UI.DISMISS_CHANGES')}>
           <IconX size={12} />
         </button>
-        <button className="diff-btn accept" onClick={onAccept} title="Apply changes" disabled={disableAccept}>
+        <button className="diff-btn accept" onClick={onAccept} title={i18n.t('UI.APPLY_CHANGES')} disabled={disableAccept}>
           <IconCheck size={12} /> Apply
         </button>
       </div>
@@ -154,12 +155,12 @@ const DiffView = ({ originalCode, newCode, onAccept, onReject, status, contentTy
               <div className="expand-gutter">
                 <div className="expand-buttons">
                   {!isAtTop && (
-                    <button className="expand-btn" onClick={() => expandUp(hunk.startIndex, hunk.count)} title="Expand up">
+                    <button className="expand-btn" onClick={() => expandUp(hunk.startIndex, hunk.count)} title={i18n.t('UI.EXPAND_UP')}>
                       <IconChevronUp size={10} />
                     </button>
                   )}
                   {!isAtBottom && (
-                    <button className="expand-btn" onClick={() => expandDown(hunk.startIndex, hunk.count)} title="Expand down">
+                    <button className="expand-btn" onClick={() => expandDown(hunk.startIndex, hunk.count)} title={i18n.t('UI.EXPAND_DOWN')}>
                       <IconChevronDown size={10} />
                     </button>
                   )}

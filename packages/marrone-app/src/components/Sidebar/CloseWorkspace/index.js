@@ -4,6 +4,7 @@ import Modal from 'components/Modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { IconFolder } from '@tabler/icons';
 import { closeWorkspaceAction } from 'providers/ReduxStore/slices/workspaces/actions';
+import i18n from '../../../i18n';
 
 const CloseWorkspace = ({ workspaceUid, onClose }) => {
   const dispatch = useDispatch();
@@ -13,30 +14,30 @@ const CloseWorkspace = ({ workspaceUid, onClose }) => {
   const onConfirm = async () => {
     try {
       if (!workspace) {
-        toast.error('Workspace not found');
+        toast.error(i18n.t('TOASTS.WORKSPACE_NOT_FOUND'));
         onClose();
         return;
       }
       if (workspace.type === 'default') {
-        toast.error('Cannot close the default workspace');
+        toast.error(i18n.t('TOASTS.CANNOT_CLOSE_DEFAULT_WORKSPACE'));
         onClose();
         return;
       }
 
       await dispatch(closeWorkspaceAction(workspace.uid));
-      toast.success('Workspace closed');
+      toast.success(i18n.t('TOASTS.WORKSPACE_CLOSED'));
       onClose();
     } catch (error) {
       console.error('Error closing workspace:', error);
-      toast.error('An error occurred while closing the workspace');
+      toast.error(i18n.t('TOASTS.ERROR_CLOSING_WORKSPACE'));
     }
   };
 
   return (
     <Modal
       size="sm"
-      title="Close Workspace"
-      confirmText="Close"
+      title={i18n.t('UI.CLOSE_WORKSPACE')}
+      confirmText={i18n.t('UI.CLOSE')}
       handleConfirm={onConfirm}
       handleCancel={onClose}
     >

@@ -14,6 +14,7 @@ import AdditionalParams from '../AdditionalParams/index';
 import SensitiveFieldWarning from 'components/SensitiveFieldWarning';
 import { savePreferences } from 'providers/ReduxStore/slices/app';
 import toast from 'react-hot-toast';
+import i18n from '../../../../../i18n';
 
 const OAuth2AuthorizationCode = ({ save, item = {}, request, handleRun, updateAuth, collection, folder, disabled }) => {
   const dispatch = useDispatch();
@@ -136,11 +137,11 @@ const OAuth2AuthorizationCode = ({ save, item = {}, request, handleRun, updateAu
       })
     )
       .then(() => {
-        toast.success('Preference updated successfully');
+        toast.success(i18n.t('TOASTS.PREFERENCE_UPDATED'));
       })
       .catch((err) => {
         console.error(err);
-        toast.error('Failed to update preference');
+        toast.error(i18n.t('TOASTS.FAILED_UPDATE_PREFERENCE'));
       });
   };
 

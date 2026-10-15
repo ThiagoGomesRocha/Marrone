@@ -9,6 +9,7 @@ import ActionIcon from 'ui/ActionIcon';
 import CreateApiSpec from 'components/Sidebar/ApiSpecs/CreateApiSpec';
 import ApiSpecs from 'components/Sidebar/ApiSpecs';
 import SidebarSection from 'components/Sidebar/SidebarSection';
+import i18n from '../../../../i18n';
 
 const ApiSpecsSection = () => {
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ const ApiSpecsSection = () => {
   const handleOpenApiSpec = () => {
     dispatch(openApiSpec()).catch((err) => {
       console.error(err);
-      toast.error('An error occurred while opening the API spec');
+      toast.error(i18n.t('TOASTS.ERROR_OPENING_API_SPEC'));
     });
   };
 
@@ -65,7 +66,7 @@ const ApiSpecsSection = () => {
       )}
       <SidebarSection
         id="api-specs"
-        title="API Specs"
+        title={i18n.t('UI.API_SPECS')}
         icon={IconFileCode}
         actions={sectionActions}
         className="api-specs-section"

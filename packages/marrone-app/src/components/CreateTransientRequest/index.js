@@ -11,6 +11,7 @@ import { get } from 'lodash';
 import { formatIpcError } from 'utils/common/error';
 import { PRESET_REQUEST_TYPES as REQUEST_TYPE } from 'utils/common/constants';
 import { useTranslation } from 'react-i18next';
+import i18n from '../../i18n';
 
 const CreateTransientRequest = ({ collectionUid }) => {
   const { t } = useTranslation();
@@ -58,7 +59,7 @@ const CreateTransientRequest = ({ collectionUid }) => {
         itemUid: null,
         isTransient: true
       })
-    ).catch((err) => toast.error(formatIpcError(err) || 'An error occurred while adding the request'));
+    ).catch((err) => toast.error(formatIpcError(err) || i18n.t('TOASTS.ERROR_ADDING_REQUEST')));
   }, [dispatch, collection, collectionPresets.requestUrl]);
 
   const handleCreateGraphQLRequest = useCallback(() => {
@@ -85,7 +86,7 @@ const CreateTransientRequest = ({ collectionUid }) => {
           }
         }
       })
-    ).catch((err) => toast.error(formatIpcError(err) || 'An error occurred while adding the request'));
+    ).catch((err) => toast.error(formatIpcError(err) || i18n.t('TOASTS.ERROR_ADDING_REQUEST')));
   }, [dispatch, collection, collectionPresets.requestUrl]);
 
   const handleCreateWebSocketRequest = useCallback(() => {
@@ -104,7 +105,7 @@ const CreateTransientRequest = ({ collectionUid }) => {
         itemUid: null,
         isTransient: true
       })
-    ).catch((err) => toast.error(formatIpcError(err) || 'An error occurred while adding the request'));
+    ).catch((err) => toast.error(formatIpcError(err) || i18n.t('TOASTS.ERROR_ADDING_REQUEST')));
   }, [dispatch, collection, collectionPresets.requestUrl]);
 
   const handleCreateGrpcRequest = useCallback(() => {
@@ -122,7 +123,7 @@ const CreateTransientRequest = ({ collectionUid }) => {
         itemUid: null,
         isTransient: true
       })
-    ).catch((err) => toast.error(formatIpcError(err) || 'An error occurred while adding the request'));
+    ).catch((err) => toast.error(formatIpcError(err) || i18n.t('TOASTS.ERROR_ADDING_REQUEST')));
   }, [dispatch, collection, collectionPresets.requestUrl]);
 
   const handleItemClick = (type) => {

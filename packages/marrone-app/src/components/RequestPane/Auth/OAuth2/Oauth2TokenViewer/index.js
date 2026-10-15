@@ -4,6 +4,7 @@ import StyledWrapper from './StyledWrapper';
 import { IconChevronDown, IconChevronRight, IconCopy, IconCheck } from '@tabler/icons';
 import { getAllVariables } from 'utils/collections/index';
 import { interpolate } from '@marrone/common';
+import i18n from '../../../../../i18n';
 
 const TokenSection = ({ title, token }) => {
   if (!token) return null;
@@ -55,7 +56,7 @@ const TokenSection = ({ title, token }) => {
               <button
                 onClick={() => handleCopy(token)}
                 className="p-1 oauth2-copy-button rounded"
-                title="Copy token"
+                title={i18n.t('UI.COPY_TOKEN')}
               >
                 {copied
                   ? <IconCheck size={16} className="text-green-700" />
@@ -140,9 +141,9 @@ const Oauth2TokenViewer = ({ collection, item, url, credentialsId, handleRun }) 
           <pre className="text-red-600 dark:text-red-400">Error fetching token. Check network logs for more details.</pre>
         ) : (
           <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 shadow-sm">
-            <TokenSection title="Access Token" token={creds.access_token} />
-            <TokenSection title="Refresh Token" token={creds.refresh_token} />
-            <TokenSection title="ID Token" token={creds.id_token} />
+            <TokenSection title={i18n.t('UI.ACCESS_TOKEN')} token={creds.access_token} />
+            <TokenSection title={i18n.t('UI.REFRESH_TOKEN')} token={creds.refresh_token} />
+            <TokenSection title={i18n.t('UI.ID_TOKEN')} token={creds.id_token} />
             {(creds.token_type || creds.scope) ? (
               <div className="mt-3 p-2 bg-gray-50 dark:bg-gray-800 rounded-lg text-xs">
                 <div className="grid grid-cols-2 gap-2">

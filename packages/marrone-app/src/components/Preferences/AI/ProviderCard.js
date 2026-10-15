@@ -14,6 +14,7 @@ import {
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { clearAiApiKey, getAiApiKey, setAiApiKey, testAiProvider } from 'utils/ai';
+import i18n from '../../../i18n';
 
 const OpenAiLogo = (props) => (
   <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
@@ -93,9 +94,9 @@ const ProviderCard = ({
       onStatusChange?.(status);
       setEditing(false);
       setKeyDraft('');
-      toast.success(`${provider.label} API key removed`);
+      toast.success(i18n.t('TOASTS.API_KEY_REMOVED', { name: provider.label }));
     } catch (err) {
-      toast.error(err.message || 'Failed to clear API key');
+      toast.error(err.message || i18n.t('TOASTS.FAILED_CLEAR_API_KEY'));
     }
   };
 

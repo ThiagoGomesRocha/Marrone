@@ -11,6 +11,7 @@ import { IconEye, IconEyeOff, IconRefresh } from '@tabler/icons';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import SystemProxy from './SystemProxy';
+import i18n from '../../../i18n';
 
 const ProxySettings = ({ close }) => {
   const { t } = useTranslation();
@@ -23,7 +24,7 @@ const ProxySettings = ({ close }) => {
     pac: Yup.object({
       source: Yup.string()
         .optional()
-        .test('pac-url', 'Specify a valid PAC URL', (value) => {
+        .test('pac-url', () => i18n.t('VALIDATION.PAC_URL_INVALID'), (value) => {
           if (!value) return true;
           try {
             const u = new URL(value);
@@ -88,7 +89,7 @@ const ProxySettings = ({ close }) => {
             proxy: validatedProxy
           })
         ).catch(() => {
-          toast.error('Failed to save preferences');
+          toast.error(i18n.t('TOASTS.FAILED_SAVE_PREFERENCES'));
         });
       })
       .catch((error) => {
@@ -107,8 +108,8 @@ const ProxySettings = ({ close }) => {
 
   const handleRefreshPac = () => {
     dispatch(refreshPacCache())
-      .then(() => toast.success('PAC cache refreshed'))
-      .catch(() => toast.error('Failed to refresh PAC cache'));
+      .then(() => toast.success(i18n.t('TOASTS.PAC_CACHE_REFRESHED')))
+      .catch(() => toast.error(i18n.t('TOASTS.FAILED_REFRESH_PAC_CACHE')));
   };
 
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -442,7 +443,7 @@ const ProxySettings = ({ close }) => {
                             formik.setFieldValue('pac.source', fileUrl);
                           }
                         })
-                        .catch(() => toast.error('Failed to open file picker'));
+                        .catch(() => toast.error(i18n.t('TOASTS.FAILED_OPEN_FILE_PICKER')));
                     }}
                   >
                     {formik.values.pac.source

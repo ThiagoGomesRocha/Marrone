@@ -10,6 +10,7 @@ import Button from 'ui/Button';
 import MethodBadge from 'ui/MethodBadge';
 import StatusBadge from 'ui/StatusBadge';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../../i18n';
 
 const getStatusBucket = (statusCode) => {
   if (statusCode >= 200 && statusCode < 300) return '2xx';
@@ -106,7 +107,7 @@ const MatchTracePanel = ({ entry }) => {
 
       {trace?.availableRoutes?.length ? (
         <div className="match-trace-section">
-          <div className="match-trace-section-title">Available routes</div>
+          <div className="match-trace-section-title">{i18n.t('UI.AVAILABLE_ROUTES')}</div>
           <ul className="match-trace-list">
             {trace.availableRoutes.map((route) => (
               <li key={route} title={route}>{route}</li>
@@ -117,7 +118,7 @@ const MatchTracePanel = ({ entry }) => {
 
       {trace?.candidates?.length ? (
         <div className="match-trace-section">
-          <div className="match-trace-section-title">Responses considered</div>
+          <div className="match-trace-section-title">{i18n.t('UI.RESPONSES_CONSIDERED')}</div>
           {trace.candidates.map((candidate) => {
             const candidateKey = candidate.responseUid || candidate.responseName;
 

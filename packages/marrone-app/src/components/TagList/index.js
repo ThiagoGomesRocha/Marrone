@@ -4,6 +4,7 @@ import StyledWrapper from './StyledWrapper';
 import SingleLineEditor from 'components/SingleLineEditor/index';
 import ToolHint from 'components/ToolHint/index';
 import { useTheme } from 'providers/Theme/index';
+import i18n from '../../i18n';
 
 const TagList = ({ tagsHintList = [], handleAddTag, tags, handleRemoveTag, onSave, handleValidation, collectionFormat, inheritedTags = [] }) => {
   const { displayedTheme } = useTheme();
@@ -77,7 +78,7 @@ const TagList = ({ tagsHintList = [], handleAddTag, tags, handleRemoveTag, onSav
                   <span className="tag-text" title={_tag}>
                     {_tag}
                   </span>
-                  <span className="tag-remove" title="Remove tag" onClick={() => handleRemoveTag(_tag)}>
+                  <span className="tag-remove" title={i18n.t('UI.REMOVE_TAG')} onClick={() => handleRemoveTag(_tag)}>
                     <IconX size={12} strokeWidth={2} aria-hidden="true" />
                   </span>
                 </button>

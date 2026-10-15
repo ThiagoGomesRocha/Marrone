@@ -9,6 +9,7 @@ import MultiLineEditor from 'components/MultiLineEditor';
 import { COPY_FEEDBACK_MS, JSON_MODE, OBJECT_CELL_MAX_HEIGHT } from '../constants';
 import { holdsVariableReference, isObjectOrArray, valueToEditorText } from '../utils';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../i18n';
 
 const VariableValue = ({
   value,
@@ -91,8 +92,8 @@ const VariableValue = ({
             type="button"
             className={`row-action-btn ${isSelected ? 'is-pinned' : ''}`}
             onClick={onOpenObject}
-            title="Open in drawer"
-            aria-label="Open object in drawer"
+            title={i18n.t('UI.OPEN_IN_DRAWER')}
+            aria-label={i18n.t('UI.OPEN_OBJECT_IN_DRAWER')}
             data-testid="variable-object-preview"
           >
             <IconArrowsDiagonal size={15} strokeWidth={1.5} />
@@ -116,7 +117,7 @@ const VariableValue = ({
           type="button"
           className={`row-action-btn ${copied ? 'copied' : ''}`}
           onClick={handleCopy}
-          title="Copy value"
+          title={i18n.t('UI.COPY_VALUE')}
           data-testid="variable-row-copy"
         >
           {copied

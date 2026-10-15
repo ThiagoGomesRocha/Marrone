@@ -23,6 +23,7 @@ import StyledWrapper from './StyledWrapper';
 import { useSidebarAccordion } from 'components/Sidebar/SidebarAccordionContext';
 import useSidebarSelectionClick from 'hooks/useSidebarSelectionClick';
 import { startBlockedDragTracking } from 'utils/dragBlockedCursor';
+import i18n from '../../../../../../i18n';
 
 const ExampleItem = ({ example, item, collection, depth, searchText, openBulkMenu, isItemMultiDragDisabled, multiDragCollections, multiDragItems }) => {
   const { dropdownContainerRef } = useSidebarAccordion();
@@ -146,7 +147,7 @@ const ExampleItem = ({ example, item, collection, depth, searchText, openBulkMen
     ) {
       setGenerateCodeItemModalOpen(true);
     } else {
-      toast.error('URL is required');
+      toast.error(i18n.t('TOASTS.URL_REQUIRED'));
     }
   };
 
@@ -162,7 +163,7 @@ const ExampleItem = ({ example, item, collection, depth, searchText, openBulkMen
     }));
     dispatch(saveRequest(item.uid, collection.uid, true))
       .then(() => {
-        toast.success(`Example renamed to "${newName}"`);
+        toast.success(i18n.t('TOASTS.EXAMPLE_RENAMED', { name: newName }));
         setShowRenameModal(false);
       });
   };
@@ -270,13 +271,13 @@ const ExampleItem = ({ example, item, collection, depth, searchText, openBulkMen
       {showRenameModal && (
         <Modal
           size="sm"
-          title="Rename Example"
+          title={i18n.t('UI.RENAME_EXAMPLE')}
           handleCancel={() => {
             setShowRenameModal(false);
             setEditName(example.name); // Reset to original name on cancel
           }}
           handleConfirm={() => handleRenameConfirm(editName)}
-          confirmText="Rename"
+          confirmText={i18n.t('UI.RENAME')}
           cancelText="Cancel"
           confirmDisabled={!editName || !editName.trim()}
         >
@@ -291,7 +292,7 @@ const ExampleItem = ({ example, item, collection, depth, searchText, openBulkMen
               className="textbox mt-2"
               value={editName}
               onChange={(e) => setEditName(e.target.value)}
-              placeholder="Enter example name..."
+              placeholder={i18n.t('UI.ENTER_EXAMPLE_NAME_DOTS')}
               autoFocus
               required
             />

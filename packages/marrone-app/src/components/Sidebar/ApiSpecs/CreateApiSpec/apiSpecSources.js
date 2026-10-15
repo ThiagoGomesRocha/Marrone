@@ -1,6 +1,7 @@
 import { sanitizeName, validateName } from 'utils/common/regex';
 import path, { normalizePath } from 'utils/common/path';
 import { isWindowsOS } from 'utils/common/platform';
+import i18n from '../../../../i18n';
 
 export const API_SPEC_SOURCE = {
   BLANK: 'blank',
@@ -26,19 +27,19 @@ export const DEFAULT_API_SPEC_EXTENSION = '.yaml';
 
 export const getApiSpecRejectionReason = (data, specType) => {
   if (specType !== 'openapi') {
-    return 'That URL does not return an OpenAPI specification.';
+    return i18n.t('VALIDATION.URL_NOT_OPENAPI');
   }
 
   const readVersion = (value) => (typeof value === 'string' ? value.trim().slice(0, 20) : '');
 
   const swaggerVersion = readVersion(data?.swagger);
   if (swaggerVersion) {
-    return `Swagger ${swaggerVersion} is not supported. Provide an OpenAPI 3.x specification.`;
+    return i18n.t('VALIDATION.SWAGGER_UNSUPPORTED', { version: swaggerVersion });
   }
 
   const version = readVersion(data?.openapi);
   if (!version.startsWith('3.')) {
-    return `OpenAPI ${version || 'version'} is not supported. Provide an OpenAPI 3.x specification.`;
+    return i18n.t('VALIDATION.OPENAPI_UNSUPPORTED', { version: version || 'version' });
   }
 
   return null;

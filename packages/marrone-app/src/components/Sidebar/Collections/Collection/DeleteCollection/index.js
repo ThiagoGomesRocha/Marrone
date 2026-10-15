@@ -6,6 +6,7 @@ import { IconAlertTriangle } from '@tabler/icons';
 import { removeCollectionFromWorkspaceAction } from 'providers/ReduxStore/slices/workspaces/actions';
 import { findCollectionByUid } from 'utils/collections/index';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../../../i18n';
 
 const DeleteCollection = ({ onClose, collectionUid, workspaceUid }) => {
   const dispatch = useDispatch();
@@ -17,18 +18,18 @@ const DeleteCollection = ({ onClose, collectionUid, workspaceUid }) => {
 
   const onConfirm = async () => {
     if (!collection || !workspace) {
-      toast.error('Collection or workspace not found');
+      toast.error(i18n.t('TOASTS.COLLECTION_OR_WORKSPACE_NOT_FOUND'));
       onClose();
       return;
     }
 
     try {
       await dispatch(removeCollectionFromWorkspaceAction(workspace.uid, collection.pathname, { deleteFiles: true }));
-      toast.success(`Deleted "${collection.name}" collection`);
+      toast.success(i18n.t('TOASTS.DELETED_COLLECTION', { name: collection.name }));
       onClose();
     } catch (error) {
       console.error('Error deleting collection:', error);
-      toast.error(error.message || 'An error occurred while deleting the collection');
+      toast.error(error.message || i18n.t('TOASTS.ERROR_DELETING_COLLECTION'));
     }
   };
 
@@ -40,8 +41,8 @@ const DeleteCollection = ({ onClose, collectionUid, workspaceUid }) => {
     <StyledWrapper>
       <Modal
         size="sm"
-        title="Delete Collection"
-        confirmText="Delete"
+        title={i18n.t('UI.DELETE_COLLECTION')}
+        confirmText={i18n.t('UI.DELETE')}
         cancelText="Cancel"
         confirmButtonColor="danger"
         confirmDisabled={!isConfirmed}

@@ -9,6 +9,7 @@ import StyledWrapper from './StyledWrapper';
 import FilePickerEditor from 'components/FilePickerEditor/index';
 import SingleLineEditor from 'components/SingleLineEditor/index';
 import MultiLineEditor from 'components/MultiLineEditor';
+import i18n from '../../../i18n';
 
 const FileBody = ({ item, collection }) => {
   const dispatch = useDispatch();
@@ -73,18 +74,18 @@ const FileBody = ({ item, collection }) => {
         <thead>
           <tr>
             <td>
-              <div title="File" className="flex items-center justify-start">File</div>
+              <div title={i18n.t('UI.FILE')} className="flex items-center justify-start">{i18n.t('UI.FILE')}</div>
             </td>
             <td>
-              <div title="Content-Type" className="flex items-center justify-start">Content-Type</div>
+              <div title={i18n.t('UI.CONTENT_TYPE')} className="flex items-center justify-start">{i18n.t('UI.CONTENT_TYPE')}</div>
             </td>
             <td>
-              <div title="Selected" className="flex items-center justify-start min-w-0">
-                <span className="truncate">Selected</span>
+              <div title={i18n.t('UI.SELECTED')} className="flex items-center justify-start min-w-0">
+                <span className="truncate">{i18n.t('UI.SELECTED')}</span>
               </div>
             </td>
             <td>
-              <div title="Description" className="flex items-center justify-start">Description</div>
+              <div title={i18n.t('UI.DESCRIPTION')} className="flex items-center justify-start">{i18n.t('UI.DESCRIPTION')}</div>
             </td>
             <td></td>
           </tr>

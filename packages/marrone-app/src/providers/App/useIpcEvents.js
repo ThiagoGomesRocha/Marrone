@@ -220,10 +220,10 @@ const useIpcEvents = () => {
 
     const removeDisplayErrorListener = ipcRenderer.on('main:display-error', (error) => {
       if (typeof error === 'string') {
-        return toast.error(error || 'Something went wrong!');
+        return toast.error(error || i18n.t('TOASTS.SOMETHING_WRONG'));
       }
       if (typeof error === 'object') {
-        return toast.error(error.message || 'Something went wrong!');
+        return toast.error(error.message || i18n.t('TOASTS.SOMETHING_WRONG'));
       }
     });
 

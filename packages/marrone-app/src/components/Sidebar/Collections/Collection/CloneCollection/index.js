@@ -15,6 +15,7 @@ import { IconArrowBackUp, IconEdit } from '@tabler/icons';
 import { findCollectionByUid } from 'utils/collections/index';
 import get from 'lodash/get';
 import { useTranslation } from 'react-i18next';
+import i18n from '../../../../../i18n';
 
 const CloneCollection = ({ onClose, collectionUid }) => {
   const { t } = useTranslation();
@@ -42,18 +43,18 @@ const CloneCollection = ({ onClose, collectionUid }) => {
     },
     validationSchema: Yup.object({
       collectionName: Yup.string()
-        .min(1, 'must be at least 1 character')
-        .max(255, 'must be 255 characters or less')
-        .required('collection name is required'),
+        .min(1, () => i18n.t('VALIDATION.MIN_1_CHAR'))
+        .max(255, () => i18n.t('VALIDATION.MAX_255_CHARS'))
+        .required(() => i18n.t('VALIDATION.COLLECTION_NAME_REQUIRED')),
       collectionFolderName: Yup.string()
-        .min(1, 'must be at least 1 character')
-        .max(255, 'must be 255 characters or less')
+        .min(1, () => i18n.t('VALIDATION.MIN_1_CHAR'))
+        .max(255, () => i18n.t('VALIDATION.MAX_255_CHARS'))
         .test('is-valid-collection-name', function (value) {
           const isValid = validateName(value);
           return isValid ? true : this.createError({ message: validateNameError(value) });
         })
-        .required('folder name is required'),
-      collectionLocation: Yup.string().min(1, 'location is required').required('location is required')
+        .required(() => i18n.t('VALIDATION.FOLDER_NAME_REQUIRED')),
+      collectionLocation: Yup.string().min(1, () => i18n.t('VALIDATION.LOCATION_REQUIRED')).required(() => i18n.t('VALIDATION.LOCATION_REQUIRED'))
     }),
     onSubmit: (values) => {
       dispatch(
@@ -65,10 +66,10 @@ const CloneCollection = ({ onClose, collectionUid }) => {
         )
       )
         .then(() => {
-          toast.success('Collection created!');
+          toast.success(i18n.t('TOASTS.COLLECTION_CREATED'));
           onClose();
         })
-        .catch((e) => toast.error('An error occurred while creating the collection - ' + e));
+        .catch((e) => toast.error(i18n.t('TOASTS.ERROR_CREATING_COLLECTION') + ' - ' + e));
     }
   });
 

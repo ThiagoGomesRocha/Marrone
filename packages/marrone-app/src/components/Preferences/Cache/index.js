@@ -11,6 +11,7 @@ import ToggleSwitch from 'components/ToggleSwitch';
 import ActionIcon from 'ui/ActionIcon';
 import StyledWrapper from './StyledWrapper';
 import { formatSize } from 'utils/common';
+import i18n from '../../../i18n';
 
 const Cache = () => {
   const { t } = useTranslation();
@@ -25,7 +26,7 @@ const Cache = () => {
 
   const persist = (next) => {
     dispatch(savePreferences({ ...preferences, cache: next })).catch(() => {
-      toast.error('Failed to update cache preferences');
+      toast.error(i18n.t('TOASTS.FAILED_UPDATE_CACHE_PREFERENCES'));
     });
   };
 
@@ -50,16 +51,16 @@ const Cache = () => {
   const handleClearFileCache = async () => {
     try {
       await clearFileCache();
-      toast.success('File cache cleared');
+      toast.success(i18n.t('TOASTS.FILE_CACHE_CLEARED'));
     } catch (error) {
-      toast.error('Failed to clear file cache');
+      toast.error(i18n.t('TOASTS.FAILED_CLEAR_FILE_CACHE'));
     }
   };
 
   const handleClearSslSession = () => {
     dispatch(clearHttpHttpsAgentCache())
-      .then(() => toast.success('SSL session cache cleared'))
-      .catch(() => toast.error('Failed to clear SSL session cache'));
+      .then(() => toast.success(i18n.t('TOASTS.SSL_CACHE_CLEARED')))
+      .catch(() => toast.error(i18n.t('TOASTS.FAILED_CLEAR_SSL_CACHE')));
   };
 
   return (

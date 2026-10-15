@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { updateResponseExampleStatusCode, updateResponseExampleStatusText } from 'providers/ReduxStore/slices/collections';
 import statusCodePhraseMap from 'components/ResponsePane/StatusCode/get-status-code-phrase';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../../i18n';
 
 const ResponseExampleStatusInput = ({ item, collection, exampleUid, status, statusText }) => {
   const dispatch = useDispatch();
@@ -75,7 +76,7 @@ const ResponseExampleStatusInput = ({ item, collection, exampleUid, status, stat
         data-testid="response-status-input"
       >
         {!currentCode ? (
-          <option value="">Select status</option>
+          <option value="">{i18n.t('UI.SELECT_STATUS')}</option>
         ) : null}
         {options.map((option) => (
           <option key={option.code} value={option.code}>

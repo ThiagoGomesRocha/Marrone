@@ -41,6 +41,7 @@ import { useResizableColumns } from 'hooks/useResizableColumns';
 import ColumnSortHeader from 'components/EditableTable/ColumnSortHeader';
 import { useReconcileSavedEnvironment } from './useReconcileSavedEnvironment';
 import InheritedVariableRow from './InheritedVariableRow';
+import i18n from '../../i18n';
 
 const MIN_H = 35 * 2;
 const MIN_COLUMN_WIDTH = 80;
@@ -426,7 +427,7 @@ const EnvironmentVariablesTable = ({
           then: (schema) => schema.optional(),
           otherwise: (schema) =>
             schema
-              .required('Name cannot be empty')
+              .required(() => i18n.t('VALIDATION.NAME_EMPTY'))
               .matches(
                 variableNameRegex,
                 'Name contains invalid characters. Must only contain alphanumeric characters, "-", "_", "." and cannot start with a digit.'
@@ -684,7 +685,7 @@ const EnvironmentVariablesTable = ({
 
     const hasChanges = JSON.stringify(activeCurrent.map(stripEnvVarUid)) !== JSON.stringify(activeSaved.map(stripEnvVarUid));
     if (!hasChanges) {
-      toast.error('No changes to save');
+      toast.error(i18n.t('TOASTS.NO_CHANGES'));
       return;
     }
 
@@ -699,7 +700,7 @@ const EnvironmentVariablesTable = ({
     });
 
     if (hasValidationErrors) {
-      toast.error('Please fix validation errors before saving');
+      toast.error(i18n.t('TOASTS.FIX_VALIDATION_ERRORS'));
       return;
     }
 
@@ -713,7 +714,7 @@ const EnvironmentVariablesTable = ({
 
     onSave(cloneDeep(persistedVariables))
       .then(() => {
-        toast.success('Changes saved successfully');
+        toast.success(i18n.t('TOASTS.CHANGES_SAVED'));
 
         // Preserve unsaved edits on the other tab across the post-save reinit via the
         // draft: keep it if the other tab is still dirty, clear it otherwise.
@@ -747,7 +748,7 @@ const EnvironmentVariablesTable = ({
       })
       .catch((error) => {
         console.error(error);
-        toast.error('An error occurred while saving the changes');
+        toast.error(i18n.t('TOASTS.ERROR_SAVING_CHANGES'));
       });
   }, [formik.values, environment.variables, onSave, onDraftChange, onDraftClear, setIsModified, isSecretTab, buildSortOrder, sortMode]);
 
@@ -801,7 +802,7 @@ const EnvironmentVariablesTable = ({
     const hasChanges
       = JSON.stringify(persistedVariables.map(stripEnvVarUid)) !== JSON.stringify(savedValues.map(stripEnvVarUid));
     if (!hasChanges) {
-      toast.error('No changes to save');
+      toast.error(i18n.t('TOASTS.NO_CHANGES'));
       return;
     }
 
@@ -816,7 +817,7 @@ const EnvironmentVariablesTable = ({
     });
 
     if (hasValidationErrors) {
-      toast.error('Please fix validation errors before saving');
+      toast.error(i18n.t('TOASTS.FIX_VALIDATION_ERRORS'));
       return;
     }
 
@@ -827,7 +828,7 @@ const EnvironmentVariablesTable = ({
 
     onSave(cloneDeep(persistedVariables))
       .then(() => {
-        toast.success('Changes saved successfully');
+        toast.success(i18n.t('TOASTS.CHANGES_SAVED'));
         onDraftClear();
 
         sortOrderRef.current = buildSortOrder(persistedVariables, sortMode);
@@ -849,7 +850,7 @@ const EnvironmentVariablesTable = ({
       })
       .catch((error) => {
         console.error(error);
-        toast.error('An error occurred while saving the changes');
+        toast.error(i18n.t('TOASTS.ERROR_SAVING_CHANGES'));
       });
   }, [formik.values, environment.variables, onSave, onDraftClear, setIsModified, isSecretTab, buildSortOrder, sortMode]);
 

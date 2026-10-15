@@ -17,6 +17,7 @@ import Dropdown from 'components/Dropdown';
 import StyledWrapper from './StyledWrapper';
 import Button from 'ui/Button';
 import { useTranslation } from 'react-i18next';
+import i18n from '../../../../../../i18n';
 
 const RenameCollectionItem = ({ collectionUid, item, onClose }) => {
   const { t } = useTranslation();
@@ -43,18 +44,18 @@ const RenameCollectionItem = ({ collectionUid, item, onClose }) => {
     },
     validationSchema: Yup.object({
       name: Yup.string()
-        .min(1, 'must be at least 1 character')
-        .max(255, 'must be 255 characters or less')
-        .required('name is required'),
+        .min(1, () => i18n.t('VALIDATION.MIN_1_CHAR'))
+        .max(255, () => i18n.t('VALIDATION.MAX_255_CHARS'))
+        .required(() => i18n.t('VALIDATION.NAME_REQUIRED')),
       filename: Yup.string()
-        .min(1, 'must be at least 1 character')
-        .max(255, 'must be 255 characters or less')
-        .required('name is required')
+        .min(1, () => i18n.t('VALIDATION.MIN_1_CHAR'))
+        .max(255, () => i18n.t('VALIDATION.MAX_255_CHARS'))
+        .required(() => i18n.t('VALIDATION.NAME_REQUIRED'))
         .test('is-valid-name', function (value) {
           const isValid = validateName(value);
           return isValid ? true : this.createError({ message: validateNameError(value) });
         })
-        .test('not-reserved', `The file names "collection" and "folder" are reserved in marrone`, (value) => !['collection', 'folder'].includes(value))
+        .test('not-reserved', () => i18n.t('VALIDATION.RESERVED_NAMES'), (value) => !['collection', 'folder'].includes(value))
     }),
     onSubmit: async (values) => {
       // if there is unsaved changes in the request,
@@ -81,7 +82,7 @@ const RenameCollectionItem = ({ collectionUid, item, onClose }) => {
         }
         onClose();
       } catch (error) {
-        toast.error(error.message || 'An error occurred while renaming');
+        toast.error(error.message || i18n.t('TOASTS.ERROR_RENAMING'));
       }
     }
   });

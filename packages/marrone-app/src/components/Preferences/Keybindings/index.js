@@ -21,6 +21,7 @@ import {
 import { Tooltip } from 'react-tooltip';
 import ToggleSwitch from 'components/ToggleSwitch/index';
 import toast from 'react-hot-toast';
+import i18n from '../../../i18n';
 
 // Modifier tokens used in stored preferences.
 // These are lowercase on purpose so they match persisted values.
@@ -566,7 +567,7 @@ const Keybindings = () => {
     };
 
     dispatch(savePreferences(updatedPreferences));
-    toast.success('All shortcuts have been reset to default');
+    toast.success(i18n.t('TOASTS.SHORTCUTS_RESET'));
   };
 
   const startEditing = (action) => {

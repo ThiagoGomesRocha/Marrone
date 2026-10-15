@@ -14,6 +14,7 @@ import { useTranslation } from 'react-i18next';
 import classnames from 'classnames';
 import StyledWrapper from './StyledWrapper';
 import ActionIcon from 'ui/ActionIcon/index';
+import i18n from '../../../i18n';
 
 const getTitleText = ({ isResponseTooLarge, isStreamingResponse }) => {
   if (isStreamingResponse) {
@@ -21,7 +22,7 @@ const getTitleText = ({ isResponseTooLarge, isStreamingResponse }) => {
   }
 
   if (isResponseTooLarge) {
-    return 'Response size exceeds 5MB limit. Cannot save as example.';
+    return i18n.t('TOASTS.RESPONSE_SIZE_LIMIT');
   }
 
   return 'Save current response as example';
@@ -50,14 +51,14 @@ const ResponseBookmark = forwardRef(({ item, collection, responseSize, children 
 
   const handleSaveClick = (e) => {
     if (!response || response.error) {
-      toast.error('No valid response to save as example');
+      toast.error(i18n.t('TOASTS.NO_VALID_RESPONSE_EXAMPLE'));
       e.preventDefault();
       e.stopPropagation();
       return;
     }
 
     if (isResponseTooLarge) {
-      toast.error('Response size exceeds 5MB limit. Cannot save as example.');
+      toast.error(i18n.t('TOASTS.RESPONSE_SIZE_LIMIT'));
       e.preventDefault();
       e.stopPropagation();
       return;
@@ -130,7 +131,7 @@ const ResponseBookmark = forwardRef(({ item, collection, responseSize, children 
     }));
 
     setShowSaveResponseExampleModal(false);
-    toast.success(`Example "${name}" created successfully`);
+    toast.success(i18n.t('TOASTS.EXAMPLE_CREATED', { name }));
   };
 
   const disabledMessage = getTitleText({

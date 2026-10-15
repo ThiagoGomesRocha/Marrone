@@ -3,6 +3,7 @@ import Portal from 'components/Portal';
 import Modal from 'components/Modal';
 import { useState } from 'react';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../i18n';
 
 const SaveFileErrorModal = ({ error }) => {
   const [showModal, setShowModal] = useState(true);
@@ -13,7 +14,7 @@ const SaveFileErrorModal = ({ error }) => {
           <StyledWrapper>
             <Modal
               size="sm"
-              title="Save File Error"
+              title={i18n.t('UI.SAVE_FILE_ERROR')}
               hideFooter={true}
               hideCancel={true}
               handleCancel={() => {

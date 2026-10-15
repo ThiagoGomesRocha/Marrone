@@ -13,6 +13,7 @@ import { findCollectionByUid, findEnvironmentInCollection } from 'utils/collecti
 import toast from 'react-hot-toast';
 import WSRequestBodyMode from '../BodyMode/index';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../../i18n';
 
 const codemirrorMode = {
   text: 'application/text',
@@ -173,10 +174,10 @@ export const SingleWSMessage = ({
 
       const result = await queueWsMessage(item, col, environment, col?.runtimeVariables, index);
       if (!result.success) {
-        toast.error(result.error || 'Failed to send message');
+        toast.error(result.error || i18n.t('TOASTS.FAILED_SEND_MESSAGE'));
       }
     } catch (err) {
-      toast.error(err.message || 'Failed to send message');
+      toast.error(err.message || i18n.t('TOASTS.FAILED_SEND_MESSAGE'));
     }
   }, [collections]);
 

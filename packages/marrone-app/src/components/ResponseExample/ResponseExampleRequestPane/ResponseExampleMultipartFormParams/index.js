@@ -14,6 +14,7 @@ import MultiLineEditor from 'components/MultiLineEditor';
 import SingleLineEditor from 'components/SingleLineEditor';
 import MultipartFileChipsCell from 'components/MultipartFileChipsCell';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../../i18n';
 
 const fileBasename = (filePath) =>
   filePath ? path.basename(normalizePath(String(filePath))) : '';
@@ -222,7 +223,7 @@ const ResponseExampleMultipartFormParams = ({ item, collection, exampleUid, edit
             <button
               className="upload-btn ml-1"
               onClick={() => handleBrowseFiles(row, onChange)}
-              title="Select File"
+              title={i18n.t('UI.SELECT_FILE')}
             >
               <IconUpload size={16} />
             </button>

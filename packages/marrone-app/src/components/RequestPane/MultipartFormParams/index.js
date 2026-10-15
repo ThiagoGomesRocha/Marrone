@@ -21,6 +21,7 @@ import path, { getRelativePathWithinBasePath, normalizePath } from 'utils/common
 import { getMultipartAutoContentType } from 'utils/common/multipartContentType';
 import { usePersistedState } from 'hooks/usePersistedState';
 import { useTrackScroll } from 'hooks/useTrackScroll';
+import i18n from '../../../i18n';
 
 const fileBasename = (filePath) =>
   filePath ? path.basename(normalizePath(String(filePath))) : '';
@@ -206,7 +207,7 @@ const MultipartFormParams = ({ item, collection }) => {
               data-testid="multipart-file-upload"
               className="upload-btn ml-1"
               onClick={() => handleBrowseFiles(row, onChange)}
-              title="Select File"
+              title={i18n.t('UI.SELECT_FILE')}
             >
               <IconUpload size={16} />
             </button>

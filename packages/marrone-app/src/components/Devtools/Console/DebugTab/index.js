@@ -6,6 +6,7 @@ import {
   clearDebugErrors
 } from 'providers/ReduxStore/slices/logs';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../../i18n';
 
 const ErrorRow = ({ error, isSelected, onClick }) => {
   const formatTime = (timestamp) => {
@@ -75,7 +76,7 @@ const DebugTab = () => {
         {debugErrors.length === 0 ? (
           <div className="debug-empty">
             <IconBug size={48} strokeWidth={1} />
-            <p>No errors</p>
+            <p>{i18n.t('UI.NO_ERRORS')}</p>
             <span>console.error() calls will appear here</span>
           </div>
         ) : (

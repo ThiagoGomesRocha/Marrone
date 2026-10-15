@@ -7,6 +7,7 @@ import ApiSpecItem from './ApiSpecItem';
 import StyledWrapper from './StyledWrapper';
 import { matchLoadedApiSpecs } from './matchLoadedApiSpecs';
 import toast from 'react-hot-toast';
+import i18n from '../../../i18n';
 
 const LinkStyle = styled.span`
   color: ${(props) => props.theme['text-link']};
@@ -32,7 +33,7 @@ const ApiSpecs = () => {
 
   const handleOpenApiSpec = () => {
     dispatch(openApiSpec()).catch(
-      (err) => console.log(err) && toast.error('An error occurred while opening the API spec')
+      (err) => console.log(err) && toast.error(i18n.t('TOASTS.ERROR_OPENING_API_SPEC'))
     );
   };
 

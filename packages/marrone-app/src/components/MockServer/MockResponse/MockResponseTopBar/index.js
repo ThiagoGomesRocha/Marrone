@@ -11,6 +11,7 @@ import {
 import get from 'lodash/get';
 import Button from 'ui/Button';
 import { getMockResponseDescriptionError, getMockResponseNameInputError } from 'utils/mock-server/mock-responses';
+import i18n from '../../../../i18n';
 
 const MockResponseTopBar = ({
   item,
@@ -69,7 +70,7 @@ const MockResponseTopBar = ({
                     value={example?.name || ''}
                     onChange={handleNameChange}
                     className="example-input example-input-name"
-                    placeholder="Mock response name"
+                    placeholder={i18n.t('UI.MOCK_RESPONSE_NAME')}
                     autoFocus
                     data-testid="mock-response-name-input"
                   />
@@ -82,7 +83,7 @@ const MockResponseTopBar = ({
                     value={example?.description || ''}
                     onChange={handleDescriptionChange}
                     className="example-input example-input-description"
-                    placeholder="Description"
+                    placeholder={i18n.t('UI.DESCRIPTION')}
                     rows={3}
                     data-testid="mock-response-description-input"
                   />
