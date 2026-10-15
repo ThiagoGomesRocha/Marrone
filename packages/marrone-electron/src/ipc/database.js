@@ -45,7 +45,11 @@ const registerDatabaseIpc = () => {
 
     return credentialsStore.setCredentials(sgbdId, {
       username: params.username,
-      password: params.password
+      // Só repassa a senha quando ela veio de fato: ausente significa "manter a senha
+      // guardada", e string vazia significa "apagar" (ver DatabaseCredentialsStore).
+      ...(params.password === undefined ? {} : { password: params.password }),
+      authType: params.authType,
+      domain: params.domain
     });
   });
 

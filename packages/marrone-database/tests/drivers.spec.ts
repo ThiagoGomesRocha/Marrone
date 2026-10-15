@@ -30,6 +30,7 @@ import { buildClientConfig } from '../src/drivers/postgres';
 import { buildConnectionConfig } from '../src/drivers/mysql';
 import {
   buildTediousConfig,
+  normalizeAuthType,
   parseMssqlParameters,
   mapTediousRow,
   tediousTypeNameFor,
@@ -88,6 +89,81 @@ describe('drivers — funções puras (sem banco, sem driver instalado)', () => 
       expect(config.options.rowCollectionOnRequestCompletion).toBe(true);
       expect(config.authentication.options.userName).toBe('usuario');
       expect(config.authentication.options.password).toBe('senha-secreta');
+    });
+
+    describe('autenticação (Fase 3) — SQL Server vs Windows/NTLM', () => {
+      test('sem authType a config é IDÊNTICA à de antes da feature (compatibilidade)', () => {
+        const config = buildTediousConfig(baseOptions('mssql://10.0.0.5:1433/mydb'));
+
+        expect(config.authentication.type).toBe('default');
+        // O domain NÃO pode aparecer nem como chave: a config do caminho antigo é comparada
+        // por igualdade estrita em alguns pontos e um campo novo a mudaria em silêncio.
+        expect('domain' in config.authentication.options).toBe(false);
+      });
+
+      test('authType \'sql\' explícito continua em type \'default\'', () => {
+        const config = buildTediousConfig({
+          ...baseOptions('mssql://10.0.0.5:1433/mydb'),
+          authType: 'sql'
+        });
+
+        expect(config.authentication.type).toBe('default');
+        expect('domain' in config.authentication.options).toBe(false);
+      });
+
+      test('authType \'windows\' vira type \'ntlm\' com usuário, senha e domínio', () => {
+        const config = buildTediousConfig({
+          ...baseOptions('mssql://10.0.0.5:1433/mydb'),
+          username: 'joao.silva',
+          authType: 'windows',
+          domain: 'EMPRESA'
+        });
+
+        expect(config.authentication.type).toBe('ntlm');
+        expect(config.authentication.options.userName).toBe('joao.silva');
+        expect(config.authentication.options.password).toBe('senha-secreta');
+        // O domínio é o campo que faz o NTLM funcionar numa rede sem AD (nome da máquina).
+        expect(config.authentication.options.domain).toBe('EMPRESA');
+      });
+
+      test('authType \'windows\' SEM domínio envia domain vazio, e não undefined', () => {
+        const config = buildTediousConfig({
+          ...baseOptions('mssql://10.0.0.5:1433/mydb'),
+          authType: 'windows'
+        });
+
+        // O tedious valida a presença da chave no NTLM: `undefined` falharia na validação.
+        expect(config.authentication.options.domain).toBe('');
+      });
+
+      test('um authType desconhecido NÃO vira NTLM por acidente', () => {
+        const config = buildTediousConfig({
+          ...baseOptions('mssql://10.0.0.5:1433/mydb'),
+          authType: 'kerberos' as unknown as 'sql'
+        });
+
+        expect(config.authentication.type).toBe('default');
+      });
+
+      test('normalizeAuthType: só "windows" sai do padrão', () => {
+        expect(normalizeAuthType('windows')).toBe('windows');
+        expect(normalizeAuthType('sql')).toBe('sql');
+        expect(normalizeAuthType(undefined)).toBe('sql');
+        expect(normalizeAuthType('')).toBe('sql');
+        expect(normalizeAuthType('WINDOWS')).toBe('sql');
+      });
+
+      test('trocar a autenticação não mexe no resto da config (TLS, timeouts, banco)', () => {
+        const sqlConfig = buildTediousConfig(baseOptions('mssql://10.0.0.5:1433/mydb'));
+        const windowsConfig = buildTediousConfig({
+          ...baseOptions('mssql://10.0.0.5:1433/mydb'),
+          authType: 'windows',
+          domain: 'EMPRESA'
+        });
+
+        expect(windowsConfig.options).toEqual(sqlConfig.options);
+        expect(windowsConfig.server).toBe(sqlConfig.server);
+      });
     });
 
     describe('parseMssqlParameters — array posicional → parâmetros nomeados', () => {
@@ -439,6 +515,28 @@ describe('pipeline (driver falso — sem banco)', () => {
 
     expect(key).not.toContain('segredo');
     expect(key).toContain('joao');
+  });
+
+  test('a chave distingue forma de autenticação e domínio (não são segredo)', () => {
+    const { ConnectionPool } = require('../src/pool');
+    const connectionString = 'mssql://localhost:1433/mydb';
+
+    const sqlKey = ConnectionPool.buildKey('mssql', connectionString, { username: 'joao' });
+    const windowsKey = ConnectionPool.buildKey('mssql', connectionString, {
+      username: 'joao',
+      authType: 'windows',
+      domain: 'EMPRESA'
+    });
+
+    // Sem esta distinção, uma conexão já aberta com autenticação do banco seria
+    // reaproveitada por um pedido de autenticação do Windows do mesmo usuário.
+    expect(sqlKey).not.toBe(windowsKey);
+    expect(windowsKey).toContain('windows');
+    expect(windowsKey).toContain('EMPRESA');
+    // A senha nunca entra, nem no caminho novo.
+    expect(
+      ConnectionPool.buildKey('mssql', connectionString, { username: 'joao', password: 'segredo', authType: 'windows' })
+    ).not.toContain('segredo');
   });
 
   test('dbQuery devolve objeto único quando há um registro (RF05)', async () => {

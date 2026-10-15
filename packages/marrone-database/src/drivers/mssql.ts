@@ -165,7 +165,15 @@ export const shouldUseSqlBatch = (sql: string): boolean => parseMssqlParameters(
 
 export interface TediousConfig {
   server: string;
-  authentication: { type: string; options: { userName: string; password: string } };
+  authentication: {
+    type: string;
+    options: {
+      userName: string;
+      password: string;
+      /** Só no NTLM (`authType: 'windows'`). */
+      domain?: string;
+    };
+  };
   options: {
     port: number;
     database: string;
@@ -177,19 +185,54 @@ export interface TediousConfig {
   };
 }
 
-/** Função pura — testável sem banco e sem o driver instalado. */
+/** Normaliza a forma de autenticação: qualquer coisa diferente de 'windows' é 'sql'. */
+export const normalizeAuthType = (authType: unknown): 'sql' | 'windows' =>
+  authType === 'windows' ? 'windows' : 'sql';
+
+/**
+ * Função pura — testável sem banco e sem o driver instalado.
+ *
+ * AUTENTICAÇÃO DO WINDOWS (NTLM)
+ * ------------------------------
+ * `tedious` não usa o token do Windows já logado (não há SSPI): com `type: 'ntlm'` ele
+ * negocia NTLM com o usuário, a senha e o DOMÍNIO informados. Ou seja, a senha continua
+ * sendo necessária — "logar como o usuário atual" sem senha não é suportado por este
+ * driver, e a UI diz isso.
+ *
+ * O domínio vai em `authentication.options.domain`. Numa rede sem Active Directory o
+ * domínio de uma conta local é o nome da máquina (`SEU-PC\joao.silva` → domain
+ * `SEU-PC`); sem o domínio, o NTLM autentica `userName` como conta do próprio
+ * servidor e a validação falha com usuário/senha correto — sintoma que engana.
+ *
+ * Com `authType: 'sql'` (o padrão) o comportamento é exatamente o anterior: `type:
+ * 'default'`, sem `domain` no objeto — nem como chave vazia, para o config seguir
+ * idêntico ao de antes quando ninguém usa a feature nova.
+ */
 export const buildTediousConfig = (options: DriverConnectOptions): TediousConfig => {
   const { host, port, database } = parseConnectionString(SGBD, options.connectionString);
+  const authType = normalizeAuthType(options.authType);
+
+  const authentication = authType === 'windows'
+    ? {
+        type: 'ntlm',
+        options: {
+          userName: options.username ?? '',
+          password: options.password ?? '',
+          // `?? ''` e não `undefined`: o tedious valida a presença da chave no NTLM.
+          domain: options.domain ?? ''
+        }
+      }
+    : {
+        type: 'default',
+        options: {
+          userName: options.username ?? '',
+          password: options.password ?? ''
+        }
+      };
 
   return {
     server: host,
-    authentication: {
-      type: 'default',
-      options: {
-        userName: options.username ?? '',
-        password: options.password ?? ''
-      }
-    },
+    authentication,
     options: {
       port,
       database,

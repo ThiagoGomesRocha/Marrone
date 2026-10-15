@@ -30,6 +30,14 @@ const ALGO_PREFIX = /^\$0[01]:/;
 /** Um valor está cifrado se começa com o marcador de algoritmo do encryption.js. */
 const isEncrypted = (value) => typeof value === 'string' && ALGO_PREFIX.test(value);
 
+/**
+ * Normaliza a forma de autenticação: só 'windows' é diferente do padrão.
+ *
+ * Ausente (ou qualquer outro valor) = 'sql', que é o comportamento de sempre — assim uma
+ * credencial gravada por uma versão anterior (sem esse campo) continua funcionando igual.
+ */
+const normalizeAuthType = (authType) => (authType === 'windows' ? 'windows' : 'sql');
+
 const normalizeSgbdId = (sgbdId) => {
   if (typeof sgbdId !== 'string' || sgbdId.trim() === '') {
     throw new Error('sgbdId é obrigatório e deve ser uma string não vazia.');
@@ -56,31 +64,56 @@ class DatabaseCredentialsStore {
 
   /**
    * Grava (ou substitui) as credenciais de um SGBD.
-   * @returns {{ sgbdId: string, username: string, hasPassword: boolean }} — nunca a senha.
+   *
+   * SENHA AUSENTE ≠ SENHA VAZIA. Se `credentials.password` vier `undefined`/`null`, a
+   * senha JÁ GUARDADA é preservada; se vier string vazia, a senha gravada passa a ser
+   * vazia (é como se apaga). A distinção importa: o formulário promete "deixe o campo
+   * vazio para manter a senha", e antes QUALQUER salvamento gravava string vazia —
+   * apagando a senha guardada em silêncio.
+   *
+   * @returns {{ sgbdId: string, username: string, authType: string, hasPassword: boolean }} — nunca a senha.
    */
   setCredentials(sgbdId, credentials = {}) {
     const id = normalizeSgbdId(sgbdId);
     const username = credentials.username === undefined || credentials.username === null
       ? ''
       : String(credentials.username);
-    const password = credentials.password === undefined || credentials.password === null
+    const passwordProvided = credentials.password !== undefined && credentials.password !== null;
+    const password = passwordProvided ? String(credentials.password) : '';
+    const domain = credentials.domain === undefined || credentials.domain === null
       ? ''
-      : String(credentials.password);
+      : String(credentials.domain);
+    const authType = normalizeAuthType(credentials.authType);
 
     const all = this._all();
+    const previous = all[id];
+    const passwordValue = passwordProvided
+      ? encryptStringSafe(password).value
+      : (previous?.password ?? encryptStringSafe('').value);
+
     all[id] = {
       username: encryptStringSafe(username).value,
-      password: encryptStringSafe(password).value
+      password: passwordValue,
+      // `authType` e `domain` NÃO são segredo (o domínio aparece até no usuário), então
+      // não passam pelo cifra — mas ficam no cofre junto da credencial porque são a mesma
+      // decisão de conexão. Só fazem sentido juntos: quem tem a senha tem a conta.
+      authType,
+      domain
     };
     this._save(all);
 
-    return { sgbdId: id, username, hasPassword: password.length > 0 };
+    return {
+      sgbdId: id,
+      username,
+      authType,
+      hasPassword: passwordProvided ? password.length > 0 : Boolean(previous?.password)
+    };
   }
 
   /**
    * Lê as credenciais em claro. Uso EXCLUSIVO do host, no momento de abrir a conexão —
    * este valor nunca deve ser enviado ao renderer nem ao sandbox de scripts.
-   * @returns {{ username: string, password: string } | null}
+   * @returns {{ username: string, password: string, authType: string, domain: string } | null}
    */
   getCredentials(sgbdId) {
     const id = normalizeSgbdId(sgbdId);
@@ -92,7 +125,10 @@ class DatabaseCredentialsStore {
 
     return {
       username: entry.username ? decryptStringSafe(entry.username).value : '',
-      password: entry.password ? decryptStringSafe(entry.password).value : ''
+      password: entry.password ? decryptStringSafe(entry.password).value : '',
+      // Entrada gravada por versão anterior (sem os campos) cai no padrão 'sql'.
+      authType: normalizeAuthType(entry.authType),
+      domain: entry.domain || ''
     };
   }
 
@@ -120,6 +156,9 @@ class DatabaseCredentialsStore {
     return Object.keys(all).map((id) => ({
       sgbdId: id,
       username: all[id].username ? decryptStringSafe(all[id].username).value : '',
+      // Devolvidos para a UI poder restaurar o formulário. Nenhum dos dois é segredo.
+      authType: normalizeAuthType(all[id].authType),
+      domain: all[id].domain || '',
       hasPassword: Boolean(all[id].password)
     }));
   }

@@ -33,6 +33,19 @@ relatórios de execução enriquecidos.
 
 ### Added
 
+- **Autenticação do Windows (NTLM) na conexão SQL Server.** Novo campo `authType`
+  (`'sql'` — padrão — ou `'windows'`) e `domain` em `DriverConnectOptions`; com
+  `authType: 'windows'` o driver monta `authentication: { type: 'ntlm', options: { userName,
+  password, domain } }` em vez de `type: 'default'`.
+  - **Na interface:** a aba *Settings > Database* ganhou o seletor *Tipo de autenticação*
+    (SQL Server Authentication / Windows Authentication) e o campo **Domínio**, que aparece
+    só com o Windows Authentication selecionado. A escolha é guardada no cofre junto da
+    credencial.
+  - **No CLI:** `MARRONE_DB_MSSQL_AUTH=windows` e `MARRONE_DB_MSSQL_DOMAIN=<DOMINIO>`.
+  - Em rede sem Active Directory o domínio de uma conta local é o **nome da máquina**
+    (`EMPRESA` para a conta `EMPRESA\joao.silva`).
+  - A opção aparece **apenas no SQL Server** — é o único driver do projeto que implementa
+    NTLM; oferecê-la para PostgreSQL/MySQL/Oracle/DB2 seria uma opção que não faz nada.
 - **Relatório JSON espelhando o HTML** (`generateJsonReport`). O `--reporter-json` do CLI
   (e o JSON exportado pela interface) gravava o objeto interno cru, sem CURL e sem nenhuma
   informação de banco; agora os dois relatórios saem da mesma transformação e trazem as
@@ -65,6 +78,11 @@ relatórios de execução enriquecidos.
 
 ### Fixed
 
+- **Salvar credenciais sem digitar a senha apagava a senha guardada.** O formulário dizia
+  "deixe o campo vazio para mantê-la", mas o `DatabaseCredentialsStore` gravava string vazia
+  em QUALQUER salvamento, apagando a senha em silêncio. Agora senha **ausente** preserva a
+  guardada e senha **vazia** (o campo enviado vazio) apaga de fato — que é o que o aviso
+  promete.
 - **Headers sensíveis passam a ser mascarados no relatório.** O CURL do relatório já
   substituía o valor de `Authorization`, `Cookie`, `X-Api-Key` e afins por `[REDACTED]`,
   mas as **tabelas de headers** do mesmo relatório mostravam o valor cru — o CURL dava uma
@@ -93,6 +111,27 @@ relatórios de execução enriquecidos.
 - O build do `@marrone/common` estava falhando por erros de tipo, o que deixava o `dist`
   desatualizado em silêncio e fazia a aba de banco sumir do relatório do CLI.
 - Suítes de teste destravadas após o rebrand e a migração para jsdom.
+
+### Limitações conhecidas
+
+- **A autenticação do Windows não foi validada contra um servidor real** — e não é possível
+  validá-la nesta máquina de desenvolvimento. O ambiente é um `WORKGROUP` (sem Active
+  Directory), e o SQL Server local só tem conta local. O Windows/SQL
+  Server não permite autenticação NTLM com uma conta **local** (SAM): o servidor recusa com
+  o erro 18452, registrado no log dele como *"Login failed. The login is from an untrusted
+  domain and cannot be used with Windows authentication."*
+  O que **foi** verificado: a requisição NTLM chega ao SQL Server e é avaliada por ele
+  (o erro é de avaliação de logon do servidor, não de configuração do driver), e a
+  comparação com o caminho de autenticação do banco produz mensagens distintas — o
+  `type: 'default'` falha com "senha não correspondeu", o `type: 'ntlm'` com "domínio não
+  confiável". A validação completa exige um servidor em domínio AD.
+  Observação: `sqlcmd -E` conecta nesta máquina porque usa SSPI/Negotiate com o token do
+  processo, e **não** NTLM — o `tedious` não tem SSPI, ele negocia usuário/senha/domínio
+  explicitamente.
+- **`DECIMAL`/`NUMERIC` no SQL Server perdem precisão** (limitação do `readNumeric` do
+  `tedious`, que converte para `number` antes de o pacote ver o valor). Vale em pg/mysql2/
+  Oracle/DB2 a promessa de "decimal volta como string"; no SQL Server, faça `CAST` para
+  texto no próprio SQL quando a precisão importar.
 
 ## [1.0.0] - 2026-10-11
 

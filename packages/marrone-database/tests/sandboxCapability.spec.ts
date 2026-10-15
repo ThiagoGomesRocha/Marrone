@@ -146,6 +146,56 @@ describe('createEnvironmentCredentialProvider (usado pelo CLI)', () => {
 
     expect(provider.getCredentials('mysql')).toEqual({ username: 'u', password: 'p' });
   });
+
+  describe('autenticação do Windows (Fase 3)', () => {
+    test('AUTH=windows liga o NTLM e traz o domínio', () => {
+      const provider = createEnvironmentCredentialProvider({
+        MARRONE_DB_MSSQL_USER: 'joao.silva',
+        MARRONE_DB_MSSQL_PASSWORD: 'segredo',
+        MARRONE_DB_MSSQL_AUTH: 'windows',
+        MARRONE_DB_MSSQL_DOMAIN: 'EMPRESA'
+      } as Record<string, string | undefined>);
+
+      expect(provider.getCredentials('mssql')).toEqual({
+        username: 'joao.silva',
+        password: 'segredo',
+        authType: 'windows',
+        domain: 'EMPRESA'
+      });
+    });
+
+    test('sem AUTH=windows o resultado é EXATAMENTE o de antes da feature', () => {
+      const provider = createEnvironmentCredentialProvider({
+        MARRONE_DB_MSSQL_USER: 'joao',
+        MARRONE_DB_MSSQL_PASSWORD: 'segredo',
+        // Valor que não é 'windows' não deve ligar nada.
+        MARRONE_DB_MSSQL_AUTH: 'sql'
+      } as Record<string, string | undefined>);
+
+      expect(provider.getCredentials('mssql')).toEqual({ username: 'joao', password: 'segredo' });
+    });
+
+    test('AUTH=windows sem DOMAIN devolve domínio vazio, não undefined', () => {
+      const provider = createEnvironmentCredentialProvider({
+        MARRONE_DB_MSSQL_USER: 'joao',
+        MARRONE_DB_MSSQL_PASSWORD: 'segredo',
+        MARRONE_DB_MSSQL_AUTH: 'windows'
+      } as Record<string, string | undefined>);
+
+      const credentials = provider.getCredentials('mssql')!;
+
+      expect(credentials.authType).toBe('windows');
+      expect(credentials.domain).toBe('');
+    });
+
+    test('a dica cita as variáveis de autenticação do Windows', () => {
+      const provider = createEnvironmentCredentialProvider({} as Record<string, string | undefined>);
+      const hint = provider.credentialsHint!('mssql');
+
+      expect(hint).toContain('MARRONE_DB_MSSQL_AUTH');
+      expect(hint).toContain('MARRONE_DB_MSSQL_DOMAIN');
+    });
+  });
 });
 
 describe('createSandboxCapability', () => {

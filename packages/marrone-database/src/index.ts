@@ -164,7 +164,14 @@ export const dbConnect = async (
   }
 
   const pool = getPool();
-  const credentials: Credentials = { username: options.username, password: options.password };
+  const credentials: Credentials = {
+    username: options.username,
+    password: options.password,
+    // Forma de autenticação e domínio seguem junto com a credencial: a chave do pool e a
+    // config do driver dependem dos dois (ver DriverConnectOptions e ConnectionPool.buildKey).
+    authType: options.authType,
+    domain: options.domain
+  };
 
   // Valida host/porta/database — e RECUSA credenciais embutidas na URL — antes de
   // tocar em qualquer driver. Falha cedo, com mensagem clara.

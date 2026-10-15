@@ -107,7 +107,15 @@ describe('Preferences > Database (F4 / F5)', () => {
     await waitFor(() => {
       expect(mock.calls).toContainEqual([
         'database:credentials:set',
-        { sgbdId: 'postgres', username: 'joao', password: 'segredo' }
+        {
+          sgbdId: 'postgres',
+          username: 'joao',
+          password: 'segredo',
+          // Fora do SQL Server a autenticação é sempre a do banco ('sql') e não há domínio
+          // — a UI manda os campos explícitos para não gravar lixo no cofre.
+          authType: 'sql',
+          domain: ''
+        }
       ]);
     });
 
@@ -152,5 +160,132 @@ describe('Preferences > Database (F4 / F5)', () => {
     expect(await screen.findByText(/Catálogo indisponível/)).toBeInTheDocument();
     // cai para a lista local e continua funcional
     expect(await screen.findByLabelText('Banco de dados')).toBeInTheDocument();
+  });
+
+  /**
+   * Autenticação do Windows (Fase 3).
+   *
+   * Estes testes existem porque a opção é CONDICIONAL: só o SQL Server implementa NTLM, e
+   * o campo de domínio só faz sentido com o Windows Authentication selecionado. Um teste
+   * que não cobrisse o "não aparece" deixaria passar exatamente o erro que estraga a tela:
+   * oferecer Windows Authentication para PostgreSQL.
+   */
+  describe('autenticação do Windows (SQL Server)', () => {
+    const selectDatabase = async (sgbdId) => {
+      const select = await screen.findByLabelText('Banco de dados');
+      fireEvent.change(select, { target: { value: sgbdId } });
+      return select;
+    };
+
+    test('o seletor de autenticação NÃO aparece em bancos que não são SQL Server', async () => {
+      render(<Database />);
+
+      expect(await screen.findByLabelText('Banco de dados')).toBeInTheDocument();
+      expect(screen.queryByText('Tipo de autenticação')).not.toBeInTheDocument();
+      expect(screen.queryByRole('radio', { name: /Windows Authentication/ })).not.toBeInTheDocument();
+    });
+
+    test('no SQL Server o seletor aparece e o domínio começa escondido', async () => {
+      render(<Database />);
+      await selectDatabase('mssql');
+
+      expect(await screen.findByText('Tipo de autenticação')).toBeInTheDocument();
+      expect(screen.getByRole('radio', { name: /SQL Server Authentication/ })).toBeChecked();
+      // Só aparece com o Windows Authentication selecionado.
+      expect(screen.queryByLabelText('Domínio')).not.toBeInTheDocument();
+    });
+
+    test('escolher Windows Authentication revela o campo de domínio', async () => {
+      render(<Database />);
+      await selectDatabase('mssql');
+
+      fireEvent.click(screen.getByRole('radio', { name: /Windows Authentication/ }));
+
+      expect(await screen.findByLabelText('Domínio')).toBeInTheDocument();
+      expect(screen.getByLabelText('Usuário (conta do Windows)')).toBeInTheDocument();
+    });
+
+    test('salvar como Windows Authentication envia authType e domínio ao cofre', async () => {
+      const mock = createIpcMock();
+      window.ipcRenderer = { invoke: mock.invoke };
+
+      render(<Database />);
+      await selectDatabase('mssql');
+
+      fireEvent.click(screen.getByRole('radio', { name: /Windows Authentication/ }));
+      fireEvent.change(await screen.findByLabelText('Usuário (conta do Windows)'), { target: { value: 'joao.silva' } });
+      fireEvent.change(screen.getByLabelText('Senha'), { target: { value: 'segredo' } });
+      fireEvent.change(screen.getByLabelText('Domínio'), { target: { value: 'EMPRESA' } });
+      fireEvent.click(screen.getByText('Salvar'));
+
+      await waitFor(() => {
+        expect(mock.calls).toContainEqual([
+          'database:credentials:set',
+          {
+            sgbdId: 'mssql',
+            username: 'joao.silva',
+            password: 'segredo',
+            authType: 'windows',
+            domain: 'EMPRESA'
+          }
+        ]);
+      });
+    });
+
+    test('voltar para SQL Server Authentication não envia domínio (nada de lixo no cofre)', async () => {
+      const mock = createIpcMock();
+      window.ipcRenderer = { invoke: mock.invoke };
+
+      render(<Database />);
+      await selectDatabase('mssql');
+
+      fireEvent.click(screen.getByRole('radio', { name: /Windows Authentication/ }));
+      fireEvent.change(await screen.findByLabelText('Domínio'), { target: { value: 'EMPRESA' } });
+      fireEvent.click(screen.getByRole('radio', { name: /SQL Server Authentication/ }));
+      fireEvent.click(screen.getByText('Salvar'));
+
+      await waitFor(() => {
+        const saved = mock.calls.filter(([channel]) => channel === 'database:credentials:set');
+        expect(saved).toHaveLength(1);
+        expect(saved[saved.length - 1][1]).toMatchObject({ sgbdId: 'mssql', authType: 'sql', domain: '' });
+      });
+    });
+
+    test('a escolha gravada é restaurada ao reabrir o formulário', async () => {
+      const mock = createIpcMock({
+        credentials: [
+          { sgbdId: 'mssql', username: 'joao.silva', authType: 'windows', domain: 'EMPRESA', hasPassword: true }
+        ]
+      });
+      window.ipcRenderer = { invoke: mock.invoke };
+
+      render(<Database />);
+      await selectDatabase('mssql');
+
+      expect(await screen.findByRole('radio', { name: /Windows Authentication/ })).toBeChecked();
+      expect(screen.getByLabelText('Domínio')).toHaveValue('EMPRESA');
+      expect(screen.getByLabelText('Usuário (conta do Windows)')).toHaveValue('joao.silva');
+    });
+
+    test('salvar com o campo de senha vazio NÃO manda a chave password (senha preservada)', async () => {
+      const mock = createIpcMock({
+        credentials: [{ sgbdId: 'mssql', username: 'joao', authType: 'sql', domain: '', hasPassword: true }]
+      });
+      window.ipcRenderer = { invoke: mock.invoke };
+
+      render(<Database />);
+      await selectDatabase('mssql');
+
+      fireEvent.change(await screen.findByLabelText('Usuário'), { target: { value: 'joao' } });
+      fireEvent.click(screen.getByText('Salvar'));
+
+      await waitFor(() => {
+        const saved = mock.calls.filter(([channel]) => channel === 'database:credentials:set');
+        expect(saved).toHaveLength(1);
+        // A chave ausente significa "manter a senha guardada" no main process; enviar
+        // string vazia apagaria a senha (era o bug).
+        expect(saved[0][1]).not.toHaveProperty('password');
+      });
+    });
   });
 });

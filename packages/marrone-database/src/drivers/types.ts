@@ -34,12 +34,32 @@ export interface DriverConnection {
   close(): Promise<void>;
 }
 
+/**
+ * Forma de autenticação aceita pelos drivers.
+ *
+ * - `sql`     — usuário e senha do próprio SGBD. É o PADRÃO (ausente = `sql`), então
+ *               nenhuma configuração existente muda de comportamento.
+ * - `windows` — autenticação do Windows (NTLM). Hoje só o SQL Server implementa.
+ */
+export type DriverAuthType = 'sql' | 'windows';
+
 export interface DriverConnectOptions {
   /** String de conexão SEM credenciais (host/porta/database). */
   connectionString: string;
   /** Vem do cofre do sistema, resolvido pelo host. Nunca do arquivo da coleção. */
   username?: string;
   password?: string;
+  /**
+   * Forma de autenticação. Ausente equivale a `sql` (compatibilidade).
+   */
+  authType?: DriverAuthType;
+  /**
+   * Domínio da conta, usado só com `authType: 'windows'`.
+   *
+   * Numa rede SEM Active Directory (workgroup) o domínio de uma conta local é o nome da
+   * máquina — ex.: `SEU-PC` para a conta `SEU-PC\joao.silva`.
+   */
+  domain?: string;
   connectTimeoutMs: number;
 }
 

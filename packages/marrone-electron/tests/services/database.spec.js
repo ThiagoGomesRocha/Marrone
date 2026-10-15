@@ -39,6 +39,7 @@ describe('vaultCredentialProvider — origem da credencial no app', () => {
   beforeEach(() => {
     credentialsStore.deleteCredentials('postgres');
     credentialsStore.deleteCredentials('oracle');
+    credentialsStore.deleteCredentials('mssql');
   });
 
   test('devolve o que está no cofre', () => {
@@ -46,7 +47,28 @@ describe('vaultCredentialProvider — origem da credencial no app', () => {
 
     expect(vaultCredentialProvider.getCredentials('postgres')).toEqual({
       username: 'joao',
-      password: 'segredo'
+      password: 'segredo',
+      // authType/domain acompanham a credencial (Fase 3); padrão 'sql'.
+      authType: 'sql',
+      domain: ''
+    });
+  });
+
+  // Este é o elo que faz a opção "Windows Authentication" da UI chegar ao driver: sem
+  // ele, o radio gravaria no cofre e o driver continuaria autenticando como 'sql'.
+  test('leva authType e domínio do cofre até quem abre a conexão', () => {
+    credentialsStore.setCredentials('mssql', {
+      username: 'joao.silva',
+      password: 'segredo',
+      authType: 'windows',
+      domain: 'EMPRESA'
+    });
+
+    expect(vaultCredentialProvider.getCredentials('mssql')).toEqual({
+      username: 'joao.silva',
+      password: 'segredo',
+      authType: 'windows',
+      domain: 'EMPRESA'
     });
   });
 

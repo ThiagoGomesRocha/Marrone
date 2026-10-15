@@ -18,9 +18,15 @@ const CredentialsForm = ({ databases, currentDatabase, onDatabaseChange, onSaved
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [hasStoredPassword, setHasStoredPassword] = useState(false);
+  // Forma de autenticação e domínio (Fase 3). Só têm efeito no SQL Server — é o único
+  // driver que implementa a autenticação do Windows (NTLM).
+  const [authType, setAuthType] = useState('sql');
+  const [domain, setDomain] = useState('');
   const [testConnectionString, setTestConnectionString] = useState(getExample(currentDatabase).connectionString);
   const [status, setStatus] = useState(null);
   const [busy, setBusy] = useState(false);
+
+  const isMssql = currentDatabase === 'mssql';
 
   // useCallback para manter as referências estáveis: sem isso o useEffect abaixo vira um loop
   // de dependências instáveis (aviso react-hooks/exhaustive-deps do ESLint do repo).
@@ -33,6 +39,9 @@ const CredentialsForm = ({ databases, currentDatabase, onDatabaseChange, onSaved
 
       setUsername(entry?.username || '');
       setHasStoredPassword(Boolean(entry?.hasPassword));
+      // Ausente/desconhecido = 'sql': é o padrão e o comportamento das versões anteriores.
+      setAuthType(entry?.authType === 'windows' ? 'windows' : 'sql');
+      setDomain(entry?.domain || '');
       // A senha em claro nunca é devolvida pelo main process: por isso o campo começa vazio.
       setPassword('');
     } catch (err) {
@@ -51,7 +60,17 @@ const CredentialsForm = ({ databases, currentDatabase, onDatabaseChange, onSaved
     setStatus(null);
 
     try {
-      await invoke('database:credentials:set', { sgbdId: currentDatabase, username, password });
+      await invoke('database:credentials:set', {
+        sgbdId: currentDatabase,
+        username,
+        // Campo vazio = MANTER a senha guardada; por isso a chave é omitida em vez de
+        // mandar string vazia (que apagaria a senha — ver DatabaseCredentialsStore).
+        ...(password ? { password } : {}),
+        // Só o SQL Server usa estes dois; nos demais mandamos 'sql' para não gravar uma
+        // configuração de autenticação que o driver não implementa.
+        authType: isMssql ? authType : 'sql',
+        domain: isMssql && authType === 'windows' ? domain : ''
+      });
       setHasStoredPassword(Boolean(password) || hasStoredPassword);
       setPassword('');
       setStatus({ type: 'success', message: `Credenciais de ${getSgbdLabel(currentDatabase)} guardadas no cofre do sistema.` });
@@ -72,6 +91,8 @@ const CredentialsForm = ({ databases, currentDatabase, onDatabaseChange, onSaved
       setUsername('');
       setPassword('');
       setHasStoredPassword(false);
+      setAuthType('sql');
+      setDomain('');
       setStatus({ type: 'success', message: 'Credenciais removidas.' });
       onSaved?.();
     } catch (err) {
@@ -129,19 +150,87 @@ const CredentialsForm = ({ databases, currentDatabase, onDatabaseChange, onSaved
         </select>
       </div>
 
+      {/*
+        Tipo de autenticação — SÓ no SQL Server. É o único driver do projeto que implementa
+        a autenticação do Windows (NTLM); oferecer a opção nos outros SGBDs seria uma opção
+        que não faz nada.
+      */}
+      {isMssql && (
+        <div className="mb-3">
+          <span className="block text-xs font-medium mb-1">Tipo de autenticação</span>
+          <div className="flex flex-col gap-1">
+            <label className="flex items-center gap-2 text-sm">
+              <input
+                type="radio"
+                name="database-auth-type"
+                value="sql"
+                checked={authType === 'sql'}
+                onChange={() => setAuthType('sql')}
+              />
+              SQL Server Authentication — usuário e senha do próprio banco
+            </label>
+            <label className="flex items-center gap-2 text-sm">
+              <input
+                type="radio"
+                name="database-auth-type"
+                value="windows"
+                checked={authType === 'windows'}
+                onChange={() => setAuthType('windows')}
+              />
+              Windows Authentication — conta do Windows (NTLM), com domínio
+            </label>
+          </div>
+        </div>
+      )}
+
       <div className="mb-3">
         <label className="block text-xs font-medium mb-1" htmlFor="database-username">
-          Usuário
+          {isMssql && authType === 'windows' ? 'Usuário (conta do Windows)' : 'Usuário'}
         </label>
         <input
           id="database-username"
           className="w-full p-1 rounded border text-sm"
           type="text"
           autoComplete="off"
+          placeholder={isMssql && authType === 'windows' ? 'joao.silva' : ''}
           value={username}
           onChange={(event) => setUsername(event.target.value)}
         />
+        {isMssql && authType === 'windows' && (
+          <p className="text-xs opacity-60 mt-1">
+            Informe só o nome da conta — o domínio vai no campo abaixo. Também funciona escrever a
+            conta já qualificada (<code>EMPRESA\joao.silva</code>) e deixar o domínio preenchido.
+          </p>
+        )}
       </div>
+
+      {/*
+        Campo de domínio: aparece SÓ com a autenticação do Windows selecionada.
+        Em rede sem Active Directory o domínio de uma conta local é o NOME DA MÁQUINA — sem
+        ele, o NTLM tenta autenticar uma conta do próprio servidor e a conexão falha mesmo
+        com usuário e senha corretos (sintoma que engana).
+      */}
+      {isMssql && authType === 'windows' && (
+        <div className="mb-3">
+          <label className="block text-xs font-medium mb-1" htmlFor="database-domain">
+            Domínio
+          </label>
+          <input
+            id="database-domain"
+            className="w-full p-1 rounded border text-sm"
+            type="text"
+            autoComplete="off"
+            placeholder="EMPRESA"
+            value={domain}
+            onChange={(event) => setDomain(event.target.value)}
+          />
+          <p className="text-xs opacity-60 mt-1">
+            Em rede sem Active Directory (workgroup), o domínio de uma conta local é o{' '}
+            <strong>nome da máquina</strong> — por exemplo <code>SEU-PC</code> para a conta{' '}
+            <code>SEU-PC\joao.silva</code>.
+          </p>
+        </div>
+      )}
 
       <div className="mb-3">
         <label className="block text-xs font-medium mb-1" htmlFor="database-password">
@@ -170,6 +259,12 @@ const CredentialsForm = ({ databases, currentDatabase, onDatabaseChange, onSaved
             ? 'Há uma senha guardada. Deixe o campo vazio para mantê-la ao salvar o usuário.'
             : 'A senha será cifrada pelo cofre do sistema (safeStorage).'}
         </p>
+        {isMssql && authType === 'windows' && (
+          <p className="text-xs opacity-60 mt-1">
+            A senha é necessária também na autenticação do Windows: o driver do SQL Server não usa o
+            token da sessão já aberta no sistema, ele negocia a conta informada aqui.
+          </p>
+        )}
       </div>
 
       <div className="mb-3">

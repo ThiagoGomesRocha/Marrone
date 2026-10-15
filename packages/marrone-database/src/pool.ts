@@ -17,6 +17,10 @@ export const DEFAULT_IDLE_TIMEOUT_MS = 5 * 60 * 1000;
 export interface Credentials {
   username?: string;
   password?: string;
+  /** 'sql' (padrão) ou 'windows'. Ver DriverAuthType em drivers/types.ts. */
+  authType?: string;
+  /** Domínio da conta, usado só com authType 'windows'. */
+  domain?: string;
 }
 
 export interface ConnectionPoolOptions {
@@ -44,7 +48,16 @@ export class ConnectionPool {
    * diagnóstico, e um segredo não deve poder vazar por ali.
    */
   static buildKey(sgbd: SgbdId, connectionString: string, credentials: Credentials = {}): string {
-    return `${sgbd}|${connectionString}|${credentials.username ?? ''}`;
+    // A SENHA NUNCA entra na chave — a chave pode aparecer em log de diagnóstico, e um
+    // segredo não deve poder vazar por ali.
+    //
+    // `authType` e `domain` ENTRAM porque não são segredo e mudam a conexão física
+    // resultante: sem eles, uma conexão já aberta com autenticação do SGBD seria
+    // reaproveitada por um pedido de autenticação do Windows do mesmo usuário.
+    const authType = credentials.authType ?? 'sql';
+    const domain = credentials.domain ?? '';
+
+    return `${sgbd}|${connectionString}|${credentials.username ?? ''}|${authType}|${domain}`;
   }
 
   get size(): number {
@@ -73,6 +86,8 @@ export class ConnectionPool {
       connectionString,
       username: credentials.username,
       password: credentials.password,
+      authType: credentials.authType as DriverConnectOptions['authType'],
+      domain: credentials.domain,
       connectTimeoutMs: this.connectTimeoutMs
     };
 

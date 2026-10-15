@@ -31,6 +31,10 @@ export interface ConnectionRef {
 export interface ConnectOptionsLike {
   username?: string;
   password?: string;
+  /** 'sql' (padrão) ou 'windows'. */
+  authType?: string;
+  /** Domínio da conta, usado com authType 'windows'. */
+  domain?: string;
   connectTimeoutMs?: number;
   idleTimeoutMs?: number;
 }
@@ -50,6 +54,10 @@ export interface ConnectionHandle {
 export interface ResolvedCredentials {
   username: string;
   password: string;
+  /** 'sql' (padrão) ou 'windows' (NTLM). Hoje só o SQL Server usa 'windows'. */
+  authType?: string;
+  /** Domínio da conta, usado com authType 'windows'. */
+  domain?: string;
 }
 
 /** De onde o host tira as credenciais. */
@@ -171,6 +179,13 @@ export const beginStatementFor = (sgbd: string): string => {
  * Nomes: `<PREFIXO>_<SGBD>_USER` e `<PREFIXO>_<SGBD>_PASSWORD`.
  * Exemplo: MARRONE_DB_POSTGRES_USER / MARRONE_DB_POSTGRES_PASSWORD
  *
+ * Autenticação do Windows no SQL Server (opcional):
+ * `<PREFIXO>_<SGBD>_AUTH=windows` e `<PREFIXO>_<SGBD>_DOMAIN=<DOMINIO>`.
+ * Exemplo: MARRONE_DB_MSSQL_AUTH=windows, MARRONE_DB_MSSQL_DOMAIN=EMPRESA
+ *
+ * Numa rede SEM Active Directory o domínio de uma conta local é o nome da máquina
+ * (`SEU-PC\joao.silva` → domain `SEU-PC`).
+ *
  * Não há variável genérica de propósito: uma credencial global seria aplicada a qualquer
  * SGBD, inclusive a um que você não pretendia conectar.
  */
@@ -180,28 +195,51 @@ export const createEnvironmentCredentialProvider = (
 ): CredentialProvider => {
   const varNames = (sgbdId: string) => {
     const key = sgbdId.toUpperCase();
-    return { user: `${prefix}_${key}_USER`, password: `${prefix}_${key}_PASSWORD` };
+    return {
+      user: `${prefix}_${key}_USER`,
+      password: `${prefix}_${key}_PASSWORD`,
+      auth: `${prefix}_${key}_AUTH`,
+      domain: `${prefix}_${key}_DOMAIN`
+    };
   };
 
   return {
     getCredentials(sgbdId: string): ResolvedCredentials | null {
-      const { user, password } = varNames(sgbdId);
+      const { user, password, auth, domain } = varNames(sgbdId);
       const username = env[user];
       const pass = env[password];
+      const authValue = env[auth];
+      const domainValue = env[domain];
 
-      if (username === undefined && pass === undefined) {
+      if (username === undefined && pass === undefined && authValue === undefined) {
         return null;
       }
 
-      return { username: username ?? '', password: pass ?? '' };
+      const resolved: ResolvedCredentials = {
+        username: username ?? '',
+        password: pass ?? ''
+      };
+
+      // Só 'windows' liga o NTLM. Qualquer outro valor (ou ausente) mantém o
+      // comportamento de sempre — usuário/senha do SGBD —, para não mudar o significado
+      // das variáveis que já existiam.
+      if (authValue === 'windows') {
+        resolved.authType = 'windows';
+        resolved.domain = domainValue ?? '';
+      }
+
+      return resolved;
     },
 
     credentialsHint(sgbdId: string): string {
-      const { user, password } = varNames(sgbdId);
+      const { user, password, auth, domain } = varNames(sgbdId);
 
       return (
         `Defina as variáveis de ambiente ${user} e ${password} `
-        + `(elas não são lidas de nenhum arquivo da coleção).`
+        + `(elas não são lidas de nenhum arquivo da coleção). `
+        + `Para autenticação do Windows no SQL Server, defina também ${auth}=windows e `
+        + `${domain}=<DOMINIO> — em rede sem Active Directory, o domínio de uma conta local `
+        + `é o nome da máquina.`
       );
     }
   };
@@ -371,7 +409,11 @@ export const createSandboxCapability = ({
 
       const connection = await database.dbConnect(sgbd, connectionString, {
         username: credentials.username,
-        password: credentials.password
+        password: credentials.password,
+        // Repassa a forma de autenticação e o domínio: sem isto a escolha "Windows
+        // Authentication" feita na UI/CLI nunca chegaria ao driver.
+        authType: credentials.authType,
+        domain: credentials.domain
       });
 
       // Guardamos só um identificador serializável: o objeto de conexão não atravessa a ponte.
