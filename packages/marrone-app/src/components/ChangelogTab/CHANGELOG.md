@@ -1,3 +1,41 @@
+## What's New in Marrone v1.1.1
+
+Versão de correção: os links do aplicativo e da documentação apontavam para endereços que não
+existem, e a documentação agora tem uma wiki.
+
+### Links corrigidos
+
+* **Repositório e suporte:** a tela de suporte, o menu Ajuda, a busca global, a barra de status
+  e o CLI apontavam para `github.com/marrone/marrone` — uma organização que **não existe** (404)
+  — e para um domínio de documentação que nunca resolveu. Agora apontam para este repositório,
+  para as issues e para a wiki.
+* **Aba API Docs:** o renderer da documentação vinha de um CDN que não resolve, então a aba abria
+  sem renderer nenhum. Voltou a funcionar.
+* **Documentação das features beta:** os links de AI, Akamai EdgeGrid, Mock Server e gRPC
+  Scripting apontavam para URLs curtas inexistentes.
+
+### Suporte sem Community
+
+* O grupo **Community** (GitHub, Discord, Twitter, LinkedIn) saiu da tela de suporte: eram os
+  canais do Bruno, o projeto de origem — o Discord e o Twitter apontavam para contas de outro
+  projeto, e o LinkedIn para uma empresa sem relação com o Marrone.
+
+### Wiki e documentação
+
+* **[Testes automatizados](https://github.com/ThiagoGomesRocha/Marrone/wiki/Testes)** — como
+  testar em cada camada (componente, banco, E2E) e como escrever os `test()` de uma coleção.
+* **[Scripts de banco de dados](https://github.com/ThiagoGomesRocha/Marrone/wiki/Banco-de-Dados)**
+  — `bru.db` nos cinco SGBDs, com o exemplo canônico e as armadilhas de cada um.
+* A referência de formato de coleção, scripting e runner continua sendo a
+  [documentação do Bruno](https://docs.usebruno.com).
+
+### Build
+
+* `npm run build:electron:win` voltou a funcionar no Windows: o script de empacotamento era
+  chamado de um jeito que o `cmd.exe` não entende.
+
+---
+
 ## What's New in Marrone v1.1.0
 
 Esta versão traz acesso a banco de dados direto dos seus scripts e relatórios de execução

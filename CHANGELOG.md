@@ -9,7 +9,7 @@ adota [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 > mudança de conteúdo entre as duas candidatas e a versão estável — os itens abaixo são o
 > conteúdo somado das três, reunido numa única seção.
 
-## [Não publicado]
+## [1.1.1] - 2026-10-15
 
 ### Added
 
