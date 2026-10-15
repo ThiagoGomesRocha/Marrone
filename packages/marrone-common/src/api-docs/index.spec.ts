@@ -126,7 +126,7 @@ describe('buildApiDocsHtml', () => {
     const html = buildApiDocsHtml('My API', '"data"');
     expect(html).not.toContain('gitCollectionUrl');
     expect(html).toContain('const collectionData = "data";');
-    expect(html).toContain('https://cdn.marrone.com/api-docs/api-docs.js');
+    expect(html).toContain('https://cdn.usebruno.com/api-docs/api-docs.js');
   });
 
   it('embeds gitCollectionUrl when provided', () => {

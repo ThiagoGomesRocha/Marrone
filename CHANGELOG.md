@@ -69,6 +69,15 @@ adota [Versionamento Semântico](https://semver.org/lang/pt-BR/).
   `'.' não é reconhecido como um comando interno ou externo`. Os scripts de empacotamento
   agora invocam `bash ./scripts/build-electron.sh <alvo>`, que funciona tanto no Windows
   quanto no macOS e no Linux.
+- **A aba API Docs carregava o renderer de um CDN que não existe.** O padrão era
+  `https://cdn.marrone.com/api-docs/api-docs.js` — host inventado pelo rename, que não
+  resolve; a documentação abria sem renderer nenhum. Agora aponta para
+  `https://cdn.usebruno.com/api-docs/api-docs.js`, verificado com requisição HTTP (200 no
+  `.js` e no `.css`). Isso é uma **dependência do CDN do projeto de origem** e está
+  registrado de propósito: o asset é estático e o conteúdo da coleção continua embutido no
+  HTML local (não trafega para o CDN), mas para independência total o caminho é hospedar os
+  próprios assets e trocar `DEFAULT_RENDERER_BASE_URL` (ou passar `rendererBaseUrl`).
+  O teste que fixava a URL errada foi corrigido junto.
 
 ### Observado, ainda não tratado
 

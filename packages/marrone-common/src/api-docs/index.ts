@@ -51,7 +51,15 @@ export interface ApiDocsDependencies {
 
 const YAML_DUMP_OPTIONS = { indent: 2, lineWidth: -1, noRefs: true, sortKeys: false };
 const JSESC_OPTIONS = { quotes: 'double', wrap: true };
-const DEFAULT_RENDERER_BASE_URL = 'https://cdn.marrone.com';
+// De onde o HTML da aba API Docs carrega o renderer (JS/CSS) que desenha a documentação.
+//
+// ⚠️ O padrão aponta para o CDN do Bruno: o Marrone não hospeda esses assets, e o valor
+// anterior (`cdn.marrone.com`) foi inventado pelo rename bruno -> marrone — o host não
+// resolve, então a aba API Docs abria sem renderer nenhum. Este é um asset estático
+// (o conteúdo da coleção vai embutido no HTML local, não trafega para o CDN), mas é uma
+// dependência de infraestrutura de terceiros: se o Marrone passar a hospedar os seus
+// próprios assets, mude aqui — ou passe `rendererBaseUrl` para sobrescrever.
+const DEFAULT_RENDERER_BASE_URL = 'https://cdn.usebruno.com';
 
 const isFolder = (item: TaggedItem): boolean => item.type === 'folder' || Array.isArray(item.items);
 const isRequestItem = (item: TaggedItem): boolean =>
