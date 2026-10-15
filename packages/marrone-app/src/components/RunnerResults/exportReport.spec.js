@@ -147,3 +147,27 @@ describe('buildRunnerReport — JSON exportado pela interface', () => {
     );
   });
 });
+
+describe('buildRunnerReport — idioma do relatório', () => {
+  test('segue o lang passado (pt-BR)', () => {
+    const { html } = buildRunnerReport({
+      items: [buildItem()],
+      exchanges: {},
+      runCompletionTime: '2024-01-02 03:04:05',
+      lang: 'pt-BR'
+    });
+
+    expect(html).toContain('Data e Hora');
+    expect(html).not.toContain('Date & Time');
+  });
+
+  test('padrão é inglês quando lang não é informado', () => {
+    const { html } = buildRunnerReport({
+      items: [buildItem()],
+      exchanges: {},
+      runCompletionTime: '2024-01-02 03:04:05'
+    });
+
+    expect(html).toContain('Date & Time');
+  });
+});

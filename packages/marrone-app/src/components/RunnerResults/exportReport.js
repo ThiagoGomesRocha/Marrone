@@ -57,6 +57,7 @@ const mapItemToRunnerResult = (item, exchange) => {
  * @param {string} opts.logo              data-URL logo
  * @param {boolean} opts.includeSensitive whether CURL commands include credential headers
  * @param {string} opts.runCompletionTime ISO timestamp
+ * @param {string} opts.lang              report language (en, pt-BR); defaults to en
  */
 export const buildRunnerReport = ({
   items = [],
@@ -65,7 +66,8 @@ export const buildRunnerReport = ({
   environment = null,
   logo = '',
   includeSensitive = false,
-  runCompletionTime = ''
+  runCompletionTime = '',
+  lang = 'en'
 }) => {
   const results = items.map((item) => mapItemToRunnerResult(item, exchanges[item.requestUid]));
   const summary = getRunnerSummary(results);
@@ -77,7 +79,8 @@ export const buildRunnerReport = ({
     environment,
     runCompletionTime,
     logo,
-    includeSensitive
+    includeSensitive,
+    lang
   });
 
   // O JSON exportado pela interface passa pelo MESMO gerador do CLI, então ele espelha o

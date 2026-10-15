@@ -10,6 +10,7 @@ import { IconRefresh, IconPlayerStop, IconCircleCheck, IconCircleX, IconCircleOf
 import useOverflowCollapse from 'hooks/useOverflowCollapse';
 import ResponsePane from './ResponsePane';
 import { buildRunnerReport } from './exportReport';
+import i18n from '../../i18n';
 import StyledWrapper from './StyledWrapper';
 import RunnerTags from './RunnerTags/index';
 import RunnerFilter from './RunnerFilter';
@@ -261,7 +262,8 @@ export default function RunnerResults({ collection }) {
         environment: null,
         logo: reportPrefs.logo || '',
         includeSensitive: reportPrefs.includeSensitive === true,
-        runCompletionTime: runnerInfo.runCompletionTime || new Date().toISOString()
+        runCompletionTime: runnerInfo.runCompletionTime || new Date().toISOString(),
+        lang: i18n.language
       });
 
       await window.ipcRenderer.invoke('renderer:save-report', {
