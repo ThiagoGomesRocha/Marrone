@@ -41,6 +41,7 @@ const buildRunnerResults = (databaseOperations: any[] = []) => [
         // runner/types). Uma fixture que coloca `name` dentro de `request` faz o teste
         // CONCORDAR com o bug que ele deveria pegar — foi o que aconteceu aqui.
         name: 'Pedido',
+        path: 'Pedidos/validar_pedido.bru',
         request: { method: 'POST', url: 'https://api.local/pedidos', headers: {} },
         response: { status: 200, headers: {}, data: {} },
         runDuration: 0.1,
@@ -132,10 +133,15 @@ describe('relatório — seção Database Operations', () => {
     expect(JSON.stringify(payload)).not.toContain('senha-em-claro');
   });
 
-  // Regressão: a primeira versão deste código espalhava `databaseOperations` cru dentro de
-  // cada result (via `...result`), então os parâmetros SEM redação vazavam por payload.results
-  // mesmo com a redação no topo. Este teste trava isso.
-  test('REGRESSÃO: as operações aparecem SÓ no topo do payload, nunca dentro de cada result', () => {
+  // Regressão (histórico): a primeira versão deste código espalhava `databaseOperations`
+  // CRU dentro de cada result (via `...result`), então os parâmetros SEM redação vazavam
+  // por payload.results mesmo com a redação no topo.
+  //
+  // O invariante MUDOU na Fase 2, de propósito: as operações agora APARECEM dentro de cada
+  // result, porque o bloco "Database Operation" é renderizado dentro de cada teste. O que
+  // continua proibido — e é o que este teste trava agora — é a versão CRUA: o que entra
+  // ali é a versão redigida.
+  test('REGRESSÃO: só a versão REDIGIDA das operações entra em payload.results', () => {
     const html = generateHtmlReport({
       runnerResults: buildRunnerResults([
         {
@@ -150,9 +156,43 @@ describe('relatório — seção Database Operations', () => {
 
     const payload = extractPayload(html);
 
-    expect(payload.results[0].results[0].databaseOperations).toBeUndefined();
+    // A operação está no nível da requisição — é o que a aba Tests renderiza...
+    expect(payload.results[0].results[0].databaseOperations).toHaveLength(1);
+    // ...mas REDIGIDA.
+    expect(payload.results[0].results[0].databaseOperations[0].parameters).toEqual(['***']);
+    // A visão consolidada do topo continua existindo.
     expect(payload.databaseOperations).toHaveLength(1);
-    expect(JSON.stringify(payload.results)).not.toContain('senha-em-claro');
+    // E o valor reconhecível não aparece em lugar nenhum do payload.
+    expect(JSON.stringify(payload)).not.toContain('senha-em-claro');
+  });
+
+  test('a operação dentro da requisição carrega o script e o rótulo do SGBD', () => {
+    const html = generateHtmlReport({
+      runnerResults: buildRunnerResults([
+        {
+          sgbd: 'mssql',
+          sql: 'SELECT id FROM usuarios WHERE id = @p1',
+          parameters: ['***'],
+          durationMs: 45,
+          status: 'success',
+          resultSummary: '1 registro'
+        }
+      ])
+    });
+
+    const [operation] = extractPayload(html).results[0].results[0].databaseOperations;
+
+    // O nome do arquivo sai do caminho da requisição — é o "Script:" do mockup.
+    expect(operation.script).toBe('validar_pedido.bru');
+    expect(operation.requestPath).toBe('Pedidos/validar_pedido.bru');
+    expect(operation.sgbdLabel).toBe('SQL Server');
+    expect(operation.requestName).toBe('Pedido');
+  });
+
+  test('sem operações a requisição traz um array vazio, não undefined', () => {
+    const html = generateHtmlReport({ runnerResults: buildRunnerResults([]) });
+
+    expect(extractPayload(html).results[0].results[0].databaseOperations).toEqual([]);
   });
 
   test('com includeSensitive os parâmetros são preservados', () => {

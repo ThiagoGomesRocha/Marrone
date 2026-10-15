@@ -1,4 +1,5 @@
 import type { T_RunnerRequestExecutionResult } from '../../types';
+import { mergeTestResults } from '../shared/test-results';
 
 export const getFilteredRequestResults = (results: T_RunnerRequestExecutionResult[] = [], onlyFailed = false) => {
   const indexedResults = (Array.isArray(results) ? results : []).map((value, index) => ({ value, index }));
@@ -169,6 +170,50 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
       .db-rows-json {
         max-height: 320px;
         overflow-y: auto;
+      }
+
+      /* Bloco "Database Operation" DENTRO de cada teste */
+      .db-op-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .db-op-title {
+        font-weight: 600;
+        font-size: 0.8rem;
+      }
+
+      .db-op-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 24px;
+        margin-bottom: 8px;
+      }
+
+      .db-op-field {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .db-op-label {
+        font-size: 0.68rem;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        opacity: 0.6;
+      }
+
+      .db-op-value {
+        font-size: 0.78rem;
+        word-break: break-word;
+      }
+
+      .db-op-sql {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        margin-bottom: 8px;
       }
 
       .curl-command {
@@ -503,6 +548,93 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
               :row-class-name="testsRowClassName"
             />
           </n-card>
+
+          <!--
+            Operações de banco DESTA requisição, dentro do próprio teste (antes elas só
+            existiam na aba "Database Operations", longe do teste que as executou).
+            A aba consolidada continua existindo como visão geral.
+          -->
+          <n-card
+            v-if="hasDatabaseOperations"
+            title="🗄️ Database Operation"
+            size="small"
+          >
+            <p class="db-note">
+              Operações executadas pelos scripts desta requisição. Os parâmetros aparecem
+              redigidos por padrão — o relatório é um artefato compartilhável.
+            </p>
+            <n-collapse>
+              <n-collapse-item
+                v-for="(operation, opIndex) in databaseOperations"
+                :key="opIndex"
+                :name="opIndex"
+              >
+                <template #header>
+                  <div class="db-op-header">
+                    <n-tag size="small" :type="operation.status === 'error' ? 'error' : 'success'">
+                      {{ operation.status === 'error' ? '❌ Falha' : '✅ Sucesso' }}
+                    </n-tag>
+                    <span class="db-op-title">{{ operationTitle(operation) }}</span>
+                  </div>
+                </template>
+
+                <div class="db-op-grid">
+                  <div class="db-op-field">
+                    <span class="db-op-label">Script</span>
+                    <span class="db-op-value">{{ operationScript }}</span>
+                  </div>
+                  <div class="db-op-field">
+                    <span class="db-op-label">Conexão</span>
+                    <span class="db-op-value">{{ operation.sgbd }} ({{ operation.sgbdLabel }})</span>
+                  </div>
+                  <div class="db-op-field">
+                    <span class="db-op-label">Operação</span>
+                    <span class="db-op-value">{{ operationType(operation) }}</span>
+                  </div>
+                  <div class="db-op-field">
+                    <span class="db-op-label">Tempo</span>
+                    <span class="db-op-value">{{ operation.durationMs }} ms</span>
+                  </div>
+                  <div class="db-op-field">
+                    <span class="db-op-label">Resultado</span>
+                    <span class="db-op-value">{{ operation.resultSummary || operationType(operation) }}</span>
+                  </div>
+                  <div class="db-op-field" v-if="operation.connectionString">
+                    <span class="db-op-label">Destino</span>
+                    <span class="db-op-value">{{ operation.connectionString }}</span>
+                  </div>
+                </div>
+
+                <div class="db-op-sql">
+                  <span class="db-op-label">SQL</span>
+                  <pre class="db-sql">{{ operation.sql || '-' }}</pre>
+                </div>
+
+                <div class="db-op-field">
+                  <span class="db-op-label">Parâmetros</span>
+                  <span class="db-op-value">{{ formatOperationParameters(operation) }}</span>
+                </div>
+
+                <div v-if="operation.resultRows && operation.resultRows.length" class="db-rows">
+                  <div class="db-rows-header">
+                    <span class="metadata-label">Linhas retornadas</span>
+                    <span class="db-meta" v-if="operation.resultRowsTruncated">
+                      mostrando {{ operation.resultRows.length }} de {{ operation.resultRowsTotal }} — as demais foram omitidas
+                    </span>
+                  </div>
+                  <n-data-table
+                    :columns="operationRowsColumns(operation)"
+                    :data="operationRowsData(operation)"
+                    size="small"
+                  />
+                </div>
+
+                <n-alert v-if="operation.status === 'error' && operation.error" type="error" size="small">
+                  {{ operation.error.code ? operation.error.code + ' — ' : '' }}{{ operation.error.message }}
+                </n-alert>
+              </n-collapse-item>
+            </n-collapse>
+          </n-card>
         </n-flex>
       </n-collapse-item>
     </script>
@@ -511,29 +643,10 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
 
       const getFilteredRequestResults = ${getFilteredRequestResults.toString()};
 
-      function mergeTests(runnerResults) {
-        if (!Array.isArray(runnerResults)) return runnerResults; 
-
-        runnerResults.forEach(iteration => {
-          const { totalTests, passedTests, failedTests, totalPreRequestTests, passedPreRequestTests, failedPreRequestTests, totalPostResponseTests, passedPostResponseTests, failedPostResponseTests } = iteration.summary;
-          
-          // Merge summary test counts
-          iteration.summary.totalTests = totalTests + totalPreRequestTests + totalPostResponseTests;
-          iteration.summary.passedTests = passedTests + passedPreRequestTests + passedPostResponseTests;
-          iteration.summary.failedTests = failedTests + failedPreRequestTests + failedPostResponseTests;
-          
-          // Merge individual result test arrays
-          iteration.results.forEach(result => {
-            result.testResults = [
-              ...(result.preRequestTestResults || []),
-              ...(result.postResponseTestResults || []),
-              ...(result.testResults || [])
-            ];
-          }); 
-        });
-        
-        return runnerResults;
-      }
+      // Inlinada a partir de ../shared/test-results: a MESMA função que o gerador de
+      // JSON importa. Enquanto esta regra vivia só aqui, o relatório JSON não tinha como
+      // garantir que listava os testes como esta aba lista.
+      const mergeTestResults = ${mergeTestResults.toString()};
 
       const App = {
         setup() {
@@ -545,7 +658,7 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
           const rawResults = JSON.parse(decodeBase64('${resutsJsonString}'));
 
           const res = computed(() => {
-            return mergeTests(rawResults.results);
+            return mergeTestResults(rawResults.results);
           });
 
           const marroneVersion = computed(() => {
@@ -883,6 +996,13 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
               className: 'status'
             },
             {
+              // Tempo de CADA teste. O runner passou a medir isto (packages/marrone-js
+              // src/test.js); relatórios antigos não têm o campo e mostram '-'.
+              title: 'Duration',
+              key: 'duration',
+              render: (row) => (typeof row?.duration === 'number' ? row.duration + ' ms' : '-')
+            },
+            {
               title: 'Error',
               key: 'error'
             }
@@ -912,6 +1032,53 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
           const total = computed(() => {
             return (props?.result?.testResults?.length || 0) + (props?.result?.assertionResults?.length || 0);
           });
+
+          // ---- Operações de banco DESTA requisição (bloco dentro do teste) ----
+          const databaseOperations = computed(() => {
+            const operations = props?.result?.databaseOperations;
+            return Array.isArray(operations) ? operations : [];
+          });
+          const hasDatabaseOperations = computed(() => databaseOperations.value.length > 0);
+          const operationScript = computed(() => databaseOperations.value[0]?.script || props?.result?.path || '-');
+
+          // Tipo da operação: as de ciclo de vida (connect/disconnect/begin/commit/rollback)
+          // não têm SQL e vêm no campo "operation"; as de consulta vêm com "sql".
+          const operationType = (operation) => operation?.operation || (operation?.sql ? 'query' : 'execute');
+
+          const operationTitle = (operation) => {
+            const summary = operation?.resultSummary ? ' — ' + operation.resultSummary : '';
+            return (operation?.sgbdLabel || operation?.sgbd || '') + ' · ' + operationType(operation) + summary;
+          };
+
+          const formatOperationParameters = (operation) => {
+            if (!Array.isArray(operation?.parameters) || operation.parameters.length === 0) {
+              return '-';
+            }
+            return operation.parameters.join(', ');
+          };
+
+          const formatOperationCell = (value) => {
+            if (value === null || value === undefined) return 'NULL';
+            if (typeof value === 'object') return JSON.stringify(value);
+            return String(value);
+          };
+
+          // Colunas DINÂMICAS: saem das chaves da própria linha, então consultas com
+          // colunas diferentes funcionam sem nenhuma configuração.
+          const operationRowsColumns = (operation) => {
+            const rows = Array.isArray(operation?.resultRows) ? operation.resultRows : [];
+            const keys = Array.from(new Set(rows.flatMap((row) => (row && typeof row === 'object' && !Array.isArray(row) ? Object.keys(row) : ['valor']))));
+            return keys.map((key) => ({
+              title: key,
+              key,
+              render: (row) => formatOperationCell(row ? row[key] : undefined)
+            }));
+          };
+
+          const operationRowsData = (operation) => {
+            const rows = Array.isArray(operation?.resultRows) ? operation.resultRows : [];
+            return rows.map((row) => (row && typeof row === 'object' && !Array.isArray(row) ? row : { valor: row }));
+          };
 
           const hasError = computed(() => !!props?.result?.error || props?.result?.status === 'error' || (props?.result?.response?.status === 'skipped' && props?.result?.error));
           const hasFailure = computed(() => total.value !== totalPassed.value);
@@ -947,6 +1114,15 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
             hasFailure,
             hasError,
             testsColumns,
+            // Bloco "Database Operation" dentro do teste:
+            databaseOperations,
+            hasDatabaseOperations,
+            operationScript,
+            operationType,
+            operationTitle,
+            formatOperationParameters,
+            operationRowsColumns,
+            operationRowsData,
             result: props.result,
             testDuration,
             responseCode,

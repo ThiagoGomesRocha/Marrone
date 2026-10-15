@@ -66,7 +66,10 @@ const setupBruTestMethods = (bru, __marroneTestResults, assertionResults) => {
         description: r.description,
         expected: r.expected,
         actual: r.actual,
-        error: r.error
+        error: r.error,
+        // Tempo do teste, medido em ../test.js. Repassado aqui para quem consome pelo
+        // `bru.getTestResults()` ver o mesmo que o relatório mostra.
+        duration: r.duration
       }))
     };
   };

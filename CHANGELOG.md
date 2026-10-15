@@ -33,6 +33,17 @@ relatórios de execução enriquecidos.
 
 ### Added
 
+- **Relatório JSON espelhando o HTML** (`generateJsonReport`). O `--reporter-json` do CLI
+  (e o JSON exportado pela interface) gravava o objeto interno cru, sem CURL e sem nenhuma
+  informação de banco; agora os dois relatórios saem da mesma transformação e trazem as
+  mesmas requisições e os mesmos testes.
+- **Bloco "Database Operation" dentro de cada teste** na aba Tests do relatório HTML,
+  colapsável, com o script que disparou a operação, a conexão e o SGBD, o tipo de operação,
+  o SQL, os parâmetros, o tempo, o resultado (tabela com colunas dinâmicas) e o status. A
+  aba "Database Operations" consolidada continua existindo como visão geral.
+- **Tempo de cada teste** no relatório (coluna *Duration*), medido no runner.
+- **`databaseOperation` por requisição** no JSON (a primeira operação, ou `null`) e
+  **`databaseOperations` consolidado** no topo, para o consumo por ferramentas.
 - API `bru.db.*` no sandbox dos scripts (QuickJS), disponível nos blocos de pré-requisição,
   pós-resposta e `tests`, no app (Electron) e no CLI.
 - Catálogo único de SGBDs (`packages/marrone-database/src/constants.ts`) como fonte de verdade
@@ -54,6 +65,14 @@ relatórios de execução enriquecidos.
 
 ### Fixed
 
+- **Headers sensíveis passam a ser mascarados no relatório.** O CURL do relatório já
+  substituía o valor de `Authorization`, `Cookie`, `X-Api-Key` e afins por `[REDACTED]`,
+  mas as **tabelas de headers** do mesmo relatório mostravam o valor cru — o CURL dava uma
+  falsa sensação de segurança enquanto o token seguia dentro do arquivo, que circula. Agora
+  as duas partes usam a mesma lista de headers e o mesmo marcador. Para incluir os valores
+  originais existe `includeSensitive` (`--reporter-include-sensitive`), e para remover
+  headers por completo continuam valendo `--reporter-skip-all-headers` e
+  `--reporter-skip-headers`.
 - **Driver SQL Server (`tedious`).** Três defeitos que só apareciam contra um servidor real:
   as linhas passaram a ser achatadas por `metadata.colName` (o tedious devolve objeto indexado
   por posição ordinal, não por nome de coluna); os parâmetros passaram a ser registrados com

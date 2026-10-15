@@ -24,6 +24,8 @@ type T_TestPassResult = {
   description: string;
   uid?: string;
   isScriptError?: boolean;
+  /** Tempo do teste em ms, medido no runner (packages/marrone-js/src/test.js). */
+  duration?: number;
 };
 
 type T_TestFailResult = {
@@ -32,6 +34,8 @@ type T_TestFailResult = {
   error: string;
   uid?: string;
   isScriptError?: boolean;
+  /** Tempo do teste em ms, medido no runner (packages/marrone-js/src/test.js). */
+  duration?: number;
 };
 
 type T_TestResult = T_TestPassResult | T_TestFailResult;

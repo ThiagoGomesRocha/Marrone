@@ -8,6 +8,7 @@ const { runSingleRequest } = require('../runner/run-single-request');
 const { isRequestTagsIncluded } = require('@marrone/common');
 const makeJUnitOutput = require('../reporters/junit');
 const makeHtmlOutput = require('../reporters/html');
+const makeJsonOutput = require('../reporters/json');
 const { getOptions } = require('../utils/bru');
 const { parseDotEnv } = require('@marrone/filestore');
 const constants = require('../constants');
@@ -996,7 +997,12 @@ const handler = async function (argv) {
       await require('../services/database').closeAllDatabaseConnections();
 
       const reporters = {
-        json: (path) => fs.writeFileSync(path, JSON.stringify(outputJson, null, 2)),
+        // O JSON agora espelha o HTML: mesmas requisições, mesmos testes (pré-requisição +
+        // pós-resposta + tests), mesmo CURL e as operações de banco por requisição.
+        json: (path) => makeJsonOutput(outputJson, path, runCompletionTime, environmentName, {
+          includeSensitive: reporterIncludeSensitive,
+          includeDbRows: reporterHideDbRows !== true
+        }),
         junit: (path) => makeJUnitOutput(results, path),
         html: (path) => makeHtmlOutput(outputJson, path, runCompletionTime, environmentName, {
           logoPath: reporterHtmlLogo,

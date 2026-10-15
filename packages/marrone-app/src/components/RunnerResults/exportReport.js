@@ -1,4 +1,4 @@
-import { generateHtmlReport, getRunnerSummary } from '@marrone/common/runner';
+import { generateHtmlReport, generateJsonReport, getRunnerSummary } from '@marrone/common/runner';
 import { version as appVersion } from '../../../package.json';
 
 // Maps a desktop runner item (+ its stored exchange) to the shape expected by
@@ -80,7 +80,21 @@ export const buildRunnerReport = ({
     includeSensitive
   });
 
-  const json = JSON.stringify({ summary, results }, null, 2);
+  // O JSON exportado pela interface passa pelo MESMO gerador do CLI, então ele espelha o
+  // HTML exportado ao lado dele (testes mesclados, CURL e operações de banco redigidas).
+  // Antes eram duas linhas soltas de JSON.stringify do objeto interno, que não tinham
+  // CURL nem banco nenhum.
+  const json = JSON.stringify(
+    generateJsonReport({
+      runnerResults,
+      version: version || `Marrone v${appVersion}`,
+      environment,
+      runCompletionTime,
+      includeSensitive
+    }),
+    null,
+    2
+  );
 
   return { html, json, summary };
 };
