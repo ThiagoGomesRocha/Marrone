@@ -32,7 +32,7 @@ Ele nasceu como um **fork do [Bruno](https://github.com/usebruno/bruno)** e mant
 
 Baixe o instalador mais recente na página de releases:
 
-👉 **[marrone-setup-1.0.0.exe](https://github.com/ThiagoGomesRocha/Marrone/releases/latest)**
+👉 **[marrone-setup-1.1.0.exe](https://github.com/ThiagoGomesRocha/Marrone/releases/latest)**
 
 ### CLI (linha de comando)
 
