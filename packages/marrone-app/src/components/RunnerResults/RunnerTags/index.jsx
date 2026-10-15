@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { get, cloneDeep, find } from 'lodash';
 import { updateCollectionTagsList, updateRunnerTagsDetails } from 'providers/ReduxStore/slices/collections';
 import TagList from 'components/TagList';
+import { useTranslation } from 'react-i18next';
 
 const RunnerTags = ({ collectionUid, className = '' }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const collections = useSelector((state) => state.collections.collections);
   const collection = cloneDeep(find(collections, (c) => c.uid === collectionUid));
@@ -75,7 +77,7 @@ const RunnerTags = ({ collectionUid, className = '' }) => {
     <div className={`flex flex-col ${className}`}>
       <div className="flex flex-row gap-4 w-full">
         <div className="flex-1 flex flex-col gap-2 min-w-0" data-testid="runner-include-tags">
-          <span>Include tags</span>
+          <span>{t('RUNNER.INCLUDE_TAGS')}</span>
           <TagList
             tags={tags.include}
             handleAddTag={(tag) => handleAddTag({ tag, to: 'include' })}
@@ -85,7 +87,7 @@ const RunnerTags = ({ collectionUid, className = '' }) => {
           />
         </div>
         <div className="flex-1 flex flex-col gap-2 min-w-0" data-testid="runner-exclude-tags">
-          <span>Exclude tags</span>
+          <span>{t('RUNNER.EXCLUDE_TAGS')}</span>
           <TagList
             tags={tags.exclude}
             handleAddTag={(tag) => handleAddTag({ tag, to: 'exclude' })}

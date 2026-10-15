@@ -6,6 +6,7 @@ import path from 'utils/common/path';
 import { browseDirectory, createCollection } from 'providers/ReduxStore/slices/collections/actions';
 import toast from 'react-hot-toast';
 import Portal from 'components/Portal';
+import { useTranslation } from 'react-i18next';
 import Modal from 'components/Modal';
 import { sanitizeName, validateName, validateNameError } from 'utils/common/regex';
 import PathDisplay from 'components/PathDisplay/index';
@@ -20,6 +21,7 @@ import get from 'lodash/get';
 import Button from 'ui/Button';
 
 const CreateCollection = ({ onClose, defaultLocation: propDefaultLocation, initialCollectionName = '' }) => {
+  const { t } = useTranslation();
   const inputRef = useRef();
   const dispatch = useDispatch();
   const workspaces = useSelector((state) => state.workspaces?.workspaces || []);
@@ -104,7 +106,7 @@ const CreateCollection = ({ onClose, defaultLocation: propDefaultLocation, initi
           className="btn-advanced"
           type="button"
         >
-          Options
+          {t('MODALS.COMMON.OPTIONS')}
         </button>
         <IconCaretDown className="caret ml-1" size={14} strokeWidth={2} />
       </div>
@@ -114,11 +116,11 @@ const CreateCollection = ({ onClose, defaultLocation: propDefaultLocation, initi
   return (
     <Portal>
       <StyledWrapper>
-        <Modal size="md" title="Create Collection" hideFooter={true} handleCancel={onClose}>
+        <Modal size="md" title={t('MODALS.CREATE_COLLECTION.TITLE')} hideFooter={true} handleCancel={onClose}>
           <form className="marrone-form" onSubmit={formik.handleSubmit}>
             <div>
               <label htmlFor="collection-name" className="flex items-center font-medium">
-                Name
+                {t('MODALS.COMMON.NAME')}
               </label>
               <input
                 id="collection-name"
@@ -150,13 +152,13 @@ const CreateCollection = ({ onClose, defaultLocation: propDefaultLocation, initi
               ) : null}
 
               <label htmlFor="collection-location" className="font-medium mt-3 flex items-center">
-                Location
+                {t('MODALS.COMMON.LOCATION')}
                 <Help>
                   <p>
-                    Marrone stores your collections on your computer's filesystem.
+                    {t('MODALS.COMMON.LOCATION_HELP_FILESYSTEM')}
                   </p>
                   <p className="mt-2">
-                    Choose the location where you want to store this collection.
+                    {t('MODALS.COMMON.LOCATION_HELP_CHOOSE')}
                   </p>
                 </Help>
               </label>
@@ -184,20 +186,20 @@ const CreateCollection = ({ onClose, defaultLocation: propDefaultLocation, initi
                   className="text-link cursor-pointer hover:underline"
                   onClick={browse}
                 >
-                  Browse
+                  {t('MODALS.COMMON.BROWSE')}
                 </span>
               </div>
               {formik.values.collectionName?.trim()?.length > 0 && (
                 <div className="mt-4">
                   <div className="flex items-center justify-between">
                     <label htmlFor="filename" className="flex items-center font-medium">
-                      Folder Name
+                      {t('MODALS.COMMON.FOLDER_NAME')}
                       <Help width="300">
                         <p>
-                          The name of the folder used to store the collection.
+                          {t('MODALS.COMMON.FOLDER_NAME_HELP_1')}
                         </p>
                         <p className="mt-2">
-                          You can choose a folder name different from your collection's name or one compatible with filesystem rules.
+                          {t('MODALS.COMMON.FOLDER_NAME_HELP_2')}
                         </p>
                       </Help>
                     </label>
@@ -246,16 +248,16 @@ const CreateCollection = ({ onClose, defaultLocation: propDefaultLocation, initi
               {showAdvancedOptions && (
                 <div className="mt-4">
                   <label htmlFor="format" className="flex items-center font-medium">
-                    File Format
+                    {t('MODALS.COMMON.FILE_FORMAT')}
                     <Help width="300">
                       <p>
-                        Choose the file format for storing requests in this collection.
+                        {t('MODALS.COMMON.FILE_FORMAT_HELP')}
                       </p>
                       <p className="mt-2">
-                        <strong>OpenCollection (YAML):</strong> Industry-standard YAML format (.yml files)
+                        <strong>{t('MODALS.COMMON.FILE_FORMAT_YAML_LABEL')}</strong> {t('MODALS.COMMON.FILE_FORMAT_YAML_DESC')}
                       </p>
                       <p className="mt-1">
-                        <strong>BRU:</strong> Marrone's native file format (.bru files)
+                        <strong>{t('MODALS.COMMON.FILE_FORMAT_BRU_LABEL')}</strong> {t('MODALS.COMMON.FILE_FORMAT_BRU_DESC')}
                       </p>
                     </Help>
                   </label>
@@ -287,16 +289,16 @@ const CreateCollection = ({ onClose, defaultLocation: propDefaultLocation, initi
                       setShowAdvancedOptions(!showAdvancedOptions);
                     }}
                   >
-                    {showAdvancedOptions ? 'Hide Advanced Options' : 'Show Advanced Options'}
+                    {showAdvancedOptions ? t('MODALS.COMMON.HIDE_ADVANCED_OPTIONS') : t('MODALS.COMMON.SHOW_ADVANCED_OPTIONS')}
                   </div>
                 </Dropdown>
               </div>
               <div className="flex justify-end">
                 <Button type="button" color="secondary" variant="ghost" onClick={onClose} className="mr-2">
-                  Cancel
+                  {t('MODALS.COMMON.CANCEL')}
                 </Button>
                 <Button type="submit">
-                  Create
+                  {t('MODALS.COMMON.CREATE')}
                 </Button>
               </div>
             </div>

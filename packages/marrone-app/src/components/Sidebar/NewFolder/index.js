@@ -14,8 +14,10 @@ import Dropdown from 'components/Dropdown';
 import { IconCaretDown } from '@tabler/icons';
 import StyledWrapper from './StyledWrapper';
 import Button from 'ui/Button';
+import { useTranslation } from 'react-i18next';
 
 const NewFolder = ({ collectionUid, item, onClose }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const inputRef = useRef();
   const [isEditing, toggleEditing] = useState(false);
@@ -75,7 +77,7 @@ const NewFolder = ({ collectionUid, item, onClose }) => {
           className="btn-advanced"
           type="button"
         >
-          Options
+          {t('MODALS.COMMON.OPTIONS')}
         </button>
         <IconCaretDown className="caret ml-1" size={14} strokeWidth={2} />
       </div>
@@ -85,10 +87,10 @@ const NewFolder = ({ collectionUid, item, onClose }) => {
   return (
     <Portal>
       <StyledWrapper>
-        <Modal size="md" title="New Folder" hideFooter={true} handleCancel={onClose}>
+        <Modal size="md" title={t('MODALS.NEW_FOLDER.TITLE')} hideFooter={true} handleCancel={onClose}>
           <form className="marrone-form" onSubmit={formik.handleSubmit}>
             <label htmlFor="folderName" className="block font-medium">
-              Folder Name
+              {t('MODALS.COMMON.FOLDER_NAME')}
             </label>
             <input
               id="folder-name"
@@ -115,10 +117,10 @@ const NewFolder = ({ collectionUid, item, onClose }) => {
               <div className="mt-4">
                 <div className="flex items-center justify-between">
                   <label htmlFor="directoryName" className="flex items-center font-medium">
-                    Folder Name <small className="font-normal text-muted ml-1">(on filesystem)</small>
+                    {t('MODALS.COMMON.FOLDER_NAME')} <small className="font-normal text-muted ml-1">{t('MODALS.COMMON.ON_FILESYSTEM')}</small>
                     <Help width="300">
                       <p>
-                        You can choose to save the folder as a different name on your file system versus what is displayed in the app.
+                        {t('MODALS.COMMON.FILESYSTEM_FOLDER_HELP')}
                       </p>
                     </Help>
                   </label>
@@ -144,7 +146,7 @@ const NewFolder = ({ collectionUid, item, onClose }) => {
                       id="file-name"
                       type="text"
                       name="directoryName"
-                      placeholder="Folder Name"
+                      placeholder={t('MODALS.COMMON.FOLDER_NAME')}
                       className="block textbox mt-2 w-full"
                       autoComplete="off"
                       autoCorrect="off"
@@ -178,16 +180,16 @@ const NewFolder = ({ collectionUid, item, onClose }) => {
                       toggleShowFilesystemName(!showFilesystemName);
                     }}
                   >
-                    {showFilesystemName ? 'Hide Filesystem Name' : 'Show Filesystem Name'}
+                    {showFilesystemName ? t('MODALS.COMMON.HIDE_FILESYSTEM_NAME') : t('MODALS.COMMON.SHOW_FILESYSTEM_NAME')}
                   </div>
                 </Dropdown>
               </div>
               <div className="flex justify-end">
                 <Button type="button" color="secondary" variant="ghost" onClick={onClose} className="mr-2">
-                  Cancel
+                  {t('MODALS.COMMON.CANCEL')}
                 </Button>
                 <Button type="submit">
-                  Create
+                  {t('MODALS.COMMON.CREATE')}
                 </Button>
               </div>
             </div>

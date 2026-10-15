@@ -364,5 +364,357 @@
         "DATABASE": {
             "TITLE": "Banco de Dados"
         }
+    },
+    "MODALS": {
+        "COMMON": {
+            "NAME": "Nome",
+            "LOCATION": "Local",
+            "BROWSE": "Procurar",
+            "CANCEL": "Cancelar",
+            "CREATE": "Criar",
+            "CLONE": "Clonar",
+            "RENAME": "Renomear",
+            "IMPORT": "Importar",
+            "EXPORT": "Exportar",
+            "SAVE": "Salvar",
+            "DELETE": "Excluir",
+            "REPLACE": "Substituir",
+            "REMOVE": "Remover",
+            "BACK": "Voltar",
+            "CLOSE": "Fechar",
+            "OPEN": "Abrir",
+            "COPY": "Copiar",
+            "OPTIONS": "Opções",
+            "SHOW_ADVANCED_OPTIONS": "Mostrar opções avançadas",
+            "HIDE_ADVANCED_OPTIONS": "Ocultar opções avançadas",
+            "SHOW_FILESYSTEM_NAME": "Mostrar nome no sistema de arquivos",
+            "HIDE_FILESYSTEM_NAME": "Ocultar nome no sistema de arquivos",
+            "FOLDER_NAME": "Nome da pasta",
+            "FILE_NAME": "Nome do arquivo",
+            "ON_FILESYSTEM": "(no sistema de arquivos)",
+            "FILE_FORMAT": "Formato de arquivo",
+            "DESCRIPTION": "Descrição",
+            "PORT": "Porta",
+            "SOURCE": "Origem",
+            "ENVIRONMENT": "Ambiente",
+            "ENVIRONMENT_NAME": "Nome do ambiente",
+            "SELECT_ALL": "Selecionar todos",
+            "DESELECT_ALL": "Desmarcar todos",
+            "FOLDER_NAME_HELP_1": "O nome da pasta usada para armazenar a coleção.",
+            "FOLDER_NAME_HELP_2": "Você pode escolher um nome de pasta diferente do nome da coleção ou um compatível com as regras do sistema de arquivos.",
+            "FILESYSTEM_FOLDER_HELP": "Você pode optar por salvar a pasta com um nome diferente no sistema de arquivos daquele exibido no aplicativo.",
+            "FILESYSTEM_FILE_HELP_1": "O Marrone salva cada requisição como um arquivo na pasta da coleção.",
+            "FILESYSTEM_FILE_HELP_2": "Você pode escolher um nome de arquivo diferente do nome da requisição ou um compatível com as regras do sistema de arquivos.",
+            "LOCATION_HELP_FILESYSTEM": "O Marrone armazena suas coleções no sistema de arquivos do seu computador.",
+            "LOCATION_HELP_CHOOSE": "Escolha o local onde você deseja armazenar esta coleção.",
+            "FILE_FORMAT_HELP": "Escolha o formato de arquivo para armazenar as requisições nesta coleção.",
+            "FILE_FORMAT_YAML_LABEL": "OpenCollection (YAML):",
+            "FILE_FORMAT_YAML_DESC": "Formato YAML padrão da indústria (arquivos .yml)",
+            "FILE_FORMAT_BRU_LABEL": "BRU:",
+            "FILE_FORMAT_BRU_DESC": "Formato de arquivo nativo do Marrone (arquivos .bru)",
+            "FOLDER_ARRANGEMENT": "Organização de pastas",
+            "FOLDER_ARRANGEMENT_DESC": "Escolha se as pastas serão criadas de acordo com os paths ou as tags da especificação.",
+            "GROUP_BY_TAGS": "Tags",
+            "GROUP_BY_PATHS": "Paths"
+        },
+        "CREATE_COLLECTION": {
+            "TITLE": "Criar Coleção"
+        },
+        "IMPORT_COLLECTION": {
+            "TITLE": "Importar Coleção",
+            "TAB_FILE": "Arquivo",
+            "TAB_GIT_REPOSITORY": "Repositório Git",
+            "FILE_DROP_PRE": "Solte o(s) arquivo(s) para importar ou ",
+            "FILE_CHOOSE": "escolher arquivo(s)",
+            "FILE_SUPPORTED": "Suporta Marrone, OpenCollection, Postman, Insomnia, OpenAPI 3.x / Swagger 2.0, WSDL e formatos ZIP",
+            "GIT_URL_PLACEHOLDER": "Insira a URL do repositório Git",
+            "URL_PLACEHOLDER": "Insira a URL (especificação OpenAPI/Swagger, Postman ou Insomnia)"
+        },
+        "IMPORT_COLLECTION_LOCATION": {
+            "TITLE": "Importar Coleção",
+            "CHECK_SPEC_UPDATES": "Verificar atualizações da especificação",
+            "CHECK_SPEC_UPDATES_DESC": "Receba notificações de mudanças na especificação e sincronize sua coleção com ela.",
+            "CHECK_SPEC_UPDATES_SWAGGER_UNSUPPORTED": "A sincronização com OpenAPI não é compatível com especificações Swagger 2.0.",
+            "PRESERVE_SCRIPTS": "Preservar scripts",
+            "PRESERVE_SCRIPTS_IMPORT_DESC": "Importar os scripts do Postman sem traduzi-los."
+        },
+        "EXPORT_TO_POSTMAN": {
+            "TITLE": "Exportar para o Postman",
+            "PRESERVE_SCRIPTS": "Preservar scripts",
+            "PRESERVE_SCRIPTS_DESC": "Exportar os scripts do Marrone sem traduzi-los."
+        },
+        "CREATE_OR_OPEN": {
+            "NO_COLLECTIONS": "Nenhuma coleção encontrada.",
+            "OR": "ou",
+            "COLLECTION": "Coleção"
+        },
+        "CLONE_COLLECTION": {
+            "TITLE": "Clonar Coleção"
+        },
+        "RENAME_COLLECTION": {
+            "TITLE": "Renomear Coleção"
+        },
+        "CLONE_ITEM": {
+            "TITLE_FOLDER": "Clonar Pasta",
+            "TITLE_REQUEST": "Clonar Requisição",
+            "TITLE_APP": "Clonar Aplicativo",
+            "NAME_LABEL_FOLDER": "Nome da pasta",
+            "NAME_LABEL_REQUEST": "Nome da requisição",
+            "NAME_LABEL_APP": "Nome do aplicativo",
+            "NAME_PLACEHOLDER": "Digite o nome do item"
+        },
+        "RENAME_ITEM": {
+            "TITLE_FOLDER": "Renomear Pasta",
+            "TITLE_REQUEST": "Renomear Requisição",
+            "TITLE_APP": "Renomear Aplicativo",
+            "NAME_LABEL_FOLDER": "Nome da pasta",
+            "NAME_LABEL_REQUEST": "Nome da requisição",
+            "NAME_LABEL_APP": "Nome do aplicativo"
+        },
+        "NEW_FOLDER": {
+            "TITLE": "Nova Pasta"
+        },
+        "NEW_REQUEST": {
+            "TITLE": "Nova Requisição",
+            "TYPE_LABEL": "Tipo",
+            "REQUEST_TYPE_FROM_CURL": "A partir de cURL",
+            "REQUEST_NAME": "Nome da Requisição",
+            "REQUEST_NAME_PLACEHOLDER": "Nome da Requisição",
+            "REQUEST_URL_PLACEHOLDER": "URL da requisição",
+            "CURL_COMMAND": "Comando cURL",
+            "CURL_COMMAND_PLACEHOLDER": "Digite a requisição cURL aqui.."
+        },
+        "NEW_APP": {
+            "TITLE": "Novo Aplicativo",
+            "CREATE_DESC_PRE": "Cria um arquivo de aplicativo independente em",
+            "CREATE_DESC_THIS_FOLDER": "esta pasta",
+            "CREATE_DESC_COLLECTION": "coleção \"{{name}}\""
+        },
+        "CREATE_API_SPEC": {
+            "TITLE": "Criar Especificação de API",
+            "SOURCE_BLANK": "Especificação em branco",
+            "SOURCE_COLLECTION": "Da Coleção do Marrone",
+            "SOURCE_URL": "Da URL da especificação",
+            "SELECT_COLLECTION": "Selecione uma coleção",
+            "CHOOSE_FILE": "Escolher arquivo...",
+            "FETCHING": "Buscando especificação…",
+            "COLLECTION_SOURCE_ARIA": "Origem da coleção",
+            "COLLECTION_SOURCE_FROM_WORKSPACE": "Do workspace",
+            "COLLECTION_SOURCE_FROM_FILESYSTEM": "Do sistema de arquivos",
+            "NO_COLLECTIONS_HINT": "Nenhuma coleção neste workspace"
+        },
+        "CLONE_GIT_REPOSITORY": {
+            "TITLE": "Clonar Repositório Git",
+            "GIT_REPOSITORY_URL": "URL do repositório Git",
+            "BRANCH": "Branch",
+            "BRANCH_LOADING": "Carregando branches...",
+            "BRANCH_DEFAULT": "Padrão do repositório",
+            "BRANCH_NO_MATCH": "Nenhuma branch corresponde à sua busca",
+            "BRANCH_LIST_FAILED": "Não foi possível listar as branches deste repositório. A clonagem usará a branch padrão.",
+            "CLONING": "Clonando repositório",
+            "CLONE_SUCCESS": "Clonagem concluída",
+            "CLONE_FAILED": "Falha na clonagem",
+            "SCANNING": "Procurando arquivos Marrone",
+            "SCAN_SUCCESS": "Varredura concluída",
+            "OF": "de",
+            "SELECTED": "selecionados",
+            "NO_COLLECTIONS_FOUND": "Nenhuma coleção Marrone foi encontrada neste repositório.",
+            "COLLECTIONS_TITLE": "Coleções",
+            "SEARCH_COLLECTIONS": "Pesquisar Coleções"
+        },
+        "BULK_IMPORT": {
+            "TITLE": "Importação em massa",
+            "NO_LOCATION_SELECTED": "Nenhum local selecionado",
+            "IMPORTING_COLLECTIONS": "Importando Coleções ({{count}})",
+            "FAILED_COUNT": "({{failed}}/{{total}} falhas)",
+            "ITEMS_SKIPPED": "{{count}} item(ns) ignorados",
+            "SEE_ERROR": "Ver erro",
+            "IMPORTING_ENVIRONMENTS": "Importando Ambientes ({{count}})",
+            "COLLECTIONS_TITLE": "Coleções",
+            "SEARCH_COLLECTIONS": "Pesquisar Coleções",
+            "NO_COLLECTIONS_FOUND": "Nenhuma coleção encontrada",
+            "ENVIRONMENTS_TITLE": "Ambientes",
+            "SEARCH_ENVIRONMENTS": "Pesquisar Ambientes",
+            "NO_ENVIRONMENTS_FOUND": "Nenhum ambiente encontrado",
+            "ENVIRONMENT_ASSIGNMENT": "Atribuição de Ambiente",
+            "GLOBAL_ENVIRONMENT": "Ambiente Global",
+            "GLOBAL_ENV_TOOLTIP": "Os ambientes serão importados e armazenados como globais, acessíveis em todas as coleções.",
+            "DUPLICATE_ACROSS_COLLECTIONS": "Duplicar entre as Coleções",
+            "DUPLICATE_TOOLTIP": "Cada coleção importada receberá sua própria cópia dos ambientes.",
+            "LOCATION_PLACEHOLDER": "Selecione um local para salvar a coleção",
+            "ERROR_DETAILS": "Detalhes do Erro"
+        },
+        "CREATE_WORKSPACE": {
+            "TITLE": "Criar Workspace",
+            "DESCRIPTION": "Dê um nome ao seu novo workspace e escolha o tipo para começar.",
+            "CREATING": "Criando...",
+            "CREATE_WORKSPACE": "Criar Workspace",
+            "FOLDER_NAME_HELP_1": "O nome da pasta usada para armazenar o workspace.",
+            "FOLDER_NAME_HELP_2": "Você pode escolher um nome de pasta diferente do nome do workspace ou um compatível com as regras do sistema de arquivos.",
+            "LOCATION_HELP_FILESYSTEM": "O Marrone armazena seus workspaces no sistema de arquivos do seu computador.",
+            "LOCATION_HELP_CHOOSE": "Escolha o local onde você deseja armazenar este workspace."
+        },
+        "IMPORT_WORKSPACE": {
+            "TITLE": "Importar Workspace",
+            "IMPORTING": "Importando...",
+            "WORKSPACE_FILE": "Arquivo do Workspace",
+            "DROP_FILE_PRE": "Solte o arquivo zip do workspace aqui ou ",
+            "CHOOSE_FILE": "escolher um arquivo",
+            "SUPPORTED": "Suporta arquivos zip de workspace exportados do Marrone",
+            "EXTRACT_LOCATION": "Local de Extração",
+            "EXTRACT_HELP_1": "Escolha o local onde você deseja extrair este workspace.",
+            "EXTRACT_HELP_2": "A pasta do workspace será criada neste local."
+        },
+        "RENAME_WORKSPACE": {
+            "TITLE": "Renomear Workspace",
+            "WORKSPACE_NAME": "Nome do Workspace"
+        },
+        "CREATE_ENVIRONMENT": {
+            "TITLE": "Criar Ambiente"
+        },
+        "CREATE_GLOBAL_ENVIRONMENT": {
+            "TITLE": "Criar Ambiente Global"
+        },
+        "RENAME_ENVIRONMENT": {
+            "TITLE": "Renomear Ambiente"
+        },
+        "EXPORT_ENVIRONMENT": {
+            "TITLE": "Exportar Ambientes",
+            "GLOBAL_ENVIRONMENTS": "Ambientes Globais",
+            "COLLECTION_ENVIRONMENTS": "Ambientes da Coleção",
+            "INHERITS": "herda",
+            "NO_GLOBAL_ENVIRONMENTS": "Nenhum ambiente global",
+            "NO_COLLECTION_ENVIRONMENTS": "Nenhum ambiente de coleção",
+            "EXPORT_FORMAT": "Formato de Exportação",
+            "FORMAT_SINGLE_JSON_LABEL": "Arquivo JSON único",
+            "FORMAT_SINGLE_JSON_DESC_MULTI": "Todos os ambientes em um único array JSON",
+            "FORMAT_SINGLE_JSON_DESC_SINGLE": "Exportar como um único objeto JSON de ambiente",
+            "FORMAT_FOLDER_LABEL": "Arquivos separados em pasta",
+            "FORMAT_FOLDER_DESC": "Cada ambiente como um arquivo JSON separado",
+            "SELECT_TARGET_LOCATION": "Selecione um local de destino",
+            "EXPORTING": "Exportando...",
+            "EXPORT_SELECTED_ONE": "Exportar {{count}} Ambiente",
+            "EXPORT_SELECTED_MANY": "Exportar {{count}} Ambientes"
+        },
+        "IMPORT_ENVIRONMENT": {
+            "TITLE_GLOBAL": "Importar ambientes globais",
+            "TITLE_COLLECTION": "Importar ambientes",
+            "DROP_TITLE": "Solte seus arquivos de ambiente aqui",
+            "IMPORT_TITLE": "Importar seus ambientes",
+            "SUBTITLE": "Arraste e solte arquivos JSON ou clique para navegar. Suporta os formatos Marrone e Postman.",
+            "FOUND": "encontrados",
+            "IMPORT_COUNT": "Importar ({{count}})",
+            "SELECTED_COUNT": "selecionados",
+            "EXISTS_SINGLE": "já existe com o mesmo nome",
+            "EXISTS_PLURAL": "já existem com o mesmo nome",
+            "COULD_NOT_READ_SKIPPED": "não puderam ser lidos e serão ignorados",
+            "FILTER_PLACEHOLDER": "Filtrar por nome",
+            "GROUP_NEW": "Novos",
+            "GROUP_ALREADY_EXISTS": "Já existe",
+            "GROUP_COULD_NOT_BE_READ": "Não foi possível ler",
+            "NO_MATCHES": "Nenhum ambiente corresponde ao seu filtro",
+            "RESOLUTION_NEW": "Novo",
+            "RESOLUTION_NEW_TITLE": "Importar como um novo ambiente",
+            "RESOLUTION_REPLACE": "Substituir",
+            "RESOLUTION_REPLACE_TITLE": "Substituir existente"
+        },
+        "CREATE_MOCK_SERVER": {
+            "TITLE_EDIT": "Configurações do Mock Server",
+            "TITLE_CREATE": "Criar Mock Server",
+            "SOURCE_COLLECTION": "Coleção",
+            "SOURCE_API_SPEC": "Especificação de API",
+            "SOURCE_STANDALONE": "Independente",
+            "SELECT_COLLECTION": "Selecione uma coleção",
+            "OPEN_COLLECTION_HINT": "Abra uma coleção neste workspace para vinculá-la aqui.",
+            "LOADING_COLLECTION": "Carregando coleção…",
+            "SELECT_API_SPEC": "Selecione uma especificação de API",
+            "OPEN_SPEC_HINT": "Abra uma especificação de API neste workspace para vinculá-la aqui.",
+            "STANDALONE_HINT": "Um mock server independente não tem origem. Adicione respostas manualmente no painel.",
+            "SYNC_SPEC": "Sincronizar respostas do mock com a especificação de API",
+            "SYNC_COLLECTION": "Sincronizar respostas do mock com os exemplos da coleção",
+            "ADVANCED_SETTINGS": "Configurações avançadas",
+            "RESPONSE_DELAY": "Atraso da resposta (ms)",
+            "AUTO_PORT_HINT": "O Marrone escolherá automaticamente a próxima porta disponível."
+        },
+        "CLONE_MOCK_SERVER": {
+            "TITLE": "Clonar Mock Server",
+            "CLONE_HINT": "Clona as respostas do mock e as configurações do servidor. O clone inicia parado."
+        },
+        "RENAME_MOCK_SERVER": {
+            "TITLE": "Renomear Mock Server"
+        },
+        "CREATE_MOCK_RESPONSE": {
+            "TITLE": "Criar Resposta de Mock",
+            "CREATING": "Criando...",
+            "STATUS_CODE": "Código de Status",
+            "BODY_TYPE": "Tipo de Corpo",
+            "BODY_TYPE_TEXT": "Texto",
+            "COPY_FROM_EXAMPLE": "Copiar de um exemplo da coleção",
+            "COPY_FROM_EXAMPLE_DESC": "Reutiliza a requisição, o código de status e o corpo do exemplo, em vez de começar de uma resposta vazia.",
+            "SELECT_AN_EXAMPLE": "Selecione um exemplo"
+        },
+        "RENAME_MOCK_RESPONSE": {
+            "TITLE": "Renomear Resposta de Mock",
+            "RENAMING": "Renomeando..."
+        },
+        "CREATE_TRANSIENT_REQUEST": {
+            "ARIA_LABEL": "Nova requisição transitória"
+        },
+        "CREATE_EXAMPLE": {
+            "TITLE": "Criar Exemplo de Resposta",
+            "SAVE_TITLE": "Salvar Resposta como Exemplo",
+            "CONFIRM": "Criar Exemplo",
+            "EXAMPLE_NAME": "Nome do Exemplo"
+        },
+        "IMPORT_PATHS": {
+            "FROM_COLLECTION_SETTINGS": "Das Configurações da Coleção",
+            "SOME_PATHS_NOT_FOUND": "Alguns caminhos de importação não puderam ser encontrados.",
+            "MANAGE_IMPORT_PATHS": "Gerenciar caminhos de importação",
+            "IMPORT_PATH_ENABLED": "Caminho de importação habilitado",
+            "IMPORT_PATH_DISABLED": "Caminho de importação desabilitado",
+            "NO_IMPORT_PATHS": "Nenhum caminho de importação configurado nas configurações da coleção",
+            "BROWSE_IMPORT_PATH": "Procurar Caminho de Importação"
+        }
+    },
+    "RUNNER": {
+        "TITLE": "Runner",
+        "REQUEST_COUNT_PRE": "Você tem",
+        "REQUEST_SINGULAR": "requisição",
+        "REQUEST_PLURAL": "requisições",
+        "REQUEST_COUNT_POST": "nesta coleção.",
+        "LOADING": "(Carregando...)",
+        "LOADING_WARNING": "As requisições desta coleção ainda estão carregando.",
+        "TIMINGS": "Tempos",
+        "DELAY_LABEL": "Atraso entre requisições (ms)",
+        "DELAY_PLACEHOLDER": "ex.: 5",
+        "FILTERS": "Filtros",
+        "RUN_ONE": "Executar {{count}} Requisição",
+        "RUN_MANY": "Executar {{count}} Requisições",
+        "RESET": "Redefinir",
+        "CANCEL_EXECUTION": "Cancelar Execução",
+        "EXPORT": "Exportar",
+        "EXPORT_REPORT": "Exportar Relatório",
+        "RUN_AGAIN": "Executar Novamente",
+        "TAGS": "Tags:",
+        "CLOSE": "Fechar",
+        "CLOSE_RESPONSE": "Fechar visualização da resposta",
+        "CLICK_STATUS": "Clique no código de status para ver a resposta",
+        "REQUEST_FAILED": "(falha na requisição)",
+        "FILTER_BY": "Filtrar por:",
+        "FILTER_ALL": "Todos",
+        "FILTER_PASSED": "Aprovados",
+        "FILTER_FAILED": "Falharam",
+        "FILTER_SKIPPED": "Ignorados",
+        "INCLUDE_TAGS": "Incluir tags",
+        "EXCLUDE_TAGS": "Excluir tags",
+        "SELECTED_OF_TOTAL": "{{selected}} de {{total}} selecionados",
+        "SELECT_ALL": "Selecionar todos",
+        "DESELECT_ALL": "Desmarcar todos",
+        "RESET_TITLE": "Redefinir seleção e ordem",
+        "LOADING_REQUESTS": "Carregando requisições...",
+        "NO_REQUESTS": "Nenhuma requisição encontrada nesta coleção",
+        "RESPONSE": "Resposta",
+        "HEADERS": "Cabeçalhos",
+        "TIMELINE": "Linha do tempo"
     }
 }

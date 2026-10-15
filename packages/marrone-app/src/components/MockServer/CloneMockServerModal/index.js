@@ -21,6 +21,7 @@ import {
   saveMockServerInstance,
   suggestAvailableMockServerPort
 } from 'utils/mock-server/mock-server-instances';
+import { useTranslation } from 'react-i18next';
 
 const CloneMockServerModal = ({
   instance,
@@ -29,6 +30,7 @@ const CloneMockServerModal = ({
   activeWorkspace,
   onClose
 }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const inputRef = useRef();
   const activeWorkspaceUid = useSelector((state) => state.workspaces.activeWorkspaceUid);
@@ -152,8 +154,8 @@ const CloneMockServerModal = ({
     <Portal>
       <Modal
         size="md"
-        title="Clone Mock Server"
-        confirmText="Clone"
+        title={t('MODALS.CLONE_MOCK_SERVER.TITLE')}
+        confirmText={t('MODALS.COMMON.CLONE')}
         handleConfirm={async () => {
           const errors = await formik.validateForm();
           if (Object.keys(errors).length > 0) {
@@ -172,7 +174,7 @@ const CloneMockServerModal = ({
         <form className="marrone-form" onSubmit={(event) => event.preventDefault()}>
           <div>
             <label htmlFor="mock-server-clone-name" className="block font-medium">
-              Name
+              {t('MODALS.COMMON.NAME')}
             </label>
             <input
               id="mock-server-clone-name"
@@ -196,7 +198,7 @@ const CloneMockServerModal = ({
 
           <div className="mt-4">
             <label htmlFor="mock-server-clone-port" className="block font-medium">
-              Port
+              {t('MODALS.COMMON.PORT')}
             </label>
             <input
               id="mock-server-clone-port"
@@ -221,7 +223,7 @@ const CloneMockServerModal = ({
           </div>
 
           <p className="text-xs opacity-70 mt-4">
-            Clones mock responses and server settings. The clone starts stopped.
+            {t('MODALS.CLONE_MOCK_SERVER.CLONE_HINT')}
           </p>
         </form>
       </Modal>

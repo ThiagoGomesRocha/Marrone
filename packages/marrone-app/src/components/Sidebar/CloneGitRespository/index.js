@@ -25,10 +25,13 @@ import GitNotFoundModal from 'components/Git/GitNotFoundModal/index';
 import SkippedPathsWarning from 'components/SkippedPathsWarning';
 import toast from 'react-hot-toast';
 import get from 'lodash/get';
+import { useTranslation } from 'react-i18next';
 
 const EMPTY_BRANCH_LISTING = { branches: [], defaultBranch: '', loading: false, failed: false };
 
 const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null }) => {
+  const { t } = useTranslation();
+  const CONFIRM_TEXT_KEYS = { Clone: 'MODALS.COMMON.CLONE', Close: 'MODALS.COMMON.CLOSE', Open: 'MODALS.COMMON.OPEN' };
   const [collectionPaths, setCollectionPaths] = useState([]);
   const [skippedCollectionPaths, setSkippedCollectionPaths] = useState([]);
   const [selectedCollectionPaths, setSelectedCollectionPaths] = useState([]);
@@ -54,7 +57,7 @@ const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null 
       setSteps((prev) =>
         prev.map((step) =>
           step.step === 'clone' && !step?.completed
-            ? { ...step, title: 'Cloning repository', completed: false, info: progressData.progressData }
+            ? { ...step, title: t('MODALS.CLONE_GIT_REPOSITORY.CLONING'), completed: false, info: progressData.progressData }
             : step
         )
       );
@@ -86,7 +89,7 @@ const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null 
       ...prev,
       {
         step: 'clone',
-        title: 'Cloning repository',
+        title: t('MODALS.CLONE_GIT_REPOSITORY.CLONING'),
         completed: false
       }
     ]);
@@ -97,7 +100,7 @@ const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null 
     setSteps((prev) =>
       prev.map((step) =>
         step.step === 'clone'
-          ? { ...step, title: 'Cloning successful', completed: true, info: '' }
+          ? { ...step, title: t('MODALS.CLONE_GIT_REPOSITORY.CLONE_SUCCESS'), completed: true, info: '' }
           : step
       )
     );
@@ -107,7 +110,7 @@ const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null 
     setSteps((prev) =>
       prev.map((step) =>
         step.step === 'clone'
-          ? { ...step, title: 'Cloning failed', completed: true, error: true }
+          ? { ...step, title: t('MODALS.CLONE_GIT_REPOSITORY.CLONE_FAILED'), completed: true, error: true }
           : step
       )
     );
@@ -118,7 +121,7 @@ const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null 
       ...prev,
       {
         step: 'scan',
-        title: 'Scanning for Marrone files',
+        title: t('MODALS.CLONE_GIT_REPOSITORY.SCANNING'),
         completed: false
       }
     ]);
@@ -128,7 +131,7 @@ const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null 
     toast.success('Repository scanned successfully');
     setSteps((prev) =>
       prev.map((step) =>
-        step.step === 'scan' ? { ...step, title: 'Scan successful', completed: true, info: '' } : step
+        step.step === 'scan' ? { ...step, title: t('MODALS.CLONE_GIT_REPOSITORY.SCAN_SUCCESS'), completed: true, info: '' } : step
       )
     );
   };
@@ -232,14 +235,14 @@ const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null 
           onClick={handleBackButtonClick}
           data-testid="clone-git-repository-modal-back-btn"
         >
-          Back
+          {t('MODALS.COMMON.BACK')}
         </Button>
       );
     }
     if (isScanCompleted() && collectionPaths?.length > 0) {
       return (
         <SelectionFooter>
-          <span>{selectedCollectionPaths.length}</span> of {collectionPaths.length} selected
+          <span>{selectedCollectionPaths.length}</span> {t('MODALS.CLONE_GIT_REPOSITORY.OF')} {collectionPaths.length} {t('MODALS.CLONE_GIT_REPOSITORY.SELECTED')}
         </SelectionFooter>
       );
     }
@@ -282,8 +285,8 @@ const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null 
     <Portal id="clone-repository-portal">
       <Modal
         size="md"
-        title="Clone Git Repository"
-        confirmText={getConfirmText()}
+        title={t('MODALS.CLONE_GIT_REPOSITORY.TITLE')}
+        confirmText={t(CONFIRM_TEXT_KEYS[getConfirmText()])}
         handleConfirm={handleConfirm}
         handleCancel={onClose}
         confirmDisabled={isConfirmDisabled()}
@@ -312,7 +315,7 @@ const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null 
                   : (
                       <>
                         <label htmlFor="repository-url" className="flex items-center font-semibold">
-                          Git Repository URL
+                          {t('MODALS.CLONE_GIT_REPOSITORY.GIT_REPOSITORY_URL')}
                         </label>
                         <input
                           id="repository-url"
@@ -333,7 +336,7 @@ const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null 
                   <div className="text-red-500">{formik.errors.repositoryUrl}</div>
                 )}
                 <label htmlFor="collection-location" className="block font-semibold mt-3">
-                  Location
+                  {t('MODALS.COMMON.LOCATION')}
                 </label>
                 <input
                   id="collection-location"
@@ -353,12 +356,12 @@ const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null 
                 )}
                 <div className="mt-1">
                   <span className="text-link cursor-pointer hover:underline" onClick={browse}>
-                    Browse
+                    {t('MODALS.COMMON.BROWSE')}
                   </span>
                 </div>
                 <Select
                   className="branch-select mt-5"
-                  label="Branch"
+                  label={t('MODALS.CLONE_GIT_REPOSITORY.BRANCH')}
                   data={branchListing.branches}
                   value={formik.values.branch || branchListing.defaultBranch}
                   onChange={(branch) => formik.setFieldValue('branch', branch || '')}
@@ -367,13 +370,13 @@ const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null 
                   loading={branchListing.loading}
                   rightSection={branchListing.loading ? undefined : <IconChevronDown size={12} strokeWidth={2} />}
                   disabled={!branchListing.branches.length}
-                  placeholder={branchListing.loading ? 'Loading branches...' : 'Repository default'}
-                  nothingFoundMessage="No branches match your search"
+                  placeholder={branchListing.loading ? t('MODALS.CLONE_GIT_REPOSITORY.BRANCH_LOADING') : t('MODALS.CLONE_GIT_REPOSITORY.BRANCH_DEFAULT')}
+                  nothingFoundMessage={t('MODALS.CLONE_GIT_REPOSITORY.BRANCH_NO_MATCH')}
                   data-testid="clone-git-repository-branch-select"
                 />
                 {branchListing.failed && (
                   <div className="text-muted text-xs mt-1">
-                    Branches could not be listed for this repository. Cloning will use the default branch.
+                    {t('MODALS.CLONE_GIT_REPOSITORY.BRANCH_LIST_FAILED')}
                   </div>
                 )}
               </div>
@@ -410,13 +413,13 @@ const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null 
                   {collectionPaths.length === 0 && (
                     <div className="scan-warning flex items-start gap-2">
                       <IconAlertCircle className="scan-warning-icon" size={18} strokeWidth={1.5} />
-                      <div>No Marrone collections were found in this repository.</div>
+                      <div>{t('MODALS.CLONE_GIT_REPOSITORY.NO_COLLECTIONS_FOUND')}</div>
                     </div>
                   )}
                   {collectionPaths.length > 0 && (
                     <SelectionList
-                      title="Collections"
-                      searchPlaceholder="Search Collections"
+                      title={t('MODALS.CLONE_GIT_REPOSITORY.COLLECTIONS_TITLE')}
+                      searchPlaceholder={t('MODALS.CLONE_GIT_REPOSITORY.SEARCH_COLLECTIONS')}
                       items={collectionPaths}
                       selectedItems={selectedCollectionPaths}
                       onSelectAll={handleSelectAllCollections}

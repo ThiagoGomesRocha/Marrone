@@ -19,6 +19,7 @@ import CollectionSourceFields from './CollectionSourceFields';
 import UrlSourceField from './UrlSourceField';
 import SpecLocationField from './SpecLocationField';
 import useApiSpecUrlSource from './useApiSpecUrlSource';
+import { useTranslation } from 'react-i18next';
 import useCollectionSource from './useCollectionSource';
 import {
   API_SPEC_NAME_TAKEN_ERROR,
@@ -30,10 +31,11 @@ import {
 } from './apiSpecSources';
 
 const CreateApiSpec = ({ onClose }) => {
+  const { t } = useTranslation();
   const sourceRadios = [
-    { id: 'api-spec-source-blank', value: API_SPEC_SOURCE.BLANK, label: 'Blank Spec' },
-    { id: 'api-spec-source-collection', value: API_SPEC_SOURCE.COLLECTION, label: 'From Marrone Collection' },
-    { id: 'api-spec-source-url', value: API_SPEC_SOURCE.URL, label: 'From Spec URL' }
+    { id: 'api-spec-source-blank', value: API_SPEC_SOURCE.BLANK, label: t('MODALS.CREATE_API_SPEC.SOURCE_BLANK') },
+    { id: 'api-spec-source-collection', value: API_SPEC_SOURCE.COLLECTION, label: t('MODALS.CREATE_API_SPEC.SOURCE_COLLECTION') },
+    { id: 'api-spec-source-url', value: API_SPEC_SOURCE.URL, label: t('MODALS.CREATE_API_SPEC.SOURCE_URL') }
   ];
 
   const inputRef = useRef();
@@ -316,8 +318,8 @@ const CreateApiSpec = ({ onClose }) => {
       <StyledWrapper>
         <Modal
           size="md"
-          title="Create API Spec"
-          confirmText="Create"
+          title={t('MODALS.CREATE_API_SPEC.TITLE')}
+          confirmText={t('MODALS.COMMON.CREATE')}
           confirmDisabled={
             urlSource.isFetching
             || (formik.values.importFrom === API_SPEC_SOURCE.COLLECTION && collectionSource.isLoading)
@@ -326,7 +328,7 @@ const CreateApiSpec = ({ onClose }) => {
           handleCancel={onClose}
         >
           <form className="marrone-form w-[500px] max-w-full" onSubmit={formik.handleSubmit}>
-            <label className="block font-semibold mb-2">Source</label>
+            <label className="block font-semibold mb-2">{t('MODALS.COMMON.SOURCE')}</label>
             <div className="flex items-center gap-[28px]">
               {sourceRadios.map(({ id, value, label }) => (
                 <div key={id} className="flex items-center">
@@ -377,7 +379,7 @@ const CreateApiSpec = ({ onClose }) => {
             ) : null}
 
             <label htmlFor="api-spec-name" className="flex items-center font-semibold mt-3">
-              Name
+              {t('MODALS.COMMON.NAME')}
             </label>
             <div className="relative">
               <input

@@ -7,9 +7,11 @@ import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { renameGlobalEnvironment } from 'providers/ReduxStore/slices/global-environments';
 import { validateName, validateNameError } from 'utils/common/regex';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
 const RenameEnvironment = ({ onClose, environment }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const globalEnvs = useSelector((state) => state?.globalEnvironments?.globalEnvironments);
   const inputRef = useRef();
@@ -66,15 +68,15 @@ const RenameEnvironment = ({ onClose, environment }) => {
     <Portal>
       <Modal
         size="sm"
-        title="Rename Environment"
-        confirmText="Rename"
+        title={t('MODALS.RENAME_ENVIRONMENT.TITLE')}
+        confirmText={t('MODALS.COMMON.RENAME')}
         handleConfirm={onSubmit}
         handleCancel={onClose}
       >
         <form className="marrone-form" onSubmit={(e) => e.preventDefault()}>
           <div>
             <label htmlFor="environment-name" className="block font-semibold">
-              Environment Name
+              {t('MODALS.COMMON.ENVIRONMENT_NAME')}
             </label>
             <input
               id="environment-name"

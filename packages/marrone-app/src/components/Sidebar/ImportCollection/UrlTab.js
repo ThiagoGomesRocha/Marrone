@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { fetchAndValidateApiSpecFromUrl } from 'utils/importers/common';
 import { isValidUrl } from 'utils/url/index';
 import Button from 'ui/Button';
+import { useTranslation } from 'react-i18next';
 const UrlTab = ({
   setIsLoading,
   handleSubmit,
   setErrorMessage
 }) => {
+  const { t } = useTranslation();
   const [urlInput, setUrlInput] = useState('');
 
   const handleUrlImport = async (event) => {
@@ -41,7 +43,7 @@ const UrlTab = ({
             setUrlInput(e.target.value);
             setErrorMessage('');
           }}
-          placeholder="Enter URL (OpenAPI/Swagger, Postman, or Insomnia specification)"
+          placeholder={t('MODALS.IMPORT_COLLECTION.URL_PLACEHOLDER')}
           className="flex-1 px-3 py-1 textbox"
         />
         <Button
@@ -52,7 +54,7 @@ const UrlTab = ({
           color="primary"
           style={{ height: '100%' }}
         >
-          Import
+          {t('MODALS.COMMON.IMPORT')}
         </Button>
       </div>
     </form>

@@ -7,8 +7,10 @@ import Portal from 'components/Portal';
 import Modal from 'components/Modal';
 import { addGlobalEnvironment } from 'providers/ReduxStore/slices/global-environments';
 import { validateName, validateNameError } from 'utils/common/regex';
+import { useTranslation } from 'react-i18next';
 
 const CreateEnvironment = ({ onClose, onEnvironmentCreated }) => {
+  const { t } = useTranslation();
   const globalEnvs = useSelector((state) => state?.globalEnvironments?.globalEnvironments);
 
   const validateEnvironmentName = (name) => {
@@ -62,8 +64,8 @@ const CreateEnvironment = ({ onClose, onEnvironmentCreated }) => {
     <Portal>
       <Modal
         size="md"
-        title="Create Global Environment"
-        confirmText="Create"
+        title={t('MODALS.CREATE_GLOBAL_ENVIRONMENT.TITLE')}
+        confirmText={t('MODALS.COMMON.CREATE')}
         handleConfirm={onSubmit}
         handleCancel={onClose}
         dataTestId="create-global-environment-modal"
@@ -71,7 +73,7 @@ const CreateEnvironment = ({ onClose, onEnvironmentCreated }) => {
         <form className="marrone-form" onSubmit={(e) => e.preventDefault()}>
           <div>
             <label htmlFor="environment-name" className="block font-semibold">
-              Environment Name
+              {t('MODALS.COMMON.ENVIRONMENT_NAME')}
             </label>
             <div className="flex items-center mt-2">
               <input

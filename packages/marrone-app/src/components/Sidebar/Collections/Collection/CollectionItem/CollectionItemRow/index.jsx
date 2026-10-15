@@ -62,6 +62,7 @@ import {
 } from 'utils/collections/index';
 import { getRevealInFolderLabel } from 'utils/common/platform';
 import CreateExampleModal from 'components/ResponseExample/CreateExampleModal';
+import { useTranslation } from 'react-i18next';
 import { openDevtoolsAndSwitchToTerminal } from 'utils/terminal';
 import ActionIcon from 'ui/ActionIcon';
 import MenuDropdown from 'ui/MenuDropdown';
@@ -84,6 +85,7 @@ const CollectionItemRow = ({
   multiDragCollections,
   multiDragItems: multiDragItemsForSelection
 }) => {
+  const { t } = useTranslation();
   const { dropdownContainerRef } = useSidebarAccordion();
   const selectorInput = {
     itemUid: item.uid,
@@ -749,7 +751,7 @@ const CollectionItemRow = ({
         isOpen={createExampleModalOpen}
         onClose={() => setCreateExampleModalOpen(false)}
         onSave={handleCreateExample}
-        title="Create Response Example"
+        title={t('MODALS.CREATE_EXAMPLE.TITLE')}
         initialName={getInitialExampleName(item)}
       />
       <div

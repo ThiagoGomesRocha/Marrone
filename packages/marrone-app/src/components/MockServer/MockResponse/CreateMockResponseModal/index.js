@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Portal from 'components/Portal';
 import Modal from 'components/Modal';
 import statusCodePhraseMap from 'components/ResponsePane/StatusCode/get-status-code-phrase';
+import { useTranslation } from 'react-i18next';
 import {
   collectCollectionExamples,
   getMockResponseNameError,
@@ -10,14 +11,14 @@ import {
   isMockResponseNameTaken
 } from 'utils/mock-server/mock-responses';
 
-const BODY_TYPES = [
-  { value: 'json', label: 'JSON' },
-  { value: 'text', label: 'Text' },
-  { value: 'xml', label: 'XML' },
-  { value: 'html', label: 'HTML' }
-];
-
 const CreateMockResponseModal = ({ collection, existingResponses = [], onCreate, onClose }) => {
+  const { t } = useTranslation();
+  const BODY_TYPES = [
+    { value: 'json', label: 'JSON' },
+    { value: 'text', label: t('MODALS.CREATE_MOCK_RESPONSE.BODY_TYPE_TEXT') },
+    { value: 'xml', label: 'XML' },
+    { value: 'html', label: 'HTML' }
+  ];
   const nameInputRef = useRef();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -101,8 +102,8 @@ const CreateMockResponseModal = ({ collection, existingResponses = [], onCreate,
     <Portal>
       <Modal
         size="md"
-        title="Create Mock Response"
-        confirmText={isSaving ? 'Creating...' : 'Create'}
+        title={t('MODALS.CREATE_MOCK_RESPONSE.TITLE')}
+        confirmText={isSaving ? t('MODALS.CREATE_MOCK_RESPONSE.CREATING') : t('MODALS.COMMON.CREATE')}
         confirmDisabled={isSaving || !trimmedName || Boolean(inputNameError) || Boolean(descriptionError)}
         handleConfirm={handleConfirm}
         handleCancel={() => {
@@ -115,7 +116,7 @@ const CreateMockResponseModal = ({ collection, existingResponses = [], onCreate,
         <form className="marrone-form" onSubmit={(event) => event.preventDefault()}>
           <div>
             <label htmlFor="mock-response-create-name" className="block font-medium">
-              Name
+              {t('MODALS.COMMON.NAME')}
             </label>
             <input
               id="mock-response-create-name"
@@ -140,7 +141,7 @@ const CreateMockResponseModal = ({ collection, existingResponses = [], onCreate,
 
           <div className="mt-4">
             <label htmlFor="mock-response-create-description" className="block font-medium">
-              Description
+              {t('MODALS.COMMON.DESCRIPTION')}
             </label>
             <textarea
               id="mock-response-create-description"
@@ -158,7 +159,7 @@ const CreateMockResponseModal = ({ collection, existingResponses = [], onCreate,
           <div className="mt-4 grid grid-cols-2 gap-4">
             <div>
               <label htmlFor="mock-response-create-status" className="block font-medium">
-                Status Code
+                {t('MODALS.CREATE_MOCK_RESPONSE.STATUS_CODE')}
               </label>
               <select
                 id="mock-response-create-status"
@@ -176,7 +177,7 @@ const CreateMockResponseModal = ({ collection, existingResponses = [], onCreate,
 
             <div>
               <label htmlFor="mock-response-create-body-type" className="block font-medium">
-                Body Type
+                {t('MODALS.CREATE_MOCK_RESPONSE.BODY_TYPE')}
               </label>
               <select
                 id="mock-response-create-body-type"
@@ -209,9 +210,9 @@ const CreateMockResponseModal = ({ collection, existingResponses = [], onCreate,
                   data-testid="mock-response-use-example-checkbox"
                 />
                 <span>
-                  <span className="block font-medium">Copy from a collection example</span>
+                  <span className="block font-medium">{t('MODALS.CREATE_MOCK_RESPONSE.COPY_FROM_EXAMPLE')}</span>
                   <span className="block text-xs opacity-70 mt-1">
-                    Reuses the example's request, status code and body instead of starting from an empty response.
+                    {t('MODALS.CREATE_MOCK_RESPONSE.COPY_FROM_EXAMPLE_DESC')}
                   </span>
                 </span>
               </label>
@@ -227,7 +228,7 @@ const CreateMockResponseModal = ({ collection, existingResponses = [], onCreate,
                     }}
                     data-testid="mock-response-example-select"
                   >
-                    <option value="">Select an example</option>
+                    <option value="">{t('MODALS.CREATE_MOCK_RESPONSE.SELECT_AN_EXAMPLE')}</option>
                     {examples.map(({ item, example }) => (
                       <option key={`${item.uid}-${example.uid}`} value={`${item.uid}:${example.uid}`}>
                         {example.name} ({item.name})

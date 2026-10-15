@@ -6,8 +6,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 import { renameCollection } from 'providers/ReduxStore/slices/collections/actions';
 import { findCollectionByUid } from 'utils/collections/index';
+import { useTranslation } from 'react-i18next';
 
 const RenameCollection = ({ collectionUid, onClose }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const inputRef = useRef();
   const collection = useSelector((state) => findCollectionByUid(state.collections.collections, collectionUid));
@@ -42,11 +44,11 @@ const RenameCollection = ({ collectionUid, onClose }) => {
   const onSubmit = () => formik.handleSubmit();
 
   return (
-    <Modal size="md" title="Rename Collection" confirmText="Rename" handleConfirm={onSubmit} handleCancel={onClose}>
+    <Modal size="md" title={t('MODALS.RENAME_COLLECTION.TITLE')} confirmText={t('MODALS.COMMON.RENAME')} handleConfirm={onSubmit} handleCancel={onClose}>
       <form className="marrone-form" onSubmit={(e) => e.preventDefault()}>
         <div>
           <label htmlFor="name" className="block font-medium">
-            Name
+            {t('MODALS.COMMON.NAME')}
           </label>
           <input
             id="collection-name"

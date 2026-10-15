@@ -4,8 +4,7 @@ import MenuDropdown from 'ui/MenuDropdown';
 import SegmentedControl from 'ui/SegmentedControl';
 import { IconChevronDown } from '@tabler/icons';
 import { COLLECTION_SOURCE, COLLECTION_SOURCE_ITEMS } from '../apiSpecSources';
-
-const NO_COLLECTIONS_HINT = 'No collections in this workspace';
+import { useTranslation } from 'react-i18next';
 
 const CollectionSourceFields = ({
   collectionUid,
@@ -23,13 +22,17 @@ const CollectionSourceFields = ({
   onSelectEnvironment,
   onBrowseCollection
 }) => {
+  const { t } = useTranslation();
   const hasWorkspaceCollections = workspaceCollections.length > 0;
 
-  const sourceItems = COLLECTION_SOURCE_ITEMS.map((item) => (
-    item.value === COLLECTION_SOURCE.WORKSPACE && !hasWorkspaceCollections
-      ? { ...item, disabled: true, className: 'segment-no-collections' }
-      : item
-  ));
+  const sourceItems = COLLECTION_SOURCE_ITEMS.map((item) => {
+    const label = item.value === COLLECTION_SOURCE.WORKSPACE
+      ? t('MODALS.CREATE_API_SPEC.COLLECTION_SOURCE_FROM_WORKSPACE')
+      : t('MODALS.CREATE_API_SPEC.COLLECTION_SOURCE_FROM_FILESYSTEM');
+    return item.value === COLLECTION_SOURCE.WORKSPACE && !hasWorkspaceCollections
+      ? { ...item, label, disabled: true, className: 'segment-no-collections' }
+      : { ...item, label };
+  });
 
   const collectionItems = workspaceCollections.map((collection) => ({
     id: collection.uid,
@@ -47,7 +50,7 @@ const CollectionSourceFields = ({
     <>
       <div className="collection-source-control">
         <SegmentedControl
-          ariaLabel="Collection source"
+          ariaLabel={t('MODALS.CREATE_API_SPEC.COLLECTION_SOURCE_ARIA')}
           name="collectionSource"
           value={isWorkspaceSource ? COLLECTION_SOURCE.WORKSPACE : COLLECTION_SOURCE.FILESYSTEM}
           onChange={onSelectSource}
@@ -58,7 +61,7 @@ const CollectionSourceFields = ({
         {hasWorkspaceCollections ? null : (
           <Tooltip
             anchorSelect=".segment-no-collections"
-            content={NO_COLLECTIONS_HINT}
+            content={t('MODALS.CREATE_API_SPEC.NO_COLLECTIONS_HINT')}
             className="api-spec-hint-tooltip"
             place="top"
             data-testid="api-spec-no-collections"
@@ -86,7 +89,7 @@ const CollectionSourceFields = ({
               data-testid="api-spec-collection-trigger"
             >
               <span className={selectedWorkspaceCollection ? 'truncate' : 'truncate placeholder'}>
-                {selectedWorkspaceCollection?.name || 'Select a collection'}
+                {selectedWorkspaceCollection?.name || t('MODALS.CREATE_API_SPEC.SELECT_COLLECTION')}
               </span>
               <IconChevronDown className="caret" size={14} strokeWidth={2} />
             </button>
@@ -102,7 +105,7 @@ const CollectionSourceFields = ({
             type="text"
             name="collectionLocation"
             readOnly={true}
-            placeholder="Choose file..."
+            placeholder={t('MODALS.CREATE_API_SPEC.CHOOSE_FILE')}
             className="block textbox mt-1 w-full cursor-pointer"
             autoComplete="off"
             autoCorrect="off"
@@ -126,7 +129,7 @@ const CollectionSourceFields = ({
           {collectionLocation ? (
             <div className="mt-1">
               <span className="text-link cursor-pointer hover:underline" onClick={onBrowseCollection}>
-                Browse
+                {t('MODALS.COMMON.BROWSE')}
               </span>
             </div>
           ) : null}
@@ -136,7 +139,7 @@ const CollectionSourceFields = ({
       {environmentNames.length ? (
         <>
           <label htmlFor="api-spec-environment" className="flex items-center font-semibold mt-3">
-            Environment
+            {t('MODALS.COMMON.ENVIRONMENT')}
           </label>
           <MenuDropdown
             items={environmentItems}

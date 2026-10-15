@@ -16,8 +16,10 @@ import Portal from 'components/Portal';
 import Dropdown from 'components/Dropdown';
 import StyledWrapper from './StyledWrapper';
 import Button from 'ui/Button';
+import { useTranslation } from 'react-i18next';
 
 const RenameCollectionItem = ({ collectionUid, item, onClose }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const collection = useSelector((state) => state.collections.collections?.find((c) => c.uid === collectionUid));
   const isFolder = isItemAFolder(item);
@@ -26,6 +28,7 @@ const RenameCollectionItem = ({ collectionUid, item, onClose }) => {
   const itemName = item?.name;
   const itemType = item?.type;
   const itemTypeLabel = getItemTypeLabel(item);
+  const itemTypeKey = isFolder ? 'FOLDER' : item?.type === 'app' ? 'APP' : 'REQUEST';
   const itemFilename = item?.filename ? path.parse(item?.filename).name : '';
   const [showFilesystemName, toggleShowFilesystemName] = useState(false);
 
@@ -96,7 +99,7 @@ const RenameCollectionItem = ({ collectionUid, item, onClose }) => {
           className="btn-advanced"
           type="button"
         >
-          Options
+          {t('MODALS.COMMON.OPTIONS')}
         </button>
         <IconCaretDown className="caret ml-1" size={14} strokeWidth={2} />
       </div>
@@ -108,14 +111,14 @@ const RenameCollectionItem = ({ collectionUid, item, onClose }) => {
       <StyledWrapper>
         <Modal
           size="md"
-          title={`Rename ${itemTypeLabel}`}
+          title={t(`MODALS.RENAME_ITEM.TITLE_${itemTypeKey}`)}
           handleCancel={onClose}
           hideFooter
         >
           <form className="marrone-form" onSubmit={formik.handleSubmit}>
             <div className="flex flex-col mt-2">
               <label htmlFor="name" className="block font-medium">
-                {itemTypeLabel} Name
+                {t(`MODALS.RENAME_ITEM.NAME_LABEL_${itemTypeKey}`)}
               </label>
               <input
                 id="collection-item-name"
@@ -140,20 +143,20 @@ const RenameCollectionItem = ({ collectionUid, item, onClose }) => {
               <div className="mt-4">
                 <div className="flex items-center justify-between">
                   <label htmlFor="filename" className="flex items-center font-medium">
-                    {isFolder ? 'Folder' : 'File'} Name <small className="font-normal text-muted ml-1">(on filesystem)</small>
+                    {isFolder ? t('MODALS.COMMON.FOLDER_NAME') : t('MODALS.COMMON.FILE_NAME')} <small className="font-normal text-muted ml-1">{t('MODALS.COMMON.ON_FILESYSTEM')}</small>
                     { isFolder ? (
                       <Help width="300">
                         <p>
-                          You can choose to save the folder as a different name on your file system versus what is displayed in the app.
+                          {t('MODALS.COMMON.FILESYSTEM_FOLDER_HELP')}
                         </p>
                       </Help>
                     ) : (
                       <Help width="300">
                         <p>
-                          Marrone saves each request as a file in your collection's folder.
+                          {t('MODALS.COMMON.FILESYSTEM_FILE_HELP_1')}
                         </p>
                         <p className="mt-2">
-                          You can choose a file name different from your request's name or one compatible with filesystem rules.
+                          {t('MODALS.COMMON.FILESYSTEM_FILE_HELP_2')}
                         </p>
                       </Help>
                     )}
@@ -181,7 +184,7 @@ const RenameCollectionItem = ({ collectionUid, item, onClose }) => {
                       id="file-name"
                       type="text"
                       name="filename"
-                      placeholder={isFolder ? 'Folder Name' : 'File Name'}
+                      placeholder={isFolder ? t('MODALS.COMMON.FOLDER_NAME') : t('MODALS.COMMON.FILE_NAME')}
                       className="!pr-10 block textbox mt-2 w-full"
                       autoComplete="off"
                       autoCorrect="off"
@@ -215,16 +218,16 @@ const RenameCollectionItem = ({ collectionUid, item, onClose }) => {
                       toggleShowFilesystemName(!showFilesystemName);
                     }}
                   >
-                    {showFilesystemName ? 'Hide Filesystem Name' : 'Show Filesystem Name'}
+                    {showFilesystemName ? t('MODALS.COMMON.HIDE_FILESYSTEM_NAME') : t('MODALS.COMMON.SHOW_FILESYSTEM_NAME')}
                   </div>
                 </Dropdown>
               </div>
               <div className="flex justify-end">
                 <Button type="button" color="secondary" variant="ghost" onClick={onClose} className="mr-2">
-                  Cancel
+                  {t('MODALS.COMMON.CANCEL')}
                 </Button>
                 <Button type="submit" data-testid="rename-item-button">
-                  Rename
+                  {t('MODALS.COMMON.RENAME')}
                 </Button>
               </div>
             </div>

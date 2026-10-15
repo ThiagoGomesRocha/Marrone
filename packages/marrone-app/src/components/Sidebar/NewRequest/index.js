@@ -23,8 +23,10 @@ import StyledWrapper from './StyledWrapper';
 import SingleLineEditor from 'components/SingleLineEditor/index';
 import { useTheme } from 'styled-components';
 import Button from 'ui/Button';
+import { useTranslation } from 'react-i18next';
 
 const NewRequest = ({ collectionUid, item, isEphemeral, onClose }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const inputRef = useRef();
 
@@ -302,7 +304,7 @@ const NewRequest = ({ collectionUid, item, isEphemeral, onClose }) => {
     return (
       <div ref={ref} className="flex mr-2 text-link cursor-pointer items-center">
         <button className="btn-advanced" type="button">
-          Options
+          {t('MODALS.COMMON.OPTIONS')}
         </button>
         <IconCaretDown className="caret ml-1" size={14} strokeWidth={2} />
       </div>
@@ -312,14 +314,14 @@ const NewRequest = ({ collectionUid, item, isEphemeral, onClose }) => {
   return (
     <Portal>
       <StyledWrapper>
-        <Modal size="md" title="New Request" hideFooter handleCancel={onClose}>
+        <Modal size="md" title={t('MODALS.NEW_REQUEST.TITLE')} hideFooter handleCancel={onClose}>
           <form
             className="marrone-form"
             onSubmit={formik.handleSubmit}
           >
             <div>
               <label htmlFor="requestName" className="block font-medium">
-                Type
+                {t('MODALS.NEW_REQUEST.TYPE_LABEL')}
               </label>
 
               <div className="mt-2 grid grid-cols-3 gap-2">
@@ -398,7 +400,7 @@ const NewRequest = ({ collectionUid, item, isEphemeral, onClose }) => {
                       data-testid="from-curl"
                     />
                     <label htmlFor="from-curl" className="ml-1 cursor-pointer select-none">
-                      From cURL
+                      {t('MODALS.NEW_REQUEST.REQUEST_TYPE_FROM_CURL')}
                     </label>
                   </div>
                 </div>
@@ -406,13 +408,13 @@ const NewRequest = ({ collectionUid, item, isEphemeral, onClose }) => {
             </div>
             <div className="mt-4">
               <label htmlFor="requestName" className="block font-medium">
-                Request Name
+                {t('MODALS.NEW_REQUEST.REQUEST_NAME')}
               </label>
               <input
                 id="request-name"
                 type="text"
                 name="requestName"
-                placeholder="Request Name"
+                placeholder={t('MODALS.NEW_REQUEST.REQUEST_NAME_PLACEHOLDER')}
                 ref={inputRef}
                 className="block textbox mt-2 w-full"
                 autoComplete="off"
@@ -434,12 +436,11 @@ const NewRequest = ({ collectionUid, item, isEphemeral, onClose }) => {
               <div className="mt-4">
                 <div className="flex items-center justify-between">
                   <label htmlFor="filename" className="flex items-center font-medium">
-                    File Name <small className="font-normal text-muted ml-1">(on filesystem)</small>
+                    {t('MODALS.COMMON.FILE_NAME')} <small className="font-normal text-muted ml-1">{t('MODALS.COMMON.ON_FILESYSTEM')}</small>
                     <Help width="300">
-                      <p>Marrone saves each request as a file in your collection's folder.</p>
+                      <p>{t('MODALS.COMMON.FILESYSTEM_FILE_HELP_1')}</p>
                       <p className="mt-2">
-                        You can choose a file name different from your request's name or one compatible with filesystem
-                        rules.
+                        {t('MODALS.COMMON.FILESYSTEM_FILE_HELP_2')}
                       </p>
                     </Help>
                   </label>
@@ -466,7 +467,7 @@ const NewRequest = ({ collectionUid, item, isEphemeral, onClose }) => {
                       id="file-name"
                       type="text"
                       name="filename"
-                      placeholder="File Name"
+                      placeholder={t('MODALS.COMMON.FILE_NAME')}
                       className="!pr-10 block textbox mt-2 w-full"
                       autoComplete="off"
                       autoCorrect="off"
@@ -514,7 +515,7 @@ const NewRequest = ({ collectionUid, item, isEphemeral, onClose }) => {
                       <SingleLineEditor
                         onRun={() => formik.handleSubmit()}
                         onPaste={handlePaste}
-                        placeholder="Request URL"
+                        placeholder={t('MODALS.NEW_REQUEST.REQUEST_URL_PLACEHOLDER')}
                         value={formik.values.requestUrl || ''}
                         theme={storedTheme}
                         onChange={(value) => {
@@ -539,7 +540,7 @@ const NewRequest = ({ collectionUid, item, isEphemeral, onClose }) => {
               <div className="mt-4">
                 <div className="flex justify-between">
                   <label htmlFor="request-url" className="block font-medium">
-                    cURL Command
+                    {t('MODALS.NEW_REQUEST.CURL_COMMAND')}
                   </label>
                   <Dropdown className="dropdown" onCreate={onDropdownCreate} icon={<Icon />} placement="bottom-end">
                     <div
@@ -564,7 +565,7 @@ const NewRequest = ({ collectionUid, item, isEphemeral, onClose }) => {
                 </div>
                 <textarea
                   name="curlCommand"
-                  placeholder="Enter cURL request here.."
+                  placeholder={t('MODALS.NEW_REQUEST.CURL_COMMAND_PLACEHOLDER')}
                   className="block textbox w-full mt-4 curl-command"
                   value={formik.values.curlCommand}
                   onChange={handleCurlCommandChange}
@@ -587,16 +588,16 @@ const NewRequest = ({ collectionUid, item, isEphemeral, onClose }) => {
                       toggleShowFilesystemName(!showFilesystemName);
                     }}
                   >
-                    {showFilesystemName ? 'Hide Filesystem Name' : 'Show Filesystem Name'}
+                    {showFilesystemName ? t('MODALS.COMMON.HIDE_FILESYSTEM_NAME') : t('MODALS.COMMON.SHOW_FILESYSTEM_NAME')}
                   </div>
                 </Dropdown>
               </div>
               <div className="flex justify-end">
                 <Button type="button" color="secondary" variant="ghost" onClick={onClose} className="mr-2">
-                  Cancel
+                  {t('MODALS.COMMON.CANCEL')}
                 </Button>
                 <Button type="submit" data-testid="create-new-request-button">
-                  Create
+                  {t('MODALS.COMMON.CREATE')}
                 </Button>
               </div>
             </div>

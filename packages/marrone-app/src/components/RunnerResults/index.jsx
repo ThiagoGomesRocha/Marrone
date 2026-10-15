@@ -11,6 +11,7 @@ import useOverflowCollapse from 'hooks/useOverflowCollapse';
 import ResponsePane from './ResponsePane';
 import { buildRunnerReport } from './exportReport';
 import i18n from '../../i18n';
+import { useTranslation } from 'react-i18next';
 import StyledWrapper from './StyledWrapper';
 import RunnerTags from './RunnerTags/index';
 import RunnerFilter from './RunnerFilter';
@@ -50,28 +51,29 @@ const anyTestFailed = (item) => {
 // === Centralized filters definition ===
 const FILTERS = {
   all: {
-    label: 'All',
+    labelKey: 'RUNNER.FILTER_ALL',
     predicate: () => true,
     resultFilter: (results) => results
   },
   passed: {
-    label: 'Passed',
+    labelKey: 'RUNNER.FILTER_PASSED',
     predicate: (item) => allTestsPassed(item),
     resultFilter: (results) => results?.filter((r) => r.status === 'pass')
   },
   failed: {
-    label: 'Failed',
+    labelKey: 'RUNNER.FILTER_FAILED',
     predicate: (item) => anyTestFailed(item),
     resultFilter: (results) => results?.filter((r) => ['fail', 'error'].includes(r.status))
   },
   skipped: {
-    label: 'Skipped',
+    labelKey: 'RUNNER.FILTER_SKIPPED',
     predicate: (item) => item.status === 'skipped',
     resultFilter: (results) => results
   }
 };
 
 export default function RunnerResults({ collection }) {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const reportPrefs = useSelector((state) => get(state.app.preferences, 'report', {}));
   const [exportFormat, setExportFormat] = useState('html');
@@ -287,9 +289,9 @@ export default function RunnerResults({ collection }) {
     failed: items.filter(anyTestFailed).length,
     skipped: items.filter((i) => i.status === 'skipped').length
   };
-  const filterOptions = Object.entries(FILTERS).map(([key, { label }]) => ({
+  const filterOptions = Object.entries(FILTERS).map(([key, { labelKey }]) => ({
     key,
-    label,
+    label: t(labelKey),
     count: filterCounts[key]
   }));
 
@@ -301,26 +303,26 @@ export default function RunnerResults({ collection }) {
           <div className="w-1/2 pr-4">
             <div className="font-medium mt-6 title flex items-center">
               <IconRun size={20} strokeWidth={1.5} className="mr-2" />
-              Runner
+              {t('RUNNER.TITLE')}
             </div>
             <div className="mt-2">
-              You have <span className="font-medium text-xs">{totalRequestsInCollection}</span> {totalRequestsInCollection === 1 ? 'request' : 'requests'} in this collection.
+              {t('RUNNER.REQUEST_COUNT_PRE')} <span className="font-medium text-xs">{totalRequestsInCollection}</span> {totalRequestsInCollection === 1 ? t('RUNNER.REQUEST_SINGULAR') : t('RUNNER.REQUEST_PLURAL')} {t('RUNNER.REQUEST_COUNT_POST')}
               {isCollectionLoading && (
                 <span className="ml-2 text-muted">
-                  (Loading...)
+                  {t('RUNNER.LOADING')}
                 </span>
               )}
             </div>
-            {isCollectionLoading ? <div className="my-1 danger">Requests in this collection are still loading.</div> : null}
+            {isCollectionLoading ? <div className="my-1 danger">{t('RUNNER.LOADING_WARNING')}</div> : null}
 
             {/* Timings */}
-            <div className="runner-section-title mt-6">Timings</div>
+            <div className="runner-section-title mt-6">{t('RUNNER.TIMINGS')}</div>
             <div className="runner-section mt-2">
-              <label>Delay between requests (ms)</label>
+              <label>{t('RUNNER.DELAY_LABEL')}</label>
               <input
                 type="number"
                 className="block textbox w-full mt-2"
-                placeholder="e.g. 5"
+                placeholder={t('RUNNER.DELAY_PLACEHOLDER')}
                 autoComplete="off"
                 autoCorrect="off"
                 autoCapitalize="off"
@@ -332,7 +334,7 @@ export default function RunnerResults({ collection }) {
             </div>
 
             {/* Filters */}
-            <div className="runner-section-title mt-6">Filters</div>
+            <div className="runner-section-title mt-6">{t('RUNNER.FILTERS')}</div>
             <div className="runner-section mt-2 mb-6">
               {/* Tags for the collection run */}
               <RunnerTags collectionUid={collection.uid} />
@@ -345,11 +347,11 @@ export default function RunnerResults({ collection }) {
                 disabled={selectedRequestItems.length === 0 || isCollectionLoading}
                 onClick={runCollection}
               >
-                Run {selectedRequestItems.length} Request{selectedRequestItems.length !== 1 ? 's' : ''}
+                {selectedRequestItems.length !== 1 ? t('RUNNER.RUN_MANY', { count: selectedRequestItems.length }) : t('RUNNER.RUN_ONE', { count: selectedRequestItems.length })}
               </Button>
 
               <Button type="button" variant="ghost" onClick={resetRunner}>
-                Reset
+                {t('RUNNER.RESET')}
               </Button>
             </div>
           </div>
@@ -386,11 +388,11 @@ export default function RunnerResults({ collection }) {
               variant="filled"
               color="danger"
               icon={<IconPlayerStop />}
-              title="Cancel Execution"
-              aria-label="Cancel Execution"
+              title={t('RUNNER.CANCEL_EXECUTION')}
+              aria-label={t('RUNNER.CANCEL_EXECUTION')}
               data-testid="runner-cancel-button"
             >
-              Cancel Execution
+              {t('RUNNER.CANCEL_EXECUTION')}
             </Button>
           </div>
         ) : runnerInfo.status === 'ended' ? (
@@ -412,12 +414,12 @@ export default function RunnerResults({ collection }) {
               variant="filled"
               color="secondary"
               icon={<IconDownload />}
-              title="Export Report"
-              aria-label="Export Report"
+              title={t('RUNNER.EXPORT_REPORT')}
+              aria-label={t('RUNNER.EXPORT_REPORT')}
               data-testid="runner-export-button"
               disabled={isExporting}
             >
-              Export
+              {t('RUNNER.EXPORT')}
             </Button>
             <Button
               type="button"
@@ -426,11 +428,11 @@ export default function RunnerResults({ collection }) {
               variant="filled"
               color="secondary"
               icon={<IconRefresh />}
-              title="Run Again"
-              aria-label="Run Again"
+              title={t('RUNNER.RUN_AGAIN')}
+              aria-label={t('RUNNER.RUN_AGAIN')}
               data-testid="runner-run-again-button"
             >
-              Run Again
+              {t('RUNNER.RUN_AGAIN')}
             </Button>
             <Button
               type="button"
@@ -439,11 +441,11 @@ export default function RunnerResults({ collection }) {
               variant="filled"
               color="secondary"
               icon={<IconReload />}
-              title="Reset"
-              aria-label="Reset"
+              title={t('RUNNER.RESET')}
+              aria-label={t('RUNNER.RESET')}
               data-testid="runner-reset-button"
             >
-              Reset
+              {t('RUNNER.RESET')}
             </Button>
           </div>
         ) : null}
@@ -455,7 +457,7 @@ export default function RunnerResults({ collection }) {
         >
           {areTagsAdded && (
             <div className="pb-2 text-xs flex flex-row gap-1">
-              Tags:
+              {t('RUNNER.TAGS')}
               <div className="flex flex-row items-center gap-x-2">
                 <div className="text-green">
                   {tags.include.join(', ')}
@@ -507,13 +509,13 @@ export default function RunnerResults({ collection }) {
                         </span>
                       ) : (
                         <span className="danger text-xs cursor-pointer" onClick={() => setSelectedItem(item)}>
-                          (request failed)
+                          {t('RUNNER.REQUEST_FAILED')}
                         </span>
                       )}
                     </div>
                     {tags.include.length > 0 && item?.tags?.some((t) => tags.include.includes(t)) && (
                       <div className="pl-7 text-xs text-muted">
-                        Tags: {item.tags.filter((t) => tags.include.includes(t)).join(', ')}
+                        {t('RUNNER.TAGS')} {item.tags.filter((t) => tags.include.includes(t)).join(', ')}
                       </div>
                     )}
                     {item.status == 'error' ? <div className="error-message pl-8 pt-2 text-xs" data-testid="runner-iteration-status-label">{item.error}</div> : null}
@@ -626,8 +628,8 @@ export default function RunnerResults({ collection }) {
                 <button
                   onClick={() => setSelectedItem(null)}
                   className="p-1 rounded hover-bg-surface transition-colors cursor-pointer flex items-center justify-center"
-                  title="Close"
-                  aria-label="Close response view"
+                  title={t('RUNNER.CLOSE')}
+                  aria-label={t('RUNNER.CLOSE_RESPONSE')}
                 >
                   <IconX size={16} strokeWidth={1.5} />
                 </button>
@@ -642,7 +644,7 @@ export default function RunnerResults({ collection }) {
                 <IconExternalLink size={64} strokeWidth={1.5} />
               </div>
               <p className="text-subtext1">
-                Click on the status code to view the response
+                {t('RUNNER.CLICK_STATUS')}
               </p>
             </div>
           </div>

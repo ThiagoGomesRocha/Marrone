@@ -7,6 +7,7 @@ import { IconCaretDown, IconTrash } from '@tabler/icons';
 import Portal from 'components/Portal';
 import Modal from 'components/Modal';
 import Button from 'ui/Button';
+import { useTranslation } from 'react-i18next';
 import { normalizePath } from 'utils/common/path';
 import { areItemsLoading, getWorkspaceCollections } from 'utils/collections';
 import { matchLoadedApiSpecs } from 'components/Sidebar/ApiSpecs/matchLoadedApiSpecs';
@@ -166,6 +167,7 @@ const CreateMockServerModal = ({
   defaultCollectionUid = null,
   defaultSourceType = 'collection'
 }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const inputRef = useRef();
   const [showAdvancedPort, setShowAdvancedPort] = useState(Boolean(editingInstance));
@@ -496,8 +498,8 @@ const CreateMockServerModal = ({
     <Portal>
       <Modal
         size="md"
-        title={isEditing ? 'Mock Server Settings' : 'Create Mock Server'}
-        confirmText={isEditing ? 'Save' : 'Create'}
+        title={isEditing ? t('MODALS.CREATE_MOCK_SERVER.TITLE_EDIT') : t('MODALS.CREATE_MOCK_SERVER.TITLE_CREATE')}
+        confirmText={isEditing ? t('MODALS.COMMON.SAVE') : t('MODALS.COMMON.CREATE')}
         confirmDisabled={isLinkedCollectionLoading}
         handleConfirm={handleConfirm}
         handleCancel={handleCancel}
@@ -510,7 +512,7 @@ const CreateMockServerModal = ({
             onClick={handleDelete}
             data-testid="mock-server-delete-btn"
           >
-            Delete
+            {t('MODALS.COMMON.DELETE')}
           </Button>
         ) : null}
       >
@@ -520,7 +522,7 @@ const CreateMockServerModal = ({
         >
           <div>
             <label htmlFor="mock-server-name" className="block font-medium">
-              Name
+              {t('MODALS.COMMON.NAME')}
             </label>
             <input
               id="mock-server-name"
@@ -544,11 +546,11 @@ const CreateMockServerModal = ({
           </div>
 
           <div className="mt-4">
-            <label className="block font-medium mb-2">Source</label>
+            <label className="block font-medium mb-2">{t('MODALS.COMMON.SOURCE')}</label>
             <div className="flex items-center gap-4 flex-wrap">
               <SourceRadio
                 value="collection"
-                label="Collection"
+                label={t('MODALS.CREATE_MOCK_SERVER.SOURCE_COLLECTION')}
                 checked={formik.values.sourceType === 'collection'}
                 disabled={!hasCollectionOptions}
                 onChange={formik.handleChange}
@@ -557,7 +559,7 @@ const CreateMockServerModal = ({
               />
               <SourceRadio
                 value="spec"
-                label="API Spec"
+                label={t('MODALS.CREATE_MOCK_SERVER.SOURCE_API_SPEC')}
                 checked={formik.values.sourceType === 'spec'}
                 disabled={!hasSpecOptions}
                 onChange={formik.handleChange}
@@ -566,7 +568,7 @@ const CreateMockServerModal = ({
               />
               <SourceRadio
                 value="manual"
-                label="Standalone"
+                label={t('MODALS.CREATE_MOCK_SERVER.SOURCE_STANDALONE')}
                 checked={formik.values.sourceType === 'manual'}
                 onChange={formik.handleChange}
                 dataTestId="mock-server-source-manual"
@@ -578,7 +580,7 @@ const CreateMockServerModal = ({
           {formik.values.sourceType === 'collection' ? (
             <div className="mt-4">
               <label htmlFor="mock-server-collection" className="block font-medium">
-                Collection
+                {t('MODALS.CREATE_MOCK_SERVER.SOURCE_COLLECTION')}
               </label>
               {hasCollectionOptions ? (
                 <select
@@ -591,20 +593,20 @@ const CreateMockServerModal = ({
                   }}
                   data-testid="mock-server-collection-select"
                 >
-                  <option value="">Select a collection</option>
+                  <option value="">{t('MODALS.CREATE_MOCK_SERVER.SELECT_COLLECTION')}</option>
                   {collectionSelectOptions.map((collection) => (
                     <option key={collection.uid} value={collection.uid}>{collection.name}</option>
                   ))}
                 </select>
               ) : (
-                <div className="text-xs mt-2 opacity-70">Open a collection in this workspace to link it here.</div>
+                <div className="text-xs mt-2 opacity-70">{t('MODALS.CREATE_MOCK_SERVER.OPEN_COLLECTION_HINT')}</div>
               )}
               {formik.touched.collectionUid && formik.errors.collectionUid ? (
                 <div className="text-red-500 mt-1">{formik.errors.collectionUid}</div>
               ) : null}
               {isLinkedCollectionLoading ? (
                 <div className="text-xs mt-2 opacity-70" data-testid="mock-server-collection-loading">
-                  Loading collection…
+                  {t('MODALS.CREATE_MOCK_SERVER.LOADING_COLLECTION')}
                 </div>
               ) : null}
             </div>
@@ -613,7 +615,7 @@ const CreateMockServerModal = ({
           {formik.values.sourceType === 'spec' ? (
             <div className="mt-4">
               <label htmlFor="mock-server-spec" className="block font-medium">
-                API Spec
+                {t('MODALS.CREATE_MOCK_SERVER.SOURCE_API_SPEC')}
               </label>
               {hasSpecOptions ? (
                 <select
@@ -626,13 +628,13 @@ const CreateMockServerModal = ({
                   }}
                   data-testid="mock-server-spec-select"
                 >
-                  <option value="">Select an API spec</option>
+                  <option value="">{t('MODALS.CREATE_MOCK_SERVER.SELECT_API_SPEC')}</option>
                   {specSelectOptions.map((spec) => (
                     <option key={spec.uid} value={spec.uid}>{spec.name}</option>
                   ))}
                 </select>
               ) : (
-                <div className="text-xs mt-2 opacity-70">Open an API spec in this workspace to link it here.</div>
+                <div className="text-xs mt-2 opacity-70">{t('MODALS.CREATE_MOCK_SERVER.OPEN_SPEC_HINT')}</div>
               )}
               {formik.touched.specUid && formik.errors.specUid ? (
                 <div className="text-red-500 mt-1">{formik.errors.specUid}</div>
@@ -642,7 +644,7 @@ const CreateMockServerModal = ({
 
           {formik.values.sourceType === 'manual' ? (
             <div className="mt-4 text-xs opacity-70">
-              A standalone mock server has no source. Add responses manually from the dashboard.
+              {t('MODALS.CREATE_MOCK_SERVER.STANDALONE_HINT')}
             </div>
           ) : null}
 
@@ -658,8 +660,8 @@ const CreateMockServerModal = ({
                 />
                 <span className="font-medium">
                   {formik.values.sourceType === 'spec'
-                    ? 'Sync mock responses with API spec'
-                    : 'Sync mock responses with collection examples'}
+                    ? t('MODALS.CREATE_MOCK_SERVER.SYNC_SPEC')
+                    : t('MODALS.CREATE_MOCK_SERVER.SYNC_COLLECTION')}
                 </span>
               </label>
             </div>
@@ -672,14 +674,14 @@ const CreateMockServerModal = ({
               onClick={() => setShowAdvancedPort((value) => !value)}
               data-testid="mock-server-advanced-settings-toggle"
             >
-              Advanced settings
+              {t('MODALS.CREATE_MOCK_SERVER.ADVANCED_SETTINGS')}
               <IconCaretDown className={`ml-1 ${showAdvancedPort ? 'rotate-180' : ''}`} size={14} strokeWidth={2} />
             </button>
             {showAdvancedPort ? (
               <>
                 <div className="mt-4">
                   <label htmlFor="mock-server-port" className="block font-medium">
-                    Port
+                    {t('MODALS.COMMON.PORT')}
                   </label>
                   <input
                     id="mock-server-port"
@@ -726,7 +728,7 @@ const CreateMockServerModal = ({
 
                 <div className="mt-4">
                   <label htmlFor="mock-server-delay" className="block font-medium">
-                    Response delay (ms)
+                    {t('MODALS.CREATE_MOCK_SERVER.RESPONSE_DELAY')}
                   </label>
                   <input
                     id="mock-server-delay"
@@ -748,7 +750,7 @@ const CreateMockServerModal = ({
               </>
             ) : (
               <div className="text-xs mt-2 opacity-70">
-                Marrone will pick the next available port automatically.
+                {t('MODALS.CREATE_MOCK_SERVER.AUTO_PORT_HINT')}
               </div>
             )}
           </div>

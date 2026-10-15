@@ -7,6 +7,7 @@ import { IconCaretDown } from '@tabler/icons';
 import toast from 'react-hot-toast';
 import { sanitizeName, validateName, validateNameError } from 'utils/common/regex';
 import Portal from 'components/Portal';
+import { useTranslation } from 'react-i18next';
 import Modal from 'components/Modal';
 import Dropdown from 'components/Dropdown';
 import { browseDirectory, exportCollectionToPostman } from 'providers/ReduxStore/slices/collections/actions';
@@ -16,6 +17,7 @@ import StyledWrapper from './StyledWrapper';
 const FILE_EXISTS_ERROR = 'Name already exists in this location.';
 
 const ExportToPostman = ({ onClose, onExported, collection }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const inputRef = useRef();
   const [preserveScripts, setPreserveScripts] = useState(false);
@@ -98,7 +100,7 @@ const ExportToPostman = ({ onClose, onExported, collection }) => {
     return (
       <div ref={ref} className="flex items-center text-link cursor-pointer">
         <button className="btn-advanced" type="button">
-          Options
+          {t('MODALS.COMMON.OPTIONS')}
         </button>
         <IconCaretDown className="caret ml-1" size={14} strokeWidth={2} />
       </div>
@@ -110,9 +112,9 @@ const ExportToPostman = ({ onClose, onExported, collection }) => {
       <StyledWrapper>
         <Modal
           size="md"
-          title="Export to Postman"
+          title={t('MODALS.EXPORT_TO_POSTMAN.TITLE')}
           dataTestId="export-to-postman-modal"
-          confirmText={fileExists ? 'Replace' : 'Export'}
+          confirmText={fileExists ? t('MODALS.COMMON.REPLACE') : t('MODALS.COMMON.EXPORT')}
           confirmButtonColor={fileExists ? 'danger' : 'primary'}
           confirmDisabled={isExporting}
           handleConfirm={() => (fileExists ? handleReplace() : formik.handleSubmit())}
@@ -128,7 +130,7 @@ const ExportToPostman = ({ onClose, onExported, collection }) => {
                     setShowAdvancedOptions(!showAdvancedOptions);
                   }}
                 >
-                  {showAdvancedOptions ? 'Hide Advanced Options' : 'Show Advanced Options'}
+                  {showAdvancedOptions ? t('MODALS.COMMON.HIDE_ADVANCED_OPTIONS') : t('MODALS.COMMON.SHOW_ADVANCED_OPTIONS')}
                 </div>
               </Dropdown>
             </div>
@@ -136,7 +138,7 @@ const ExportToPostman = ({ onClose, onExported, collection }) => {
         >
           <form className="marrone-form" onSubmit={(e) => e.preventDefault()}>
             <label htmlFor="fileName" className="block font-medium">
-              Name
+              {t('MODALS.COMMON.NAME')}
             </label>
             <div className="relative">
               <input
@@ -159,7 +161,7 @@ const ExportToPostman = ({ onClose, onExported, collection }) => {
             ) : null}
 
             <label htmlFor="location" className="block font-medium mt-4">
-              Location
+              {t('MODALS.COMMON.LOCATION')}
             </label>
             <input
               id="location"
@@ -179,7 +181,7 @@ const ExportToPostman = ({ onClose, onExported, collection }) => {
             ) : null}
             <div className="mt-1">
               <span className="text-link cursor-pointer hover:underline" onClick={browse}>
-                Browse
+                {t('MODALS.COMMON.BROWSE')}
               </span>
             </div>
 
@@ -193,9 +195,9 @@ const ExportToPostman = ({ onClose, onExported, collection }) => {
                   data-testid="preserve-scripts-toggle"
                 />
                 <div>
-                  <span className="preserve-scripts-label">Preserve scripts</span>
+                  <span className="preserve-scripts-label">{t('MODALS.EXPORT_TO_POSTMAN.PRESERVE_SCRIPTS')}</span>
                   <p className="preserve-scripts-description">
-                    Export Marrone scripts without translating them.
+                    {t('MODALS.EXPORT_TO_POSTMAN.PRESERVE_SCRIPTS_DESC')}
                   </p>
                 </div>
               </label>

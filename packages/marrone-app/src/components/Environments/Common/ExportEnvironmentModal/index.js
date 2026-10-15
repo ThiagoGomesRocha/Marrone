@@ -9,8 +9,10 @@ import { IconAlertTriangle } from '@tabler/icons';
 import { getInheritedEnvironments } from '@marrone/common/utils';
 import StyledWrapper from './StyledWrapper';
 import Button from 'ui/Button';
+import { useTranslation } from 'react-i18next';
 
 const ExportEnvironmentModal = ({ onClose, environments = [], environmentType }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   // Helper function to truncate environment names
@@ -120,14 +122,14 @@ const ExportEnvironmentModal = ({ onClose, environments = [], environmentType })
 
     if (isMultiple) {
       return [
-        { value: 'single-file', label: 'Single JSON file', description: 'All environments in one JSON array' },
-        { value: 'folder', label: 'Separate files in folder', description: 'Each environment as a separate JSON file', disabled: false }
+        { value: 'single-file', label: t('MODALS.EXPORT_ENVIRONMENT.FORMAT_SINGLE_JSON_LABEL'), description: t('MODALS.EXPORT_ENVIRONMENT.FORMAT_SINGLE_JSON_DESC_MULTI') },
+        { value: 'folder', label: t('MODALS.EXPORT_ENVIRONMENT.FORMAT_FOLDER_LABEL'), description: t('MODALS.EXPORT_ENVIRONMENT.FORMAT_FOLDER_DESC'), disabled: false }
       ];
     }
 
     return [
-      { value: 'single-object', label: 'Single JSON file', description: 'Export as a single environment JSON object' },
-      { value: 'folder', label: 'Separate files in folder', description: 'Each environment as a separate JSON file', disabled: true }
+      { value: 'single-object', label: t('MODALS.EXPORT_ENVIRONMENT.FORMAT_SINGLE_JSON_LABEL'), description: t('MODALS.EXPORT_ENVIRONMENT.FORMAT_SINGLE_JSON_DESC_SINGLE') },
+      { value: 'folder', label: t('MODALS.EXPORT_ENVIRONMENT.FORMAT_FOLDER_LABEL'), description: t('MODALS.EXPORT_ENVIRONMENT.FORMAT_FOLDER_DESC'), disabled: true }
     ];
   }, [selectedCount, exportFormat]);
 
@@ -165,7 +167,7 @@ const ExportEnvironmentModal = ({ onClose, environments = [], environmentType })
       <StyledWrapper>
         <Modal
           size="md"
-          title="Export Environments"
+          title={t('MODALS.EXPORT_ENVIRONMENT.TITLE')}
           hideFooter={true}
           handleCancel={onClose}
         >
@@ -176,14 +178,14 @@ const ExportEnvironmentModal = ({ onClose, environments = [], environmentType })
                 <div className="flex flex-col h-full">
                   <div className="flex justify-between items-center mb-2 pb-1">
                     <h3 className="font-medium text-theme">
-                      {environmentType === 'global' ? 'Global Environments' : 'Collection Environments'}
+                      {environmentType === 'global' ? t('MODALS.EXPORT_ENVIRONMENT.GLOBAL_ENVIRONMENTS') : t('MODALS.EXPORT_ENVIRONMENT.COLLECTION_ENVIRONMENTS')}
                     </h3>
                     <button
                       type="button"
                       onClick={handleSelectAll}
                       className="text-xs text-link px-1 py-0.5 rounded transition-colors"
                     >
-                      {environments.every((env) => selectedEnvironments[env.uid]) ? 'Deselect All' : 'Select All'}
+                      {environments.every((env) => selectedEnvironments[env.uid]) ? t('MODALS.COMMON.DESELECT_ALL') : t('MODALS.COMMON.SELECT_ALL')}
                     </button>
                   </div>
                   <div className="flex flex-col gap-1 flex-1 overflow-y-auto">
@@ -206,7 +208,7 @@ const ExportEnvironmentModal = ({ onClose, environments = [], environmentType })
                             <div className="inheritance-warning" data-testid="env-export-inheritance-warning">
                               <IconAlertTriangle size={14} strokeWidth={1.5} className="warning-icon" />
                               <span>
-                                inherits{' '}
+                                {t('MODALS.EXPORT_ENVIRONMENT.INHERITS')}{' '}
                                 <span className="inherited-name">{unselectedInheritedEnvironmentNames.join(', ')}</span>
                               </span>
                             </div>
@@ -220,12 +222,12 @@ const ExportEnvironmentModal = ({ onClose, environments = [], environmentType })
                 <div className="flex flex-col h-full">
                   <div className="flex justify-between items-center mb-2 pb-1">
                     <h3 className="font-medium text-theme">
-                      {environmentType === 'global' ? 'Global Environments' : 'Collection Environments'}
+                      {environmentType === 'global' ? t('MODALS.EXPORT_ENVIRONMENT.GLOBAL_ENVIRONMENTS') : t('MODALS.EXPORT_ENVIRONMENT.COLLECTION_ENVIRONMENTS')}
                     </h3>
                   </div>
                   <div className="flex items-center justify-center flex-1 p-4 text-center">
                     <span className="text-xs text-muted">
-                      No {environmentType === 'global' ? 'global' : 'collection'} environments
+                      {environmentType === 'global' ? t('MODALS.EXPORT_ENVIRONMENT.NO_GLOBAL_ENVIRONMENTS') : t('MODALS.EXPORT_ENVIRONMENT.NO_COLLECTION_ENVIRONMENTS')}
                     </span>
                   </div>
                 </div>
@@ -236,7 +238,7 @@ const ExportEnvironmentModal = ({ onClose, environments = [], environmentType })
             {selectedCount > 0 && (
               <div className="mb-4">
                 <label className="block font-medium mb-2 text-theme">
-                  Export Format
+                  {t('MODALS.EXPORT_ENVIRONMENT.EXPORT_FORMAT')}
                 </label>
                 <div className="space-y-2">
                   {exportFormatOptions.map((option) => (
@@ -263,7 +265,7 @@ const ExportEnvironmentModal = ({ onClose, environments = [], environmentType })
             {/* Location Input Section */}
             <div className="mb-4">
               <label htmlFor="export-location" className="block font-medium mb-2 text-theme">
-                Location
+                {t('MODALS.COMMON.LOCATION')}
               </label>
               <div className="flex flex-col relative items-center">
                 <input
@@ -275,7 +277,7 @@ const ExportEnvironmentModal = ({ onClose, environments = [], environmentType })
                   onClick={browse}
                   onChange={(e) => setFilePath(e.target.value)}
                   disabled={isExporting || selectedCount <= 0}
-                  placeholder="Select a target location"
+                  placeholder={t('MODALS.EXPORT_ENVIRONMENT.SELECT_TARGET_LOCATION')}
                   autoComplete="off"
                   autoCorrect="off"
                   autoCapitalize="off"
@@ -295,7 +297,7 @@ const ExportEnvironmentModal = ({ onClose, environments = [], environmentType })
                 disabled={isExporting}
                 className="mt-2 mr-2"
               >
-                Cancel
+                {t('MODALS.COMMON.CANCEL')}
               </Button>
               <Button
                 type="button"
@@ -304,7 +306,7 @@ const ExportEnvironmentModal = ({ onClose, environments = [], environmentType })
                 disabled={isExporting || selectedCount === 0}
                 className="mt-2"
               >
-                {isExporting ? 'Exporting...' : `Export ${selectedCount || ''} Environment${selectedCount !== 1 ? 's' : ''}`}
+                {isExporting ? t('MODALS.EXPORT_ENVIRONMENT.EXPORTING') : selectedCount !== 1 ? t('MODALS.EXPORT_ENVIRONMENT.EXPORT_SELECTED_MANY', { count: selectedCount || '' }) : t('MODALS.EXPORT_ENVIRONMENT.EXPORT_SELECTED_ONE', { count: selectedCount || '' })}
               </Button>
             </div>
           </div>

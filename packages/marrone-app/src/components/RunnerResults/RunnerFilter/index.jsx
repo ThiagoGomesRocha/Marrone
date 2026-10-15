@@ -2,8 +2,10 @@ import React from 'react';
 import { IconCheck, IconChevronDown } from '@tabler/icons';
 import MenuDropdown from 'ui/MenuDropdown';
 import StyledWrapper from './StyledWrapper';
+import { useTranslation } from 'react-i18next';
 
 const RunnerFilter = ({ filters, activeFilter, onFilterChange }) => {
+  const { t } = useTranslation();
   const active = filters.find((filter) => filter.key === activeFilter);
 
   const menuItems = filters.map(({ key, label, count }) => ({
@@ -26,7 +28,7 @@ const RunnerFilter = ({ filters, activeFilter, onFilterChange }) => {
   return (
     <StyledWrapper className="filter-bar">
       <div className="filter-label">
-        <span>Filter by:</span>
+        <span>{t('RUNNER.FILTER_BY')}</span>
       </div>
 
       <div className="filter-buttons">
@@ -53,7 +55,7 @@ const RunnerFilter = ({ filters, activeFilter, onFilterChange }) => {
         <button
           type="button"
           className="filter-select"
-          aria-label={`Filter by: ${active.label}`}
+          aria-label={`${t('RUNNER.FILTER_BY')} ${active.label}`}
           data-testid="runner-filter-select"
         >
           <span>{active.label}</span>

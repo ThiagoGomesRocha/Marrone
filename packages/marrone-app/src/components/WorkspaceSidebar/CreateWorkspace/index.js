@@ -13,8 +13,10 @@ import { multiLineMsg } from 'utils/common/index';
 import { formatIpcError } from 'utils/common/error';
 import { sanitizeName, validateName, validateNameError } from 'utils/common/regex';
 import get from 'lodash/get';
+import { useTranslation } from 'react-i18next';
 
 const CreateWorkspace = ({ onClose }) => {
+  const { t } = useTranslation();
   const inputRef = useRef();
   const dispatch = useDispatch();
   const preferences = useSelector((state) => state.app.preferences);
@@ -85,9 +87,9 @@ const CreateWorkspace = ({ onClose }) => {
   return (
     <Modal
       size="md"
-      title="Create Workspace"
-      description="Give your new workspace a name and choose its type to get started."
-      confirmText={isSubmitting ? 'Creating...' : 'Create Workspace'}
+      title={t('MODALS.CREATE_WORKSPACE.TITLE')}
+      description={t('MODALS.CREATE_WORKSPACE.DESCRIPTION')}
+      confirmText={isSubmitting ? t('MODALS.CREATE_WORKSPACE.CREATING') : t('MODALS.CREATE_WORKSPACE.CREATE_WORKSPACE')}
       handleConfirm={formik.handleSubmit}
       handleCancel={onClose}
       style="new"
@@ -97,7 +99,7 @@ const CreateWorkspace = ({ onClose }) => {
         <form className="marrone-form" onSubmit={formik.handleSubmit}>
           <div className="mb-4">
             <label htmlFor="workspaceName" className="block font-semibold mb-2">
-              Name
+              {t('MODALS.COMMON.NAME')}
             </label>
             <input
               id="workspace-name"
@@ -133,13 +135,13 @@ const CreateWorkspace = ({ onClose }) => {
             <div className="mb-4">
               <div className="flex items-center justify-between mb-2">
                 <label htmlFor="workspaceFolderName" className="flex items-center font-semibold">
-                  Folder Name
+                  {t('MODALS.COMMON.FOLDER_NAME')}
                   <Help width="300">
                     <p>
-                      The name of the folder used to store the workspace.
+                      {t('MODALS.CREATE_WORKSPACE.FOLDER_NAME_HELP_1')}
                     </p>
                     <p className="mt-2">
-                      You can choose a folder name different from your workspace's name or one compatible with filesystem rules.
+                      {t('MODALS.CREATE_WORKSPACE.FOLDER_NAME_HELP_2')}
                     </p>
                   </Help>
                 </label>
@@ -183,13 +185,13 @@ const CreateWorkspace = ({ onClose }) => {
 
           <div className="mb-4">
             <label htmlFor="workspaceLocation" className="font-semibold mb-2 flex items-center">
-              Location
+              {t('MODALS.COMMON.LOCATION')}
               <Help>
                 <p>
-                  Marrone stores your workspaces on your computer's filesystem.
+                  {t('MODALS.CREATE_WORKSPACE.LOCATION_HELP_FILESYSTEM')}
                 </p>
                 <p className="mt-2">
-                  Choose the location where you want to store this workspace.
+                  {t('MODALS.CREATE_WORKSPACE.LOCATION_HELP_CHOOSE')}
                 </p>
               </Help>
             </label>
@@ -214,7 +216,7 @@ const CreateWorkspace = ({ onClose }) => {
                 className="text-link cursor-pointer hover:underline"
                 onClick={browse}
               >
-                Browse
+                {t('MODALS.COMMON.BROWSE')}
               </span>
             </div>
           </div>

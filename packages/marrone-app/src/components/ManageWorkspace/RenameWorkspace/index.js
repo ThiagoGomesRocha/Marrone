@@ -6,8 +6,10 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { renameWorkspaceAction } from 'providers/ReduxStore/slices/workspaces/actions';
+import { useTranslation } from 'react-i18next';
 
 const RenameWorkspace = ({ onClose, workspace }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const inputRef = useRef();
 
@@ -54,8 +56,8 @@ const RenameWorkspace = ({ onClose, workspace }) => {
     <Portal>
       <Modal
         size="md"
-        title="Rename Workspace"
-        confirmText="Rename"
+        title={t('MODALS.RENAME_WORKSPACE.TITLE')}
+        confirmText={t('MODALS.COMMON.RENAME')}
         handleConfirm={onSubmit}
         handleCancel={onClose}
         dataTestId="rename-workspace-modal"
@@ -63,7 +65,7 @@ const RenameWorkspace = ({ onClose, workspace }) => {
         <form className="marrone-form" onSubmit={(e) => e.preventDefault()}>
           <div>
             <label htmlFor="workspace-name" className="block font-semibold">
-              Workspace Name
+              {t('MODALS.RENAME_WORKSPACE.WORKSPACE_NAME')}
             </label>
             <input
               id="workspace-name"

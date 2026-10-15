@@ -7,8 +7,10 @@ import { useDispatch } from 'react-redux';
 import Portal from 'components/Portal';
 import Modal from 'components/Modal';
 import { validateName, validateNameError } from 'utils/common/regex';
+import { useTranslation } from 'react-i18next';
 
 const CreateEnvironment = ({ collection, onClose, onEnvironmentCreated }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const inputRef = useRef();
 
@@ -60,8 +62,8 @@ const CreateEnvironment = ({ collection, onClose, onEnvironmentCreated }) => {
     <Portal>
       <Modal
         size="md"
-        title="Create Environment"
-        confirmText="Create"
+        title={t('MODALS.CREATE_ENVIRONMENT.TITLE')}
+        confirmText={t('MODALS.COMMON.CREATE')}
         handleConfirm={onSubmit}
         handleCancel={onClose}
         dataTestId="create-environment-modal"
@@ -69,7 +71,7 @@ const CreateEnvironment = ({ collection, onClose, onEnvironmentCreated }) => {
         <form className="marrone-form" onSubmit={(e) => e.preventDefault()}>
           <div>
             <label htmlFor="name" className="block font-medium">
-              Environment Name
+              {t('MODALS.COMMON.ENVIRONMENT_NAME')}
             </label>
             <div className="flex items-center mt-2">
               <input

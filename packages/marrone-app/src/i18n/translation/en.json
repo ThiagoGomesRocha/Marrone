@@ -364,5 +364,357 @@
         "DATABASE": {
             "TITLE": "Database"
         }
+    },
+    "MODALS": {
+        "COMMON": {
+            "NAME": "Name",
+            "LOCATION": "Location",
+            "BROWSE": "Browse",
+            "CANCEL": "Cancel",
+            "CREATE": "Create",
+            "CLONE": "Clone",
+            "RENAME": "Rename",
+            "IMPORT": "Import",
+            "EXPORT": "Export",
+            "SAVE": "Save",
+            "DELETE": "Delete",
+            "REPLACE": "Replace",
+            "REMOVE": "Remove",
+            "BACK": "Back",
+            "CLOSE": "Close",
+            "OPEN": "Open",
+            "COPY": "Copy",
+            "OPTIONS": "Options",
+            "SHOW_ADVANCED_OPTIONS": "Show Advanced Options",
+            "HIDE_ADVANCED_OPTIONS": "Hide Advanced Options",
+            "SHOW_FILESYSTEM_NAME": "Show Filesystem Name",
+            "HIDE_FILESYSTEM_NAME": "Hide Filesystem Name",
+            "FOLDER_NAME": "Folder Name",
+            "FILE_NAME": "File Name",
+            "ON_FILESYSTEM": "(on filesystem)",
+            "FILE_FORMAT": "File Format",
+            "DESCRIPTION": "Description",
+            "PORT": "Port",
+            "SOURCE": "Source",
+            "ENVIRONMENT": "Environment",
+            "ENVIRONMENT_NAME": "Environment Name",
+            "SELECT_ALL": "Select All",
+            "DESELECT_ALL": "Deselect All",
+            "FOLDER_NAME_HELP_1": "The name of the folder used to store the collection.",
+            "FOLDER_NAME_HELP_2": "You can choose a folder name different from your collection's name or one compatible with filesystem rules.",
+            "FILESYSTEM_FOLDER_HELP": "You can choose to save the folder as a different name on your file system versus what is displayed in the app.",
+            "FILESYSTEM_FILE_HELP_1": "Marrone saves each request as a file in your collection's folder.",
+            "FILESYSTEM_FILE_HELP_2": "You can choose a file name different from your request's name or one compatible with filesystem rules.",
+            "LOCATION_HELP_FILESYSTEM": "Marrone stores your collections on your computer's filesystem.",
+            "LOCATION_HELP_CHOOSE": "Choose the location where you want to store this collection.",
+            "FILE_FORMAT_HELP": "Choose the file format for storing requests in this collection.",
+            "FILE_FORMAT_YAML_LABEL": "OpenCollection (YAML):",
+            "FILE_FORMAT_YAML_DESC": "Industry-standard YAML format (.yml files)",
+            "FILE_FORMAT_BRU_LABEL": "BRU:",
+            "FILE_FORMAT_BRU_DESC": "Marrone's native file format (.bru files)",
+            "FOLDER_ARRANGEMENT": "Folder arrangement",
+            "FOLDER_ARRANGEMENT_DESC": "Select whether to create folders according to the spec's paths or tags.",
+            "GROUP_BY_TAGS": "Tags",
+            "GROUP_BY_PATHS": "Paths"
+        },
+        "CREATE_COLLECTION": {
+            "TITLE": "Create Collection"
+        },
+        "IMPORT_COLLECTION": {
+            "TITLE": "Import Collection",
+            "TAB_FILE": "File",
+            "TAB_GIT_REPOSITORY": "Git Repository",
+            "FILE_DROP_PRE": "Drop file(s) to import or ",
+            "FILE_CHOOSE": "choose file(s)",
+            "FILE_SUPPORTED": "Supports Marrone, OpenCollection, Postman, Insomnia, OpenAPI 3.x / Swagger 2.0, WSDL, and ZIP formats",
+            "GIT_URL_PLACEHOLDER": "Enter Git repository URL",
+            "URL_PLACEHOLDER": "Enter URL (OpenAPI/Swagger, Postman, or Insomnia specification)"
+        },
+        "IMPORT_COLLECTION_LOCATION": {
+            "TITLE": "Import Collection",
+            "CHECK_SPEC_UPDATES": "Check for Spec Updates",
+            "CHECK_SPEC_UPDATES_DESC": "Stay notified of spec changes and sync your collection with the spec.",
+            "CHECK_SPEC_UPDATES_SWAGGER_UNSUPPORTED": "OpenAPI Sync is not supported for Swagger 2.0 specs.",
+            "PRESERVE_SCRIPTS": "Preserve scripts",
+            "PRESERVE_SCRIPTS_IMPORT_DESC": "Import Postman scripts without translating them."
+        },
+        "EXPORT_TO_POSTMAN": {
+            "TITLE": "Export to Postman",
+            "PRESERVE_SCRIPTS": "Preserve scripts",
+            "PRESERVE_SCRIPTS_DESC": "Export Marrone scripts without translating them."
+        },
+        "CREATE_OR_OPEN": {
+            "NO_COLLECTIONS": "No collections found.",
+            "OR": "or",
+            "COLLECTION": "Collection"
+        },
+        "CLONE_COLLECTION": {
+            "TITLE": "Clone Collection"
+        },
+        "RENAME_COLLECTION": {
+            "TITLE": "Rename Collection"
+        },
+        "CLONE_ITEM": {
+            "TITLE_FOLDER": "Clone Folder",
+            "TITLE_REQUEST": "Clone Request",
+            "TITLE_APP": "Clone App",
+            "NAME_LABEL_FOLDER": "Folder Name",
+            "NAME_LABEL_REQUEST": "Request Name",
+            "NAME_LABEL_APP": "App Name",
+            "NAME_PLACEHOLDER": "Enter item name"
+        },
+        "RENAME_ITEM": {
+            "TITLE_FOLDER": "Rename Folder",
+            "TITLE_REQUEST": "Rename Request",
+            "TITLE_APP": "Rename App",
+            "NAME_LABEL_FOLDER": "Folder Name",
+            "NAME_LABEL_REQUEST": "Request Name",
+            "NAME_LABEL_APP": "App Name"
+        },
+        "NEW_FOLDER": {
+            "TITLE": "New Folder"
+        },
+        "NEW_REQUEST": {
+            "TITLE": "New Request",
+            "TYPE_LABEL": "Type",
+            "REQUEST_TYPE_FROM_CURL": "From cURL",
+            "REQUEST_NAME": "Request Name",
+            "REQUEST_NAME_PLACEHOLDER": "Request Name",
+            "REQUEST_URL_PLACEHOLDER": "Request URL",
+            "CURL_COMMAND": "cURL Command",
+            "CURL_COMMAND_PLACEHOLDER": "Enter cURL request here.."
+        },
+        "NEW_APP": {
+            "TITLE": "New App",
+            "CREATE_DESC_PRE": "Creates a standalone app file in",
+            "CREATE_DESC_THIS_FOLDER": "this folder",
+            "CREATE_DESC_COLLECTION": "collection \"{{name}}\""
+        },
+        "CREATE_API_SPEC": {
+            "TITLE": "Create API Spec",
+            "SOURCE_BLANK": "Blank Spec",
+            "SOURCE_COLLECTION": "From Marrone Collection",
+            "SOURCE_URL": "From Spec URL",
+            "SELECT_COLLECTION": "Select a collection",
+            "CHOOSE_FILE": "Choose file...",
+            "FETCHING": "Fetching specification…",
+            "COLLECTION_SOURCE_ARIA": "Collection source",
+            "COLLECTION_SOURCE_FROM_WORKSPACE": "From workspace",
+            "COLLECTION_SOURCE_FROM_FILESYSTEM": "From file system",
+            "NO_COLLECTIONS_HINT": "No collections in this workspace"
+        },
+        "CLONE_GIT_REPOSITORY": {
+            "TITLE": "Clone Git Repository",
+            "GIT_REPOSITORY_URL": "Git Repository URL",
+            "BRANCH": "Branch",
+            "BRANCH_LOADING": "Loading branches...",
+            "BRANCH_DEFAULT": "Repository default",
+            "BRANCH_NO_MATCH": "No branches match your search",
+            "BRANCH_LIST_FAILED": "Branches could not be listed for this repository. Cloning will use the default branch.",
+            "CLONING": "Cloning repository",
+            "CLONE_SUCCESS": "Cloning successful",
+            "CLONE_FAILED": "Cloning failed",
+            "SCANNING": "Scanning for Marrone files",
+            "SCAN_SUCCESS": "Scan successful",
+            "OF": "of",
+            "SELECTED": "selected",
+            "NO_COLLECTIONS_FOUND": "No Marrone collections were found in this repository.",
+            "COLLECTIONS_TITLE": "Collections",
+            "SEARCH_COLLECTIONS": "Search Collections"
+        },
+        "BULK_IMPORT": {
+            "TITLE": "Bulk Import",
+            "NO_LOCATION_SELECTED": "No location selected",
+            "IMPORTING_COLLECTIONS": "Importing Collections ({{count}})",
+            "FAILED_COUNT": "({{failed}}/{{total}} failed)",
+            "ITEMS_SKIPPED": "{{count}} item(s) skipped",
+            "SEE_ERROR": "See error",
+            "IMPORTING_ENVIRONMENTS": "Importing Environments ({{count}})",
+            "COLLECTIONS_TITLE": "Collections",
+            "SEARCH_COLLECTIONS": "Search Collections",
+            "NO_COLLECTIONS_FOUND": "No collections found",
+            "ENVIRONMENTS_TITLE": "Environments",
+            "SEARCH_ENVIRONMENTS": "Search Environments",
+            "NO_ENVIRONMENTS_FOUND": "No environments found",
+            "ENVIRONMENT_ASSIGNMENT": "Environment Assignment",
+            "GLOBAL_ENVIRONMENT": "Global Environment",
+            "GLOBAL_ENV_TOOLTIP": "Environments will be imported and stored as global, accessible across collections.",
+            "DUPLICATE_ACROSS_COLLECTIONS": "Duplicate Across Collections",
+            "DUPLICATE_TOOLTIP": "Each imported collection will receive its own copy of the environments.",
+            "LOCATION_PLACEHOLDER": "Select a location to save the collection",
+            "ERROR_DETAILS": "Error Details"
+        },
+        "CREATE_WORKSPACE": {
+            "TITLE": "Create Workspace",
+            "DESCRIPTION": "Give your new workspace a name and choose its type to get started.",
+            "CREATING": "Creating...",
+            "CREATE_WORKSPACE": "Create Workspace",
+            "FOLDER_NAME_HELP_1": "The name of the folder used to store the workspace.",
+            "FOLDER_NAME_HELP_2": "You can choose a folder name different from your workspace's name or one compatible with filesystem rules.",
+            "LOCATION_HELP_FILESYSTEM": "Marrone stores your workspaces on your computer's filesystem.",
+            "LOCATION_HELP_CHOOSE": "Choose the location where you want to store this workspace."
+        },
+        "IMPORT_WORKSPACE": {
+            "TITLE": "Import Workspace",
+            "IMPORTING": "Importing...",
+            "WORKSPACE_FILE": "Workspace File",
+            "DROP_FILE_PRE": "Drop workspace zip file here or ",
+            "CHOOSE_FILE": "choose a file",
+            "SUPPORTED": "Supports exported Marrone workspace zip files",
+            "EXTRACT_LOCATION": "Extract Location",
+            "EXTRACT_HELP_1": "Choose the location where you want to extract this workspace.",
+            "EXTRACT_HELP_2": "The workspace folder will be created at this location."
+        },
+        "RENAME_WORKSPACE": {
+            "TITLE": "Rename Workspace",
+            "WORKSPACE_NAME": "Workspace Name"
+        },
+        "CREATE_ENVIRONMENT": {
+            "TITLE": "Create Environment"
+        },
+        "CREATE_GLOBAL_ENVIRONMENT": {
+            "TITLE": "Create Global Environment"
+        },
+        "RENAME_ENVIRONMENT": {
+            "TITLE": "Rename Environment"
+        },
+        "EXPORT_ENVIRONMENT": {
+            "TITLE": "Export Environments",
+            "GLOBAL_ENVIRONMENTS": "Global Environments",
+            "COLLECTION_ENVIRONMENTS": "Collection Environments",
+            "INHERITS": "inherits",
+            "NO_GLOBAL_ENVIRONMENTS": "No global environments",
+            "NO_COLLECTION_ENVIRONMENTS": "No collection environments",
+            "EXPORT_FORMAT": "Export Format",
+            "FORMAT_SINGLE_JSON_LABEL": "Single JSON file",
+            "FORMAT_SINGLE_JSON_DESC_MULTI": "All environments in one JSON array",
+            "FORMAT_SINGLE_JSON_DESC_SINGLE": "Export as a single environment JSON object",
+            "FORMAT_FOLDER_LABEL": "Separate files in folder",
+            "FORMAT_FOLDER_DESC": "Each environment as a separate JSON file",
+            "SELECT_TARGET_LOCATION": "Select a target location",
+            "EXPORTING": "Exporting...",
+            "EXPORT_SELECTED_ONE": "Export {{count}} Environment",
+            "EXPORT_SELECTED_MANY": "Export {{count}} Environments"
+        },
+        "IMPORT_ENVIRONMENT": {
+            "TITLE_GLOBAL": "Import global environments",
+            "TITLE_COLLECTION": "Import environments",
+            "DROP_TITLE": "Drop your environment files here",
+            "IMPORT_TITLE": "Import your environments",
+            "SUBTITLE": "Drag & drop JSON files or click to browse. Supports both Marrone and Postman formats.",
+            "FOUND": "found",
+            "IMPORT_COUNT": "Import ({{count}})",
+            "SELECTED_COUNT": "selected",
+            "EXISTS_SINGLE": "already exists with the same name",
+            "EXISTS_PLURAL": "already exist with the same name",
+            "COULD_NOT_READ_SKIPPED": "could not be read and will be skipped",
+            "FILTER_PLACEHOLDER": "Filter by name",
+            "GROUP_NEW": "New",
+            "GROUP_ALREADY_EXISTS": "Already exists",
+            "GROUP_COULD_NOT_BE_READ": "Could not be read",
+            "NO_MATCHES": "No environments match your filter",
+            "RESOLUTION_NEW": "New",
+            "RESOLUTION_NEW_TITLE": "Import as a new environment",
+            "RESOLUTION_REPLACE": "Replace",
+            "RESOLUTION_REPLACE_TITLE": "Replace existing"
+        },
+        "CREATE_MOCK_SERVER": {
+            "TITLE_EDIT": "Mock Server Settings",
+            "TITLE_CREATE": "Create Mock Server",
+            "SOURCE_COLLECTION": "Collection",
+            "SOURCE_API_SPEC": "API Spec",
+            "SOURCE_STANDALONE": "Standalone",
+            "SELECT_COLLECTION": "Select a collection",
+            "OPEN_COLLECTION_HINT": "Open a collection in this workspace to link it here.",
+            "LOADING_COLLECTION": "Loading collection…",
+            "SELECT_API_SPEC": "Select an API spec",
+            "OPEN_SPEC_HINT": "Open an API spec in this workspace to link it here.",
+            "STANDALONE_HINT": "A standalone mock server has no source. Add responses manually from the dashboard.",
+            "SYNC_SPEC": "Sync mock responses with API spec",
+            "SYNC_COLLECTION": "Sync mock responses with collection examples",
+            "ADVANCED_SETTINGS": "Advanced settings",
+            "RESPONSE_DELAY": "Response delay (ms)",
+            "AUTO_PORT_HINT": "Marrone will pick the next available port automatically."
+        },
+        "CLONE_MOCK_SERVER": {
+            "TITLE": "Clone Mock Server",
+            "CLONE_HINT": "Clones mock responses and server settings. The clone starts stopped."
+        },
+        "RENAME_MOCK_SERVER": {
+            "TITLE": "Rename Mock Server"
+        },
+        "CREATE_MOCK_RESPONSE": {
+            "TITLE": "Create Mock Response",
+            "CREATING": "Creating...",
+            "STATUS_CODE": "Status Code",
+            "BODY_TYPE": "Body Type",
+            "BODY_TYPE_TEXT": "Text",
+            "COPY_FROM_EXAMPLE": "Copy from a collection example",
+            "COPY_FROM_EXAMPLE_DESC": "Reuses the example's request, status code and body instead of starting from an empty response.",
+            "SELECT_AN_EXAMPLE": "Select an example"
+        },
+        "RENAME_MOCK_RESPONSE": {
+            "TITLE": "Rename Mock Response",
+            "RENAMING": "Renaming..."
+        },
+        "CREATE_TRANSIENT_REQUEST": {
+            "ARIA_LABEL": "New Transient Request"
+        },
+        "CREATE_EXAMPLE": {
+            "TITLE": "Create Response Example",
+            "SAVE_TITLE": "Save Response as Example",
+            "CONFIRM": "Create Example",
+            "EXAMPLE_NAME": "Example Name"
+        },
+        "IMPORT_PATHS": {
+            "FROM_COLLECTION_SETTINGS": "From Collection Settings",
+            "SOME_PATHS_NOT_FOUND": "Some import paths could not be found.",
+            "MANAGE_IMPORT_PATHS": "Manage import paths",
+            "IMPORT_PATH_ENABLED": "Import path enabled",
+            "IMPORT_PATH_DISABLED": "Import path disabled",
+            "NO_IMPORT_PATHS": "No import paths configured in collection settings",
+            "BROWSE_IMPORT_PATH": "Browse for Import Path"
+        }
+    },
+    "RUNNER": {
+        "TITLE": "Runner",
+        "REQUEST_COUNT_PRE": "You have",
+        "REQUEST_SINGULAR": "request",
+        "REQUEST_PLURAL": "requests",
+        "REQUEST_COUNT_POST": "in this collection.",
+        "LOADING": "(Loading...)",
+        "LOADING_WARNING": "Requests in this collection are still loading.",
+        "TIMINGS": "Timings",
+        "DELAY_LABEL": "Delay between requests (ms)",
+        "DELAY_PLACEHOLDER": "e.g. 5",
+        "FILTERS": "Filters",
+        "RUN_ONE": "Run {{count}} Request",
+        "RUN_MANY": "Run {{count}} Requests",
+        "RESET": "Reset",
+        "CANCEL_EXECUTION": "Cancel Execution",
+        "EXPORT": "Export",
+        "EXPORT_REPORT": "Export Report",
+        "RUN_AGAIN": "Run Again",
+        "TAGS": "Tags:",
+        "CLOSE": "Close",
+        "CLOSE_RESPONSE": "Close response view",
+        "CLICK_STATUS": "Click on the status code to view the response",
+        "REQUEST_FAILED": "(request failed)",
+        "FILTER_BY": "Filter by:",
+        "FILTER_ALL": "All",
+        "FILTER_PASSED": "Passed",
+        "FILTER_FAILED": "Failed",
+        "FILTER_SKIPPED": "Skipped",
+        "INCLUDE_TAGS": "Include tags",
+        "EXCLUDE_TAGS": "Exclude tags",
+        "SELECTED_OF_TOTAL": "{{selected}} of {{total}} selected",
+        "SELECT_ALL": "Select All",
+        "DESELECT_ALL": "Deselect All",
+        "RESET_TITLE": "Reset selection and order",
+        "LOADING_REQUESTS": "Loading requests...",
+        "NO_REQUESTS": "No requests found in this collection",
+        "RESPONSE": "Response",
+        "HEADERS": "Headers",
+        "TIMELINE": "Timeline"
     }
 }

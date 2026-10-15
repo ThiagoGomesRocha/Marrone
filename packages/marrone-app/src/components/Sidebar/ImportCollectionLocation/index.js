@@ -19,6 +19,7 @@ import Modal from 'components/Modal';
 import Help from 'components/Help';
 import Dropdown from 'components/Dropdown';
 import StyledWrapper from './StyledWrapper';
+import { useTranslation } from 'react-i18next';
 import { showImportIssuesToast } from 'components/Toast/ImportIssuesToast';
 import { DEFAULT_COLLECTION_FORMAT } from 'utils/common/constants';
 
@@ -99,12 +100,8 @@ const convertCollection = async (format, rawData, { groupingType, collectionForm
   }
 };
 
-const groupingOptions = [
-  { value: 'tags', label: 'Tags', description: 'Group requests by OpenAPI/Swagger tags', testId: 'grouping-option-tags' },
-  { value: 'path', label: 'Paths', description: 'Group requests by URL path structure', testId: 'grouping-option-path' }
-];
-
 const ImportCollectionLocation = ({ onClose, handleSubmit, rawData, format, sourceUrl, filePath, rawContent }) => {
+  const { t } = useTranslation();
   const inputRef = useRef();
   const dispatch = useDispatch();
   const [groupingType, setGroupingType] = useState('tags');
@@ -114,6 +111,11 @@ const ImportCollectionLocation = ({ onClose, handleSubmit, rawData, format, sour
   const [preserveScripts, setPreserveScripts] = useState(false);
   const dropdownTippyRef = useRef();
   const optionsDropdownTippyRef = useRef();
+
+  const groupingOptions = [
+    { value: 'tags', label: t('MODALS.COMMON.GROUP_BY_TAGS'), testId: 'grouping-option-tags' },
+    { value: 'path', label: t('MODALS.COMMON.GROUP_BY_PATHS'), testId: 'grouping-option-path' }
+  ];
   const isOpenApi = format === 'openapi';
   const isPostman = format === 'postman';
   const isZipImport = format === 'marrone-zip';
@@ -209,7 +211,7 @@ const ImportCollectionLocation = ({ onClose, handleSubmit, rawData, format, sour
     return (
       <div ref={ref} className="flex items-center text-link cursor-pointer">
         <button className="btn-advanced" type="button">
-          Options
+          {t('MODALS.COMMON.OPTIONS')}
         </button>
         <IconCaretDown className="caret ml-1" size={14} strokeWidth={2} />
       </div>
@@ -265,8 +267,8 @@ const ImportCollectionLocation = ({ onClose, handleSubmit, rawData, format, sour
       <StyledWrapper>
         <Modal
           size="md"
-          title="Import Collection"
-          confirmText="Import"
+          title={t('MODALS.IMPORT_COLLECTION_LOCATION.TITLE')}
+          confirmText={t('MODALS.COMMON.IMPORT')}
           handleConfirm={onSubmit}
           handleCancel={onClose}
           dataTestId="import-collection-location-modal"
@@ -282,7 +284,7 @@ const ImportCollectionLocation = ({ onClose, handleSubmit, rawData, format, sour
                       setShowAdvancedOptions(!showAdvancedOptions);
                     }}
                   >
-                    {showAdvancedOptions ? 'Hide Advanced Options' : 'Show Advanced Options'}
+                    {showAdvancedOptions ? t('MODALS.COMMON.HIDE_ADVANCED_OPTIONS') : t('MODALS.COMMON.SHOW_ADVANCED_OPTIONS')}
                   </div>
                 </Dropdown>
               </div>
@@ -292,16 +294,16 @@ const ImportCollectionLocation = ({ onClose, handleSubmit, rawData, format, sour
           <form className="marrone-form" onSubmit={(e) => e.preventDefault()}>
             <div>
               <label htmlFor="collectionName" className="block font-medium">
-                Name
+                {t('MODALS.COMMON.NAME')}
               </label>
               <div className="mt-2">{collectionName}</div>
 
               <>
                 <label htmlFor="collectionLocation" className="font-medium mt-4 flex items-center">
-                  Location
+                  {t('MODALS.COMMON.LOCATION')}
                   <Help>
-                    <p>Marrone stores your collections on your computer's filesystem.</p>
-                    <p className="mt-2">Choose the location where you want to store this collection.</p>
+                    <p>{t('MODALS.COMMON.LOCATION_HELP_FILESYSTEM')}</p>
+                    <p className="mt-2">{t('MODALS.COMMON.LOCATION_HELP_CHOOSE')}</p>
                   </Help>
                 </label>
                 <input
@@ -330,21 +332,21 @@ const ImportCollectionLocation = ({ onClose, handleSubmit, rawData, format, sour
                   className="text-link cursor-pointer hover:underline"
                   onClick={browse}
                 >
-                  Browse
+                  {t('MODALS.COMMON.BROWSE')}
                 </span>
               </div>
 
               {showAdvancedOptions && !isZipImport && (
                 <div className="mt-4">
                   <label htmlFor="format" className="flex items-center font-medium">
-                    File Format
+                    {t('MODALS.COMMON.FILE_FORMAT')}
                     <Help width="300">
-                      <p>Choose the file format for storing requests in this collection.</p>
+                      <p>{t('MODALS.COMMON.FILE_FORMAT_HELP')}</p>
                       <p className="mt-2">
-                        <strong>OpenCollection (YAML):</strong> Industry-standard YAML format (.yml files)
+                        <strong>{t('MODALS.COMMON.FILE_FORMAT_YAML_LABEL')}</strong> {t('MODALS.COMMON.FILE_FORMAT_YAML_DESC')}
                       </p>
                       <p className="mt-1">
-                        <strong>BRU:</strong> Marrone's native file format (.bru files)
+                        <strong>{t('MODALS.COMMON.FILE_FORMAT_BRU_LABEL')}</strong> {t('MODALS.COMMON.FILE_FORMAT_BRU_DESC')}
                       </p>
                     </Help>
                   </label>
@@ -371,9 +373,9 @@ const ImportCollectionLocation = ({ onClose, handleSubmit, rawData, format, sour
                     data-testid="preserve-scripts-toggle"
                   />
                   <div>
-                    <span className="checkbox-option-label">Preserve scripts</span>
+                    <span className="checkbox-option-label">{t('MODALS.IMPORT_COLLECTION_LOCATION.PRESERVE_SCRIPTS')}</span>
                     <p className="checkbox-option-description">
-                      Import Postman scripts without translating them.
+                      {t('MODALS.IMPORT_COLLECTION_LOCATION.PRESERVE_SCRIPTS_IMPORT_DESC')}
                     </p>
                   </div>
                 </label>
@@ -384,10 +386,10 @@ const ImportCollectionLocation = ({ onClose, handleSubmit, rawData, format, sour
               <div className="mt-4 flex gap-4 items-center justify-between">
                 <div>
                   <label htmlFor="groupingType" className="block font-medium">
-                    Folder arrangement
+                    {t('MODALS.COMMON.FOLDER_ARRANGEMENT')}
                   </label>
                   <p className="text-muted text-xs mt-1 mb-2">
-                    Select whether to create folders according to the spec's paths or tags.
+                    {t('MODALS.COMMON.FOLDER_ARRANGEMENT_DESC')}
                   </p>
                 </div>
                 <div className="relative">
@@ -419,11 +421,11 @@ const ImportCollectionLocation = ({ onClose, handleSubmit, rawData, format, sour
                   className={`checkbox mt-0.5 ${isSwagger2 ? '' : 'cursor-pointer'}`}
                 />
                 <div>
-                  <span className="checkbox-option-label">Check for Spec Updates</span>
+                  <span className="checkbox-option-label">{t('MODALS.IMPORT_COLLECTION_LOCATION.CHECK_SPEC_UPDATES')}</span>
                   <p className="checkbox-option-description">
                     {isSwagger2
-                      ? 'OpenAPI Sync is not supported for Swagger 2.0 specs.'
-                      : 'Stay notified of spec changes and sync your collection with the spec.'}
+                      ? t('MODALS.IMPORT_COLLECTION_LOCATION.CHECK_SPEC_UPDATES_SWAGGER_UNSUPPORTED')
+                      : t('MODALS.IMPORT_COLLECTION_LOCATION.CHECK_SPEC_UPDATES_DESC')}
                   </p>
                 </div>
               </label>

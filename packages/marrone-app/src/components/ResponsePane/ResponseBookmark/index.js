@@ -10,6 +10,7 @@ import CreateExampleModal from 'components/ResponseExample/CreateExampleModal';
 import { getExampleBodyType } from 'utils/responseBodyProcessor';
 import { detectContentTypeFromBase64 } from 'utils/response';
 import { getInitialExampleName } from 'utils/collections/index';
+import { useTranslation } from 'react-i18next';
 import classnames from 'classnames';
 import StyledWrapper from './StyledWrapper';
 import ActionIcon from 'ui/ActionIcon/index';
@@ -27,6 +28,7 @@ const getTitleText = ({ isResponseTooLarge, isStreamingResponse }) => {
 };
 
 const ResponseBookmark = forwardRef(({ item, collection, responseSize, children }, ref) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const [showSaveResponseExampleModal, setShowSaveResponseExampleModal] = useState(false);
   const response = item.response || {};
@@ -162,7 +164,7 @@ const ResponseBookmark = forwardRef(({ item, collection, responseSize, children 
         isOpen={showSaveResponseExampleModal}
         onClose={() => setShowSaveResponseExampleModal(false)}
         onSave={saveAsExample}
-        title="Save Response as Example"
+        title={t('MODALS.CREATE_EXAMPLE.SAVE_TITLE')}
         initialName={getInitialExampleName(item)}
       />
     </>

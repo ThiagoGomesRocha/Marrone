@@ -13,8 +13,10 @@ import {
   saveMockServerInstance,
   updateMockServerTabName
 } from 'utils/mock-server/mock-server-instances';
+import { useTranslation } from 'react-i18next';
 
 const RenameMockServerModal = ({ instance, onClose }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const inputRef = useRef();
   const activeWorkspaceUid = useSelector((state) => state.workspaces.activeWorkspaceUid);
@@ -75,8 +77,8 @@ const RenameMockServerModal = ({ instance, onClose }) => {
     <Portal>
       <Modal
         size="md"
-        title="Rename Mock Server"
-        confirmText="Rename"
+        title={t('MODALS.RENAME_MOCK_SERVER.TITLE')}
+        confirmText={t('MODALS.COMMON.RENAME')}
         handleConfirm={() => formik.handleSubmit()}
         handleCancel={handleCancel}
         dataTestId="mock-server-rename-modal"
@@ -84,7 +86,7 @@ const RenameMockServerModal = ({ instance, onClose }) => {
         <form className="marrone-form" onSubmit={(event) => event.preventDefault()}>
           <div>
             <label htmlFor="mock-server-rename-name" className="block font-medium">
-              Name
+              {t('MODALS.COMMON.NAME')}
             </label>
             <input
               id="mock-server-rename-name"

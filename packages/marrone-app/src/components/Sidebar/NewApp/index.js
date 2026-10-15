@@ -7,8 +7,10 @@ import Modal from 'components/Modal';
 import Portal from 'components/Portal';
 import { newApp } from 'providers/ReduxStore/slices/collections/actions';
 import { sanitizeName, validateName, validateNameError } from 'utils/common/regex';
+import { useTranslation } from 'react-i18next';
 
 const NewApp = ({ collectionUid, item, onClose }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const submitLockRef = useRef(false);
 
@@ -57,8 +59,8 @@ const NewApp = ({ collectionUid, item, onClose }) => {
     <Portal>
       <Modal
         size="md"
-        title="New App"
-        confirmText="Create"
+        title={t('MODALS.NEW_APP.TITLE')}
+        confirmText={t('MODALS.COMMON.CREATE')}
         handleConfirm={onSubmit}
         handleCancel={onClose}
         disableEscapeKey={false}
@@ -71,7 +73,7 @@ const NewApp = ({ collectionUid, item, onClose }) => {
           data-testid="new-app-form"
         >
           <label htmlFor="appName" className="block font-semibold">
-            Name
+            {t('MODALS.COMMON.NAME')}
           </label>
           <input
             id="appName"
@@ -89,7 +91,7 @@ const NewApp = ({ collectionUid, item, onClose }) => {
             <div className="text-red-500 text-xs mt-2">{formik.errors.appName}</div>
           ) : (
             <div className="text-xs mt-2 opacity-70">
-              Creates a standalone app file in {item ? 'this folder' : `collection "${collection?.name || ''}"`}.
+              {t('MODALS.NEW_APP.CREATE_DESC_PRE')} {item ? t('MODALS.NEW_APP.CREATE_DESC_THIS_FOLDER') : t('MODALS.NEW_APP.CREATE_DESC_COLLECTION', { name: collection?.name || '' })}.
             </div>
           )}
         </form>
