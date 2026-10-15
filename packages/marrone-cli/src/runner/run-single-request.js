@@ -955,6 +955,15 @@ const runSingleRequest = async function (
         syncVariableUpdates(result, request);
         testResults = get(result, 'results', []);
 
+        // As operações de banco desta fase precisam ser coletadas AQUI.
+        //
+        // Sem esta linha, um bru.db executado no bloco `tests` — que é onde a validação no
+        // banco faz sentido, e o padrão do exemplo da coleção de onboarding — rodava, mas
+        // NÃO aparecia no relatório: a consulta devolvia as linhas para o script e o
+        // relatório saía sem nenhuma operação. O caminho do app já fazia isso (as três
+        // fases são enviadas por IPC); só o CLI ficava devendo esta fase.
+        databaseOperations.push(...collectDatabaseOperations(result));
+
         if (result?.nextRequestName !== undefined) {
           nextRequestName = result.nextRequestName;
         }
@@ -986,6 +995,10 @@ const runSingleRequest = async function (
         ];
 
         syncVariableUpdates(error?.partialResults, request);
+
+        // Mesmo no erro do bloco de testes, o que rodou até falhar deve ir para o
+        // relatório — é justamente quando alguém vai querer ver o SQL que deu errado.
+        databaseOperations.push(...collectDatabaseOperations(error?.partialResults));
 
         if (error?.partialResults?.nextRequestName !== undefined) {
           nextRequestName = error.partialResults.nextRequestName;

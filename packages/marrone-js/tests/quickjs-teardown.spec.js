@@ -218,7 +218,16 @@ describe('QuickJS context teardown leaves no live handles or deferreds', () => {
       });
 
       expectCleanTeardown(outcome);
-      expect(results).toEqual([{ description: 'async test with awaited host work', status: 'pass' }]);
+      // O resultado do teste agora carrega QUANTO TEMPO ele levou (medido no shim do
+      // QuickJS). A asserção passou a ser por campos + o tipo do `duration`, em vez de
+      // igualdade exata do objeto inteiro — do contrário qualquer campo novo no resultado
+      // voltaria a quebrar um teste que não tem nada a ver com o assunto.
+      expect(results).toHaveLength(1);
+      expect(results[0]).toMatchObject({
+        description: 'async test with awaited host work',
+        status: 'pass'
+      });
+      expect(typeof results[0].duration).toBe('number');
     });
 
     it('surfaces a dispose failure after waited-for work as the run error', async () => {

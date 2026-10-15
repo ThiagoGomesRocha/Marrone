@@ -32,9 +32,16 @@ const addBruShimToContext = (vm, __marroneTestResults) => {
       }
 
       globalThis.Test = (__marroneTestResults) => async (description, callback) => {
+        // Tempo de CADA teste.
+        //
+        // Medido aqui porque o sandbox QuickJS tem a SUA propria implementacao de test(),
+        // separada do src/test.js que o sandbox node-vm usa. Sem esta linha, o tempo por
+        // teste aparecia no runtime node-vm e sumia no QuickJS — que e o runtime PADRAO.
+        var startedAt = Date.now();
+
         try {
           await callback();
-          __marroneTestResults.addResult({ description, status: "pass" });
+          __marroneTestResults.addResult({ description, status: "pass", duration: Date.now() - startedAt });
         } catch (error) {
           if (error instanceof DummyChaiAssertionError) {
             const { message, actual, expected } = error;
@@ -44,12 +51,14 @@ const addBruShimToContext = (vm, __marroneTestResults) => {
               error: message,
               actual,
               expected,
+              duration: Date.now() - startedAt,
             });
           } else {
             globalThis.__marrone__addResult({
               description,
               status: "fail",
               error: error.message || "An unexpected error occurred.",
+              duration: Date.now() - startedAt,
             });
           }
         }

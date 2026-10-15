@@ -78,6 +78,19 @@ relatórios de execução enriquecidos.
 
 ### Fixed
 
+- **O CLI não levava para o relatório as operações de banco feitas no bloco `tests`.** As
+  fases de pré-requisição e pós-resposta eram coletadas; a de `tests` não era — e é
+  justamente onde a validação no banco faz sentido (é o padrão do exemplo da coleção de
+  onboarding). Sintoma: a consulta rodava, devolvia as linhas para o script e o relatório
+  saía **sem nenhuma operação**, sem erro nenhum. Encontrado rodando uma coleção de verdade
+  contra o SQL Server local; o caminho do app já funcionava (as três fases vão por IPC).
+- **O relatório chamava toda operação de SQL de "query".** O host não gravava o TIPO da
+  operação, então um `UPDATE` aparecia como consulta. Agora `query` e `execute` são
+  registrados distintos, ao lado das de ciclo de vida (`connect`, `disconnect`,
+  `begin`/`commit`/`rollback`).
+- **O tempo por teste não era medido no runtime padrão.** O sandbox QuickJS tem a sua própria
+  implementação de `test()`, separada da usada pelo runtime `node-vm`; a medição tinha
+  ficado só na segunda, então a coluna *Duration* saía `-` no QuickJS — que é o padrão.
 - **Salvar credenciais sem digitar a senha apagava a senha guardada.** O formulário dizia
   "deixe o campo vazio para mantê-la", mas o `DatabaseCredentialsStore` gravava string vazia
   em QUALQUER salvamento, apagando a senha em silêncio. Agora senha **ausente** preserva a

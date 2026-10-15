@@ -322,12 +322,22 @@ export const createSandboxCapability = ({
     sql,
     params,
     scope,
+    operation,
     run
   }: {
     sgbd: SgbdId;
     sql: string;
     params: unknown[] | undefined;
     scope: unknown;
+    /**
+     * Tipo da operação ('query' | 'execute'), gravado no relatório.
+     *
+     * Sem isto o relatório não tinha como distinguir uma consulta de um comando: as duas
+     * chegam iguais (mesmo sgbd, um SQL, parâmetros), e o relatório acabava rotulando tudo
+     * como "query" — inclusive um UPDATE. As operações de ciclo de vida (connect/
+     * disconnect/begin/commit/rollback) já gravavam o seu tipo.
+     */
+    operation: 'query' | 'execute';
     run: () => Promise<T>;
   }): Promise<T> => {
     const startedAt = Date.now();
@@ -340,6 +350,7 @@ export const createSandboxCapability = ({
         timestamp,
         sgbd,
         sql,
+        operation,
         parameters: redactParameters(params, { includeSensitive }),
         durationMs: Date.now() - startedAt,
         status: 'success',
@@ -356,6 +367,7 @@ export const createSandboxCapability = ({
         timestamp,
         sgbd,
         sql,
+        operation,
         parameters: redactParameters(params, { includeSensitive }),
         durationMs: Date.now() - startedAt,
         status: 'error',
@@ -447,6 +459,7 @@ export const createSandboxCapability = ({
         sql,
         params,
         scope,
+        operation: 'query',
         run: () => database.dbQuery(connection, sql, Array.isArray(params) ? params : [])
       });
     },
@@ -459,6 +472,7 @@ export const createSandboxCapability = ({
         sql,
         params,
         scope,
+        operation: 'execute',
         run: () => database.dbExecute(connection, sql, Array.isArray(params) ? params : [])
       });
     },
