@@ -1,5 +1,6 @@
 import type { T_RunnerRequestExecutionResult } from '../../types';
 import { mergeTestResults } from '../shared/test-results';
+import { htmlReportTranslations, type HtmlReportTranslations } from './translations';
 
 export const getFilteredRequestResults = (results: T_RunnerRequestExecutionResult[] = [], onlyFailed = false) => {
   const indexedResults = (Array.isArray(results) ? results : []).map((value, index) => ({ value, index }));
@@ -16,15 +17,15 @@ export const getFilteredRequestResults = (results: T_RunnerRequestExecutionResul
   );
 };
 
-export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
-<html lang="en">
+export const htmlTemplateString = (resutsJsonString: string, translations: HtmlReportTranslations = htmlReportTranslations.en) => `<!DOCTYPE html>
+<html lang="${translations.htmlLang}">
   <head>
     <meta charset="utf-8" />
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <!-- Would use latest version, you'd better specify a version -->
     <script src="https://unpkg.com/naive-ui"></script>
 
-    <title>Marrone</title>
+    <title>${translations.title}</title>
     <style>
       .error > .status {
         color: red;
@@ -235,7 +236,7 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
         <n-layout embedded position="absolute" content-style="padding: 24px;">
           <n-card>
             <n-flex>
-              <n-page-header title="Marrone run dashboard">
+              <n-page-header title="${translations.pageTitle}">
                 <template #avatar>
                   <n-avatar size="large" style="background-color: transparent">
                     <img v-if="logo" :src="logo" alt="logo" style="max-height: 40px; max-width: 160px; object-fit: contain;" />
@@ -245,40 +246,40 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
                 <template #extra>
                   <n-flex justify="end">
                     <n-switch v-model:value="darkMode" :rail-style="darkModeRailStyle">
-                      <template #checked> Dark </template>
-                      <template #unchecked> Light </template>
+                      <template #checked> ${translations.theme.dark} </template>
+                      <template #unchecked> ${translations.theme.light} </template>
                     </n-switch>
                   </n-flex>
                 </template>
               </n-page-header>
               <n-tabs type="segment" animated v-model:value="currentTab">
-                <n-tab-pane name="summary" tab="Summary">
+                <n-tab-pane name="summary" tab="${translations.tabs.summary}">
                   <n-flex justify="center" vertical>
                     <!-- Run Information Card using Naive UI components -->
-                    <n-card title="Run Information" size="small">
+                    <n-card title="${translations.metadata.runInformation}" size="small">
                       <div class="metadata-grid">
                         <n-card class="metadata-item" size="small">
-                          <div class="metadata-label">Date & Time</div>
+                          <div class="metadata-label">${translations.metadata.dateTime}</div>
                           <div class="metadata-value">{{ runCompletionTime }}</div>
                         </n-card>
                         <n-card class="metadata-item" size="small">
-                          <div class="metadata-label">Version</div>
+                          <div class="metadata-label">${translations.metadata.version}</div>
                           <div class="metadata-value">{{ marroneVersion }}</div>
                         </n-card>
                         <n-card class="metadata-item" size="small">
-                          <div class="metadata-label">Environment</div>
+                          <div class="metadata-label">${translations.metadata.environment}</div>
                           <div class="metadata-value">{{ environment }}</div>
                         </n-card>
                         <n-card class="metadata-item" size="small">
-                          <div class="metadata-label">Total run duration</div>
+                          <div class="metadata-label">${translations.metadata.totalRunDuration}</div>
                           <div class="metadata-value">{{ totalDuration }}</div>
                         </n-card>
                         <n-card class="metadata-item" size="small">
-                          <div class="metadata-label">Total data received</div>
+                          <div class="metadata-label">${translations.metadata.totalDataReceived}</div>
                           <div class="metadata-value">{{ totalDataReceived }}</div>
                         </n-card>
                         <n-card class="metadata-item" size="small">
-                          <div class="metadata-label">Average response time</div>
+                          <div class="metadata-label">${translations.metadata.averageResponseTime}</div>
                           <div class="metadata-value">{{ averageResponseTime }}</div>
                         </n-card>
                       </div>
@@ -286,12 +287,12 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
                     <x-summary v-for="(result, index) in res" :res="result" :key="index"></x-summary>
                   </n-flex>
                 </n-tab-pane>
-                <n-tab-pane name="requests" tab="Requests">
+                <n-tab-pane name="requests" tab="${translations.tabs.requests}">
                   <n-flex justify="center" vertical>
                     <x-requests v-for="(result, index) in res" :res="result" :key="index"></x-requests>
                   </n-flex>
                 </n-tab-pane>
-                <n-tab-pane v-if="databaseOperations.length > 0" name="database" tab="Database Operations">
+                <n-tab-pane v-if="databaseOperations.length > 0" name="database" tab="${translations.tabs.database}">
                   <x-database-operations :operations="databaseOperations"></x-database-operations>
                 </n-tab-pane>
               </n-tabs>
@@ -302,22 +303,21 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
     </div>
     <script type="text/x-template" id="database-operations-component">
       <n-flex justify="center" vertical>
-        <n-card title="Database Operations" size="small">
+        <n-card title="${translations.database.title}" size="small">
           <p class="db-note">
-            Operações de banco executadas pelos scripts de pré e pós-requisição.
-            Os parâmetros aparecem redigidos por padrão — o relatório é um artefato compartilhável.
+            ${translations.database.note}
           </p>
 
           <div class="db-filters">
-            <span class="metadata-label">SGBD</span>
-            <n-select v-model:value="sgbdFilter" :options="sgbdOptions" clearable placeholder="Todos" style="max-width: 220px;" size="small" />
-            <span class="metadata-label">Status</span>
-            <n-select v-model:value="statusFilter" :options="statusOptions" clearable placeholder="Todos" style="max-width: 220px;" size="small" />
-            <span class="metadata-label">{{ filtered.length }} de {{ operations.length }} operação(ões)</span>
+            <span class="metadata-label">${translations.database.sgbd}</span>
+            <n-select v-model:value="sgbdFilter" :options="sgbdOptions" clearable placeholder="${translations.database.all}" style="max-width: 220px;" size="small" />
+            <span class="metadata-label">${translations.database.status}</span>
+            <n-select v-model:value="statusFilter" :options="statusOptions" clearable placeholder="${translations.database.all}" style="max-width: 220px;" size="small" />
+            <span class="metadata-label">${translations.database.countLabel}</span>
           </div>
 
           <div v-if="filtered.length === 0" class="db-empty">
-            Nenhuma operação de banco corresponde ao filtro.
+            ${translations.database.noMatch}
           </div>
 
           <div v-for="(operation, index) in filtered" :key="index" class="db-operation">
@@ -330,22 +330,22 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
               <span class="db-meta">{{ operation.durationMs }} ms</span>
               <span v-if="operation.requestName" class="db-meta">{{ operation.requestMethod }} {{ operation.requestName }}</span>
               <button type="button" class="db-copy" @click="copySql(operation, index)">
-                {{ copiedIndex === index ? 'Copiado!' : 'Copiar SQL' }}
+                {{ copiedIndex === index ? '${translations.database.copied}' : '${translations.database.copySql}' }}
               </button>
             </div>
 
             <pre class="db-sql">{{ operation.sql || operation.operation || '-' }}</pre>
 
             <div class="db-details">
-              <span>Parâmetros: {{ formatParameters(operation) }}</span>
-              <span>Resultado: {{ operation.resultSummary || (operation.operation ? operation.operation : '-') }}</span>
+              <span>${translations.database.parameters} {{ formatParameters(operation) }}</span>
+              <span>${translations.database.result} {{ operation.resultSummary || (operation.operation ? operation.operation : '-') }}</span>
             </div>
 
             <div v-if="operation.resultRows && operation.resultRows.length" class="db-rows">
               <div class="db-rows-header">
-                <span class="metadata-label">Linhas</span>
+                <span class="metadata-label">${translations.database.rows}</span>
                 <span class="db-meta" v-if="operation.resultRowsTruncated">
-                  mostrando {{ operation.resultRows.length }} de {{ operation.resultRowsTotal }} — as demais foram omitidas
+                  ${translations.database.showingRows}
                 </span>
               </div>
               <pre class="db-sql db-rows-json">{{ formatRows(operation.resultRows) }}</pre>
@@ -368,31 +368,31 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
             <n-flex justify="center">
               <n-alert type="success">
                 <n-statistic
-                  label="Total requests"
+                  label="${translations.summary.totalRequests}"
                   :value="summaryTotalRequests"
                 >
                 </n-statistic>
               </n-alert>
               <n-alert :type="summaryErrors ? 'error' : 'success'">
-                <n-statistic label="Total errors" :value="summaryErrors">
+                <n-statistic label="${translations.summary.totalErrors}" :value="summaryErrors">
                 </n-statistic>
               </n-alert>
               <n-alert type="success">
                 <n-statistic
-                  label="Total Controls"
+                  label="${translations.summary.totalControls}"
                   :value="summaryTotalControls"
                 >
                 </n-statistic>
               </n-alert>
               <n-alert :type="summaryFailedControls ? 'error' : 'success'">
                 <n-statistic
-                  label="Total Failed Controls"
+                  label="${translations.summary.totalFailedControls}"
                   :value="summaryFailedControls"
                 >
                 </n-statistic>
               </n-alert>
               <n-alert type="warning" v-if="summarySkippedRequests">
-                <n-statistic label="Skipped requests" :value="summarySkippedRequests">
+                <n-statistic label="${translations.summary.skippedRequests}" :value="summarySkippedRequests">
                 </n-statistic>
               </n-alert>
             </n-flex>
@@ -411,8 +411,8 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
             v-model:value="onlyFailed"
             :rail-style="railStyle"
           >
-            <template #checked> Only Failed </template>
-            <template #unchecked> Show All </template>
+            <template #checked> ${translations.requests.onlyFailed} </template>
+            <template #unchecked> ${translations.requests.showAll} </template>
           </n-switch>
 
           <n-collapse>
@@ -432,30 +432,30 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
             :bordered="false"
           >
             <template #header>
-              {{result.path}} - {{resultSummary}} {{hasError && result.response.status !== 'skipped' ? " - (request failed)" : "" }}
+              {{result.path}} - {{resultSummary}} {{hasError && result.response.status !== 'skipped' ? "${translations.result.requestFailed}" : "" }}
             </template>
           </n-alert>
         </template>
         <n-flex vertical>
           <n-grid x-gap="12" :cols="2">
             <n-gi>
-              <n-card title="REQUEST INFORMATION">
+              <n-card title="${translations.result.requestInformation}">
                 <n-list>
                   <n-list-item>
                     <n-thing
-                      title="File"
+                      title="${translations.result.file}"
                       :description="result.path"
                     />
                   </n-list-item>
                   <n-list-item>
                     <n-thing
-                      title="Request Method"
+                      title="${translations.result.requestMethod}"
                       :description="result.request.method"
                     />
                   </n-list-item>
                   <n-list-item>
                     <n-thing
-                      title="Request URL"
+                      title="${translations.result.requestUrl}"
                       :description="result.request.url"
                     />
                   </n-list-item>
@@ -463,23 +463,23 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
               </n-card>
             </n-gi>
             <n-gi>
-              <n-card title="RESPONSE INFORMATION">
+              <n-card title="${translations.result.responseInformation}">
                 <n-list>
                   <n-list-item>
                     <n-thing
-                      title="Response Code"
+                      title="${translations.result.responseCode}"
                       :description="responseCode"
                     />
                   </n-list-item>
                   <n-list-item>
                     <n-thing
-                      title="Response time"
+                      title="${translations.result.responseTime}"
                       :description="result.response.responseTime + ' ms'"
                     />
                   </n-list-item>
                   <n-list-item>
                     <n-thing
-                      title="Test duration"
+                      title="${translations.result.testDuration}"
                       :description="testDuration"
                     />
                   </n-list-item>
@@ -487,16 +487,16 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
               </n-card>
             </n-gi>
           </n-grid>
-          <n-card v-if="result.curl" title="CURL COMMAND">
+          <n-card v-if="result.curl" title="${translations.result.curlCommand}">
             <template #header-extra>
-              <n-button size="tiny" quaternary @click="copyCurl">Copy</n-button>
+              <n-button size="tiny" quaternary @click="copyCurl">${translations.result.copy}</n-button>
             </template>
             <pre class="curl-command"><code class="language-bash">{{ result.curl }}</code></pre>
           </n-card>
-          <n-alert v-if="hasError || (result.response.status === 'skipped' && result.error)" title="Error" type="error">
+          <n-alert v-if="hasError || (result.response.status === 'skipped' && result.error)" title="${translations.result.error}" type="error">
             {{result.error}}
           </n-alert>
-          <n-card title="REQUEST HEADERS">
+          <n-card title="${translations.result.requestHeaders}">
             <n-data-table
               :columns="headerColumns"
               :data="headerDataRequest"
@@ -504,7 +504,7 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
           </n-card>
           <n-card
             v-if="result.request.data"
-            title="REQUEST BODY"
+            title="${translations.result.requestBody}"
           >
           <iframe
             v-if="result.request.isHtml"
@@ -514,7 +514,7 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
 
           <pre v-else>{{ result.request.data }}</pre>
           </n-card>
-          <n-card title="RESPONSE HEADERS">
+          <n-card title="${translations.result.responseHeaders}">
             <n-data-table
               :columns="headerColumns"
               :data="headerDataResponse"
@@ -522,10 +522,10 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
           </n-card>
           <n-card
             v-if="result.response.data"
-            title="RESPONSE BODY"
+            title="${translations.result.responseBody}"
           >
           <template #header-extra>
-            <n-button size="tiny" quaternary @click="copyResponseBody">Copy</n-button>
+            <n-button size="tiny" quaternary @click="copyResponseBody">${translations.result.copy}</n-button>
           </template>
           <iframe
             v-if="result.response.isHtml"
@@ -534,14 +534,14 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
           ></iframe>
 
           <pre v-else>{{ result.response.data }}</pre>          </n-card>
-          <n-card title="ASSERTIONS INFORMATION">
+          <n-card title="${translations.result.assertionsInformation}">
             <n-data-table
               :columns="assertionsColumns"
               :data="result.assertionResults"
               :row-class-name="assertionsRowClassName"
             />
           </n-card>
-          <n-card title="TESTS INFORMATION">
+          <n-card title="${translations.result.testsInformation}">
             <n-data-table
               :columns="testsColumns"
               :data="result.testResults"
@@ -556,12 +556,11 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
           -->
           <n-card
             v-if="hasDatabaseOperations"
-            title="🗄️ Database Operation"
+            title="${translations.database.operationCardTitle}"
             size="small"
           >
             <p class="db-note">
-              Operações executadas pelos scripts desta requisição. Os parâmetros aparecem
-              redigidos por padrão — o relatório é um artefato compartilhável.
+              ${translations.database.operationNote}
             </p>
             <n-collapse>
               <n-collapse-item
@@ -572,7 +571,7 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
                 <template #header>
                   <div class="db-op-header">
                     <n-tag size="small" :type="operation.status === 'error' ? 'error' : 'success'">
-                      {{ operation.status === 'error' ? '❌ Falha' : '✅ Sucesso' }}
+                      {{ operation.status === 'error' ? '${translations.database.failure}' : '${translations.database.success}' }}
                     </n-tag>
                     <span class="db-op-title">{{ operationTitle(operation) }}</span>
                   </div>
@@ -580,46 +579,46 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
 
                 <div class="db-op-grid">
                   <div class="db-op-field">
-                    <span class="db-op-label">Script</span>
+                    <span class="db-op-label">${translations.database.script}</span>
                     <span class="db-op-value">{{ operationScript }}</span>
                   </div>
                   <div class="db-op-field">
-                    <span class="db-op-label">Conexão</span>
+                    <span class="db-op-label">${translations.database.connection}</span>
                     <span class="db-op-value">{{ operation.sgbd }} ({{ operation.sgbdLabel }})</span>
                   </div>
                   <div class="db-op-field">
-                    <span class="db-op-label">Operação</span>
+                    <span class="db-op-label">${translations.database.operation}</span>
                     <span class="db-op-value">{{ operationType(operation) }}</span>
                   </div>
                   <div class="db-op-field">
-                    <span class="db-op-label">Tempo</span>
+                    <span class="db-op-label">${translations.database.time}</span>
                     <span class="db-op-value">{{ operation.durationMs }} ms</span>
                   </div>
                   <div class="db-op-field">
-                    <span class="db-op-label">Resultado</span>
+                    <span class="db-op-label">${translations.database.result}</span>
                     <span class="db-op-value">{{ operation.resultSummary || operationType(operation) }}</span>
                   </div>
                   <div class="db-op-field" v-if="operation.connectionString">
-                    <span class="db-op-label">Destino</span>
+                    <span class="db-op-label">${translations.database.destination}</span>
                     <span class="db-op-value">{{ operation.connectionString }}</span>
                   </div>
                 </div>
 
                 <div class="db-op-sql">
-                  <span class="db-op-label">SQL</span>
+                  <span class="db-op-label">${translations.database.sql}</span>
                   <pre class="db-sql">{{ operation.sql || '-' }}</pre>
                 </div>
 
                 <div class="db-op-field">
-                  <span class="db-op-label">Parâmetros</span>
+                  <span class="db-op-label">${translations.database.parameters}</span>
                   <span class="db-op-value">{{ formatOperationParameters(operation) }}</span>
                 </div>
 
                 <div v-if="operation.resultRows && operation.resultRows.length" class="db-rows">
                   <div class="db-rows-header">
-                    <span class="metadata-label">Linhas retornadas</span>
+                    <span class="metadata-label">${translations.database.returnedRows}</span>
                     <span class="db-meta" v-if="operation.resultRowsTruncated">
-                      mostrando {{ operation.resultRows.length }} de {{ operation.resultRowsTotal }} — as demais foram omitidas
+                      ${translations.database.showingRows}
                     </span>
                   </div>
                   <n-data-table
@@ -825,33 +824,33 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
         setup(props) {
           const summaryColumns = [
             {
-              title: 'SUMMARY ITEM',
+              title: '${translations.summary.colSummaryItem}',
               key: 'title'
             },
             {
-              title: 'TOTAL',
+              title: '${translations.summary.colTotal}',
               key: 'total'
             },
             {
-              title: 'PASSED',
+              title: '${translations.summary.colPassed}',
               key: 'passed'
             },
             {
-              title: 'FAILED',
+              title: '${translations.summary.colFailed}',
               key: 'failed'
             },
             {
-              title: 'SKIPPED',
+              title: '${translations.summary.colSkipped}',
               key: 'skipped'
             },
             {
-              title: 'ERROR',
+              title: '${translations.summary.colError}',
               key: 'error'
             }
           ];
           const summaryData = computed(() => [
             {
-              title: 'Requests',
+              title: '${translations.summary.rowRequests}',
               total: props.res.summary.totalRequests,
               passed: props.res.summary.passedRequests,
               failed: props.res.summary.failedRequests,
@@ -859,7 +858,7 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
               error: props.res.summary.errorRequests
             },
             {
-              title: 'Assertions',
+              title: '${translations.summary.rowAssertions}',
               total: props.res.summary.totalAssertions,
               passed: props.res.summary.passedAssertions,
               failed: props.res.summary.failedAssertions,
@@ -867,7 +866,7 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
               error: '-'
             },
             {
-              title: 'Tests',
+              title: '${translations.summary.rowTests}',
               total: props.res.summary.totalTests,
               passed: props.res.summary.passedTests,
               failed: props.res.summary.failedTests,
@@ -897,7 +896,7 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
             summarySkippedRequests,
             summaryErrors,
             totalRunDuration,
-            iterationTitle: 'Iteration ' + iterationIndex
+            iterationTitle: '${translations.summary.iteration} ' + iterationIndex
           };
         }
       });
@@ -921,7 +920,7 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
               }
               return style;
             },
-            iterationTitle: 'Iteration ' + iterationIndex
+            iterationTitle: '${translations.summary.iteration} ' + iterationIndex
           };
         }
       });
@@ -946,35 +945,35 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
           };
           const headerColumns = [
             {
-              title: 'Header Name',
+              title: '${translations.result.headerName}',
               key: 'name',
               className: 'min-width-150'
             },
             {
-              title: 'Header Value',
+              title: '${translations.result.headerValue}',
               key: 'value'
             }
           ];
           const assertionsColumns = [
             {
-              title: 'Expression',
+              title: '${translations.result.expression}',
               key: 'lhsExpr'
             },
             {
-              title: 'Operator',
+              title: '${translations.result.operator}',
               key: 'operator'
             },
             {
-              title: 'Operand',
+              title: '${translations.result.operand}',
               key: 'rhsOperand'
             },
             {
-              title: 'Status',
+              title: '${translations.result.status}',
               key: 'status',
               className: 'status'
             },
             {
-              title: 'Error',
+              title: '${translations.result.error}',
               key: 'error'
             }
           ];
@@ -987,23 +986,23 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
           };
           const testsColumns = [
             {
-              title: 'Description',
+              title: '${translations.result.description}',
               key: 'description'
             },
             {
-              title: 'Status',
+              title: '${translations.result.status}',
               key: 'status',
               className: 'status'
             },
             {
               // Tempo de CADA teste. O runner passou a medir isto (packages/marrone-js
               // src/test.js); relatórios antigos não têm o campo e mostram '-'.
-              title: 'Duration',
+              title: '${translations.result.duration}',
               key: 'duration',
               render: (row) => (typeof row?.duration === 'number' ? row.duration + ' ms' : '-')
             },
             {
-              title: 'Error',
+              title: '${translations.result.error}',
               key: 'error'
             }
           ];
@@ -1092,9 +1091,9 @@ export const htmlTemplateString = (resutsJsonString: string) => `<!DOCTYPE html>
           });
           const resultSummary = computed(() => {
             if (props.result.response.status === 'skipped') {
-              return props.result.skipReason === 'bail' ? 'Request skipped due to bail' : 'Request Skipped';
+              return props.result.skipReason === 'bail' ? '${translations.result.requestSkippedDueToBail}' : '${translations.result.requestSkipped}';
             }
-            return totalPassed.value + '/' + total.value + ' Passed';
+            return totalPassed.value + '/' + total.value + ' ${translations.result.passed}';
           });
           const getAlertType = computed(() => {
             if (props.result.response.status === 'skipped') {

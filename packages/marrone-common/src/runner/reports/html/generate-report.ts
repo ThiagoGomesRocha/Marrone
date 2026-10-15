@@ -3,6 +3,7 @@ import { encodeBase64 } from '../../utils';
 import htmlTemplateString from './template';
 import { enrichResult } from '../shared/report-results';
 import { collectDatabaseOperations, redactDatabaseParameters } from '../shared/database-operations';
+import { getHtmlReportTranslations } from './translations';
 
 /**
  * Gerador do relatório HTML.
@@ -18,7 +19,8 @@ const generateHtmlReport = ({
   runCompletionTime = '', // Default run completion time if not provided
   logo = '', // Optional data-URL (data:image/png;base64,...) shown in the report header
   includeSensitive = false, // Whether to include credential headers/query params in generated CURL commands
-  includeDbRows = true // Whether the Database Operations tab carries the rows the queries returned
+  includeDbRows = true, // Whether the Database Operations tab carries the rows the queries returned
+  lang = 'en' // Report language (en, pt-BR); falls back to en when unknown
 }: {
   runnerResults: T_RunnerResults[];
   version?: string;
@@ -27,6 +29,7 @@ const generateHtmlReport = ({
   logo?: string;
   includeSensitive?: boolean;
   includeDbRows?: boolean;
+  lang?: string;
 }): string => {
   const resultsWithSummaryAndCleanData = (runnerResults || []).map(({ iterationIndex, results, summary }) => {
     return {
@@ -47,7 +50,7 @@ const generateHtmlReport = ({
     runCompletionTime,
     logo,
     databaseOperations
-  })));
+  })), getHtmlReportTranslations(lang));
   return htmlString;
 };
 
