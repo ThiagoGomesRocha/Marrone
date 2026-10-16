@@ -9,6 +9,7 @@ import Modal from 'components/Modal';
 import toast from 'react-hot-toast';
 import Button from 'ui/Button';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../../../i18n';
 
 const MAX_UNSAVED_REQUESTS_TO_SHOW = 5;
 
@@ -53,11 +54,11 @@ const ConfirmMoveDrafts = ({ onClose, collection, collectionUid }) => {
   const moveAndClose = () => {
     dispatch(moveCollectionToWorkspace(collectionUid))
       .then(() => {
-        toast.success('Collection moved into workspace');
+        toast.success(i18n.t('TOASTS.COLLECTION_MOVED'));
         onClose();
       })
       .catch((err) => {
-        toast.error(err?.message || 'An error occurred while moving the collection');
+        toast.error(err?.message || i18n.t('TOASTS.ERROR_MOVING_COLLECTION'));
         setIsMoving(false);
       });
   };
@@ -68,7 +69,7 @@ const ConfirmMoveDrafts = ({ onClose, collection, collectionUid }) => {
     }
     // If there are transient drafts, we can't proceed with batch save
     if (currentTransientDrafts.length > 0) {
-      toast.error('Please save or discard transient requests first');
+      toast.error(i18n.t('TOASTS.SAVE_OR_DISCARD_TRANSIENT'));
       return;
     }
     setIsMoving(true);
@@ -77,7 +78,7 @@ const ConfirmMoveDrafts = ({ onClose, collection, collectionUid }) => {
       dispatch(saveMultipleRequests(currentDrafts))
         .then(() => moveAndClose())
         .catch(() => {
-          toast.error('Failed to save requests!');
+          toast.error(i18n.t('TOASTS.FAILED_SAVE_REQUESTS'));
           setIsMoving(false);
         });
     } else {
@@ -113,7 +114,7 @@ const ConfirmMoveDrafts = ({ onClose, collection, collectionUid }) => {
     <StyledWrapper>
       <Modal
         size="md"
-        title="Move into Workspace"
+        title={i18n.t('UI.MOVE_INTO_WORKSPACE')}
         handleCancel={onClose}
         disableEscapeKey={true}
         disableCloseOnOutsideClick={true}
@@ -202,7 +203,7 @@ const ConfirmMoveDrafts = ({ onClose, collection, collectionUid }) => {
               data-testid="move-workspace-save-and-move"
               onClick={handleSaveAll}
               disabled={currentTransientDrafts.length > 0 || isMoving}
-              title={currentTransientDrafts.length > 0 ? 'Please save or discard transient requests first' : ''}
+              title={currentTransientDrafts.length > 0 ? i18n.t('TOASTS.SAVE_OR_DISCARD_TRANSIENT') : ''}
             >
               {isMoving ? 'Moving...' : currentDrafts.length > 1 ? 'Save All and Move' : 'Save and Move'}
             </Button>

@@ -6,6 +6,7 @@ import { dismissUnresolvedVariables } from 'providers/ReduxStore/slices/collecti
 import useCopyToClipboard from 'hooks/useCopyToClipboard';
 import ActionIcon from 'ui/ActionIcon';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../i18n';
 
 const MAX_INLINE_NAMES_LENGTH = 40;
 
@@ -50,12 +51,12 @@ const UnresolvedVariableCount = ({ names, popoverId }) => {
         isOpen={isPopoverOpen}
       >
         <div className="popover-header">
-          <span>Unresolved variables</span>
+          <span>{i18n.t('UI.UNRESOLVED_VARIABLES')}</span>
           <ActionIcon
             size="xs"
             data-testid="unresolved-variables-copy"
             onClick={() => copyToClipboard(names.join('\n'))}
-            aria-label="Copy unresolved variable names"
+            aria-label={i18n.t('UI.COPY_UNRESOLVED')}
             label={copied ? 'Copied' : 'Copy variable names'}
           >
             {copied ? <IconCheck size={14} strokeWidth={1.5} /> : <IconCopy size={14} strokeWidth={1.5} />}
@@ -111,7 +112,7 @@ const UnresolvedVariablesInfo = ({ item, collection }) => {
         className="close-button"
         data-testid="unresolved-variables-info-close"
         onClick={handleClose}
-        aria-label="Dismiss unresolved variables info"
+        aria-label={i18n.t('UI.DISMISS_UNRESOLVED_INFO')}
       >
         <IconX size={16} strokeWidth={1.5} />
       </ActionIcon>

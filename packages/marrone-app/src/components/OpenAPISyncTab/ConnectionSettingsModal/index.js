@@ -5,6 +5,7 @@ import Modal from 'components/Modal';
 import { isHttpUrl } from 'utils/url/index';
 import { isOpenApiSpec } from 'utils/importers/openapi-collection';
 import { parseFileAsJsonOrYaml } from 'utils/importers/file-reader';
+import i18n from '../../../i18n';
 
 const ConnectionSettingsModal = ({ collection, sourceUrl, onSave, onDisconnect, onClose }) => {
   const openApiSyncConfig = collection?.brunoConfig?.openapi?.[0];
@@ -39,7 +40,7 @@ const ConnectionSettingsModal = ({ collection, sourceUrl, onSave, onDisconnect, 
   return (
     <Modal
       size="md"
-      title="Connection Settings"
+      title={i18n.t('UI.CONNECTION_SETTINGS')}
       hideFooter={true}
       handleCancel={onClose}
     >
@@ -85,13 +86,13 @@ const ConnectionSettingsModal = ({ collection, sourceUrl, onSave, onDisconnect, 
                       try {
                         const data = await parseFileAsJsonOrYaml(file);
                         if (!isOpenApiSpec(data)) {
-                          toast.error('The selected file is not a valid OpenAPI 3.x specification');
+                          toast.error(i18n.t('TOASTS.INVALID_OPENAPI_FILE'));
                           return;
                         }
                         const path = window.ipcRenderer.getFilePath(file);
                         if (path) setFilePath(path);
                       } catch (err) {
-                        toast.error(err.message || 'Failed to read the selected file');
+                        toast.error(err.message || i18n.t('TOASTS.FAILED_READ_FILE'));
                       }
                     }
                   }}
@@ -127,7 +128,7 @@ const ConnectionSettingsModal = ({ collection, sourceUrl, onSave, onDisconnect, 
 
           {autoCheck && (
             <div className="settings-field">
-              <label className="settings-label">Check interval</label>
+              <label className="settings-label">{i18n.t('UI.CHECK_INTERVAL')}</label>
               <div className="interval-buttons">
                 {intervals.map((mins) => (
                   <button

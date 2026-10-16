@@ -1,11 +1,12 @@
 import Button from 'ui/Button';
 import Modal from 'components/Modal';
+import i18n from '../../../i18n';
 
 const DisconnectSyncModal = ({ onConfirm, onClose }) => {
   return (
     <Modal
       size="sm"
-      title="Disconnect Sync"
+      title={i18n.t('UI.DISCONNECT_SYNC')}
       hideFooter={true}
       handleCancel={onClose}
     >

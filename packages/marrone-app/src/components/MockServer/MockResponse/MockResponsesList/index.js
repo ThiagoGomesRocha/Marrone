@@ -30,6 +30,7 @@ import Button from 'ui/Button';
 import ActionIcon from 'ui/ActionIcon';
 import ListGroup from 'ui/ListGroup';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../../i18n';
 
 const MockResponsesList = ({ instance, collection }) => {
   const dispatch = useDispatch();
@@ -96,7 +97,7 @@ const MockResponsesList = ({ instance, collection }) => {
         })).unwrap();
 
         openResponseTab(result.response);
-        toast.success('Mock response created from example');
+        toast.success(i18n.t('TOASTS.MOCK_RESPONSE_CREATED_FROM_EXAMPLE'));
         return;
       }
 
@@ -110,7 +111,7 @@ const MockResponsesList = ({ instance, collection }) => {
 
       openResponseTab(result.response);
     } catch (err) {
-      toast.error(err.message || 'Failed to create mock response');
+      toast.error(err.message || i18n.t('TOASTS.FAILED_CREATE_MOCK_RESPONSE'));
       // rethrow so CreateMockResponseModal keeps itself open with the entered values
       throw err;
     }
@@ -118,7 +119,7 @@ const MockResponsesList = ({ instance, collection }) => {
 
   const handleGenerateFromSpec = () => {
     if (!spec?.pathname) {
-      toast.error('Open the API spec in this workspace first.');
+      toast.error(i18n.t('TOASTS.OPEN_SPEC_FIRST'));
       return;
     }
 
@@ -137,7 +138,7 @@ const MockResponsesList = ({ instance, collection }) => {
       setShowGenerateModal(false);
       toast.success(`Generated ${result.createdCount} mock response(s) from API spec`);
     } catch (err) {
-      toast.error(err.message || 'Failed to generate mock responses from spec');
+      toast.error(err.message || i18n.t('TOASTS.FAILED_GENERATE_MOCK_RESPONSES'));
     } finally {
       setIsGenerating(false);
     }
@@ -162,7 +163,7 @@ const MockResponsesList = ({ instance, collection }) => {
 
   const handleConfirmSync = async () => {
     if (!resolvedCollection?.items?.length) {
-      toast.error('Collection is not loaded. Open the linked collection first.');
+      toast.error(i18n.t('TOASTS.COLLECTION_NOT_LOADED'));
       return;
     }
 
@@ -189,9 +190,9 @@ const MockResponsesList = ({ instance, collection }) => {
       }
 
       setShowSyncModal(false);
-      toast.success('Mock responses synced with collection examples');
+      toast.success(i18n.t('TOASTS.MOCK_RESPONSES_SYNCED_COLLECTION'));
     } catch (err) {
-      toast.error(err.message || 'Failed to sync mock responses');
+      toast.error(err.message || i18n.t('TOASTS.FAILED_SYNC_MOCK_RESPONSES'));
     } finally {
       setIsSyncing(false);
     }
@@ -199,7 +200,7 @@ const MockResponsesList = ({ instance, collection }) => {
 
   const handleSyncWithSpec = () => {
     if (!spec?.pathname) {
-      toast.error('Open the API spec in this workspace first.');
+      toast.error(i18n.t('TOASTS.OPEN_SPEC_FIRST'));
       return;
     }
 
@@ -222,9 +223,9 @@ const MockResponsesList = ({ instance, collection }) => {
       })).unwrap();
 
       setShowSyncSpecModal(false);
-      toast.success('Mock responses synced with spec');
+      toast.success(i18n.t('TOASTS.MOCK_RESPONSES_SYNCED_SPEC'));
     } catch (err) {
-      toast.error(err.message || 'Failed to sync mock responses with spec');
+      toast.error(err.message || i18n.t('TOASTS.FAILED_SYNC_MOCK_RESPONSES_SPEC'));
     } finally {
       setIsSyncingSpec(false);
     }
@@ -245,9 +246,9 @@ const MockResponsesList = ({ instance, collection }) => {
       dispatch(closeTabs({ tabUids: [deletingResponse.uid] }));
       dispatch(removeMockResponseEditor({ responseUid: deletingResponse.uid }));
       setDeletingResponse(null);
-      toast.success('Mock response deleted');
+      toast.success(i18n.t('TOASTS.MOCK_RESPONSE_DELETED'));
     } catch (err) {
-      toast.error(err.message || 'Failed to delete mock response');
+      toast.error(err.message || i18n.t('TOASTS.FAILED_DELETE_MOCK_RESPONSE'));
     } finally {
       setIsDeleting(false);
     }
@@ -261,9 +262,9 @@ const MockResponsesList = ({ instance, collection }) => {
         params: response.request?.params
       });
       await navigator.clipboard.writeText(url);
-      toast.success('URL copied');
+      toast.success(i18n.t('TOASTS.URL_COPIED'));
     } catch {
-      toast.error('Failed to copy URL');
+      toast.error(i18n.t('TOASTS.FAILED_COPY_URL'));
     }
   };
 
@@ -271,7 +272,7 @@ const MockResponsesList = ({ instance, collection }) => {
     <StyledWrapper>
       {deletingResponse ? (
         <MockConfirmModal
-          title="Delete Mock Response"
+          title={i18n.t('UI.DELETE_MOCK_RESPONSE')}
           confirmText={isDeleting ? 'Deleting...' : 'Delete'}
           confirmDisabled={isDeleting}
           confirmButtonColor="danger"
@@ -305,7 +306,7 @@ const MockResponsesList = ({ instance, collection }) => {
 
       {showSyncModal ? (
         <MockConfirmModal
-          title="Sync with Collection Examples"
+          title={i18n.t('UI.SYNC_WITH_COLLECTION')}
           confirmText={isSyncing ? 'Syncing...' : 'Sync'}
           confirmDisabled={isSyncing}
           dataTestId="sync-mock-examples-modal"
@@ -327,7 +328,7 @@ const MockResponsesList = ({ instance, collection }) => {
 
       {showSyncSpecModal ? (
         <MockConfirmModal
-          title="Sync with API Spec"
+          title={i18n.t('UI.SYNC_WITH_SPEC')}
           confirmText={isSyncingSpec ? 'Syncing...' : 'Sync'}
           confirmDisabled={isSyncingSpec}
           dataTestId="mock-response-sync-spec-modal"
@@ -413,7 +414,7 @@ const MockResponsesList = ({ instance, collection }) => {
             className="response-search"
             value={searchQuery}
             onChange={setSearchQuery}
-            placeholder="Search by name, method, or endpoint"
+            placeholder={i18n.t('UI.SEARCH_BY_NAME_METHOD_ENDPOINT')}
             data-testid="mock-response-search-input"
           />
         ) : null}

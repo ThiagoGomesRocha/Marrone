@@ -3,6 +3,7 @@ import Portal from 'components/Portal';
 import Modal from 'components/Modal';
 import { useState } from 'react';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../i18n';
 
 const IpcErrorModal = ({ error }) => {
   const [showModal, setShowModal] = useState(true);
@@ -13,7 +14,7 @@ const IpcErrorModal = ({ error }) => {
           <Portal>
             <Modal
               size="sm"
-              title="Error"
+              title={i18n.t('UI.ERROR')}
               hideFooter={true}
               hideCancel={true}
               handleCancel={() => {

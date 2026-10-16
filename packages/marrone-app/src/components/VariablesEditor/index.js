@@ -15,6 +15,7 @@ import { DEFAULT_DRAWER_WIDTH, DRAWER_MAX_RATIO, MIN_DRAWER_WIDTH } from './cons
 import { clearEnvironmentBoundPersistence, isObjectOrArray, secretRevealKey } from './utils';
 import { useVariablesScroll } from './hooks/useVariablesScroll';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../i18n';
 
 const VariablesEditor = ({ collection }) => {
   const dispatch = useDispatch();
@@ -201,7 +202,7 @@ const VariablesEditor = ({ collection }) => {
         <div className="variables-scroll" data-testid="variables-scroll-container">
           <VariablesSection
             icon={IconBolt}
-            title="Runtime Variables"
+            title={i18n.t('UI.RUNTIME_VARIABLES')}
             count={runtimeRows.length}
             expanded={isSectionExpanded('runtime')}
             onToggle={() => toggleSection('runtime')}
@@ -227,7 +228,7 @@ const VariablesEditor = ({ collection }) => {
 
           <VariablesSection
             icon={IconDatabase}
-            title="Environment Variables"
+            title={i18n.t('UI.ENVIRONMENT_VARIABLES')}
             count={envRows.length}
             subtitle={environment?.name}
             expanded={isSectionExpanded('environment')}

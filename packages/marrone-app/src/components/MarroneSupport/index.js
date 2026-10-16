@@ -3,6 +3,7 @@ import Modal from 'components/Modal/index';
 import { IconSpeakerphone, IconBook } from '@tabler/icons';
 import StyledWrapper from './StyledWrapper';
 import { MARRONE_DOCS_URL, MARRONE_ISSUES_URL } from 'utils/common/constants';
+import i18n from '../../i18n';
 
 /**
  * ATENÇÃO: este componente não está montado em lugar nenhum (a tela de suporte em uso é
@@ -15,7 +16,7 @@ import { MARRONE_DOCS_URL, MARRONE_ISSUES_URL } from 'utils/common/constants';
 const MarroneSupport = ({ onClose }) => {
   return (
     <StyledWrapper>
-      <Modal size="sm" title="Support" handleCancel={onClose} hideFooter={true}>
+      <Modal size="sm" title={i18n.t('UI.SUPPORT')} handleCancel={onClose} hideFooter={true}>
         <div className="collection-options">
           <div className="mt-2">
             <a href={MARRONE_DOCS_URL} target="_blank" rel="noreferrer" className="flex items-end">

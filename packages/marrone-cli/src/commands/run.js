@@ -169,6 +169,11 @@ const builder = async (yargs) => {
       describe: 'Path to a logo image (png/jpeg/webp) embedded in the HTML report header',
       type: 'string'
     })
+    .option('lang', {
+      describe: 'Language of the generated report (en, pt-BR)',
+      type: 'string',
+      default: 'en'
+    })
     .option('reporter-include-sensitive', {
       type: 'boolean',
       description: 'Include sensitive headers (Authorization, Cookie, API keys) in the CURL commands of the HTML report',
@@ -350,6 +355,7 @@ const handler = async function (argv) {
       reporterHtmlLogo,
       reporterIncludeSensitive,
       reporterHideDbRows,
+      lang,
       clientCertConfig,
       noproxy,
       cacheSslSession,
@@ -1007,7 +1013,8 @@ const handler = async function (argv) {
         html: (path) => makeHtmlOutput(outputJson, path, runCompletionTime, environmentName, {
           logoPath: reporterHtmlLogo,
           includeSensitive: reporterIncludeSensitive,
-          includeDbRows: reporterHideDbRows !== true
+          includeDbRows: reporterHideDbRows !== true,
+          lang
         })
       };
 

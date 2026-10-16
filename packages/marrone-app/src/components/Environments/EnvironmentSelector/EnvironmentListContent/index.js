@@ -3,6 +3,7 @@ import { IconPlus, IconDownload, IconSettings } from '@tabler/icons';
 import ToolHint from 'components/ToolHint';
 import ColorBadge from 'components/ColorBadge';
 import SearchInput from 'components/SearchInput';
+import i18n from '../../../../i18n';
 
 const EnvironmentListContent = ({
   environments,
@@ -69,7 +70,7 @@ const EnvironmentListContent = ({
             <div className="env-list-search">
               <SearchInput
                 ref={searchInputRef}
-                placeholder="Search environments..."
+                placeholder={i18n.t('UI.SEARCH_ENVIRONMENTS')}
                 searchText={searchText}
                 setSearchText={setSearchText}
                 onKeyDown={handleKeyDown}

@@ -6,6 +6,7 @@ import Dropdown from 'components/Dropdown';
 import { saveCollectionSecurityConfig } from 'providers/ReduxStore/slices/collections/actions';
 import StyledWrapper from './StyledWrapper';
 import ToolHint from 'components/ToolHint';
+import i18n from '../../../i18n';
 
 const SANDBOX_OPTIONS = [
   {
@@ -63,7 +64,7 @@ const JsSandboxMode = ({ collection }) => {
       })
       .catch((err) => {
         console.error(err);
-        toast.error('Failed to update sandbox mode');
+        toast.error(i18n.t('TOASTS.FAILED_UPDATE_SANDBOX'));
       });
   };
 

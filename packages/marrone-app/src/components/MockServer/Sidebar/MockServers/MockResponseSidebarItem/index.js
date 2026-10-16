@@ -11,6 +11,7 @@ import RenameMockResponseModal from 'components/MockServer/MockResponse/RenameMo
 import MockConfirmModal from 'components/MockServer/MockConfirmModal';
 import MenuDropdown from 'ui/MenuDropdown';
 import ActionIcon from 'ui/ActionIcon';
+import i18n from '../../../../../i18n';
 
 const MockResponseSidebarItem = ({
   response,
@@ -63,9 +64,9 @@ const MockResponseSidebarItem = ({
       }));
 
       setShowRenameModal(false);
-      toast.success('Mock response renamed');
+      toast.success(i18n.t('TOASTS.MOCK_RESPONSE_RENAMED'));
     } catch (err) {
-      toast.error(err.message || 'Failed to rename mock response');
+      toast.error(err.message || i18n.t('TOASTS.FAILED_RENAME_MOCK_RESPONSE'));
     } finally {
       setIsRenaming(false);
     }
@@ -85,9 +86,9 @@ const MockResponseSidebarItem = ({
       })).unwrap();
 
       openResponseTab(result.response || clonedResponse);
-      toast.success('Mock response cloned');
+      toast.success(i18n.t('TOASTS.MOCK_RESPONSE_CLONED'));
     } catch (err) {
-      toast.error(err.message || 'Failed to clone mock response');
+      toast.error(err.message || i18n.t('TOASTS.FAILED_CLONE_MOCK_RESPONSE'));
     } finally {
       setIsCloning(false);
     }
@@ -104,9 +105,9 @@ const MockResponseSidebarItem = ({
       dispatch(closeTabs({ tabUids: [response.uid] }));
       dispatch(removeMockResponseEditor({ responseUid: response.uid }));
       setShowDeleteModal(false);
-      toast.success('Mock response deleted');
+      toast.success(i18n.t('TOASTS.MOCK_RESPONSE_DELETED'));
     } catch (err) {
-      toast.error(err.message || 'Failed to delete mock response');
+      toast.error(err.message || i18n.t('TOASTS.FAILED_DELETE_MOCK_RESPONSE'));
     } finally {
       setIsDeleting(false);
     }
@@ -156,7 +157,7 @@ const MockResponseSidebarItem = ({
 
       {showDeleteModal ? (
         <MockConfirmModal
-          title="Delete Mock Response"
+          title={i18n.t('UI.DELETE_MOCK_RESPONSE')}
           confirmText={isDeleting ? 'Deleting...' : 'Delete'}
           confirmDisabled={isDeleting}
           confirmButtonColor="danger"

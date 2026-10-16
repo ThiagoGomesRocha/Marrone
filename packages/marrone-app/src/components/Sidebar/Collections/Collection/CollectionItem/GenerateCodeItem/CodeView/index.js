@@ -10,6 +10,7 @@ import { findCollectionByItemUid, getGlobalEnvironmentVariables, getGlobalEnviro
 import { cloneDeep } from 'lodash';
 import { useEffect, useMemo, useState } from 'react';
 import { generateSnippet } from '../utils/snippet-generator';
+import i18n from '../../../../../../../i18n';
 const CodeView = ({ language, item }) => {
   const { displayedTheme } = useTheme();
   const preferences = useSelector((state) => state.app.preferences);
@@ -57,7 +58,7 @@ const CodeView = ({ language, item }) => {
       <CopyToClipboard
         text={snippet}
         options={{ format: 'text/plain' }}
-        onCopy={() => toast.success('Copied to clipboard!')}
+        onCopy={() => toast.success(i18n.t('TOASTS.COPIED_CLIPBOARD'))}
       >
         <button className="copy-to-clipboard">
           <IconCopy size={20} strokeWidth={1.5} />

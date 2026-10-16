@@ -1,6 +1,7 @@
 import classnames from 'classnames';
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { updateActivePreferencesTab } from 'providers/ReduxStore/slices/app';
 import {
   IconSettings,
@@ -34,6 +35,7 @@ import StyledWrapper from './StyledWrapper';
 import Cache from './Cache/index';
 
 const Preferences = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const tab = useSelector((state) => state.app.activePreferencesTab);
 
@@ -105,51 +107,51 @@ const Preferences = () => {
         <div className="flex flex-col items-center tabs tablist" role="tablist">
           <div className={getTabClassname('general')} role="tab" onClick={() => setTab('general')}>
             <IconSettings size={16} strokeWidth={1.5} />
-            General
+            {t('PREFERENCES.TABS.GENERAL')}
           </div>
           <div className={getTabClassname('themes')} role="tab" onClick={() => setTab('themes')}>
             <IconPalette size={16} strokeWidth={1.5} />
-            Themes
+            {t('PREFERENCES.TABS.THEMES')}
           </div>
           <div className={getTabClassname('display')} role="tab" onClick={() => setTab('display')}>
             <IconBrowser size={16} strokeWidth={1.5} />
-            Display
+            {t('PREFERENCES.TABS.DISPLAY')}
           </div>
           <div className={getTabClassname('proxy')} role="tab" onClick={() => setTab('proxy')}>
             <IconUserCircle size={16} strokeWidth={1.5} />
-            Proxy
+            {t('PREFERENCES.TABS.PROXY')}
           </div>
           <div className={getTabClassname('clientCert')} role="tab" onClick={() => setTab('clientCert')}>
             <IconCertificate size={16} strokeWidth={1.5} />
-            Client Certificates
+            {t('PREFERENCES.TABS.CLIENT_CERTIFICATES')}
           </div>
           <div className={getTabClassname('security')} role="tab" onClick={() => setTab('security')}>
             <IconShieldLock size={16} strokeWidth={1.5} />
-            Security
+            {t('PREFERENCES.TABS.SECURITY')}
           </div>
           <div className={getTabClassname('database')} role="tab" onClick={() => setTab('database')}>
             <IconServer size={16} strokeWidth={1.5} />
-            Database
+            {t('PREFERENCES.TABS.DATABASE')}
           </div>
           <div className={getTabClassname('keybindings')} role="tab" onClick={() => setTab('keybindings')}>
             <IconKeyboard size={16} strokeWidth={1.5} />
-            Keybindings
+            {t('PREFERENCES.TABS.KEYBINDINGS')}
           </div>
           <div className={getTabClassname('ai')} role="tab" onClick={() => setTab('ai')}>
             <IconSparkles size={16} strokeWidth={1.5} />
-            AI
+            {t('PREFERENCES.TABS.AI')}
           </div>
           <div className={getTabClassname('cache')} role="tab" onClick={() => setTab('cache')}>
             <IconDatabase size={16} strokeWidth={1.5} />
-            Cache
+            {t('PREFERENCES.TABS.CACHE')}
           </div>
           <div className={getTabClassname('support')} role="tab" onClick={() => setTab('support')}>
             <IconZoomQuestion size={16} strokeWidth={1.5} />
-            Support
+            {t('PREFERENCES.TABS.SUPPORT')}
           </div>
           <div className={getTabClassname('beta')} role="tab" onClick={() => setTab('beta')}>
             <IconSquareLetterB size={16} strokeWidth={1.5} />
-            Beta
+            {t('PREFERENCES.TABS.BETA')}
           </div>
         </div>
         <section

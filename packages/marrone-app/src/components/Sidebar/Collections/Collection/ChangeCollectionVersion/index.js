@@ -7,10 +7,11 @@ import Portal from 'components/Portal';
 import { findCollectionByUid, getCollectionVersion, isOpenCollectionFormat } from 'utils/collections/index';
 import { saveCollectionVersion } from 'providers/ReduxStore/slices/collections/actions';
 import StyledWrapper, { ModalTitle } from './StyledWrapper';
+import i18n from '../../../../../i18n';
 
 const CollectionNotFound = ({ onClose }) => (
   <Portal>
-    <Modal size="sm" title="Change Collection Version" confirmText="Close" handleConfirm={onClose} hideCancel>
+    <Modal size="sm" title={i18n.t('UI.CHANGE_COLLECTION_VERSION')} confirmText={i18n.t('UI.CLOSE')} handleConfirm={onClose} hideCancel>
       <StyledWrapper className="w-[480px]">
         <div className="flex items-center gap-2 text-warning">
           <IconAlertTriangle size={16} className="shrink-0" />

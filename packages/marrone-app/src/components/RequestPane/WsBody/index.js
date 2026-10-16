@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { usePersistedState } from 'hooks/usePersistedState';
 import StyledWrapper from './StyledWrapper';
 import { SingleWSMessage } from './SingleWSMessage/index';
+import i18n from '../../../i18n';
 
 const getSelectedIndex = (messages) => {
   const idx = messages.findIndex((msg) => msg.selected);
@@ -245,7 +246,7 @@ const WSBody = ({ item, collection, handleRun, onAddMessage }) => {
           <p>No WebSocket messages available</p>
           <button className="add-message-link" data-testid="ws-add-message" onClick={onAddMessage}>
             <IconPlus size={14} strokeWidth={1.5} />
-            <span>Add message</span>
+            <span>{i18n.t('UI.ADD_MESSAGE')}</span>
           </button>
         </div>
       </StyledWrapper>

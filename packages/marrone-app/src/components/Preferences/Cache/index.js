@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { savePreferences, clearHttpHttpsAgentCache } from 'providers/ReduxStore/slices/app';
 import toast from 'react-hot-toast';
 import get from 'lodash/get';
@@ -10,8 +11,10 @@ import ToggleSwitch from 'components/ToggleSwitch';
 import ActionIcon from 'ui/ActionIcon';
 import StyledWrapper from './StyledWrapper';
 import { formatSize } from 'utils/common';
+import i18n from '../../../i18n';
 
 const Cache = () => {
+  const { t } = useTranslation();
   const preferences = useSelector((state) => state.app.preferences);
   const dispatch = useDispatch();
   const { theme } = useTheme();
@@ -23,7 +26,7 @@ const Cache = () => {
 
   const persist = (next) => {
     dispatch(savePreferences({ ...preferences, cache: next })).catch(() => {
-      toast.error('Failed to update cache preferences');
+      toast.error(i18n.t('TOASTS.FAILED_UPDATE_CACHE_PREFERENCES'));
     });
   };
 
@@ -48,27 +51,27 @@ const Cache = () => {
   const handleClearFileCache = async () => {
     try {
       await clearFileCache();
-      toast.success('File cache cleared');
+      toast.success(i18n.t('TOASTS.FILE_CACHE_CLEARED'));
     } catch (error) {
-      toast.error('Failed to clear file cache');
+      toast.error(i18n.t('TOASTS.FAILED_CLEAR_FILE_CACHE'));
     }
   };
 
   const handleClearSslSession = () => {
     dispatch(clearHttpHttpsAgentCache())
-      .then(() => toast.success('SSL session cache cleared'))
-      .catch(() => toast.error('Failed to clear SSL session cache'));
+      .then(() => toast.success(i18n.t('TOASTS.SSL_CACHE_CLEARED')))
+      .catch(() => toast.error(i18n.t('TOASTS.FAILED_CLEAR_SSL_CACHE')));
   };
 
   return (
     <StyledWrapper className="w-full">
-      <div className="cache-section-title">Cache</div>
+      <div className="cache-section-title">{t('PREFERENCES.CACHE.TITLE')}</div>
 
       <div className="cache-item">
         <div className="cache-item-header">
           <div className="cache-item-title-group">
-            <span className="cache-item-title">File cache</span>
-            <span className="beta-badge">Beta</span>
+            <span className="cache-item-title">{t('PREFERENCES.CACHE.FILE_CACHE')}</span>
+            <span className="beta-badge">{t('PREFERENCES.CACHE.BETA')}</span>
           </div>
           <ToggleSwitch
             data-testid="cache.file.enabled"
@@ -81,15 +84,14 @@ const Cache = () => {
         <div className="cache-item-body">
           <div className="cache-item-body-text">
             <p className="cache-item-description">
-              Loads your workspace faster by caching opened collections. Marrone refreshes the cache when your collection
-              changes. Clearing it won't affect your original files.
+              {t('PREFERENCES.CACHE.FILE_CACHE_DESC')}
             </p>
             <p className="cache-item-size">
-              Cache size <strong>{fileCacheSize == null ? '—' : formatSize(fileCacheSize)}</strong>
+              {t('PREFERENCES.CACHE.CACHE_SIZE')} <strong>{fileCacheSize == null ? '—' : formatSize(fileCacheSize)}</strong>
             </p>
           </div>
           <ActionIcon
-            label="Clear cache"
+            label={t('PREFERENCES.CACHE.CLEAR_CACHE')}
             onClick={handleClearFileCache}
             disabled={!fileCacheSize}
             colorOnHover={theme.colors.text.danger}
@@ -102,7 +104,7 @@ const Cache = () => {
       <div className="cache-item">
         <div className="cache-item-header">
           <div className="cache-item-title-group">
-            <span className="cache-item-title">SSL session cache</span>
+            <span className="cache-item-title">{t('PREFERENCES.CACHE.SSL_CACHE')}</span>
           </div>
           <ToggleSwitch
             data-testid="sslSession.enabled"
@@ -115,12 +117,11 @@ const Cache = () => {
         <div className="cache-item-body">
           <div className="cache-item-body-text">
             <p className="cache-item-description">
-              Reuses TLS sessions and connections across requests for faster handshakes. Disable to create a fresh
-              connection for every request.
+              {t('PREFERENCES.CACHE.SSL_CACHE_DESC')}
             </p>
           </div>
           <ActionIcon
-            label="Clear cache"
+            label={t('PREFERENCES.CACHE.CLEAR_CACHE')}
             onClick={handleClearSslSession}
             colorOnHover={theme.colors.text.danger}
           >

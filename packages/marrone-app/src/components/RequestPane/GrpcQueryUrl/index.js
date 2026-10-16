@@ -26,6 +26,7 @@ import useProtoFileManagement from 'hooks/useProtoFileManagement/index';
 import MethodDropdown from './MethodDropdown';
 import ProtoFileDropdown from './ProtoFileDropdown';
 import ToolHint from 'components/ToolHint';
+import i18n from '../../../i18n';
 
 const STREAMING_METHOD_TYPES = ['client-streaming', 'server-streaming', 'bidi-streaming'];
 const CLIENT_STREAMING_METHOD_TYPES = ['client-streaming', 'bidi-streaming'];
@@ -63,7 +64,7 @@ const GrpcQueryUrl = ({ item, collection, handleRun }) => {
     if (isConnectionActive) {
       cancelGrpcConnection(item.uid)
         .then(() => {
-          toast.success('gRPC connection cancelled');
+          toast.success(i18n.t('TOASTS.GRPC_CONNECTION_CANCELLED'));
         })
         .catch((err) => {
           console.error('Failed to cancel gRPC connection:', err);
@@ -167,7 +168,7 @@ const GrpcQueryUrl = ({ item, collection, handleRun }) => {
 
     if (error) {
       console.error('Failed to load gRPC methods:', error);
-      toast.error('Failed to load gRPC methods');
+      toast.error(i18n.t('TOASTS.FAILED_LOAD_GRPC_METHODS'));
       setGrpcMethods([]);
       return;
     }
@@ -199,12 +200,12 @@ const GrpcQueryUrl = ({ item, collection, handleRun }) => {
 
   const handleGrpcurl = async (url) => {
     if (!url) {
-      toast.error('Please enter a valid gRPC server URL');
+      toast.error(i18n.t('TOASTS.INVALID_GRPC_URL'));
       return;
     }
 
     if (!selectedGrpcMethod?.path) {
-      toast.error('Please select a gRPC method');
+      toast.error(i18n.t('TOASTS.SELECT_GRPC_METHOD'));
       return;
     }
 
@@ -215,11 +216,11 @@ const GrpcQueryUrl = ({ item, collection, handleRun }) => {
         setGrpcurlCommand(result.command);
         setShowGrpcurlModal(true);
       } else {
-        toast.error(result.error || 'Failed to generate grpcurl command');
+        toast.error(result.error || i18n.t('TOASTS.FAILED_GENERATE_GRPCURL'));
       }
     } catch (error) {
       console.error('Error generating grpcurl command:', error);
-      toast.error('Failed to generate grpcurl command');
+      toast.error(i18n.t('TOASTS.FAILED_GENERATE_GRPCURL'));
     }
   };
 
@@ -237,11 +238,11 @@ const GrpcQueryUrl = ({ item, collection, handleRun }) => {
 
     cancelGrpcConnection(item.uid)
       .then(() => {
-        toast.success('gRPC connection cancelled');
+        toast.success(i18n.t('TOASTS.GRPC_CONNECTION_CANCELLED'));
       })
       .catch((err) => {
         console.error('Failed to cancel gRPC connection:', err);
-        toast.error('Failed to cancel gRPC connection');
+        toast.error(i18n.t('TOASTS.FAILED_CANCEL_GRPC'));
       });
   };
 
@@ -250,11 +251,11 @@ const GrpcQueryUrl = ({ item, collection, handleRun }) => {
 
     endGrpcConnection(item.uid)
       .then(() => {
-        toast.success('gRPC stream ended');
+        toast.success(i18n.t('TOASTS.GRPC_STREAM_ENDED'));
       })
       .catch((err) => {
         console.error('Failed to end gRPC stream:', err);
-        toast.error('Failed to end gRPC stream');
+        toast.error(i18n.t('TOASTS.FAILED_END_GRPC_STREAM'));
       });
   };
 
@@ -346,7 +347,7 @@ const GrpcQueryUrl = ({ item, collection, handleRun }) => {
               } else if (protoFilePath) {
                 handleProtoFileLoad(protoFilePath, true);
               } else {
-                toast.error('No proto file selected');
+                toast.error(i18n.t('TOASTS.NO_PROTO_FILE'));
               }
             }}
           >

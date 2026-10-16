@@ -7,6 +7,7 @@ import { useSidebarAccordion } from 'components/Sidebar/SidebarAccordionContext'
 import CloneGitRepository from 'components/Sidebar/CloneGitRespository';
 import RemoveGitRemote from 'components/WorkspaceHome/WorkspaceOverview/CollectionsList/RemoveGitRemote';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../../i18n';
 
 const GitRemoteCollectionRow = ({ entry }) => {
   const { dropdownContainerRef } = useSidebarAccordion();
@@ -20,9 +21,9 @@ const GitRemoteCollectionRow = ({ entry }) => {
   const handleCopyUrl = async () => {
     try {
       await navigator.clipboard.writeText(entry.remote);
-      toast.success('Git URL copied');
+      toast.success(i18n.t('TOASTS.GIT_URL_COPIED'));
     } catch (e) {
-      toast.error('Failed to copy URL');
+      toast.error(i18n.t('TOASTS.FAILED_COPY_URL'));
     }
   };
 

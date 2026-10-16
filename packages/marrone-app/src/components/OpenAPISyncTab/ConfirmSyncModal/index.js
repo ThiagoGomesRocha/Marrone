@@ -3,6 +3,7 @@ import { IconChevronRight } from '@tabler/icons';
 import Modal from 'components/Modal';
 import Button from 'ui/Button';
 import MethodBadge from 'ui/MethodBadge';
+import i18n from '../../../i18n';
 
 const handleKeyDown = (toggle) => (e) => {
   if (e.key === 'Enter' || e.key === ' ') {
@@ -50,7 +51,7 @@ const ConfirmSyncModal = ({ groups, onCancel, onSync, isSyncing }) => {
   return (
     <Modal
       size="md"
-      title="Confirm Sync"
+      title={i18n.t('UI.CONFIRM_SYNC')}
       handleCancel={onCancel}
       hideFooter={true}
     >

@@ -3,13 +3,14 @@ import { IconAlertTriangle } from '@tabler/icons';
 import Modal from 'components/Modal';
 import Button from 'ui/Button';
 import Portal from 'ui/Portal';
+import i18n from '../../../../i18n';
 
 const ConfirmApiSpecClose = ({ name, onCancel, onCloseWithoutSave, onSaveAndClose }) => {
   return (
     <Portal>
       <Modal
         size="md"
-        title="Unsaved changes"
+        title={i18n.t('UI.UNSAVED_CHANGES')}
         disableEscapeKey={true}
         disableCloseOnOutsideClick={true}
         closeModalFadeTimeout={150}

@@ -7,6 +7,7 @@ import IconSparkles from 'components/Icons/IconSparkles';
 import Button from 'ui/Button';
 import { aiGenerateScript, stopAiGeneration } from 'utils/ai';
 import StyledWrapper, { PopupWrapper } from './StyledWrapper';
+import i18n from '../../i18n';
 
 const SUGGESTIONS = {
   'tests': [
@@ -192,7 +193,7 @@ const AIAssist = ({ scriptType, currentScript, requestContext, docsContext, vari
                 <IconSparkles size={12} strokeWidth={1.75} />
                 {title}
               </span>
-              <button className="popup-close" onClick={close} type="button" aria-label="Close">
+              <button className="popup-close" onClick={close} type="button" aria-label={i18n.t('UI.CLOSE')}>
                 <IconX size={14} />
               </button>
             </div>
@@ -210,7 +211,7 @@ const AIAssist = ({ scriptType, currentScript, requestContext, docsContext, vari
                         handleGenerate();
                       }
                     }}
-                    placeholder="Describe what you want to generate..."
+                    placeholder={i18n.t('UI.DESCRIBE_GENERATE')}
                     rows={3}
                     disabled={isLoading}
                   />
@@ -251,7 +252,7 @@ const AIAssist = ({ scriptType, currentScript, requestContext, docsContext, vari
                       rounded="sm"
                       icon={<IconPlayerStop size={12} />}
                       onClick={handleStop}
-                      title="Stop generating"
+                      title={i18n.t('UI.STOP_GENERATING')}
                     >
                       Stop
                     </Button>

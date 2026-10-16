@@ -44,7 +44,8 @@ const makeHtmlOutput = async (results, outputPath, runCompletionTime, environmen
     includeSensitive: options.includeSensitive === true,
     // Linhas do resultado na aba Database Operations: incluidas por padrao (o teto de 20
     // e' aplicado no host). Use --reporter-hide-db-rows para gerar um relatorio so com metadados.
-    includeDbRows: options.includeDbRows !== false
+    includeDbRows: options.includeDbRows !== false,
+    lang: options.lang || 'en'
   });
   fs.writeFileSync(outputPath, htmlString);
 };

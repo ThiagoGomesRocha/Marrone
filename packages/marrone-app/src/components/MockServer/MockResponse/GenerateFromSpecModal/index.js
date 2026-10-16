@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import MockConfirmModal from 'components/MockServer/MockConfirmModal';
+import i18n from '../../../../i18n';
 
 const GenerateFromSpecModal = ({ specName, onClose, onConfirm, isGenerating }) => {
   const [generateFromSchema, setGenerateFromSchema] = useState(true);
@@ -7,7 +8,7 @@ const GenerateFromSpecModal = ({ specName, onClose, onConfirm, isGenerating }) =
   return (
     <MockConfirmModal
       size="md"
-      title="Generate from API Spec"
+      title={i18n.t('UI.GENERATE_FROM_SPEC')}
       confirmText={isGenerating ? 'Generating...' : 'Generate'}
       onConfirm={() => onConfirm({ generateFromSchema })}
       onClose={onClose}

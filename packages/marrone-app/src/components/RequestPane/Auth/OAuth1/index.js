@@ -12,6 +12,7 @@ import { useDetectSensitiveField } from 'hooks/useDetectSensitiveField';
 import toast from 'react-hot-toast';
 import { sendRequest, browseFiles } from 'providers/ReduxStore/slices/collections/actions';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../../i18n';
 
 const signatureMethodLabels = {
   'HMAC-SHA1': 'HMAC-SHA1',
@@ -67,7 +68,7 @@ const OAuth1 = ({ item = {}, collection, request, save, updateAuth, disabled }) 
 
   const handlePrivateKeyChange = (val) => {
     if (val && /^@file\(/.test(val.trim())) {
-      toast.error('File references should be added using the "Upload File" button below');
+      toast.error(i18n.t('TOASTS.FILE_REFERENCE_UPLOAD_BUTTON'));
       return;
     }
     handleChange('privateKey', val);
@@ -242,7 +243,7 @@ const OAuth1 = ({ item = {}, collection, request, save, updateAuth, disabled }) 
               <button
                 className="flex-shrink-0 oauth1-icon cursor-pointer"
                 onClick={handleClearFile}
-                title="Clear file"
+                title={i18n.t('UI.CLEAR_FILE')}
                 type="button"
                 disabled={disabled}
               >
@@ -270,7 +271,7 @@ const OAuth1 = ({ item = {}, collection, request, save, updateAuth, disabled }) 
                 <button
                   className="flex items-center gap-1 oauth1-icon cursor-pointer text-link"
                   onClick={handleBrowse}
-                  title="Select File"
+                  title={i18n.t('UI.SELECT_FILE')}
                   type="button"
                   disabled={disabled}
                 >

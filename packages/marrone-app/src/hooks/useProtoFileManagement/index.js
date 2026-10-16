@@ -8,6 +8,7 @@ import { loadGrpcMethodsFromProtoFile } from 'utils/network/index';
 import useLocalStorage from 'hooks/useLocalStorage/index';
 import { cloneDeep } from 'lodash';
 import get from 'lodash/get';
+import i18n from '../../i18n';
 
 /**
  * Custom hook for managing protofile data and collection configuration
@@ -43,7 +44,7 @@ export default function useProtoFileManagement(collection) {
 
   const loadMethodsFromProtoFile = async (filePath, isManualRefresh = false) => {
     if (!filePath) {
-      return { methods: [], error: new Error('No proto file selected') };
+      return { methods: [], error: new Error(i18n.t('TOASTS.NO_PROTO_FILE')) };
     }
 
     const absolutePath = getAbsoluteFilePath(collection.pathname, filePath);

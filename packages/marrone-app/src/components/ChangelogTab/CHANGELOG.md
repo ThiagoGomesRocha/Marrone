@@ -1,3 +1,28 @@
+## What's New in Marrone v1.2.0
+
+O Marrone agora fala português. Suporte completo a pt-BR na interface e nos relatórios,
+mantendo o inglês como idioma padrão.
+
+### Interface em português
+
+* **Idioma selecionável** em Preferências > Geral (Português (Brasil) ou English), com troca
+  imediata e persistente entre reinicializações.
+* **Toda a interface localizada:** tela de boas-vindas, suporte, as abas de Preferências,
+  modais, árvore de resultados do runner, mensagens de validação e toasts.
+
+### Relatórios HTML em português
+
+* No CLI, gere o relatório em pt-BR com `--lang pt-BR`:
+  `marrone run ./minha-colecao --reporter-html relatorio.html --lang pt-BR`.
+* No app desktop, o relatório exportado segue o idioma selecionado em Preferências > Geral.
+
+### Interno
+
+* As strings fixas do relatório HTML saíram do template para um dicionário `en`/`pt-BR`
+  (`marrone-common`), com inglês como fallback.
+
+---
+
 ## What's New in Marrone v1.1.1
 
 Versão de correção: os links do aplicativo e da documentação apontavam para endereços que não

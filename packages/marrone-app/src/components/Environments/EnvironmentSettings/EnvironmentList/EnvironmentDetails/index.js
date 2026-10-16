@@ -16,6 +16,7 @@ import ResponsiveTabs from 'ui/ResponsiveTabs';
 import { updateTabState } from 'providers/ReduxStore/slices/tabs';
 import useEnvironmentTabs from 'hooks/useEnvironmentTabs';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../../../i18n';
 
 const EnvironmentDetails = ({ environment, setIsModified, collection, searchQuery, setSearchQuery, isSearchExpanded, setIsSearchExpanded, debouncedSearchQuery, searchInputRef }) => {
   const dispatch = useDispatch();
@@ -63,15 +64,15 @@ const EnvironmentDetails = ({ environment, setIsModified, collection, searchQuer
 
   const validateEnvironmentName = (name) => {
     if (!name || name.trim() === '') {
-      return 'Name is required';
+      return i18n.t('VALIDATION.NAME_REQUIRED');
     }
 
     if (name.length < 1) {
-      return 'Must be at least 1 character';
+      return i18n.t('VALIDATION.MIN_1_CHAR');
     }
 
     if (name.length > 255) {
-      return 'Must be 255 characters or less';
+      return i18n.t('VALIDATION.MAX_255_CHARS');
     }
 
     if (!validateName(name)) {
@@ -83,7 +84,7 @@ const EnvironmentDetails = ({ environment, setIsModified, collection, searchQuer
       (env) => env?.uid !== environment.uid && env?.name?.toLowerCase().trim() === trimmedName
     );
     if (isDuplicate) {
-      return 'Environment already exists';
+      return i18n.t('VALIDATION.ENVIRONMENT_ALREADY_EXISTS');
     }
 
     return null;
@@ -108,13 +109,13 @@ const EnvironmentDetails = ({ environment, setIsModified, collection, searchQuer
 
     dispatch(renameEnvironment(newName, environment.uid, collection.uid))
       .then(() => {
-        toast.success('Environment renamed!');
+        toast.success(i18n.t('TOASTS.ENV_RENAMED'));
         setIsRenaming(false);
         setNewName('');
         setNameError('');
       })
       .catch(() => {
-        toast.error('An error occurred while renaming the environment');
+        toast.error(i18n.t('TOASTS.ERROR_RENAMING_ENVIRONMENT'));
       });
   };
 
@@ -178,13 +179,13 @@ const EnvironmentDetails = ({ environment, setIsModified, collection, searchQuer
       .then(() => {
         toast.success(
           inheritedEnvironmentName
-            ? `Inheriting variables from ${inheritedEnvironmentName}`
-            : 'Stopped inheriting variables'
+            ? i18n.t('TOASTS.INHERITING_VARIABLES', { name: inheritedEnvironmentName })
+            : i18n.t('TOASTS.STOPPED_INHERITING')
         );
       })
       .catch((err) => {
         console.error(err);
-        toast.error('An error occurred while saving the inherited environment');
+        toast.error(i18n.t('TOASTS.ERROR_SAVING_INHERITED_ENV'));
       });
   };
 
@@ -224,7 +225,7 @@ const EnvironmentDetails = ({ environment, setIsModified, collection, searchQuer
                   className="inline-action-btn save"
                   onClick={handleSaveRename}
                   onMouseDown={(e) => e.preventDefault()}
-                  title="Save"
+                  title={i18n.t('UI.SAVE')}
                 >
                   <IconCheck size={14} strokeWidth={2} />
                 </button>
@@ -232,7 +233,7 @@ const EnvironmentDetails = ({ environment, setIsModified, collection, searchQuer
                   className="inline-action-btn cancel"
                   onClick={handleCancelRename}
                   onMouseDown={(e) => e.preventDefault()}
-                  title="Cancel"
+                  title={i18n.t('UI.CANCEL')}
                 >
                   <IconX size={14} strokeWidth={2} />
                 </button>
@@ -299,7 +300,7 @@ const EnvironmentDetails = ({ environment, setIsModified, collection, searchQuer
                       className="clear-search"
                       onClick={handleClearSearch}
                       onMouseDown={(e) => e.preventDefault()}
-                      title="Clear search"
+                      title={i18n.t('UI.CLEAR_SEARCH')}
                       data-testid="env-clear-search"
                     >
                       <IconX size={14} strokeWidth={1.5} />

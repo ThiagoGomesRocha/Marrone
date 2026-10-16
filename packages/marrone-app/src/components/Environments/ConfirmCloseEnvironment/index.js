@@ -3,6 +3,7 @@ import { IconAlertTriangle } from '@tabler/icons';
 import Modal from 'components/Modal';
 import Portal from 'components/Portal';
 import Button from 'ui/Button';
+import i18n from '../../../i18n';
 
 const ConfirmCloseEnvironment = ({ onCancel, onCloseWithoutSave, onSaveAndClose, isGlobal, isDotEnv }) => {
   let settingsLabel = 'collection environment settings';
@@ -16,7 +17,7 @@ const ConfirmCloseEnvironment = ({ onCancel, onCloseWithoutSave, onSaveAndClose,
     <Portal>
       <Modal
         size="md"
-        title="Unsaved changes"
+        title={i18n.t('UI.UNSAVED_CHANGES')}
         disableEscapeKey={true}
         disableCloseOnOutsideClick={true}
         closeModalFadeTimeout={150}

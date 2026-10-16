@@ -20,6 +20,7 @@ import { setupLinkAware } from 'utils/codemirror/linkAware';
 import { setupCodeMirrorResizeRefresh } from 'utils/codemirror/resize';
 import CodeMirrorSearch from 'components/CodeMirrorSearch';
 import { buildSearchKeyBindings } from 'components/CodeMirrorSearch/searchKeyBindings';
+import i18n from '../../../i18n';
 
 const CodeMirror = require('codemirror');
 
@@ -239,9 +240,9 @@ export default class QueryEditor extends React.Component {
       prettyQuery = prettyQuery.replace(/\{\s*__empty:\s*true\s*\}/g, '{}');
 
       this.editor.setValue(prettyQuery);
-      toast.success('Query prettified');
+      toast.success(i18n.t('TOASTS.QUERY_PRETTIFIED'));
     } catch (e) {
-      toast.error('Error occurred while prettifying GraphQL query');
+      toast.error(i18n.t('TOASTS.ERROR_PRETTIFY_GRAPHQL'));
     }
   };
 
@@ -264,7 +265,7 @@ export default class QueryEditor extends React.Component {
         className={classnames('h-full w-full flex flex-col relative graphiql-container', {
           'search-bar-visible': this.state.searchBarVisible
         })}
-        aria-label="Query Editor"
+        aria-label={i18n.t('UI.QUERY_EDITOR')}
         font={this.props.font}
         fontSize={this.props.fontSize}
       >

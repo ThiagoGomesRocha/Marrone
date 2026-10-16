@@ -3,6 +3,7 @@ import { openLinkedRequest } from 'providers/ReduxStore/slices/collections/actio
 import toast from 'react-hot-toast';
 import { getRequestTypeFromCollectionPresets } from 'utils/collections';
 import { formatIpcError } from 'utils/common/error';
+import i18n from '../../i18n';
 
 const REQUEST_ITEM_TYPES = ['http-request', 'graphql-request', 'grpc-request', 'ws-request'];
 
@@ -24,6 +25,6 @@ export function resolveLinkClickHandler(item, collection) {
 
   return (url) => {
     store.dispatch(openLinkedRequest({ url, collectionUid: collection.uid, requestType }))
-      .catch((err) => toast.error(formatIpcError(err) || 'An error occurred while adding the request'));
+      .catch((err) => toast.error(formatIpcError(err) || i18n.t('TOASTS.ERROR_ADDING_REQUEST')));
   };
 }

@@ -4,6 +4,7 @@ import Modal from 'components/Modal';
 import { createPortal } from 'react-dom';
 import Button from 'ui/Button';
 import { useTheme } from 'providers/Theme';
+import i18n from '../../../../i18n';
 
 const ConfirmSwitchEnv = ({ onCancel }) => {
   const { theme } = useTheme();
@@ -12,7 +13,7 @@ const ConfirmSwitchEnv = ({ onCancel }) => {
   const modalContent = (
     <Modal
       size="md"
-      title="Unsaved changes"
+      title={i18n.t('UI.UNSAVED_CHANGES')}
       disableEscapeKey={true}
       disableCloseOnOutsideClick={true}
       closeModalFadeTimeout={150}

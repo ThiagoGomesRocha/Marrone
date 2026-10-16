@@ -1,3 +1,4 @@
+import i18n from '../../../../i18n';
 import React, { useRef, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
@@ -19,6 +20,7 @@ import CollectionSourceFields from './CollectionSourceFields';
 import UrlSourceField from './UrlSourceField';
 import SpecLocationField from './SpecLocationField';
 import useApiSpecUrlSource from './useApiSpecUrlSource';
+import { useTranslation } from 'react-i18next';
 import useCollectionSource from './useCollectionSource';
 import {
   API_SPEC_NAME_TAKEN_ERROR,
@@ -30,10 +32,11 @@ import {
 } from './apiSpecSources';
 
 const CreateApiSpec = ({ onClose }) => {
+  const { t } = useTranslation();
   const sourceRadios = [
-    { id: 'api-spec-source-blank', value: API_SPEC_SOURCE.BLANK, label: 'Blank Spec' },
-    { id: 'api-spec-source-collection', value: API_SPEC_SOURCE.COLLECTION, label: 'From Marrone Collection' },
-    { id: 'api-spec-source-url', value: API_SPEC_SOURCE.URL, label: 'From Spec URL' }
+    { id: 'api-spec-source-blank', value: API_SPEC_SOURCE.BLANK, label: t('MODALS.CREATE_API_SPEC.SOURCE_BLANK') },
+    { id: 'api-spec-source-collection', value: API_SPEC_SOURCE.COLLECTION, label: t('MODALS.CREATE_API_SPEC.SOURCE_COLLECTION') },
+    { id: 'api-spec-source-url', value: API_SPEC_SOURCE.URL, label: t('MODALS.CREATE_API_SPEC.SOURCE_URL') }
   ];
 
   const inputRef = useRef();
@@ -73,8 +76,8 @@ const CreateApiSpec = ({ onClose }) => {
       specUrl: Yup.string().when('importFrom', {
         is: API_SPEC_SOURCE.URL,
         then: Yup.string()
-          .required('Spec URL is required')
-          .test('is-valid-url', INVALID_URL_ERROR, (value) => isHttpUrl(String(value || '').trim())),
+          .required(() => i18n.t('VALIDATION.SPEC_URL_REQUIRED'))
+          .test('is-valid-url', () => i18n.t('VALIDATION.VALID_HTTP_URL'), (value) => isHttpUrl(String(value || '').trim())),
         otherwise: Yup.string()
       }),
       collectionSource: Yup.string().oneOf(Object.values(COLLECTION_SOURCE)),
@@ -85,7 +88,7 @@ const CreateApiSpec = ({ onClose }) => {
           && collectionSource === COLLECTION_SOURCE.WORKSPACE
           && workspaceCollections.length > 0
         ),
-        then: Yup.string().required('Collection is required'),
+        then: Yup.string().required(() => i18n.t('VALIDATION.COLLECTION_REQUIRED')),
         otherwise: Yup.string()
       }),
       collectionLocation: Yup.string().when(['importFrom', 'collectionSource'], {
@@ -93,26 +96,26 @@ const CreateApiSpec = ({ onClose }) => {
           importFrom === API_SPEC_SOURCE.COLLECTION
           && (collectionSource === COLLECTION_SOURCE.FILESYSTEM || workspaceCollections.length === 0)
         ),
-        then: Yup.string().required('Collection location is required'),
+        then: Yup.string().required(() => i18n.t('VALIDATION.COLLECTION_LOCATION_REQUIRED')),
         otherwise: Yup.string()
       }),
       environment: Yup.string(),
       apiSpecName: Yup.string()
-        .min(1, 'Must be at least 1 character')
-        .max(255, 'Must be 255 characters or less')
+        .min(1, () => i18n.t('VALIDATION.MIN_1_CHAR'))
+        .max(255, () => i18n.t('VALIDATION.MAX_255_CHARS'))
         .test('is-valid-filename', function (value) {
           const isValid = validateName(value);
           return isValid ? true : this.createError({ message: validateNameError(value) });
         })
-        .test('is-not-taken', API_SPEC_NAME_TAKEN_ERROR, function (value) {
+        .test('is-not-taken', () => i18n.t('VALIDATION.API_SPEC_NAME_TAKEN'), function (value) {
           return !isApiSpecNameTaken({
             apiSpecs,
             apiSpecName: value,
             apiSpecLocation: this.parent.apiSpecLocation
           });
         })
-        .required('Name is required'),
-      apiSpecLocation: Yup.string().min(1, 'location is required').required('location is required')
+        .required(() => i18n.t('VALIDATION.NAME_REQUIRED')),
+      apiSpecLocation: Yup.string().min(1, () => i18n.t('VALIDATION.LOCATION_REQUIRED')).required(() => i18n.t('VALIDATION.LOCATION_REQUIRED'))
     }),
     onSubmit: async (values) => {
       let specContent = '';
@@ -130,7 +133,7 @@ const CreateApiSpec = ({ onClose }) => {
       let exportWarnings = [];
       if (values.importFrom === API_SPEC_SOURCE.COLLECTION) {
         if (!collectionSource.collectionData?.configFile) {
-          toast.error('Could not load that collection. Pick a folder that contains a bruno.json or opencollection.yml.');
+          toast.error(i18n.t('TOASTS.COULD_NOT_LOAD_COLLECTION'));
           return;
         }
 
@@ -140,7 +143,7 @@ const CreateApiSpec = ({ onClose }) => {
           exportWarnings = exported.warnings;
         } catch (error) {
           console.error('Failed to build the API spec from the collection:', error);
-          toast.error('Could not build an API spec from that collection');
+          toast.error(i18n.t('TOASTS.COULD_NOT_BUILD_API_SPEC'));
           return;
         }
       }
@@ -150,7 +153,7 @@ const CreateApiSpec = ({ onClose }) => {
       dispatch(createApiSpecFile(filename, values.apiSpecLocation, specContent))
         .then(() => {
           dispatch(openApiSpecTab({ pathname: path.join(values.apiSpecLocation, filename), filename }));
-          toast.success('ApiSpec created');
+          toast.success(i18n.t('TOASTS.API_SPEC_CREATED'));
           if (exportWarnings.length) {
             toast(buildExportWarningsMessage(exportWarnings), { icon: '⚠️' });
           }
@@ -162,7 +165,7 @@ const CreateApiSpec = ({ onClose }) => {
             formik.setFieldError('apiSpecName', API_SPEC_NAME_TAKEN_ERROR);
             return;
           }
-          toast.error(err?.message || 'Failed to create the API spec');
+          toast.error(err?.message || i18n.t('TOASTS.FAILED_CREATE_API_SPEC'));
         });
     }
   });
@@ -316,8 +319,8 @@ const CreateApiSpec = ({ onClose }) => {
       <StyledWrapper>
         <Modal
           size="md"
-          title="Create API Spec"
-          confirmText="Create"
+          title={t('MODALS.CREATE_API_SPEC.TITLE')}
+          confirmText={t('MODALS.COMMON.CREATE')}
           confirmDisabled={
             urlSource.isFetching
             || (formik.values.importFrom === API_SPEC_SOURCE.COLLECTION && collectionSource.isLoading)
@@ -326,7 +329,7 @@ const CreateApiSpec = ({ onClose }) => {
           handleCancel={onClose}
         >
           <form className="marrone-form w-[500px] max-w-full" onSubmit={formik.handleSubmit}>
-            <label className="block font-semibold mb-2">Source</label>
+            <label className="block font-semibold mb-2">{t('MODALS.COMMON.SOURCE')}</label>
             <div className="flex items-center gap-[28px]">
               {sourceRadios.map(({ id, value, label }) => (
                 <div key={id} className="flex items-center">
@@ -377,7 +380,7 @@ const CreateApiSpec = ({ onClose }) => {
             ) : null}
 
             <label htmlFor="api-spec-name" className="flex items-center font-semibold mt-3">
-              Name
+              {t('MODALS.COMMON.NAME')}
             </label>
             <div className="relative">
               <input

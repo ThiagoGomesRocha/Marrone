@@ -25,6 +25,7 @@ import StyledWrapper from './StyledWrapper';
 import GenerateCodeItem from 'components/Sidebar/Collections/Collection/CollectionItem/GenerateCodeItem/index';
 import ToolHint from 'components/ToolHint';
 import toast from 'react-hot-toast';
+import i18n from '../../../i18n';
 
 const QueryUrl = ({ item, collection, handleRun }) => {
   const { theme, storedTheme } = useTheme();
@@ -89,7 +90,7 @@ const QueryUrl = ({ item, collection, handleRun }) => {
     if (item?.request?.url !== '' || (item.draft?.request?.url !== undefined && item.draft?.request?.url !== '')) {
       setGenerateCodeItemModalOpen(true);
     } else {
-      toast.error('URL is required');
+      toast.error(i18n.t('TOASTS.URL_REQUIRED'));
     }
   };
 
@@ -110,7 +111,7 @@ const QueryUrl = ({ item, collection, handleRun }) => {
     try {
       const request = getRequestFromCurlCommand(pastedData, 'graphql-request');
       if (!request || !request.url) {
-        toast.error('Invalid cURL command');
+        toast.error(i18n.t('TOASTS.INVALID_CURL'));
         return;
       }
       // Update URL
@@ -165,11 +166,11 @@ const QueryUrl = ({ item, collection, handleRun }) => {
           }));
         }
 
-        toast.success('GraphQL query imported successfully');
+        toast.success(i18n.t('TOASTS.GRAPHQL_IMPORTED'));
       }
     } catch (error) {
       console.error('Error parsing cURL command:', error);
-      toast.error('Failed to parse GraphQL query');
+      toast.error(i18n.t('TOASTS.FAILED_PARSE_GRAPHQL'));
     }
   }, [dispatch, item.uid, collection.uid]);
 
@@ -196,7 +197,7 @@ const QueryUrl = ({ item, collection, handleRun }) => {
       // Parse the curl command
       const request = getRequestFromCurlCommand(pastedData);
       if (!request || !request.url) {
-        toast.error('Invalid cURL command');
+        toast.error(i18n.t('TOASTS.INVALID_CURL'));
         return;
       }
 
@@ -377,10 +378,10 @@ const QueryUrl = ({ item, collection, handleRun }) => {
         }
       }
 
-      toast.success('cURL command imported successfully');
+      toast.success(i18n.t('TOASTS.CURL_IMPORTED'));
     } catch (error) {
       console.error('Error parsing cURL command:', error);
-      toast.error('Failed to parse cURL command');
+      toast.error(i18n.t('TOASTS.FAILED_PARSE_CURL'));
     }
   },
   [dispatch, item.uid, item.type, collection.uid]
@@ -404,7 +405,7 @@ const QueryUrl = ({ item, collection, handleRun }) => {
           <SingleLineEditor
             ref={editorRef}
             value={url}
-            placeholder="Enter URL or paste a cURL request"
+            placeholder={i18n.t('UI.ENTER_URL_OR_CURL')}
             onSave={(finalValue) => onSave(finalValue)}
             theme={storedTheme}
             onChange={(newValue) => onUrlChange(newValue)}

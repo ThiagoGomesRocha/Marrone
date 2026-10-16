@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { ignoreFolder, closeTabs } from 'providers/ReduxStore/slices/collections/actions';
 import { recursivelyGetAllItemUids } from 'utils/collections';
 import toast from 'react-hot-toast';
+import i18n from '../../../../../../i18n';
 
 const IgnoreCollectionItem = ({ onClose, item, collectionUid }) => {
   const dispatch = useDispatch();
@@ -16,11 +17,11 @@ const IgnoreCollectionItem = ({ onClose, item, collectionUid }) => {
       .then(() => {
         const tabUids = [...recursivelyGetAllItemUids(item.items), item.uid];
         dispatch(closeTabs({ tabUids }));
-        toast.success('Folder ignored');
+        toast.success(i18n.t('TOASTS.FOLDER_IGNORED'));
       })
       .catch((error) => {
         console.error('Error ignoring folder', error);
-        toast.error(error?.message || 'Error ignoring folder');
+        toast.error(error?.message || i18n.t('TOASTS.ERROR_IGNORING_FOLDER'));
       });
     onClose();
   };
@@ -28,8 +29,8 @@ const IgnoreCollectionItem = ({ onClose, item, collectionUid }) => {
   return (
     <Modal
       size="md"
-      title="Ignore Folder"
-      confirmText="Ignore"
+      title={i18n.t('UI.IGNORE_FOLDER')}
+      confirmText={i18n.t('UI.IGNORE')}
       handleConfirm={onConfirm}
       handleCancel={onClose}
     >

@@ -7,6 +7,7 @@ import { sanitizeName } from 'utils/common/regex';
 import toast from 'react-hot-toast';
 import { IconApi, IconBrandGraphql, IconPlugConnected, IconCode, IconPlus } from '@tabler/icons';
 import ActionIcon from 'ui/ActionIcon';
+import i18n from '../../i18n';
 
 const CreateUntitledRequest = ({ collectionUid, itemUid = null, onRequestCreated, placement = 'bottom' }) => {
   const dispatch = useDispatch();
@@ -29,10 +30,10 @@ const CreateUntitledRequest = ({ collectionUid, itemUid = null, onRequestCreated
       })
     )
       .then(() => {
-        toast.success('New request created!');
+        toast.success(i18n.t('TOASTS.REQUEST_CREATED'));
         onRequestCreated?.();
       })
-      .catch((err) => toast.error(err ? err.message : 'An error occurred while adding the request'));
+      .catch((err) => toast.error(err ? err.message : i18n.t('TOASTS.ERROR_ADDING_REQUEST')));
   }, [dispatch, collection, itemUid, onRequestCreated]);
 
   const handleCreateGraphQLRequest = useCallback(async () => {
@@ -58,10 +59,10 @@ const CreateUntitledRequest = ({ collectionUid, itemUid = null, onRequestCreated
       })
     )
       .then(() => {
-        toast.success('New request created!');
+        toast.success(i18n.t('TOASTS.REQUEST_CREATED'));
         onRequestCreated?.();
       })
-      .catch((err) => toast.error(err ? err.message : 'An error occurred while adding the request'));
+      .catch((err) => toast.error(err ? err.message : i18n.t('TOASTS.ERROR_ADDING_REQUEST')));
   }, [dispatch, collection, itemUid, onRequestCreated]);
 
   const handleCreateWebSocketRequest = useCallback(async () => {
@@ -79,10 +80,10 @@ const CreateUntitledRequest = ({ collectionUid, itemUid = null, onRequestCreated
       })
     )
       .then(() => {
-        toast.success('New request created!');
+        toast.success(i18n.t('TOASTS.REQUEST_CREATED'));
         onRequestCreated?.();
       })
-      .catch((err) => toast.error(err ? err.message : 'An error occurred while adding the request'));
+      .catch((err) => toast.error(err ? err.message : i18n.t('TOASTS.ERROR_ADDING_REQUEST')));
   }, [dispatch, collection, itemUid, onRequestCreated]);
 
   const handleCreateGrpcRequest = useCallback(async () => {
@@ -99,10 +100,10 @@ const CreateUntitledRequest = ({ collectionUid, itemUid = null, onRequestCreated
       })
     )
       .then(() => {
-        toast.success('New request created!');
+        toast.success(i18n.t('TOASTS.REQUEST_CREATED'));
         onRequestCreated?.();
       })
-      .catch((err) => toast.error(err ? err.message : 'An error occurred while adding the request'));
+      .catch((err) => toast.error(err ? err.message : i18n.t('TOASTS.ERROR_ADDING_REQUEST')));
   }, [dispatch, collection, itemUid, onRequestCreated]);
 
   const menuItems = useMemo(() => [

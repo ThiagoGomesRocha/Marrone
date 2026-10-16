@@ -3,14 +3,15 @@ import { IconAlertTriangle } from '@tabler/icons';
 import Modal from 'components/Modal';
 import Button from 'ui/Button';
 import Portal from 'ui/Portal';
+import i18n from '../../../../i18n';
 
 const ConfirmCollectionClose = ({ collection, onCancel, onCloseWithoutSave, onSaveAndClose }) => {
   return (
     <Portal>
       <Modal
         size="md"
-        title="Unsaved changes"
-        confirmText="Save and Close"
+        title={i18n.t('UI.UNSAVED_CHANGES')}
+        confirmText={i18n.t('UI.SAVE_AND_CLOSE')}
         cancelText="Close without saving"
         disableEscapeKey={true}
         disableCloseOnOutsideClick={true}

@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import get from 'lodash/get';
 import { updateResponseExampleDetails } from 'providers/ReduxStore/slices/collections';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../../i18n';
 
 const ResponseExampleDescription = ({ editMode, item, collection, exampleUid }) => {
   const dispatch = useDispatch();
@@ -36,7 +37,7 @@ const ResponseExampleDescription = ({ editMode, item, collection, exampleUid }) 
           value={description}
           onChange={handleChange}
           readOnly={!editMode}
-          placeholder="Enter example description..."
+          placeholder={i18n.t('UI.ENTER_EXAMPLE_DESCRIPTION')}
           className="w-full p-3 border rounded-md"
           rows={1}
         />

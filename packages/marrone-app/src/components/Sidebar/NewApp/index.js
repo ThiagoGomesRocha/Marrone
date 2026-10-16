@@ -7,8 +7,11 @@ import Modal from 'components/Modal';
 import Portal from 'components/Portal';
 import { newApp } from 'providers/ReduxStore/slices/collections/actions';
 import { sanitizeName, validateName, validateNameError } from 'utils/common/regex';
+import { useTranslation } from 'react-i18next';
+import i18n from '../../../i18n';
 
 const NewApp = ({ collectionUid, item, onClose }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const submitLockRef = useRef(false);
 
@@ -22,10 +25,10 @@ const NewApp = ({ collectionUid, item, onClose }) => {
     validationSchema: Yup.object({
       appName: Yup.string()
         .trim()
-        .min(1, 'App name is required')
-        .max(255, 'Must be 255 characters or less')
+        .min(1, () => i18n.t('VALIDATION.APP_NAME_REQUIRED'))
+        .max(255, () => i18n.t('VALIDATION.MAX_255_CHARS'))
         .test('valid-name', validateNameError, (value) => validateName(value || ''))
-        .required('App name is required')
+        .required(() => i18n.t('VALIDATION.APP_NAME_REQUIRED'))
     }),
     onSubmit: (values) => {
       const name = values.appName.trim();
@@ -38,10 +41,10 @@ const NewApp = ({ collectionUid, item, onClose }) => {
         })
       )
         .then(() => {
-          toast.success('App created');
+          toast.success(i18n.t('TOASTS.APP_CREATED'));
           onClose();
         })
-        .catch((err) => toast.error(err?.message || 'Failed to create app'))
+        .catch((err) => toast.error(err?.message || i18n.t('TOASTS.FAILED_CREATE_APP')))
         .finally(() => { submitLockRef.current = false; });
     }
   });
@@ -57,8 +60,8 @@ const NewApp = ({ collectionUid, item, onClose }) => {
     <Portal>
       <Modal
         size="md"
-        title="New App"
-        confirmText="Create"
+        title={t('MODALS.NEW_APP.TITLE')}
+        confirmText={t('MODALS.COMMON.CREATE')}
         handleConfirm={onSubmit}
         handleCancel={onClose}
         disableEscapeKey={false}
@@ -71,7 +74,7 @@ const NewApp = ({ collectionUid, item, onClose }) => {
           data-testid="new-app-form"
         >
           <label htmlFor="appName" className="block font-semibold">
-            Name
+            {t('MODALS.COMMON.NAME')}
           </label>
           <input
             id="appName"
@@ -89,7 +92,7 @@ const NewApp = ({ collectionUid, item, onClose }) => {
             <div className="text-red-500 text-xs mt-2">{formik.errors.appName}</div>
           ) : (
             <div className="text-xs mt-2 opacity-70">
-              Creates a standalone app file in {item ? 'this folder' : `collection "${collection?.name || ''}"`}.
+              {t('MODALS.NEW_APP.CREATE_DESC_PRE')} {item ? t('MODALS.NEW_APP.CREATE_DESC_THIS_FOLDER') : t('MODALS.NEW_APP.CREATE_DESC_COLLECTION', { name: collection?.name || '' })}.
             </div>
           )}
         </form>

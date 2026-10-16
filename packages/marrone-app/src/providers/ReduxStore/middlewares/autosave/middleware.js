@@ -3,6 +3,7 @@ import { saveGlobalEnvironment } from '../../slices/global-environments';
 import { flattenItems, isItemARequest, isItemAFolder, findItemInCollection, findCollectionByUid, isItemTransientRequest } from 'utils/collections';
 import { isEnvironmentValidationError } from 'utils/environments';
 import toast from 'react-hot-toast';
+import i18n from '../../../../i18n';
 
 const actionsToIntercept = [
   // Request-level actions
@@ -109,7 +110,7 @@ const pendingTimers = {};
 // editing believing their changes are on disk. A fixed toast id replaces the previous notice
 // instead of stacking one per debounce tick while the draft stays unsaveable.
 const reportAutoSaveError = (err) =>
-  toast.error(isEnvironmentValidationError(err) ? err.message : 'Auto-save failed', { id: 'autosave-error' });
+  toast.error(isEnvironmentValidationError(err) ? err.message : i18n.t('TOASTS.AUTOSAVE_FAILED'), { id: 'autosave-error' });
 
 // Helper to schedule autosave for an item
 const scheduleAutoSave = (key, save, interval) => {

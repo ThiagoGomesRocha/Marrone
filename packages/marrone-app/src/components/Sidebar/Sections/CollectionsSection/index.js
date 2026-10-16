@@ -40,6 +40,7 @@ import SidebarSection from 'components/Sidebar/SidebarSection';
 import { openDevtoolsAndSwitchToTerminal } from 'utils/terminal';
 import useKeybinding from 'hooks/useKeybinding';
 import useKeybindingDisplayText from 'hooks/useKeybindingDisplayText';
+import i18n from '../../../../i18n';
 
 const CollectionsSection = () => {
   const dispatch = useDispatch();
@@ -86,7 +87,7 @@ const CollectionsSection = () => {
       }
     };
     dispatch(savePreferences(updatedPreferences)).catch(() => {
-      toast.error('Failed to save preferences');
+      toast.error(i18n.t('TOASTS.FAILED_SAVE_PREFERENCES'));
     });
   };
 
@@ -192,13 +193,13 @@ const CollectionsSection = () => {
   const handleStartRequest = () => {
     const scratchCollectionUid = activeWorkspace?.scratchCollectionUid;
     if (!scratchCollectionUid) {
-      toast.error('Unable to create request');
+      toast.error(i18n.t('TOASTS.UNABLE_CREATE_REQUEST'));
       return;
     }
 
     const scratchCollection = collections.find((c) => c.uid === scratchCollectionUid);
     if (!scratchCollection) {
-      toast.error('Unable to create request');
+      toast.error(i18n.t('TOASTS.UNABLE_CREATE_REQUEST'));
       return;
     }
 
@@ -229,7 +230,7 @@ const CollectionsSection = () => {
         isTransient: true
       })
     ).catch((err) => {
-      toast.error('An error occurred while creating the request');
+      toast.error(i18n.t('TOASTS.ERROR_CREATING_REQUEST'));
     });
   };
 
@@ -406,7 +407,7 @@ const CollectionsSection = () => {
       )}
       <SidebarSection
         id="collections"
-        title="Collections"
+        title={i18n.t('UI.COLLECTIONS')}
         icon={IconBox}
         actions={sectionActions}
       >

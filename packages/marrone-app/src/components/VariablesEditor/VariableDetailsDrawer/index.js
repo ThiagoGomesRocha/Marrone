@@ -7,6 +7,7 @@ import CodeEditor from 'components/CodeEditor';
 import { toDisplayString } from '@marrone/common/utils';
 import { JSON_MODE } from '../constants';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../i18n';
 
 const SECTION_LABELS = {
   runtime: 'Runtime',
@@ -39,7 +40,7 @@ const VariableDetailsDrawer = ({
           type="button"
           className="close-button"
           onClick={onClose}
-          title="Close"
+          title={i18n.t('UI.CLOSE')}
           data-testid="variable-details-close"
         >
           <IconX size={16} strokeWidth={1.5} />

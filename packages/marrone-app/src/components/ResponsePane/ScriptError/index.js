@@ -12,6 +12,7 @@ import StyledWrapper from './StyledWrapper';
 import classnames from 'classnames';
 import { IconArrowsDiagonal, IconArrowsDiagonalMinimize2, IconCheck, IconCopy } from '@tabler/icons';
 import useCopyToClipboard from 'hooks/useCopyToClipboard';
+import i18n from '../../../i18n';
 
 /**
  * Determines the source of a script error (request, folder, or collection)
@@ -188,7 +189,7 @@ const ScriptErrorCard = ({ title, message, errorContext, item, collection, scrip
               className="icon-button flex-shrink-0 cursor-pointer"
               data-testid="script-error-copy"
               onClick={handleCopy}
-              aria-label="Copy script error"
+              aria-label={i18n.t('UI.COPY_SCRIPT_ERROR')}
               title={copied ? 'Copied' : 'Copy script error'}
             >
               {copied ? <IconCheck size={16} strokeWidth={1.5} /> : <IconCopy size={16} strokeWidth={1.5} />}
@@ -205,7 +206,7 @@ const ScriptErrorCard = ({ title, message, errorContext, item, collection, scrip
             </button>
 
             {onClose && (
-              <button className="icon-button flex-shrink-0 cursor-pointer" data-testid="script-error-close" onClick={onClose} aria-label="Close script error">
+              <button className="icon-button flex-shrink-0 cursor-pointer" data-testid="script-error-close" onClick={onClose} aria-label={i18n.t('UI.CLOSE_SCRIPT_ERROR')}>
                 <IconX size={16} strokeWidth={1.5} />
               </button>
             )}

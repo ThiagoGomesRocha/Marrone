@@ -9,6 +9,7 @@ import ResponseLayoutToggle, { useResponseLayoutToggle } from '../ResponseLayout
 import ResponseCopy from '../ResponseCopy/index';
 import useKeybindingDisplayText from 'hooks/useKeybindingDisplayText';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../i18n';
 
 const StyledMenuIcon = styled.button`
   display: flex;
@@ -29,7 +30,7 @@ const StyledMenuIcon = styled.button`
 const MenuIcon = forwardRef((props, ref) => (
   <StyledMenuIcon
     ref={ref}
-    title="More actions"
+    title={i18n.t('UI.MORE_ACTIONS')}
     {...props}
   >
     <IconDots size={16} strokeWidth={1.5} />

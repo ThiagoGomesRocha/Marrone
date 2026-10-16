@@ -15,6 +15,7 @@ import Modal from 'components/Modal';
 import toast from 'react-hot-toast';
 import Button from 'ui/Button';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../../../../i18n';
 
 const MAX_UNSAVED_REQUESTS_TO_SHOW = 5;
 
@@ -63,7 +64,7 @@ const ConfirmCollectionCloseDrafts = ({ onClose, collectionUids }) => {
 
   const handleSaveAll = async () => {
     if (currentTransientDrafts.length > 0) {
-      toast.error('Please save or discard transient requests first');
+      toast.error(i18n.t('TOASTS.SAVE_OR_DISCARD_TRANSIENT'));
       return;
     }
 
@@ -79,7 +80,7 @@ const ConfirmCollectionCloseDrafts = ({ onClose, collectionUids }) => {
 
       await handleRemoveCollections();
     } catch (err) {
-      toast.error('Failed to save drafts!');
+      toast.error(i18n.t('TOASTS.FAILED_SAVE_DRAFTS'));
     }
   };
 
@@ -111,7 +112,7 @@ const ConfirmCollectionCloseDrafts = ({ onClose, collectionUids }) => {
       <Modal
         size="md"
         title={`Remove ${pluralizeWord('Collection', activeCollections.length)}`}
-        confirmText="Save and Remove"
+        confirmText={i18n.t('UI.SAVE_AND_REMOVE')}
         cancelText="Remove without saving"
         handleCancel={onClose}
         disableEscapeKey={true}
@@ -213,7 +214,7 @@ const ConfirmCollectionCloseDrafts = ({ onClose, collectionUids }) => {
             <Button
               onClick={handleSaveAll}
               disabled={currentTransientDrafts.length > 0}
-              title={currentTransientDrafts.length > 0 ? 'Please save or discard transient requests first' : ''}
+              title={currentTransientDrafts.length > 0 ? i18n.t('TOASTS.SAVE_OR_DISCARD_TRANSIENT') : ''}
             >
               {allDraftsCount > 1 ? 'Save All and Remove' : 'Save and Remove'}
             </Button>

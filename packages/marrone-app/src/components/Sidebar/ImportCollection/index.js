@@ -8,6 +8,7 @@ import FileTab from './FileTab';
 import GitHubTab from './GitHubTab';
 import UrlTab from './UrlTab';
 import FullscreenLoader from './FullscreenLoader/index';
+import { useTranslation } from 'react-i18next';
 import { useTheme } from 'providers/Theme';
 
 const IMPORT_TABS = {
@@ -17,6 +18,7 @@ const IMPORT_TABS = {
 };
 
 const ImportCollection = ({ onClose, handleSubmit }) => {
+  const { t } = useTranslation();
   const { theme } = useTheme();
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -39,7 +41,7 @@ const ImportCollection = ({ onClose, handleSubmit }) => {
 
   return (
     <Portal>
-      <Modal size="md" title="Import Collection" hideFooter={true} handleCancel={onClose} dataTestId="import-collection-modal">
+      <Modal size="md" title={t('MODALS.IMPORT_COLLECTION.TITLE')} hideFooter={true} handleCancel={onClose} dataTestId="import-collection-modal">
         <StyledWrapper className="flex flex-col h-full">
           <div className="flex w-full mb-6">
             <div className="flex justify-start w-full tabs">
@@ -49,7 +51,7 @@ const ImportCollection = ({ onClose, handleSubmit }) => {
                 data-testid="file-tab"
               >
                 <IconFileImport size={18} strokeWidth={1.5} className="mr-2" />
-                File
+                {t('MODALS.IMPORT_COLLECTION.TAB_FILE')}
               </div>
               <div
                 className={getTabClassname(IMPORT_TABS.GITHUB)}
@@ -57,7 +59,7 @@ const ImportCollection = ({ onClose, handleSubmit }) => {
                 data-testid="github-tab"
               >
                 <IconBrandGit size={18} strokeWidth={1.5} className="mr-2" />
-                Git Repository
+                {t('MODALS.IMPORT_COLLECTION.TAB_GIT_REPOSITORY')}
               </div>
               <div
                 className={getTabClassname(IMPORT_TABS.URL)}

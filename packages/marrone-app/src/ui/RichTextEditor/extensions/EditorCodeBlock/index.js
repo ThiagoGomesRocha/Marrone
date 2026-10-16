@@ -6,6 +6,7 @@ import { lowlight } from 'lowlight';
 import protobuf from 'highlight.js/lib/languages/protobuf';
 import useCopyToClipboard from 'hooks/useCopyToClipboard';
 import { EDITOR_MENU_DROPDOWN_PROPS } from '../../utils/editorToolbarUi';
+import i18n from '../../../../i18n';
 
 lowlight.registerLanguage('protobuf', protobuf);
 
@@ -135,8 +136,8 @@ const EditorCodeBlock = ({ node, updateAttributes, editor }) => {
           className="editor-code-block-copy flex items-center justify-center cursor-pointer p-1 rounded transition-colors duration-150"
           data-testid="code-block-copy-btn"
           onClick={handleCopy}
-          title="Copy code"
-          aria-label="Copy code"
+          title={i18n.t('UI.COPY_CODE')}
+          aria-label={i18n.t('UI.COPY_CODE')}
         >
           {copied ? <IconCheck size={16} /> : <IconCopy size={16} />}
         </button>

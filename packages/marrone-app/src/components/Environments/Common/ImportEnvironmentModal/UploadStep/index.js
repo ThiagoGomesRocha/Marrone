@@ -3,8 +3,10 @@ import Portal from 'components/Portal';
 import Modal from 'components/Modal';
 import { IconFileImport } from '@tabler/icons';
 import { StyledWrapper } from './StyledWrapper';
+import { useTranslation } from 'react-i18next';
 
 const UploadStep = ({ modalTitle, modalTestId, importTestId, onClose, handleImportEnvironment }) => {
+  const { t } = useTranslation();
   const [isDragOver, setIsDragOver] = useState(false);
 
   const handleFileSelect = () => {
@@ -67,10 +69,10 @@ const UploadStep = ({ modalTitle, modalTestId, importTestId, onClose, handleImpo
             >
               <IconFileImport size={64} className="upload-dropzone-icon" />
               <span className="upload-dropzone-title">
-                {isDragOver ? 'Drop your environment files here' : 'Import your environments'}
+                {isDragOver ? t('MODALS.IMPORT_ENVIRONMENT.DROP_TITLE') : t('MODALS.IMPORT_ENVIRONMENT.IMPORT_TITLE')}
               </span>
               <span className="upload-dropzone-subtitle">
-                Drag & drop JSON files or click to browse. Supports both Marrone and Postman formats.
+                {t('MODALS.IMPORT_ENVIRONMENT.SUBTITLE')}
               </span>
             </div>
           </div>

@@ -1,8 +1,10 @@
 import React, { memo } from 'react';
 import { ResolutionButton } from '../ReviewStep/StyledWrapper';
-import { RESOLUTION_OPTIONS } from '../utils';
+import { RESOLUTION_OPTIONS, RESOLUTION_TYPES } from '../utils';
+import { useTranslation } from 'react-i18next';
 
 const EnvironmentRow = ({ env, isSelected, resolution, toggleItemSelection, setItemResolution, showResolutions }) => {
+  const { t } = useTranslation();
   return (
     <div className="env-item" data-testid="env-import-item">
       <label className="env-item-label">
@@ -19,7 +21,10 @@ const EnvironmentRow = ({ env, isSelected, resolution, toggleItemSelection, setI
       </label>
       {showResolutions && (
         <div className="env-actions">
-          {RESOLUTION_OPTIONS.map(({ value, label, title, testId }) => {
+          {RESOLUTION_OPTIONS.map(({ value, testId }) => {
+            const isNew = value === RESOLUTION_TYPES.CREATE_NEW;
+            const label = isNew ? t('MODALS.IMPORT_ENVIRONMENT.RESOLUTION_NEW') : t('MODALS.IMPORT_ENVIRONMENT.RESOLUTION_REPLACE');
+            const title = isNew ? t('MODALS.IMPORT_ENVIRONMENT.RESOLUTION_NEW_TITLE') : t('MODALS.IMPORT_ENVIRONMENT.RESOLUTION_REPLACE_TITLE');
             const selected = resolution === value;
 
             return (

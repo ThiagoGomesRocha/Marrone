@@ -25,6 +25,7 @@ import ResponseExampleResponsePane from 'components/ResponseExample/ResponseExam
 import MockResponseTopBar from './MockResponseTopBar';
 import MockResponseRequestPane from './MockResponseRequestPane';
 import StyledWrapper from 'components/ResponseExample/StyledWrapper';
+import i18n from '../../../i18n';
 
 const MIN_LEFT_PANE_WIDTH = 300;
 const MIN_RIGHT_PANE_WIDTH = 350;
@@ -109,7 +110,7 @@ const MockResponse = ({ instance, collection, responseUid }) => {
         await dispatch(loadMockResponses(location)).unwrap();
       } catch (err) {
         if (!cancelled) {
-          toast.error(err.message || 'Failed to load mock response');
+          toast.error(err.message || i18n.t('TOASTS.FAILED_LOAD_MOCK_RESPONSE'));
         }
       } finally {
         if (!cancelled) {
@@ -251,9 +252,9 @@ const MockResponse = ({ instance, collection, responseUid }) => {
         responseName: result.response.name
       }));
       setEditMode(false);
-      toast.success('Mock response saved');
+      toast.success(i18n.t('TOASTS.MOCK_RESPONSE_SAVED'));
     } catch (err) {
-      toast.error(err.message || 'Failed to save mock response');
+      toast.error(err.message || i18n.t('TOASTS.FAILED_SAVE_MOCK_RESPONSE'));
     } finally {
       setIsSaving(false);
     }
@@ -271,9 +272,9 @@ const MockResponse = ({ instance, collection, responseUid }) => {
         responseUid
       })).unwrap();
       dispatch(closeTabs({ tabUids: [responseUid] }));
-      toast.success('Mock response deleted');
+      toast.success(i18n.t('TOASTS.MOCK_RESPONSE_DELETED'));
     } catch (err) {
-      toast.error(err.message || 'Failed to delete mock response');
+      toast.error(err.message || i18n.t('TOASTS.FAILED_DELETE_MOCK_RESPONSE'));
     }
   };
 
@@ -301,15 +302,15 @@ const MockResponse = ({ instance, collection, responseUid }) => {
         workspacePath: resolveMockServerWorkspacePath(storedInstance, workspaces, activeWorkspace)
       }))).unwrap();
       await dispatch(syncMockServerState(location));
-      toast.success(`Mock server started at ${result.baseUrl}`);
+      toast.success(i18n.t('TOASTS.MOCK_STARTED_AT', { url: result.baseUrl }));
     } catch (err) {
-      toast.error(err.message || 'Failed to start mock server');
+      toast.error(err.message || i18n.t('TOASTS.FAILED_START_MOCK_SERVER'));
     }
   };
 
   const handleTry = async () => {
     if (!isServerRunning || !mockServerPort) {
-      toast.error('Start the mock server before trying this response');
+      toast.error(i18n.t('TOASTS.START_MOCK_SERVER_FIRST'));
       return;
     }
 
@@ -317,7 +318,7 @@ const MockResponse = ({ instance, collection, responseUid }) => {
       || item?.examples?.find((entry) => entry.uid === responseUid);
 
     if (!example?.request?.url) {
-      toast.error('Set a request URL before trying this response');
+      toast.error(i18n.t('TOASTS.SET_REQUEST_URL_FIRST'));
       return;
     }
 
@@ -335,7 +336,7 @@ const MockResponse = ({ instance, collection, responseUid }) => {
       }));
       toast.success(`Mock returned ${result.status} ${result.statusText || ''}`.trim());
     } catch (err) {
-      toast.error(err.message || 'Could not reach the mock server');
+      toast.error(err.message || i18n.t('TOASTS.MOCK_SERVER_UNREACHABLE'));
     } finally {
       setIsTrying(false);
     }
@@ -363,12 +364,12 @@ const MockResponse = ({ instance, collection, responseUid }) => {
       || item?.examples?.find((entry) => entry.uid === responseUid);
 
     if (!example?.request?.url) {
-      toast.error('Set a request URL before opening it as a request');
+      toast.error(i18n.t('TOASTS.SET_REQUEST_URL_BEFORE_OPEN'));
       return;
     }
 
     if (!resolvedCollection?.uid) {
-      toast.error('Open a collection in this workspace to create a request');
+      toast.error(i18n.t('TOASTS.OPEN_COLLECTION_TO_CREATE_REQUEST'));
       return;
     }
 
@@ -393,9 +394,9 @@ const MockResponse = ({ instance, collection, responseUid }) => {
         headers: demoRequest.headers,
         ...(demoRequest.body ? { body: { mode: 'json', json: demoRequest.body.content } } : {})
       }));
-      toast.success('Opened demo request in a new tab');
+      toast.success(i18n.t('TOASTS.OPENED_DEMO_REQUEST'));
     } catch (err) {
-      toast.error(err.message || 'Failed to open the demo request');
+      toast.error(err.message || i18n.t('TOASTS.FAILED_OPEN_DEMO_REQUEST'));
     }
   };
 

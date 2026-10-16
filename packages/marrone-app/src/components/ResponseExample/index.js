@@ -9,6 +9,7 @@ import ResponseExampleResponsePane from './ResponseExampleResponsePane';
 import GenerateCodeItem from 'components/Sidebar/Collections/Collection/CollectionItem/GenerateCodeItem';
 import StyledWrapper from './StyledWrapper';
 import toast from 'react-hot-toast';
+import i18n from '../../i18n';
 
 const MIN_LEFT_PANE_WIDTH = 300;
 const MIN_RIGHT_PANE_WIDTH = 350;
@@ -142,7 +143,7 @@ const ResponseExample = ({ item, collection, example, openInEditMode }) => {
         exampleUid: example.uid
       }));
     } catch (err) {
-      toast.error(err?.message || 'Failed to try example');
+      toast.error(err?.message || i18n.t('TOASTS.FAILED_TRY_EXAMPLE'));
     } finally {
       setIsTryPending(false);
     }

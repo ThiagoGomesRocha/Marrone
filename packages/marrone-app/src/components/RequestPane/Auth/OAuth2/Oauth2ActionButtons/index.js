@@ -10,6 +10,7 @@ import { updateResponsePaneTab } from 'providers/ReduxStore/slices/tabs';
 import { getAllVariables } from 'utils/collections/index';
 import { formatIpcError } from 'utils/common/error';
 import Button from 'ui/Button';
+import i18n from '../../../../../i18n';
 
 const Oauth2ActionButtons = ({ item, request, collection, url: accessTokenUrl, credentialsId, disabled }) => {
   const { uid: collectionUid } = collection;
@@ -83,7 +84,7 @@ const Oauth2ActionButtons = ({ item, request, collection, url: accessTokenUrl, c
         return;
       }
 
-      toast.success('Token fetched successfully!');
+      toast.success(i18n.t('TOASTS.TOKEN_FETCHED'));
     } catch (error) {
       console.error('could not fetch the token!');
       console.error(error);
@@ -123,7 +124,7 @@ const Oauth2ActionButtons = ({ item, request, collection, url: accessTokenUrl, c
         return;
       }
 
-      toast.success('Token refreshed successfully!');
+      toast.success(i18n.t('TOASTS.TOKEN_REFRESHED'));
     } catch (error) {
       console.error(error);
       toggleRefreshingToken(false);
@@ -135,7 +136,7 @@ const Oauth2ActionButtons = ({ item, request, collection, url: accessTokenUrl, c
   const handleClearCache = (e) => {
     dispatch(clearOauth2Cache({ collectionUid: collection?.uid, url: interpolatedAccessTokenUrl, credentialsId }))
       .then(() => {
-        toast.success('Cleared cache successfully');
+        toast.success(i18n.t('TOASTS.CLEARED_CACHE'));
       })
       .catch((err) => {
         toast.error(err.message);
@@ -146,13 +147,13 @@ const Oauth2ActionButtons = ({ item, request, collection, url: accessTokenUrl, c
     try {
       const result = await dispatch(cancelOauth2AuthorizationRequest());
       if (result.success && result.cancelled) {
-        toast.error('Authorization cancelled');
+        toast.error(i18n.t('TOASTS.AUTHORIZATION_CANCELLED'));
         toggleFetchingToken(false);
         toggleFetchingAuthorizationCode(false);
       }
     } catch (err) {
       console.error('Error cancelling authorization:', err);
-      toast.error('Failed to cancel authorization');
+      toast.error(i18n.t('TOASTS.FAILED_CANCEL_AUTHORIZATION'));
     }
   };
 

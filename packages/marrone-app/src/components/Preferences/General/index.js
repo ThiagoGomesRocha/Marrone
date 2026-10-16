@@ -11,8 +11,11 @@ import toast from 'react-hot-toast';
 import { IconTrash, IconUpload } from '@tabler/icons';
 import path from 'utils/common/path';
 import { SettingsGroup, CheckboxSetting, SettingsField } from '../SettingsLayout';
+import i18n from '../../../i18n';
+import { useTranslation } from 'react-i18next';
 
 const General = () => {
+  const { t } = useTranslation();
   const preferences = useSelector((state) => state.app.preferences);
   const dispatch = useDispatch();
   // The file input is hidden; the visible button forwards its click here.
@@ -35,10 +38,10 @@ const General = () => {
         return originalValue === '' ? undefined : value;
       })
       .nullable()
-      .test('isNumber', 'Request Timeout must be a number', (value) => {
+      .test('isNumber', () => i18n.t('VALIDATION.TIMEOUT_NOT_NUMBER'), (value) => {
         return value === undefined || !isNaN(value);
       })
-      .test('isValidTimeout', 'Request Timeout must be greater than or equal to 0', (value) => {
+      .test('isValidTimeout', () => i18n.t('VALIDATION.TIMEOUT_MIN'), (value) => {
         return value === undefined || Number(value) >= 0;
       }),
     autoSave: Yup.object({
@@ -47,13 +50,13 @@ const General = () => {
         .transform((value, originalValue) => {
           return originalValue === '' ? undefined : value;
         })
-        .test('isNumber', 'Save Delay must be a number', (value) => {
+        .test('isNumber', () => i18n.t('VALIDATION.SAVE_DELAY_NOT_NUMBER'), (value) => {
           return value === undefined || !isNaN(value);
         })
-        .test('isValidInterval', 'Save Delay must be at least 500ms', (value) => {
+        .test('isValidInterval', () => i18n.t('VALIDATION.SAVE_DELAY_MIN'), (value) => {
           return value === undefined || Number(value) >= 500;
         })
-        .test('intervalRequired', 'Save Delay is required when Auto Save is enabled', function (value) {
+        .test('intervalRequired', () => i18n.t('VALIDATION.SAVE_DELAY_REQUIRED'), function (value) {
           return !(this.parent.enabled && (value === undefined || value === ''));
         })
     }),
@@ -61,6 +64,7 @@ const General = () => {
       useSystemBrowser: Yup.boolean()
     }),
     defaultLocation: Yup.string().max(1024),
+    language: Yup.string().oneOf(['en', 'pt-BR']),
     reportLogo: Yup.string(),
     reportDefaultDir: Yup.string().max(1024)
   });
@@ -86,6 +90,7 @@ const General = () => {
         useSystemBrowser: get(preferences, 'request.oauth2.useSystemBrowser', false)
       },
       defaultLocation: get(preferences, 'general.defaultLocation', ''),
+      language: get(preferences, 'general.language', 'en'),
       reportLogo: get(preferences, 'report.logo', ''),
       reportDefaultDir: get(preferences, 'report.defaultDir', '')
     },
@@ -126,7 +131,8 @@ const General = () => {
           interval: newPreferences.autoSave.interval
         },
         general: {
-          defaultLocation: newPreferences.defaultLocation
+          defaultLocation: newPreferences.defaultLocation,
+          language: newPreferences.language
         },
         report: {
           logo: newPreferences.reportLogo || '',
@@ -134,7 +140,7 @@ const General = () => {
           includeSensitive: get(preferences, 'report.includeSensitive', false)
         }
       }))
-      .catch((err) => console.log(err) && toast.error('Failed to update preferences'));
+      .catch((err) => console.log(err) && toast.error(i18n.t('TOASTS.FAILED_UPDATE_PREFERENCES')));
   }, [dispatch, preferences]);
 
   const handleSaveRef = useRef(handleSave);
@@ -182,7 +188,7 @@ const General = () => {
       .catch((error) => {
         // cancelling resolves false, so this is a real failure: keep the existing value
         console.error(error);
-        toast.error('Failed to browse for a default location');
+        toast.error(i18n.t('TOASTS.FAILED_BROWSE_DEFAULT_LOCATION'));
       });
   };
 
@@ -192,7 +198,7 @@ const General = () => {
       return;
     }
     if (!['image/png', 'image/jpeg'].includes(file.type)) {
-      toast.error('Only PNG or JPEG images are supported');
+      toast.error(i18n.t('TOASTS.PNG_JPEG_ONLY'));
       return;
     }
     const reader = new FileReader();
@@ -200,7 +206,7 @@ const General = () => {
       formik.setFieldValue('reportLogo', reader.result);
     };
     reader.onerror = () => {
-      toast.error('Failed to read the image');
+      toast.error(i18n.t('TOASTS.FAILED_READ_IMAGE'));
     };
     reader.readAsDataURL(file);
   };
@@ -218,7 +224,7 @@ const General = () => {
       })
       .catch((error) => {
         console.error(error);
-        toast.error('Failed to browse for a report directory');
+        toast.error(i18n.t('TOASTS.FAILED_BROWSE_REPORT_DIR'));
       });
   };
 
@@ -234,20 +240,42 @@ const General = () => {
 
   return (
     <StyledWrapper className="w-full">
-      <div className="section-header">General Settings</div>
+      <div className="section-header">{t('PREFERENCES.GENERAL.TITLE')}</div>
       <form className="marrone-form settings-form" onSubmit={formik.handleSubmit}>
-        <SettingsGroup title="Certificates">
+        <SettingsGroup
+          title={t('PREFERENCES.GENERAL.LANGUAGE_TITLE')}
+          description={t('PREFERENCES.GENERAL.LANGUAGE_DESC')}
+        >
+          <SettingsField label={t('PREFERENCES.GENERAL.LANGUAGE_LABEL')} htmlFor="language">
+            <select
+              id="language"
+              name="language"
+              className="textbox"
+              value={formik.values.language}
+              onChange={(e) => {
+                const lang = e.target.value;
+                i18n.changeLanguage(lang);
+                formik.setFieldValue('language', lang);
+              }}
+            >
+              <option value="en">English</option>
+              <option value="pt-BR">Português (Brasil)</option>
+            </select>
+          </SettingsField>
+        </SettingsGroup>
+
+        <SettingsGroup title={t('PREFERENCES.GENERAL.CERTIFICATES')}>
           <CheckboxSetting
             id="sslVerification"
             name="sslVerification"
-            label="SSL/TLS Certificate Verification"
+            label={t('PREFERENCES.GENERAL.SSL_VERIFICATION')}
             checked={formik.values.sslVerification}
             onChange={formik.handleChange}
           />
           <CheckboxSetting
             id="customCaCertificateEnabled"
             name="customCaCertificate.enabled"
-            label="Use Custom CA Certificate"
+            label={t('PREFERENCES.GENERAL.CUSTOM_CA')}
             checked={customCaCertificateEnabled}
             onChange={formik.handleChange}
           >
@@ -258,7 +286,7 @@ const General = () => {
                   <button
                     type="button"
                     className="ca-certificate-remove"
-                    aria-label="Remove custom CA certificate"
+                    aria-label={t('PREFERENCES.GENERAL.REMOVE_CA')}
                     data-testid="general-remove-ca-certificate"
                     disabled={!customCaCertificateEnabled}
                     onClick={deleteCaCertificate}
@@ -276,7 +304,7 @@ const General = () => {
                     onClick={() => inputFileCaCertificateRef.current.click()}
                   >
                     <IconUpload strokeWidth={1.5} size={14} aria-hidden="true" />
-                    Select File
+                    {t('PREFERENCES.GENERAL.SELECT_FILE')}
                   </button>
                   <input
                     id="caCertFilePath"
@@ -293,7 +321,7 @@ const General = () => {
             <CheckboxSetting
               id="keepDefaultCaCertificatesEnabled"
               name="keepDefaultCaCertificates.enabled"
-              label="Keep Default CA Certificates"
+              label={t('PREFERENCES.GENERAL.KEEP_DEFAULT_CA')}
               checked={formik.values.keepDefaultCaCertificates.enabled}
               onChange={formik.handleChange}
               disabled={keepDefaultCaCertificatesDisabled}
@@ -301,40 +329,40 @@ const General = () => {
           </CheckboxSetting>
         </SettingsGroup>
 
-        <SettingsGroup title="Cookies & Authorization">
+        <SettingsGroup title={t('PREFERENCES.GENERAL.COOKIES_AUTH')}>
           <CheckboxSetting
             id="storeCookies"
             name="storeCookies"
-            label="Store Cookies automatically"
+            label={t('PREFERENCES.GENERAL.STORE_COOKIES')}
             checked={formik.values.storeCookies}
             onChange={formik.handleChange}
           />
           <CheckboxSetting
             id="sendCookies"
             name="sendCookies"
-            label="Send Cookies automatically"
+            label={t('PREFERENCES.GENERAL.SEND_COOKIES')}
             checked={formik.values.sendCookies}
             onChange={formik.handleChange}
           />
           <CheckboxSetting
             id="oauth2.useSystemBrowser"
             name="oauth2.useSystemBrowser"
-            label="Use System Browser for OAuth2 Authorization"
+            label={t('PREFERENCES.GENERAL.OAUTH2_BROWSER')}
             checked={formik.values.oauth2.useSystemBrowser}
             onChange={formik.handleChange}
           />
         </SettingsGroup>
 
-        <SettingsGroup title="Auto Save">
+        <SettingsGroup title={t('PREFERENCES.GENERAL.AUTO_SAVE')}>
           <CheckboxSetting
             id="autoSaveEnabled"
             name="autoSave.enabled"
-            label="Enable Auto Save"
+            label={t('PREFERENCES.GENERAL.ENABLE_AUTO_SAVE')}
             checked={autoSaveEnabled}
             onChange={formik.handleChange}
           />
           <SettingsField
-            label="Auto Save Delay (ms)"
+            label={t('PREFERENCES.GENERAL.AUTO_SAVE_DELAY')}
             htmlFor="autoSaveInterval"
             disabled={!autoSaveEnabled}
             error={autoSaveError}
@@ -356,8 +384,8 @@ const General = () => {
           </SettingsField>
         </SettingsGroup>
 
-        <SettingsGroup title="Requests">
-          <SettingsField label="Request Timeout (ms)" htmlFor="timeout" error={timeoutError}>
+        <SettingsGroup title={t('PREFERENCES.GENERAL.REQUESTS')}>
+          <SettingsField label={t('PREFERENCES.GENERAL.REQUEST_TIMEOUT')} htmlFor="timeout" error={timeoutError}>
             <input
               id="timeout"
               type="text"
@@ -375,15 +403,15 @@ const General = () => {
         </SettingsGroup>
 
         <SettingsGroup
-          title="Default Location"
-          description="Used as the default location for new workspaces and collections"
+          title={t('PREFERENCES.GENERAL.DEFAULT_LOCATION')}
+          description={t('PREFERENCES.GENERAL.DEFAULT_LOCATION_DESC')}
         >
           <SettingsField error={formik.errors.defaultLocation} className="default-location-field">
             <input
               type="text"
               name="defaultLocation"
               id="defaultLocation"
-              aria-label="Default Location"
+              aria-label={t('PREFERENCES.GENERAL.DEFAULT_LOCATION')}
               data-testid="general-default-location-input"
               className="textbox cursor-pointer default-location-input"
               autoComplete="off"
@@ -394,7 +422,7 @@ const General = () => {
               onChange={formik.handleChange}
               value={formik.values.defaultLocation || ''}
               onClick={browseDefaultLocation}
-              placeholder="Click to browse for default location"
+              placeholder={t('PREFERENCES.GENERAL.BROWSE_LOCATION')}
             />
             <button
               type="button"
@@ -402,28 +430,28 @@ const General = () => {
               data-testid="general-browse-default-location"
               onClick={browseDefaultLocation}
             >
-              Browse
+              {t('PREFERENCES.GENERAL.BROWSE')}
             </button>
           </SettingsField>
         </SettingsGroup>
 
         <SettingsGroup
-          title="Report"
-          description="Customize the generated HTML reports"
+          title={t('PREFERENCES.GENERAL.REPORT')}
+          description={t('PREFERENCES.GENERAL.REPORT_DESC')}
         >
-          <SettingsField label="Report Logo" htmlFor="reportLogo">
+          <SettingsField label={t('PREFERENCES.GENERAL.REPORT_LOGO')} htmlFor="reportLogo">
             <div className="report-logo-upload">
               {formik.values.reportLogo ? (
                 <>
-                  <img className="report-logo-preview" src={formik.values.reportLogo} alt="Report logo" />
+                  <img className="report-logo-preview" src={formik.values.reportLogo} alt={t('PREFERENCES.GENERAL.REPORT_LOGO_ALT')} />
                   <button type="button" className="report-logo-remove" onClick={removeLogo}>
-                    Remove
+                    {t('PREFERENCES.GENERAL.REMOVE')}
                   </button>
                 </>
               ) : (
                 <button type="button" className="report-logo-select" onClick={() => inputFileLogoRef.current.click()}>
                   <IconUpload strokeWidth={1.5} size={14} aria-hidden="true" />
-                  Upload Logo
+                  {t('PREFERENCES.GENERAL.UPLOAD_LOGO')}
                 </button>
               )}
               <input
@@ -437,7 +465,7 @@ const General = () => {
             </div>
           </SettingsField>
 
-          <SettingsField label="Report Export Directory" htmlFor="reportDefaultDir">
+          <SettingsField label={t('PREFERENCES.GENERAL.REPORT_DIR')} htmlFor="reportDefaultDir">
             <input
               type="text"
               name="reportDefaultDir"
@@ -451,10 +479,10 @@ const General = () => {
               onChange={formik.handleChange}
               value={formik.values.reportDefaultDir || ''}
               onClick={browseReportDir}
-              placeholder="Click to browse for report directory"
+              placeholder={t('PREFERENCES.GENERAL.BROWSE_REPORT_DIR')}
             />
             <button type="button" className="default-location-browse" onClick={browseReportDir}>
-              Browse
+              {t('PREFERENCES.GENERAL.BROWSE')}
             </button>
           </SettingsField>
         </SettingsGroup>

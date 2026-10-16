@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { getExample, getSgbdLabel } from './constants';
 
 /**
@@ -14,6 +15,7 @@ import { getExample, getSgbdLabel } from './constants';
  *    (`hasPassword`), para poder mostrar "senha guardada".
  */
 const CredentialsForm = ({ databases, currentDatabase, onDatabaseChange, onSaved }) => {
+  const { t } = useTranslation();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -126,7 +128,7 @@ const CredentialsForm = ({ databases, currentDatabase, onDatabaseChange, onSaved
 
   return (
     <div>
-      <h2 className="text-base font-medium mb-1">Database</h2>
+      <h2 className="text-base font-medium mb-1">{t('PREFERENCES.DATABASE.TITLE')}</h2>
       <p className="text-xs opacity-70 mb-4">
         Cadastre o usuário e a senha de cada banco. A senha fica no cofre do sistema operacional — ela nunca é gravada
         no arquivo da coleção, no git nem no relatório.

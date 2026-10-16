@@ -6,6 +6,7 @@ import path from 'utils/common/path';
 import { browseDirectory, createCollection } from 'providers/ReduxStore/slices/collections/actions';
 import toast from 'react-hot-toast';
 import Portal from 'components/Portal';
+import { useTranslation } from 'react-i18next';
 import Modal from 'components/Modal';
 import { sanitizeName, validateName, validateNameError } from 'utils/common/regex';
 import PathDisplay from 'components/PathDisplay/index';
@@ -18,8 +19,10 @@ import { DEFAULT_COLLECTION_FORMAT } from 'utils/common/constants';
 import StyledWrapper from './StyledWrapper';
 import get from 'lodash/get';
 import Button from 'ui/Button';
+import i18n from '../../../i18n';
 
 const CreateCollection = ({ onClose, defaultLocation: propDefaultLocation, initialCollectionName = '' }) => {
+  const { t } = useTranslation();
   const inputRef = useRef();
   const dispatch = useDispatch();
   const workspaces = useSelector((state) => state.workspaces?.workspaces || []);
@@ -46,19 +49,19 @@ const CreateCollection = ({ onClose, defaultLocation: propDefaultLocation, initi
     validationSchema: Yup.object({
       collectionName: Yup.string()
         .trim()
-        .min(1, 'Collection name can\'t be empty')
-        .max(255, 'Must be 255 characters or less')
-        .required('Collection name is required'),
+        .min(1, () => i18n.t('VALIDATION.COLLECTION_NAME_EMPTY'))
+        .max(255, () => i18n.t('VALIDATION.MAX_255_CHARS'))
+        .required(() => i18n.t('VALIDATION.COLLECTION_NAME_REQUIRED')),
       collectionFolderName: Yup.string()
-        .min(1, 'Must be at least 1 character')
-        .max(255, 'Must be 255 characters or less')
+        .min(1, () => i18n.t('VALIDATION.MIN_1_CHAR'))
+        .max(255, () => i18n.t('VALIDATION.MAX_255_CHARS'))
         .test('is-valid-collection-name', function (value) {
           const isValid = validateName(value);
           return isValid ? true : this.createError({ message: validateNameError(value) });
         })
-        .required('Folder name is required'),
-      collectionLocation: Yup.string().min(1, 'Location is required').required('Location is required'),
-      format: Yup.string().oneOf(['bru', 'yml'], 'invalid format').required('Format is required')
+        .required(() => i18n.t('VALIDATION.FOLDER_NAME_REQUIRED')),
+      collectionLocation: Yup.string().min(1, () => i18n.t('VALIDATION.LOCATION_REQUIRED')).required(() => i18n.t('VALIDATION.LOCATION_REQUIRED')),
+      format: Yup.string().oneOf(['bru', 'yml'], () => i18n.t('VALIDATION.INVALID_FORMAT')).required(() => i18n.t('VALIDATION.FORMAT_REQUIRED'))
     }),
     onSubmit: async (values) => {
       try {
@@ -67,10 +70,10 @@ const CreateCollection = ({ onClose, defaultLocation: propDefaultLocation, initi
           values.collectionLocation,
           { format: values.format }));
 
-        toast.success('Collection created!');
+        toast.success(i18n.t('TOASTS.COLLECTION_CREATED'));
         onClose();
       } catch (e) {
-        toast.error(multiLineMsg('An error occurred while creating the collection', formatIpcError(e)));
+        toast.error(multiLineMsg(i18n.t('TOASTS.ERROR_CREATING_COLLECTION'), formatIpcError(e)));
       }
     }
   });
@@ -104,7 +107,7 @@ const CreateCollection = ({ onClose, defaultLocation: propDefaultLocation, initi
           className="btn-advanced"
           type="button"
         >
-          Options
+          {t('MODALS.COMMON.OPTIONS')}
         </button>
         <IconCaretDown className="caret ml-1" size={14} strokeWidth={2} />
       </div>
@@ -114,11 +117,11 @@ const CreateCollection = ({ onClose, defaultLocation: propDefaultLocation, initi
   return (
     <Portal>
       <StyledWrapper>
-        <Modal size="md" title="Create Collection" hideFooter={true} handleCancel={onClose}>
+        <Modal size="md" title={t('MODALS.CREATE_COLLECTION.TITLE')} hideFooter={true} handleCancel={onClose}>
           <form className="marrone-form" onSubmit={formik.handleSubmit}>
             <div>
               <label htmlFor="collection-name" className="flex items-center font-medium">
-                Name
+                {t('MODALS.COMMON.NAME')}
               </label>
               <input
                 id="collection-name"
@@ -150,13 +153,13 @@ const CreateCollection = ({ onClose, defaultLocation: propDefaultLocation, initi
               ) : null}
 
               <label htmlFor="collection-location" className="font-medium mt-3 flex items-center">
-                Location
+                {t('MODALS.COMMON.LOCATION')}
                 <Help>
                   <p>
-                    Marrone stores your collections on your computer's filesystem.
+                    {t('MODALS.COMMON.LOCATION_HELP_FILESYSTEM')}
                   </p>
                   <p className="mt-2">
-                    Choose the location where you want to store this collection.
+                    {t('MODALS.COMMON.LOCATION_HELP_CHOOSE')}
                   </p>
                 </Help>
               </label>
@@ -184,20 +187,20 @@ const CreateCollection = ({ onClose, defaultLocation: propDefaultLocation, initi
                   className="text-link cursor-pointer hover:underline"
                   onClick={browse}
                 >
-                  Browse
+                  {t('MODALS.COMMON.BROWSE')}
                 </span>
               </div>
               {formik.values.collectionName?.trim()?.length > 0 && (
                 <div className="mt-4">
                   <div className="flex items-center justify-between">
                     <label htmlFor="filename" className="flex items-center font-medium">
-                      Folder Name
+                      {t('MODALS.COMMON.FOLDER_NAME')}
                       <Help width="300">
                         <p>
-                          The name of the folder used to store the collection.
+                          {t('MODALS.COMMON.FOLDER_NAME_HELP_1')}
                         </p>
                         <p className="mt-2">
-                          You can choose a folder name different from your collection's name or one compatible with filesystem rules.
+                          {t('MODALS.COMMON.FOLDER_NAME_HELP_2')}
                         </p>
                       </Help>
                     </label>
@@ -246,16 +249,16 @@ const CreateCollection = ({ onClose, defaultLocation: propDefaultLocation, initi
               {showAdvancedOptions && (
                 <div className="mt-4">
                   <label htmlFor="format" className="flex items-center font-medium">
-                    File Format
+                    {t('MODALS.COMMON.FILE_FORMAT')}
                     <Help width="300">
                       <p>
-                        Choose the file format for storing requests in this collection.
+                        {t('MODALS.COMMON.FILE_FORMAT_HELP')}
                       </p>
                       <p className="mt-2">
-                        <strong>OpenCollection (YAML):</strong> Industry-standard YAML format (.yml files)
+                        <strong>{t('MODALS.COMMON.FILE_FORMAT_YAML_LABEL')}</strong> {t('MODALS.COMMON.FILE_FORMAT_YAML_DESC')}
                       </p>
                       <p className="mt-1">
-                        <strong>BRU:</strong> Marrone's native file format (.bru files)
+                        <strong>{t('MODALS.COMMON.FILE_FORMAT_BRU_LABEL')}</strong> {t('MODALS.COMMON.FILE_FORMAT_BRU_DESC')}
                       </p>
                     </Help>
                   </label>
@@ -287,16 +290,16 @@ const CreateCollection = ({ onClose, defaultLocation: propDefaultLocation, initi
                       setShowAdvancedOptions(!showAdvancedOptions);
                     }}
                   >
-                    {showAdvancedOptions ? 'Hide Advanced Options' : 'Show Advanced Options'}
+                    {showAdvancedOptions ? t('MODALS.COMMON.HIDE_ADVANCED_OPTIONS') : t('MODALS.COMMON.SHOW_ADVANCED_OPTIONS')}
                   </div>
                 </Dropdown>
               </div>
               <div className="flex justify-end">
                 <Button type="button" color="secondary" variant="ghost" onClick={onClose} className="mr-2">
-                  Cancel
+                  {t('MODALS.COMMON.CANCEL')}
                 </Button>
                 <Button type="submit">
-                  Create
+                  {t('MODALS.COMMON.CREATE')}
                 </Button>
               </div>
             </div>

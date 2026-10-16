@@ -6,6 +6,7 @@ import StyledWrapper from './StyledWrapper';
 import EditorTableMenu from '../EditorTableMenu';
 import { EDITOR_MENU_DROPDOWN_PROPS, EDITOR_TOOLBAR_TOOLTIP_PROPS } from '../../utils/editorToolbarUi';
 import { useToolbarOverflow } from '../../hooks/useToolbarOverflow';
+import i18n from '../../../../i18n';
 
 const ToolbarButton = ({ tooltip, Icon, isActive, disabled, onClick, showLabel = false, testId }) => {
   return (
@@ -125,7 +126,7 @@ const EditorToolbar = ({ editor }) => {
             <button
               type="button"
               className="toolbar-btn toolbar-overflow-btn"
-              aria-label="More formatting options"
+              aria-label={i18n.t('UI.MORE_FORMATTING')}
               data-testid="toolbar-overflow-menu"
             >
               <IconDots size={16} strokeWidth={1.5} />

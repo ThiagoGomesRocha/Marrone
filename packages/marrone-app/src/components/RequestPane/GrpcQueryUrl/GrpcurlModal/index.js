@@ -7,6 +7,7 @@ import get from 'lodash/get';
 import Modal from 'components/Modal/index';
 import CodeEditor from 'components/CodeEditor';
 import Button from 'ui/Button';
+import i18n from '../../../../i18n';
 
 const GrpcurlModal = ({ isOpen, onClose, command }) => {
   const { displayedTheme } = useTheme();
@@ -17,10 +18,10 @@ const GrpcurlModal = ({ isOpen, onClose, command }) => {
     try {
       await navigator.clipboard.writeText(command);
       setCopied(true);
-      toast.success('Command copied to clipboard');
+      toast.success(i18n.t('TOASTS.COMMAND_COPIED'));
       setTimeout(() => setCopied(false), 2000);
     } catch (error) {
-      toast.error('Failed to copy command');
+      toast.error(i18n.t('TOASTS.FAILED_COPY_COMMAND'));
     }
   };
 

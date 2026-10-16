@@ -57,6 +57,7 @@ import DiffView from './DiffView';
 import AssistantCodeBlock from './AssistantCodeBlock';
 import { PROCESSING_STAGES, CONTENT_TYPE_LABELS, SUGGESTIONS_BY_TYPE, PLACEHOLDER_BY_TYPE } from './constants';
 import { renderMarkdown, parseMessageSegments } from './utils';
+import i18n from '../../i18n';
 
 const SELECTED_MODEL_LS_KEY = 'marrone.ai.chat.selectedModel';
 const AUTO_MODEL_ID = '';
@@ -176,8 +177,8 @@ const HistoryPopover = ({ items, activeId, onPick, onDelete, onClose }) => {
               onClick={(e) => {
                 e.stopPropagation(); onDelete(item.id);
               }}
-              title="Delete conversation"
-              aria-label="Delete conversation"
+              title={i18n.t('UI.DELETE_CONVERSATION')}
+              aria-label={i18n.t('UI.DELETE_CONVERSATION')}
             >
               <IconTrash size={12} />
             </button>
@@ -862,7 +863,7 @@ const AiChatSidebar = ({ collection, variant = 'sidebar' }) => {
           onMouseDown={handleResizeStart}
           role="separator"
           aria-orientation="vertical"
-          aria-label="Resize AI sidebar"
+          aria-label={i18n.t('UI.RESIZE_AI_SIDEBAR')}
         >
           <div className="drag-border" />
         </div>
@@ -883,7 +884,7 @@ const AiChatSidebar = ({ collection, variant = 'sidebar' }) => {
                 placement="bottom-start"
                 selectedItemId={activeTabUid}
               >
-                <button className="chat-switcher-btn" title="Switch chat">
+                <button className="chat-switcher-btn" title={i18n.t('UI.SWITCH_CHAT')}>
                   <IconChevronDown size={14} />
                 </button>
               </MenuDropdown>
@@ -893,7 +894,7 @@ const AiChatSidebar = ({ collection, variant = 'sidebar' }) => {
             <button
               className="icon-btn"
               onClick={handleNewChat}
-              title="New Session"
+              title={i18n.t('UI.NEW_SESSION')}
               disabled={isLoading || messages.length === 0}
             >
               <IconPlus size={14} />
@@ -902,7 +903,7 @@ const AiChatSidebar = ({ collection, variant = 'sidebar' }) => {
               <button
                 className={`icon-btn ${historyOpen ? 'is-active' : ''}`}
                 onClick={() => setHistoryOpen((v) => !v)}
-                title="History"
+                title={i18n.t('UI.HISTORY')}
                 disabled={historyCount === 0}
               >
                 <IconHistory size={14} />
@@ -925,7 +926,7 @@ const AiChatSidebar = ({ collection, variant = 'sidebar' }) => {
             >
               {isPopout ? <IconLayoutSidebarRightExpand size={14} /> : <IconExternalLink size={14} />}
             </button>
-            <button className="icon-btn close-btn" onClick={handleClose} title="Close">
+            <button className="icon-btn close-btn" onClick={handleClose} title={i18n.t('UI.CLOSE')}>
               <IconX size={14} />
             </button>
           </div>
@@ -977,7 +978,7 @@ const AiChatSidebar = ({ collection, variant = 'sidebar' }) => {
                     rounded="sm"
                     icon={<IconPlayerStop size={12} />}
                     onClick={handleStop}
-                    title="Stop generating"
+                    title={i18n.t('UI.STOP_GENERATING')}
                   >
                     Stop
                   </Button>
@@ -985,7 +986,7 @@ const AiChatSidebar = ({ collection, variant = 'sidebar' }) => {
                   <button
                     className="send-btn"
                     onClick={handleSubmit}
-                    title="Send (Enter)"
+                    title={i18n.t('UI.SEND_ENTER')}
                     disabled={!input.trim()}
                   >
                     Send <IconCornerDownLeft size={12} />

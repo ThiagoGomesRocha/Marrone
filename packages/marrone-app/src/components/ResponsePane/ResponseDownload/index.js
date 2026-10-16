@@ -5,6 +5,7 @@ import get from 'lodash/get';
 import { IconDownload } from '@tabler/icons';
 import classnames from 'classnames';
 import ActionIcon from 'ui/ActionIcon/index';
+import i18n from '../../../i18n';
 
 const ResponseDownload = forwardRef(({ item, children }, ref) => {
   const { ipcRenderer } = window;
@@ -26,12 +27,12 @@ const ResponseDownload = forwardRef(({ item, children }, ref) => {
         .invoke('renderer:save-response-to-file', response, item?.requestSent?.url, item.pathname)
         .then((result) => {
           if (result && result.success) {
-            toast.success('Response downloaded to file');
+            toast.success(i18n.t('TOASTS.RESPONSE_DOWNLOADED'));
           }
           resolve();
         })
         .catch((err) => {
-          toast.error(get(err, 'error.message') || 'Something went wrong!');
+          toast.error(get(err, 'error.message') || i18n.t('TOASTS.SOMETHING_WRONG'));
           reject(err);
         });
     });

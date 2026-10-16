@@ -16,6 +16,7 @@ import Modal from 'components/Modal';
 import EndpointChangeSection from '../EndpointChangeSection';
 import ExpandableEndpointRow from '../EndpointChangeSection/ExpandableEndpointRow';
 import useEndpointActions from '../hooks/useEndpointActions';
+import i18n from '../../../i18n';
 
 const CollectionStatusSection = ({
   collection,
@@ -118,7 +119,7 @@ const CollectionStatusSection = ({
         <div className="mt-5">
           {/* Modified in Collection */}
           <EndpointChangeSection
-            title="Modified in Collection"
+            title={i18n.t('UI.MODIFIED_IN_COLLECTION')}
             type="modified"
             endpoints={collectionDrift.modified || []}
             expandableLayout
@@ -127,10 +128,10 @@ const CollectionStatusSection = ({
             renderItem={(endpoint, idx) =>
               renderDriftRow(endpoint, idx, (
                 <>
-                  <Button size="xs" variant="ghost" onClick={() => onOpenEndpoint(endpoint.id)} title="Open in tab" icon={<IconExternalLink size={14} />}>
+                  <Button size="xs" variant="ghost" onClick={() => onOpenEndpoint(endpoint.id)} title={i18n.t('UI.OPEN_IN_TAB')} icon={<IconExternalLink size={14} />}>
                     Open
                   </Button>
-                  <Button size="xs" variant="ghost" onClick={() => handleResetEndpoint(endpoint)} title="Reset to spec" icon={<IconArrowBackUp size={14} />}>
+                  <Button size="xs" variant="ghost" onClick={() => handleResetEndpoint(endpoint)} title={i18n.t('UI.RESET_TO_SPEC')} icon={<IconArrowBackUp size={14} />}>
                     Reset
                   </Button>
                 </>
@@ -140,7 +141,7 @@ const CollectionStatusSection = ({
                 size="xs"
                 variant="outline"
                 onClick={handleResetAllModified}
-                title="Reset all modified endpoints to match the spec"
+                title={i18n.t('UI.RESET_ALL_MODIFIED')}
                 icon={<IconArrowBackUp size={14} />}
               >
                 Reset All
@@ -150,7 +151,7 @@ const CollectionStatusSection = ({
 
           {/* Deleted from Collection */}
           <EndpointChangeSection
-            title="Deleted from Collection"
+            title={i18n.t('UI.DELETED_FROM_COLLECTION')}
             type="missing"
             endpoints={collectionDrift.missing || []}
             expandableLayout
@@ -158,7 +159,7 @@ const CollectionStatusSection = ({
             sectionKey="drift-missing"
             renderItem={(endpoint, idx) =>
               renderDriftRow(endpoint, idx, (
-                <Button size="xs" variant="ghost" onClick={() => handleAddMissingEndpoint(endpoint)} title="Restore to collection" icon={<IconPlus size={14} />}>
+                <Button size="xs" variant="ghost" onClick={() => handleAddMissingEndpoint(endpoint)} title={i18n.t('UI.RESTORE_TO_COLLECTION')} icon={<IconPlus size={14} />}>
                   Restore
                 </Button>
               ))}
@@ -167,7 +168,7 @@ const CollectionStatusSection = ({
                 size="xs"
                 variant="outline"
                 onClick={handleAddAllMissing}
-                title="Add all deleted endpoints back to collection"
+                title={i18n.t('UI.ADD_ALL_DELETED')}
                 icon={<IconPlus size={14} />}
               >
                 Restore All
@@ -177,7 +178,7 @@ const CollectionStatusSection = ({
 
           {/* Added to Collection */}
           <EndpointChangeSection
-            title="Added to Collection"
+            title={i18n.t('UI.ADDED_TO_COLLECTION')}
             type="local-only"
             endpoints={collectionDrift.localOnly || []}
             expandableLayout
@@ -186,10 +187,10 @@ const CollectionStatusSection = ({
             renderItem={(endpoint, idx) =>
               renderDriftRow(endpoint, idx, (
                 <>
-                  <Button size="xs" variant="ghost" onClick={() => onOpenEndpoint(endpoint.id)} title="Open in tab" icon={<IconExternalLink size={14} />}>
+                  <Button size="xs" variant="ghost" onClick={() => onOpenEndpoint(endpoint.id)} title={i18n.t('UI.OPEN_IN_TAB')} icon={<IconExternalLink size={14} />}>
                     Open
                   </Button>
-                  <Button size="xs" variant="ghost" color="danger" onClick={() => handleDeleteEndpoint(endpoint)} title="Delete endpoint" icon={<IconTrash size={14} />}>
+                  <Button size="xs" variant="ghost" color="danger" onClick={() => handleDeleteEndpoint(endpoint)} title={i18n.t('UI.DELETE_ENDPOINT')} icon={<IconTrash size={14} />}>
                     Delete
                   </Button>
                 </>
@@ -200,7 +201,7 @@ const CollectionStatusSection = ({
                 variant="outline"
                 color="danger"
                 onClick={handleDeleteAllLocalOnly}
-                title="Delete all locally added endpoints"
+                title={i18n.t('UI.DELETE_ALL_ADDED')}
                 icon={<IconTrash size={14} />}
               >
                 Delete All

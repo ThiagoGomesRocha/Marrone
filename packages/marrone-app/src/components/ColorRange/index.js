@@ -1,4 +1,5 @@
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../i18n';
 
 const ColorRangePicker = ({ selectedColor, className, value, onChange, colorRange, ...props }) => {
   return (
@@ -13,7 +14,7 @@ const ColorRangePicker = ({ selectedColor, className, value, onChange, colorRang
         style={{
           background: `linear-gradient(to right, ${colorRange.join(',')})`
         }}
-        title="Adjust color"
+        title={i18n.t('UI.ADJUST_COLOR')}
         {...props}
       />
     </StyledWrapper>

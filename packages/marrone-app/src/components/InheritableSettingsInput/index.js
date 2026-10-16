@@ -2,6 +2,7 @@ import React from 'react';
 import { IconChevronDown, IconX } from '@tabler/icons';
 import { useTheme } from 'providers/Theme';
 import Dropdown from 'components/Dropdown';
+import i18n from '../../i18n';
 
 const InheritableSettingsInput = ({
   id,
@@ -76,7 +77,7 @@ const InheritableSettingsInput = ({
               type="button"
               onClick={onCustomValueReset}
               className="absolute right-1 top-1/2 transform -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 transition-colors"
-              title="Reset to inherit"
+              title={i18n.t('UI.RESET_TO_INHERIT')}
             >
               <IconX size={14} />
             </button>

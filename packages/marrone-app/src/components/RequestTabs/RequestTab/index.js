@@ -34,6 +34,7 @@ import ConfirmApiSpecClose from './ConfirmApiSpecClose';
 import { findApiSpecByPathname, hasUnsavedApiSpecChanges } from 'utils/api-specs';
 import { clearApiSpecDraft, saveApiSpecTabDraft } from 'providers/ReduxStore/slices/apiSpec';
 import toast from 'react-hot-toast';
+import i18n from '../../../i18n';
 
 const RequestTab = ({ tab, collection, tabIndex, collectionRequestTabs, folderUid, hasOverflow, setHasOverflow, dropdownContainerRef }) => {
   const dispatch = useDispatch();
@@ -291,7 +292,7 @@ const RequestTab = ({ tab, collection, tabIndex, collectionRequestTabs, folderUi
           window.dispatchEvent(new Event('dotenv-save'));
         } else {
           dispatch(saveEnvironment(variables, environmentUid, collection.uid))
-            .then(() => toast.success('Changes saved successfully'))
+            .then(() => toast.success(i18n.t('TOASTS.CHANGES_SAVED')))
             .catch(saveErrorHandler('Failed to save environment'));
         }
       }
@@ -302,7 +303,7 @@ const RequestTab = ({ tab, collection, tabIndex, collectionRequestTabs, folderUi
           window.dispatchEvent(new Event('dotenv-save'));
         } else {
           dispatch(saveGlobalEnvironment({ variables, environmentUid }))
-            .then(() => toast.success('Changes saved successfully'))
+            .then(() => toast.success(i18n.t('TOASTS.CHANGES_SAVED')))
             .catch(saveErrorHandler('Failed to save global environment'));
         }
       }
@@ -482,7 +483,7 @@ const RequestTab = ({ tab, collection, tabIndex, collectionRequestTabs, folderUi
                     dispatch(clearEnvironmentsDraft({ collectionUid: collection.uid }));
                     dispatch(closeTabs({ tabUids: [tab.uid] }));
                     setShowConfirmEnvironmentClose(false);
-                    toast.success('Environment saved');
+                    toast.success(i18n.t('TOASTS.ENV_SAVED'));
                   })
                   .catch(saveErrorHandler('Failed to save environment'));
               }
@@ -530,7 +531,7 @@ const RequestTab = ({ tab, collection, tabIndex, collectionRequestTabs, folderUi
                     dispatch(clearGlobalEnvironmentDraft());
                     dispatch(closeTabs({ tabUids: [tab.uid] }));
                     setShowConfirmGlobalEnvironmentClose(false);
-                    toast.success('Global environment saved');
+                    toast.success(i18n.t('TOASTS.GLOBAL_ENV_SAVED'));
                   })
                   .catch(saveErrorHandler('Failed to save global environment'));
               }

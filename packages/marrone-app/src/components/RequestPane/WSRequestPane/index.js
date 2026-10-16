@@ -23,6 +23,7 @@ import WSSettingsPane from '../WSSettingsPane/index';
 import TabBarAiAssist from '../TabBarAiAssist';
 import { hasEffectiveAuth } from 'utils/auth';
 import { AUTH_MODES_WS } from 'utils/common/constants';
+import i18n from '../../../i18n';
 
 const WSRequestPane = ({ item, collection, handleRun }) => {
   const dispatch = useDispatch();
@@ -99,7 +100,7 @@ const WSRequestPane = ({ item, collection, handleRun }) => {
         collectionUid: collection.uid
       }));
     } else {
-      toast.error('Nothing to prettify');
+      toast.error(i18n.t('TOASTS.NOTHING_TO_PRETTIFY'));
     }
   }, [body, dispatch, item.uid, collection.uid]);
 

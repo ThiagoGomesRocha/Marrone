@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { IconFolder } from '@tabler/icons';
 import { closeWorkspaceAction } from 'providers/ReduxStore/slices/workspaces/actions';
+import i18n from '../../../i18n';
 
 const DeleteWorkspace = ({ onClose, workspace }) => {
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ const DeleteWorkspace = ({ onClose, workspace }) => {
       await dispatch(closeWorkspaceAction(workspace.uid));
       onClose();
     } catch (error) {
-      toast.error(error?.message || 'An error occurred while removing the workspace');
+      toast.error(error?.message || i18n.t('TOASTS.ERROR_REMOVING_WORKSPACE'));
       setIsDeleting(false);
     }
   };
@@ -27,7 +28,7 @@ const DeleteWorkspace = ({ onClose, workspace }) => {
     <Portal>
       <Modal
         size="sm"
-        title="Remove Workspace"
+        title={i18n.t('UI.REMOVE_WORKSPACE')}
         confirmText={isDeleting ? 'Removing...' : 'Remove'}
         handleConfirm={onConfirm}
         handleCancel={onClose}

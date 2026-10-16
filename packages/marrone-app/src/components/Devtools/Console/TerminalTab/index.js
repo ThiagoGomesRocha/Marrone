@@ -6,6 +6,7 @@ import { useTheme } from 'providers/Theme';
 import StyledWrapper from './StyledWrapper';
 import SessionList from './SessionList';
 import '@xterm/xterm/css/xterm.css';
+import i18n from '../../../../i18n';
 
 // Build xterm.js theme from app theme
 const getTerminalTheme = (theme) => {
@@ -442,7 +443,7 @@ const TerminalTab = () => {
                 e.stopPropagation();
                 createNewSession();
               }}
-              title="New Terminal Session"
+              title={i18n.t('UI.NEW_TERMINAL_SESSION')}
             />
           </div>
           <div className="terminal-sessions-list">

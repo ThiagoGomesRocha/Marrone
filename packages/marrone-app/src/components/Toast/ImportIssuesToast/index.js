@@ -3,6 +3,7 @@ import toast from 'react-hot-toast';
 import { IconAlertCircle, IconBrandGithub, IconCopy, IconX } from '@tabler/icons';
 import StyledWrapper from './StyledWrapper';
 import { MARRONE_NEW_ISSUE_URL } from 'utils/common/constants';
+import i18n from '../../../i18n';
 
 const GITHUB_ISSUES_URL = MARRONE_NEW_ISSUE_URL;
 const MAX_URL_LENGTH = 8000;
@@ -64,9 +65,9 @@ const ImportIssuesToastContent = ({ t, issues, summary }) => {
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(issuesSummary);
-      toast.success('Copied to clipboard', { duration: 2000 });
+      toast.success(i18n.t('TOASTS.COPIED_CLIPBOARD'), { duration: 2000 });
     } catch (err) {
-      toast.error('Failed to copy to clipboard', { duration: 3000 });
+      toast.error(i18n.t('TOASTS.FAILED_COPY_CLIPBOARD'), { duration: 3000 });
     }
   };
 
@@ -82,9 +83,9 @@ const ImportIssuesToastContent = ({ t, issues, summary }) => {
 
     try {
       await navigator.clipboard.writeText(body);
-      toast.success('Issue details copied — paste them into the GitHub issue body', { duration: 5000 });
+      toast.success(i18n.t('TOASTS.ISSUE_DETAILS_COPIED'), { duration: 5000 });
     } catch (err) {
-      toast.error('Failed to copy to clipboard', { duration: 3000 });
+      toast.error(i18n.t('TOASTS.FAILED_COPY_CLIPBOARD'), { duration: 3000 });
     }
     const params = new URLSearchParams({ title, labels: 'bug' });
     window.open(`${GITHUB_ISSUES_URL}?${params.toString()}`, '_blank');
@@ -103,7 +104,7 @@ const ImportIssuesToastContent = ({ t, issues, summary }) => {
         <button
           type="button"
           className="toast-close"
-          aria-label="Close toast"
+          aria-label={i18n.t('UI.CLOSE_TOAST')}
           data-testid="import-issues-toast-close"
           onClick={() => toast.dismiss(t.id)}
         >

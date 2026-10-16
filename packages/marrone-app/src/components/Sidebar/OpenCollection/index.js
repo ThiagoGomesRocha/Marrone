@@ -14,6 +14,7 @@ import SelectionFooter from 'components/SelectionFooter';
 import SkippedPathsWarning from 'components/SkippedPathsWarning';
 import { getRelativePath, normalizePath } from 'utils/common/path';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../i18n';
 
 const OpenCollectionModal = ({ onClose }) => {
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ const OpenCollectionModal = ({ onClose }) => {
     const openedCount = result?.opened?.length || 0;
     const failedCount = (result?.failed?.length || 0) + (result?.invalid?.length || 0);
     if (openedCount > 0) {
-      toast.success(`${openedCount === 1 ? 'Collection' : 'Collections'} added to workspace`);
+      toast.success(openedCount === 1 ? i18n.t('TOASTS.COLLECTION_ADDED_WORKSPACE') : i18n.t('TOASTS.COLLECTIONS_ADDED_WORKSPACE'));
     }
     if (failedCount > 0) {
       toast.error(`Failed to open ${failedCount} collection${failedCount === 1 ? '' : 's'}`);
@@ -77,7 +78,7 @@ const OpenCollectionModal = ({ onClose }) => {
           } else if (skippedItems.length) {
             toast.error(`No Marrone collections found. ${skippedItems.length} skipped, config could not be read`);
           } else {
-            toast.error('No Marrone collections found. Couldn\'t find a bruno.json or opencollection.yml');
+            toast.error(i18n.t('TOASTS.NO_COLLECTIONS_NO_CONFIG'));
           }
           onClose();
           return;
@@ -100,7 +101,7 @@ const OpenCollectionModal = ({ onClose }) => {
             const result = await dispatch(openMultipleCollections(items.map((item) => item.pathname), { silent: true }));
             notifyOpenResult(result);
           } catch {
-            toast.error('An error occurred while opening the collections');
+            toast.error(i18n.t('TOASTS.ERROR_OPENING_COLLECTIONS'));
           }
           onClose();
           return;
@@ -112,7 +113,7 @@ const OpenCollectionModal = ({ onClose }) => {
         setShowSelection(true);
       } catch (err) {
         console.error(err);
-        toast.error('An error occurred while scanning for collections');
+        toast.error(i18n.t('TOASTS.ERROR_SCANNING_COLLECTIONS'));
         onClose();
       }
     })();
@@ -145,7 +146,7 @@ const OpenCollectionModal = ({ onClose }) => {
         onClose();
       }
     } catch {
-      toast.error('An error occurred while opening the collections');
+      toast.error(i18n.t('TOASTS.ERROR_OPENING_COLLECTIONS'));
     }
   };
 
@@ -164,8 +165,8 @@ const OpenCollectionModal = ({ onClose }) => {
     <Portal id="open-collection-portal">
       <Modal
         size="md"
-        title="Open Collection"
-        confirmText="Open"
+        title={i18n.t('UI.OPEN_COLLECTION')}
+        confirmText={i18n.t('UI.OPEN')}
         handleConfirm={handleConfirm}
         handleCancel={onClose}
         confirmDisabled={selectedCollectionPaths.length === 0}
@@ -182,7 +183,7 @@ const OpenCollectionModal = ({ onClose }) => {
           <div className="w-full min-w-0 flex flex-col gap-3">
             <SkippedPathsWarning paths={skippedCollectionPaths} itemNoun="collections" />
             <SelectionList
-              title="Collections"
+              title={i18n.t('UI.COLLECTIONS')}
               searchPlaceholder="Search Collections"
               items={collectionPaths}
               selectedItems={selectedCollectionPaths}

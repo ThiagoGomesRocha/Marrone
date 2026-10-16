@@ -14,6 +14,7 @@ import CreateGlobalEnvironment from 'components/WorkspaceHome/WorkspaceEnvironme
 import ToolHint from 'components/ToolHint';
 import StyledWrapper from './StyledWrapper';
 import { transparentize } from 'polished';
+import i18n from '../../../i18n';
 
 const TABS = [
   { id: 'collection', label: 'Collection', icon: <IconDatabase size={16} strokeWidth={1.5} /> },
@@ -220,11 +221,11 @@ const EnvironmentSelector = ({ collection }) => {
 
     dispatch(action)
       .then(() => {
-        toast.success(environment ? `Environment changed to ${environment.name}` : 'No Environments are active now');
+        toast.success(environment ? i18n.t('TOASTS.ENV_CHANGED_TO', { name: environment.name }) : i18n.t('TOASTS.NO_ENV_ACTIVE'));
         hideDropdown();
       })
       .catch(() => {
-        toast.error('An error occurred while selecting the environment');
+        toast.error(i18n.t('TOASTS.ERROR_SELECTING_ENVIRONMENT'));
       });
   };
 

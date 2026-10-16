@@ -13,6 +13,7 @@ import { MARRONE_NEW_ISSUE_URL } from 'utils/common/constants';
 import { useApp } from 'providers/App';
 import platformLib from 'platform';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../../i18n';
 
 const ErrorInfoTab = ({ error }) => {
   const { version } = useApp();
@@ -114,7 +115,7 @@ ${error.args ? error.args.map((arg, index) => {
           <button
             className="report-button"
             onClick={handleReportIssue}
-            title="Report this error on GitHub"
+            title={i18n.t('UI.REPORT_ON_GITHUB')}
           >
             <IconBrandGithub size={16} strokeWidth={1.5} />
             <span>Report Issue on GitHub</span>
@@ -227,7 +228,7 @@ const ErrorDetailsPanel = () => {
         <button
           className="close-button"
           onClick={handleClose}
-          title="Close details panel"
+          title={i18n.t('UI.CLOSE_DETAILS_PANEL')}
         >
           <IconX size={16} strokeWidth={1.5} />
         </button>

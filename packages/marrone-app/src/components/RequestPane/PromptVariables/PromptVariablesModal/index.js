@@ -3,6 +3,7 @@ import Portal from 'components/Portal';
 import Modal from 'components/Modal';
 import StyledWrapper from './StyledWrapper';
 import { IconAlertTriangle } from '@tabler/icons';
+import i18n from '../../../../i18n';
 
 export default function PromptVariablesModal({ title = 'Input Required', prompts, onSubmit, onCancel }) {
   const [values, setValues] = useState({});
@@ -20,7 +21,7 @@ export default function PromptVariablesModal({ title = 'Input Required', prompts
       <Modal
         size="lg"
         title={title}
-        confirmText="Continue"
+        confirmText={i18n.t('UI.CONTINUE')}
         cancelText="Cancel"
         handleConfirm={() => onSubmit(values)}
         handleCancel={onCancel}
@@ -37,7 +38,7 @@ export default function PromptVariablesModal({ title = 'Input Required', prompts
                   type="text"
                   data-testid={`prompt-variable-input-${index}`}
                   className="textbox mt-2 w-full"
-                  placeholder="Enter value"
+                  placeholder={i18n.t('UI.ENTER_VALUE')}
                   value={values[prompt] || ''}
                   onChange={(e) => handleChange(prompt, e.target.value)}
                   autoFocus={index === 0}

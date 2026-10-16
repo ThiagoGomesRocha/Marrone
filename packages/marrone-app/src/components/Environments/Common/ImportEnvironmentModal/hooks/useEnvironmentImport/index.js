@@ -15,6 +15,7 @@ import {
   RESOLUTION_TYPES
 } from '../../utils';
 import { useEnvironmentTarget } from '../useEnvironmentTarget';
+import i18n from '../../../../../../i18n';
 
 export { ENV_STATUS, IMPORT_STEPS };
 
@@ -112,7 +113,7 @@ export const useEnvironmentImport = (type, collection, onClose, onEnvironmentCre
     if (failedCount > 0) {
       toastError(new Error(`${failedCount} environment(s) failed to import`), `${importedCount} environment(s) imported successfully, but ${failedCount} failed.`);
     } else if (importedCount > 0) {
-      toast.success(`${importedCount > 1 ? `${importedCount} environments` : 'Environment'} imported successfully`);
+      toast.success(importedCount > 1 ? i18n.t('TOASTS.ENV_IMPORTED_MANY', { count: importedCount }) : i18n.t('TOASTS.ENV_IMPORTED_ONE'));
     }
 
     onClose();
@@ -151,7 +152,7 @@ export const useEnvironmentImport = (type, collection, onClose, onEnvironmentCre
     const environmentsToImport = items.filter((env) => (env.status === ENV_STATUS.NEW || env.status === ENV_STATUS.DUPLICATE) && selected.has(env.id));
 
     if (environmentsToImport.length === 0) {
-      toast.error('No environments selected to import');
+      toast.error(i18n.t('TOASTS.NO_ENVIRONMENTS_SELECTED'));
       return;
     }
 

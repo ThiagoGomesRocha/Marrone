@@ -15,6 +15,7 @@ import Button from 'ui/Button';
 import CollectionsList from './CollectionsList';
 import WorkspaceDocs from '../WorkspaceDocs';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../i18n';
 
 const WorkspaceOverview = ({ workspace }) => {
   const dispatch = useDispatch();
@@ -38,7 +39,7 @@ const WorkspaceOverview = ({ workspace }) => {
     }
 
     if (!workspace?.pathname) {
-      toast.error('Workspace path not found');
+      toast.error(i18n.t('TOASTS.WORKSPACE_PATH_NOT_FOUND'));
       return;
     }
 
@@ -52,7 +53,7 @@ const WorkspaceOverview = ({ workspace }) => {
       dispatch(setIsCreatingCollection(true));
     } catch (error) {
       console.error('Error ensuring collections folder exists:', error);
-      toast.error('Error preparing workspace for collection creation');
+      toast.error(i18n.t('TOASTS.ERROR_PREPARING_WORKSPACE'));
     }
   };
 

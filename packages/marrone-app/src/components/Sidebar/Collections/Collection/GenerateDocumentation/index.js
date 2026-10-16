@@ -18,6 +18,7 @@ import useCollectionGitRemoteUrl from 'hooks/useCollectionGitRemoteUrl';
 import { transformCollectionToSaveToExportAsFile, findCollectionByUid, areItemsLoading, sortItemsBySidebarOrder, getCollectionItemCounts, getCollectionVersion, getUniqueTagsFromItems } from 'utils/collections/index';
 import { marroneToOpenCollection } from '@marrone/converters';
 import { generateApiDocsHtml, getApiDocsFileName, filterRequestItemsByTags } from '@marrone/common';
+import i18n from '../../../../../i18n';
 
 const FEATURES = [
   'Standalone HTML file - no server required',
@@ -27,7 +28,7 @@ const FEATURES = [
 
 const CollectionNotFound = ({ onClose }) => (
   <Portal>
-    <Modal size="md" title="Generate Documentation" confirmText="Close" handleConfirm={onClose} hideCancel>
+    <Modal size="md" title={i18n.t('UI.GENERATE_DOCUMENTATION')} confirmText={i18n.t('UI.CLOSE')} handleConfirm={onClose} hideCancel>
       <StyledWrapper>
         <div className="flex items-center gap-2 text-warning">
           <IconAlertTriangle size={16} className="shrink-0" />
@@ -127,11 +128,11 @@ const GenerateDocumentation = ({ onClose, collectionUid }) => {
       const fileName = getApiDocsFileName(collection.name);
       FileSaver.saveAs(new Blob([htmlContent], { type: 'text/html' }), fileName);
 
-      toast.success('Documentation generated successfully');
+      toast.success(i18n.t('TOASTS.DOCUMENTATION_GENERATED'));
       onClose();
     } catch (error) {
       console.error('Error generating documentation:', error);
-      toast.error('Failed to generate documentation');
+      toast.error(i18n.t('TOASTS.FAILED_GENERATE_DOCUMENTATION'));
     }
   }, [collection, version, onClose, currentVersion, selectedEnvUidsSet, activeTags, includeGitLink, gitCollectionUrl]);
 
@@ -143,7 +144,7 @@ const GenerateDocumentation = ({ onClose, collectionUid }) => {
     <Portal>
       <Modal
         size="md"
-        title="Generate Documentation"
+        title={i18n.t('UI.GENERATE_DOCUMENTATION')}
         confirmText={isLoading ? 'Loading...' : 'Generate'}
         cancelText="Cancel"
         handleConfirm={isLoading ? undefined : handleGenerate}
@@ -182,7 +183,7 @@ const GenerateDocumentation = ({ onClose, collectionUid }) => {
                     <div className="card-divider" />
                     <div className="env-section">
                       <EnvironmentSelectionList
-                        title="Environments To Include"
+                        title={i18n.t('UI.ENVIRONMENTS_TO_INCLUDE')}
                         environments={environments}
                         selectedUids={selectedEnvUids}
                         onToggle={toggleEnv}

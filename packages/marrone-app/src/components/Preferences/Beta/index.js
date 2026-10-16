@@ -1,6 +1,7 @@
 import React, { useEffect, useCallback, useMemo, useRef } from 'react';
 import { useFormik } from 'formik';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { savePreferences, updateActivePreferencesTab } from 'providers/ReduxStore/slices/app';
 import StyledWrapper from './StyledWrapper';
 import * as Yup from 'yup';
@@ -14,6 +15,7 @@ import ToggleSwitch from 'components/ToggleSwitch';
 
 import { BETA_FEATURES as BETA_FEATURE_IDS } from 'utils/beta-features';
 import { getDocsUrlWithVersion } from 'utils/url';
+import i18n from '../../../i18n';
 
 /**
  * UI metadata for the Beta Features section in Preferences — one entry per toggle.
@@ -25,12 +27,12 @@ import { getDocsUrlWithVersion } from 'utils/url';
  *                 utils/beta-features.js (imported here as BETA_FEATURE_IDS). It is
  *                 used as the preference key (preferences.beta[id]), the form field
  *                 name and the checkbox id, so it must be stable and unique.
- *   - label       (required) short name shown next to the checkbox.
- *   - description (required) one-line explanation shown under the label.
+ *   - label       (required) i18n key for the short name shown next to the checkbox.
+ *   - description (required) i18n key for the one-line explanation shown under the label.
  *   - docsUrl     (optional) URL to the documentation for the feature.
  *   - defaultEnabled (optional) value used when the preference has never been saved. Must match the
  *                 default in the electron preferences store, otherwise the toggle lies about the state.
- *   - action      (optional) object with { label, tab } to render a button that navigates to a specific preferences tab. The label is the button text, and the tab is the tab key (e.g. 'ai', 'cache').
+ *   - action      (optional) object with { label, tab } to render a button that navigates to a specific preferences tab. The label is an i18n key for the button text, and the tab is the tab key (e.g. 'ai', 'cache').
  *
  * To add a beta feature:
  *   1. Add its key to BETA_FEATURES in utils/beta-features.js (e.g. MY_FEATURE: 'my-feature').
@@ -50,43 +52,41 @@ import { getDocsUrlWithVersion } from 'utils/url';
 const BETA_FEATURES = [
   {
     id: BETA_FEATURE_IDS.AI_ASSISTANT,
-    label: 'AI Assistant',
-    description:
-      'Generate scripts, tests, and documentation directly from the request tab. Includes contextual chat, scripting autocomplete, and support for OpenAI, Anthropic, and OpenAI-compatible providers using your own API key.',
-    action: { label: 'Go to AI settings', tab: 'ai' },
+    label: 'PREFERENCES.BETA.AI_ASSISTANT_LABEL',
+    description: 'PREFERENCES.BETA.AI_ASSISTANT_DESC',
+    action: { label: 'PREFERENCES.BETA.GO_TO_AI_SETTINGS', tab: 'ai' },
     docsUrl: 'https://docs.usebruno.com/ai/bruno-ai/introduction'
   },
   {
     id: BETA_FEATURE_IDS.FILE_CACHE,
-    label: 'File cache',
-    description:
-      'Speeds up how quickly your collections open by keeping a local cache on disk. Turn it on or clear it anytime from the Cache settings.',
-    action: { label: 'Go to Cache settings', tab: 'cache' }
+    label: 'PREFERENCES.BETA.FILE_CACHE_LABEL',
+    description: 'PREFERENCES.BETA.FILE_CACHE_DESC',
+    action: { label: 'PREFERENCES.BETA.GO_TO_CACHE_SETTINGS', tab: 'cache' }
   },
   {
     id: BETA_FEATURE_IDS.AKAMAI_EDGEGRID,
-    label: 'Akamai EdgeGrid',
-    description:
-      'Sign requests with the Akamai EdgeGrid authentication scheme. Select it from the Auth type dropdown on any request, folder, or collection.',
+    label: 'PREFERENCES.BETA.AKAMAI_EDGEGRID_LABEL',
+    description: 'PREFERENCES.BETA.AKAMAI_EDGEGRID_DESC',
     docsUrl: 'https://docs.usebruno.com/auth/overview'
   },
   {
     id: BETA_FEATURE_IDS.MOCK_SERVER,
-    label: 'Mock Server',
-    description: 'Run a local mock server using response examples defined in your collection. Serve mock API responses for frontend development without a real backend.',
+    label: 'PREFERENCES.BETA.MOCK_SERVER_LABEL',
+    description: 'PREFERENCES.BETA.MOCK_SERVER_DESC',
     toggle: true,
     defaultEnabled: true,
     docsUrl: 'https://docs.usebruno.com'
   },
   {
     id: BETA_FEATURE_IDS.GRPC_SCRIPTING,
-    label: 'gRPC Scripting',
-    description: 'Write scripts for gRPC requests. Inspect messages, metadata, and status across the call lifecycle.',
+    label: 'PREFERENCES.BETA.GRPC_SCRIPTING_LABEL',
+    description: 'PREFERENCES.BETA.GRPC_SCRIPTING_DESC',
     docsUrl: 'https://docs.usebruno.com'
   }
 ];
 
 const Beta = ({ close }) => {
+  const { t } = useTranslation();
   const preferences = useSelector((state) => state.app.preferences);
   const dispatch = useDispatch();
 
@@ -135,7 +135,7 @@ const Beta = ({ close }) => {
         }
       })
     )
-      .catch((err) => console.log(err) && toast.error('Failed to update beta preferences'));
+      .catch((err) => console.log(err) && toast.error(i18n.t('TOASTS.FAILED_UPDATE_BETA_PREFERENCES')));
   }, [dispatch, preferences]);
 
   const handleSaveRef = useRef(handleSave);
@@ -171,11 +171,11 @@ const Beta = ({ close }) => {
 
   return (
     <StyledWrapper>
-      <div className="section-header">Beta Features</div>
+      <div className="section-header">{t('PREFERENCES.BETA.TITLE')}</div>
       <form onSubmit={formik.handleSubmit}>
         <div className="mb-6">
           <p className="text-gray-500 dark:text-gray-400 mb-4 text-wrap">
-            Beta features are experimental previews that may change before full release. Try them and share feedback.
+            {t('PREFERENCES.BETA.DESCRIPTION')}
           </p>
         </div>
 
@@ -184,11 +184,11 @@ const Beta = ({ close }) => {
             <div key={feature.id} className="beta-feature-item">
               <div className="beta-feature-header">
                 <span className="beta-feature-title select-none font-medium" id={`${feature.id}-label`}>
-                  {feature.label}
+                  {t(feature.label)}
                 </span>
               </div>
               <div className="beta-feature-description text-xs text-gray-500 dark:text-gray-400 flex">
-                {feature.description}
+                {t(feature.description)}
                 {feature.toggle && (
                   <div className="ml-auto">
                     <ToggleSwitch
@@ -208,7 +208,7 @@ const Beta = ({ close }) => {
                       className="beta-feature-link"
                       onClick={() => goToTab(feature.action.tab)}
                     >
-                      <span>{feature.action.label}</span>
+                      <span>{t(feature.action.label)}</span>
                       <IconArrowRight size={14} strokeWidth={1.5} />
                     </button>
                   )}
@@ -219,7 +219,7 @@ const Beta = ({ close }) => {
                       target="_blank"
                       rel="noreferrer"
                     >
-                      <span>View docs</span>
+                      <span>{t('PREFERENCES.BETA.VIEW_DOCS')}</span>
                       <IconExternalLink size={14} strokeWidth={1.5} />
                     </a>
                   )}
@@ -231,7 +231,7 @@ const Beta = ({ close }) => {
 
         {!hasAnyBetaFeatures && (
           <div className="no-features-message">
-            <p>No beta features are currently available</p>
+            <p>{t('PREFERENCES.BETA.NO_FEATURES')}</p>
           </div>
         )}
       </form>

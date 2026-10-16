@@ -4,6 +4,7 @@ import Button from 'ui/Button';
 import { isHttpUrl } from 'utils/url/index';
 import { isOpenApiSpec } from 'utils/importers/openapi-collection';
 import { parseFileAsJsonOrYaml } from 'utils/importers/file-reader';
+import i18n from '../../../i18n';
 
 const FEATURES = [
   'Detect new, modified, and removed endpoints',
@@ -77,7 +78,7 @@ const ConnectSpecForm = ({ sourceUrl, setSourceUrl, isLoading, error, setError, 
                   try {
                     const data = await parseFileAsJsonOrYaml(file);
                     if (!isOpenApiSpec(data)) {
-                      setError('The selected file is not a valid OpenAPI 3.x specification');
+                      setError(i18n.t('TOASTS.INVALID_OPENAPI_FILE'));
                       return;
                     }
                     if (data.swagger && String(data.swagger).startsWith('2')) {
@@ -87,7 +88,7 @@ const ConnectSpecForm = ({ sourceUrl, setSourceUrl, isLoading, error, setError, 
                     const filePath = window.ipcRenderer.getFilePath(file);
                     if (filePath) setSourceUrl(filePath);
                   } catch (err) {
-                    setError(err.message || 'Failed to read the selected file');
+                    setError(err.message || i18n.t('TOASTS.FAILED_READ_FILE'));
                   }
                 }}
               />

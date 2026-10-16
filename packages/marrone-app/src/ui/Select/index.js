@@ -3,6 +3,7 @@ import Dropdown from 'components/Dropdown';
 import { IconCaretDown, IconX, IconLoader2 } from '@tabler/icons';
 import InputWrapper from 'ui/InputWrapper';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../i18n';
 
 const NAVIGATION_KEYS = ['ArrowDown', 'ArrowUp', 'Home', 'End', 'Escape'];
 const ACTION_KEYS = ['Enter'];
@@ -247,7 +248,7 @@ const Select = ({
           type="button"
           className="select-section select-right-section select-clear"
           onClick={handleClear}
-          aria-label="Clear selection"
+          aria-label={i18n.t('UI.CLEAR_SELECTION')}
         >
           <IconX size={14} strokeWidth={2} />
         </button>

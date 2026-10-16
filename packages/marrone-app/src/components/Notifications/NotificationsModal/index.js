@@ -8,6 +8,7 @@ import StyledWrapper from './StyledWrapper';
 import NotificationTabs from './NotificationTabs';
 import NotificationList from './NotificationList';
 import NotificationDetail from './NotificationDetail';
+import i18n from '../../../i18n';
 
 const DEFAULT_SIDEBAR_WIDTH = 260;
 const SIDEBAR_MIN = 200;
@@ -46,8 +47,8 @@ const NotificationsModal = ({ notifications, onClose }) => {
     <Portal>
       <Modal
         size="md"
-        title="Notifications"
-        confirmText="Close"
+        title={i18n.t('UI.NOTIFICATIONS')}
+        confirmText={i18n.t('UI.CLOSE')}
         handleConfirm={onClose}
         handleCancel={onClose}
         hideFooter={true}
@@ -71,7 +72,7 @@ const NotificationsModal = ({ notifications, onClose }) => {
             {...dragbarProps}
             role="separator"
             aria-orientation="vertical"
-            aria-label="Resize sidebar"
+            aria-label={i18n.t('UI.RESIZE_SIDEBAR')}
           />
           {isEmpty ? (
             <div className="notif-empty">

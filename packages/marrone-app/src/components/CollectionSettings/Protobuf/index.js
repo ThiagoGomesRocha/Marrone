@@ -13,6 +13,7 @@ import { Tooltip } from 'react-tooltip';
 import useProtoFileManagement from '../../../hooks/useProtoFileManagement';
 import { saveCollectionSettings } from 'providers/ReduxStore/slices/collections/actions';
 import Button from 'ui/Button';
+import i18n from '../../../i18n';
 
 const ProtobufSettings = ({ collection }) => {
   const dispatch = useDispatch();
@@ -188,7 +189,7 @@ const ProtobufSettings = ({ collection }) => {
                               type="button"
                               onClick={() => handleReplaceProtoFile(index)}
                               className="action-button replace-button"
-                              title="Replace file"
+                              title={i18n.t('UI.REPLACE_FILE')}
                             >
                               <IconFileImport size={14} />
                             </button>
@@ -197,7 +198,7 @@ const ProtobufSettings = ({ collection }) => {
                             type="button"
                             onClick={() => handleRemoveProtoFile(index)}
                             className="action-button remove-button"
-                            title="Remove file"
+                            title={i18n.t('UI.REMOVE_FILE')}
                             data-testid="protobuf-remove-file-button"
                           >
                             <IconTrash size={14} />
@@ -307,7 +308,7 @@ const ProtobufSettings = ({ collection }) => {
                               type="button"
                               onClick={() => handleReplaceImportPath(index)}
                               className="action-button replace-button"
-                              title="Replace directory"
+                              title={i18n.t('UI.REPLACE_DIRECTORY')}
                             >
                               <IconFileImport size={14} />
                             </button>
@@ -316,7 +317,7 @@ const ProtobufSettings = ({ collection }) => {
                             type="button"
                             onClick={() => handleRemoveImportPath(index)}
                             className="action-button remove-button"
-                            title="Remove import path"
+                            title={i18n.t('UI.REMOVE_IMPORT_PATH')}
                             data-testid="protobuf-remove-import-path-button"
                           >
                             <IconTrash size={14} />

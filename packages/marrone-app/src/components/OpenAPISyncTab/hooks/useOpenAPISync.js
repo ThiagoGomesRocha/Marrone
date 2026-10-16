@@ -16,6 +16,7 @@ import { isHttpUrl } from 'utils/url/index';
 import { flattenItems } from 'utils/collections/index';
 import { formatIpcError } from 'utils/common/error';
 import { countEndpoints } from '../utils';
+import i18n from '../../../i18n';
 
 const useOpenAPISync = (collection) => {
   const dispatch = useDispatch();
@@ -229,11 +230,11 @@ const useOpenAPISync = (collection) => {
         try {
           const { specType } = await fetchAndValidateApiSpecFromUrl({ url: trimmedUrl });
           if (specType !== 'openapi') {
-            setError('The URL does not point to a valid OpenAPI 3.x specification');
+            setError(i18n.t('TOASTS.INVALID_OPENAPI_URL'));
             return;
           }
         } catch {
-          setError('The URL does not point to a valid OpenAPI 3.x specification');
+          setError(i18n.t('TOASTS.INVALID_OPENAPI_URL'));
           return;
         }
       }
@@ -291,7 +292,7 @@ const useOpenAPISync = (collection) => {
         }
       }
 
-      toast.success('OpenAPI sync connected');
+      toast.success(i18n.t('TOASTS.OPENAPI_SYNC_CONNECTED'));
     } catch (err) {
       console.error('Error connecting OpenAPI sync:', err);
       setError(formatIpcError(err) || 'Failed to connect');
@@ -319,10 +320,10 @@ const useOpenAPISync = (collection) => {
         dispatch(closeTabs({ tabUids: [specTab.uid] }));
       }
 
-      toast.success('OpenAPI sync disconnected');
+      toast.success(i18n.t('TOASTS.OPENAPI_SYNC_DISCONNECTED'));
     } catch (err) {
       console.error('Error disconnecting sync:', err);
-      toast.error('Failed to disconnect sync');
+      toast.error(i18n.t('TOASTS.FAILED_DISCONNECT_SYNC'));
     }
   };
 
@@ -362,11 +363,11 @@ const useOpenAPISync = (collection) => {
       try {
         ({ specType } = await fetchAndValidateApiSpecFromUrl({ url: newUrl }));
       } catch {
-        toast.error('The URL does not point to a valid OpenAPI 3.x specification');
+        toast.error(i18n.t('TOASTS.INVALID_OPENAPI_URL'));
         throw new Error('Invalid OpenAPI specification');
       }
       if (specType !== 'openapi') {
-        toast.error('The URL does not point to a valid OpenAPI 3.x specification');
+        toast.error(i18n.t('TOASTS.INVALID_OPENAPI_URL'));
         throw new Error('Invalid OpenAPI specification');
       }
     }
@@ -384,12 +385,12 @@ const useOpenAPISync = (collection) => {
       });
       setSourceUrl(newUrl);
       setFileNotFound(false);
-      toast.success('Settings saved');
+      toast.success(i18n.t('TOASTS.SETTINGS_SAVED'));
       // Re-check with new settings — pass newUrl directly to avoid stale closure
       await checkForUpdates({ sourceUrlOverride: newUrl });
     } catch (err) {
       console.error('Error saving settings:', err);
-      toast.error('Failed to save settings');
+      toast.error(i18n.t('TOASTS.FAILED_SAVE_SETTINGS'));
     }
   };
 

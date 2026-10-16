@@ -6,6 +6,7 @@ import StatusBadge from 'ui/StatusBadge';
 import { buildRows, wrapIndex } from './buildRows';
 import { createHighlightCache } from './highlightCache';
 import DiffRow from './DiffRow';
+import i18n from '../../../i18n';
 
 const SpecDiffModal = ({ specDrift, onClose }) => {
   const virtuosoRef = useRef(null);
@@ -85,7 +86,7 @@ const SpecDiffModal = ({ specDrift, onClose }) => {
     = changeCount === 0 ? 'No changes' : `${currentIndex + 1} of ${changeCount} changes`;
 
   return (
-    <Modal size="xl" title="Spec Diff" hideFooter handleCancel={onClose}>
+    <Modal size="xl" title={i18n.t('UI.SPEC_DIFF')} hideFooter handleCancel={onClose}>
       <div className="spec-diff-modal">
         <div className="spec-diff-header">
           <div className="spec-diff-header-left">
@@ -112,7 +113,7 @@ const SpecDiffModal = ({ specDrift, onClose }) => {
                   className="spec-diff-nav-btn"
                   onClick={() => goToChange(currentIndex - 1)}
                   disabled={changeCount === 0}
-                  title="Previous change"
+                  title={i18n.t('UI.PREVIOUS_CHANGE')}
                 >
                   <IconChevronUp size={14} strokeWidth={1.75} /> Previous
                 </button>
@@ -121,7 +122,7 @@ const SpecDiffModal = ({ specDrift, onClose }) => {
                   className="spec-diff-nav-btn"
                   onClick={() => goToChange(currentIndex + 1)}
                   disabled={changeCount === 0}
-                  title="Next change"
+                  title={i18n.t('UI.NEXT_CHANGE')}
                 >
                   <IconChevronDown size={14} strokeWidth={1.75} /> Next
                 </button>

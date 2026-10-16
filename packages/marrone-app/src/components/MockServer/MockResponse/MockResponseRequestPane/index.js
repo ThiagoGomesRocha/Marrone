@@ -9,6 +9,7 @@ import ResponseExampleUrlBar from 'components/ResponseExample/ResponseExampleReq
 import { buildDemoRequestFromRules } from 'utils/mock-server/mock-responses';
 import MockResponseRules from '../MockResponseRules';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../../i18n';
 
 const DemoKeyValueTable = ({ title, rows }) => (
   <div className="demo-section">
@@ -88,10 +89,10 @@ const MockResponseRequestPane = ({
                   Auto-generated from the rules - a request like this matches this mock response.
                 </div>
                 {demoRequest.headers.length ? (
-                  <DemoKeyValueTable title="Headers" rows={demoRequest.headers} />
+                  <DemoKeyValueTable title={i18n.t('UI.HEADERS')} rows={demoRequest.headers} />
                 ) : null}
                 {demoRequest.params.length ? (
-                  <DemoKeyValueTable title="Query Params" rows={demoRequest.params} />
+                  <DemoKeyValueTable title={i18n.t('UI.QUERY_PARAMS')} rows={demoRequest.params} />
                 ) : null}
                 {demoRequest.body ? (
                   <div className="demo-section">
@@ -147,7 +148,7 @@ const MockResponseRequestPane = ({
               icon={<IconPlayerPlay size={14} stroke={1.5} />}
               onClick={onStartServer}
               disabled={isStartingServer}
-              title="Start the mock server to try this response"
+              title={i18n.t('UI.START_MOCK_TO_TRY')}
               data-testid="mock-response-start-server-btn"
             >
               {isStartingServer ? 'Starting...' : 'Start Server'}
@@ -169,7 +170,7 @@ const MockResponseRequestPane = ({
               color="secondary"
               className="try-caret"
               icon={<IconChevronDown size={14} stroke={1.5} />}
-              aria-label="More try options"
+              aria-label={i18n.t('UI.MORE_TRY_OPTIONS')}
               data-testid="mock-response-try-options-btn"
             />
           </MenuDropdown>

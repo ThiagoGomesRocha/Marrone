@@ -11,6 +11,7 @@ import ToggleSwitch from 'components/ToggleSwitch/index';
 import { TabNavigation, ProtoFilesTab, ImportPathsTab } from '../Tabs';
 import useProtoFileManagement from 'hooks/useProtoFileManagement/index';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../../i18n';
 
 const ProtoFileDropdown = ({
   collection,
@@ -49,9 +50,9 @@ const ProtoFileDropdown = ({
     }
 
     if (alreadyExists) {
-      toast.error('Proto file already exists in collection settings');
+      toast.error(i18n.t('TOASTS.PROTO_FILE_EXISTS'));
     } else {
-      toast.success('Added proto file to collection');
+      toast.success(i18n.t('TOASTS.PROTO_FILE_ADDED'));
     }
 
     dispatch(updateRequestProtoPath({
@@ -67,7 +68,7 @@ const ProtoFileDropdown = ({
 
   const handleSelectCollectionProtoFile = (protoFile) => {
     if (!protoFile || !protoFile.exists) {
-      toast.error('Proto file not found');
+      toast.error(i18n.t('TOASTS.PROTO_FILE_NOT_FOUND'));
       return;
     }
 
@@ -100,7 +101,7 @@ const ProtoFileDropdown = ({
       return;
     }
 
-    toast.success('Added import path to collection');
+    toast.success(i18n.t('TOASTS.IMPORT_PATH_ADDED'));
   };
 
   const handleToggleImportPath = async (index) => {

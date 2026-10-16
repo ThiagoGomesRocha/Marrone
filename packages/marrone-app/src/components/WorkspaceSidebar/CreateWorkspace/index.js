@@ -13,8 +13,11 @@ import { multiLineMsg } from 'utils/common/index';
 import { formatIpcError } from 'utils/common/error';
 import { sanitizeName, validateName, validateNameError } from 'utils/common/regex';
 import get from 'lodash/get';
+import { useTranslation } from 'react-i18next';
+import i18n from '../../../i18n';
 
 const CreateWorkspace = ({ onClose }) => {
+  const { t } = useTranslation();
   const inputRef = useRef();
   const dispatch = useDispatch();
   const preferences = useSelector((state) => state.app.preferences);
@@ -33,18 +36,18 @@ const CreateWorkspace = ({ onClose }) => {
     validationSchema: Yup.object({
       workspaceName: Yup.string()
         .trim()
-        .min(1, 'Workspace name can\'t be empty')
-        .max(255, 'Must be 255 characters or less')
-        .required('Workspace name is required'),
+        .min(1, () => i18n.t('VALIDATION.WORKSPACE_NAME_EMPTY'))
+        .max(255, () => i18n.t('VALIDATION.MAX_255_CHARS'))
+        .required(() => i18n.t('VALIDATION.WORKSPACE_NAME_REQUIRED')),
       workspaceFolderName: Yup.string()
-        .min(1, 'Must be at least 1 character')
-        .max(255, 'Must be 255 characters or less')
+        .min(1, () => i18n.t('VALIDATION.MIN_1_CHAR'))
+        .max(255, () => i18n.t('VALIDATION.MAX_255_CHARS'))
         .test('is-valid-folder-name', function (value) {
           const isValid = validateName(value);
           return isValid ? true : this.createError({ message: validateNameError(value) });
         })
-        .required('Folder name is required'),
-      workspaceLocation: Yup.string().min(1, 'Location is required').required('Location is required')
+        .required(() => i18n.t('VALIDATION.FOLDER_NAME_REQUIRED')),
+      workspaceLocation: Yup.string().min(1, () => i18n.t('VALIDATION.LOCATION_REQUIRED')).required(() => i18n.t('VALIDATION.LOCATION_REQUIRED'))
     }),
     onSubmit: async (values) => {
       if (isSubmitting) return;
@@ -53,10 +56,10 @@ const CreateWorkspace = ({ onClose }) => {
         setIsSubmitting(true);
 
         await dispatch(createWorkspaceAction(values.workspaceName.trim(), values.workspaceFolderName, values.workspaceLocation));
-        toast.success('Workspace created!');
+        toast.success(i18n.t('TOASTS.WORKSPACE_CREATED'));
         onClose();
       } catch (error) {
-        toast.error(multiLineMsg('An error occurred while creating the workspace', formatIpcError(error)));
+        toast.error(multiLineMsg(i18n.t('TOASTS.ERROR_CREATING_WORKSPACE'), formatIpcError(error)));
       } finally {
         setIsSubmitting(false);
       }
@@ -85,9 +88,9 @@ const CreateWorkspace = ({ onClose }) => {
   return (
     <Modal
       size="md"
-      title="Create Workspace"
-      description="Give your new workspace a name and choose its type to get started."
-      confirmText={isSubmitting ? 'Creating...' : 'Create Workspace'}
+      title={t('MODALS.CREATE_WORKSPACE.TITLE')}
+      description={t('MODALS.CREATE_WORKSPACE.DESCRIPTION')}
+      confirmText={isSubmitting ? t('MODALS.CREATE_WORKSPACE.CREATING') : t('MODALS.CREATE_WORKSPACE.CREATE_WORKSPACE')}
       handleConfirm={formik.handleSubmit}
       handleCancel={onClose}
       style="new"
@@ -97,7 +100,7 @@ const CreateWorkspace = ({ onClose }) => {
         <form className="marrone-form" onSubmit={formik.handleSubmit}>
           <div className="mb-4">
             <label htmlFor="workspaceName" className="block font-semibold mb-2">
-              Name
+              {t('MODALS.COMMON.NAME')}
             </label>
             <input
               id="workspace-name"
@@ -133,13 +136,13 @@ const CreateWorkspace = ({ onClose }) => {
             <div className="mb-4">
               <div className="flex items-center justify-between mb-2">
                 <label htmlFor="workspaceFolderName" className="flex items-center font-semibold">
-                  Folder Name
+                  {t('MODALS.COMMON.FOLDER_NAME')}
                   <Help width="300">
                     <p>
-                      The name of the folder used to store the workspace.
+                      {t('MODALS.CREATE_WORKSPACE.FOLDER_NAME_HELP_1')}
                     </p>
                     <p className="mt-2">
-                      You can choose a folder name different from your workspace's name or one compatible with filesystem rules.
+                      {t('MODALS.CREATE_WORKSPACE.FOLDER_NAME_HELP_2')}
                     </p>
                   </Help>
                 </label>
@@ -183,13 +186,13 @@ const CreateWorkspace = ({ onClose }) => {
 
           <div className="mb-4">
             <label htmlFor="workspaceLocation" className="font-semibold mb-2 flex items-center">
-              Location
+              {t('MODALS.COMMON.LOCATION')}
               <Help>
                 <p>
-                  Marrone stores your workspaces on your computer's filesystem.
+                  {t('MODALS.CREATE_WORKSPACE.LOCATION_HELP_FILESYSTEM')}
                 </p>
                 <p className="mt-2">
-                  Choose the location where you want to store this workspace.
+                  {t('MODALS.CREATE_WORKSPACE.LOCATION_HELP_CHOOSE')}
                 </p>
               </Help>
             </label>
@@ -214,7 +217,7 @@ const CreateWorkspace = ({ onClose }) => {
                 className="text-link cursor-pointer hover:underline"
                 onClick={browse}
               >
-                Browse
+                {t('MODALS.COMMON.BROWSE')}
               </span>
             </div>
           </div>

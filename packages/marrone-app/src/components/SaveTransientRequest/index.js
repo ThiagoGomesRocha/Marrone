@@ -24,6 +24,7 @@ import { itemSchema } from '@marrone/schema';
 import { uuid } from 'utils/common';
 import { formatIpcError } from 'utils/common/error';
 import get from 'lodash/get';
+import i18n from '../../i18n';
 
 const SaveTransientRequest = ({ item: itemProp, collection: collectionProp, isOpen = false, onClose, closeAfterSave = false }) => {
   const dispatch = useDispatch();
@@ -190,7 +191,7 @@ const SaveTransientRequest = ({ item: itemProp, collection: collectionProp, isOp
 
       const trimmedName = requestName.trim();
       if (!trimmedName || trimmedName.length === 0) {
-        toast.error('Request name is required');
+        toast.error(i18n.t('TOASTS.REQUEST_NAME_REQUIRED'));
         return;
       }
 
@@ -214,7 +215,7 @@ const SaveTransientRequest = ({ item: itemProp, collection: collectionProp, isOp
           );
           baseItem = { ...latestItem, ...parsed, uid: latestItem.uid, pathname: latestItem.pathname };
         } catch (err) {
-          toast.error(formatIpcError(err) || 'Invalid request content - fix it in file mode before saving');
+          toast.error(formatIpcError(err) || i18n.t('TOASTS.INVALID_REQUEST_CONTENT'));
           return;
         }
       } else {
@@ -268,10 +269,10 @@ const SaveTransientRequest = ({ item: itemProp, collection: collectionProp, isOp
         }
       });
 
-      toast.success('Request saved successfully');
+      toast.success(i18n.t('TOASTS.REQUEST_SAVED'));
       handleClose();
     } catch (err) {
-      toast.error(formatIpcError(err) || 'Failed to save request');
+      toast.error(formatIpcError(err) || i18n.t('TOASTS.FAILED_SAVE_REQUEST'));
       console.error('Error saving request:', err);
     }
   };
@@ -303,7 +304,7 @@ const SaveTransientRequest = ({ item: itemProp, collection: collectionProp, isOp
     const trimmedFolderName = newFolderName.trim();
 
     if (!trimmedFolderName) {
-      toast.error('Folder name is required');
+      toast.error(i18n.t('TOASTS.FOLDER_NAME_REQUIRED'));
       return;
     }
 
@@ -318,12 +319,12 @@ const SaveTransientRequest = ({ item: itemProp, collection: collectionProp, isOp
 
     try {
       await dispatch(newFolder(trimmedFolderName, directoryName, targetCollectionUid, parentFolder?.uid));
-      toast.success('New folder created!');
+      toast.success(i18n.t('TOASTS.FOLDER_CREATED'));
 
       setPendingFolderNavigation(directoryName);
       handleCancelNewFolder();
     } catch (err) {
-      const errorMessage = err?.message || 'An error occurred while adding the folder';
+      const errorMessage = err?.message || i18n.t('TOASTS.ERROR_ADDING_FOLDER');
       toast.error(errorMessage);
     }
   };
@@ -350,7 +351,7 @@ const SaveTransientRequest = ({ item: itemProp, collection: collectionProp, isOp
   const handleCreateNewCollection = async () => {
     const trimmedName = newCollection.name.trim();
     if (!trimmedName) {
-      toast.error('Collection name is required');
+      toast.error(i18n.t('TOASTS.COLLECTION_NAME_REQUIRED'));
       return;
     }
     if (!validateName(trimmedName)) {
@@ -358,15 +359,15 @@ const SaveTransientRequest = ({ item: itemProp, collection: collectionProp, isOp
       return;
     }
     if (!newCollection.location) {
-      toast.error('Location is required');
+      toast.error(i18n.t('TOASTS.LOCATION_REQUIRED'));
       return;
     }
     try {
       await dispatch(createCollection(trimmedName, sanitizeName(trimmedName), newCollection.location, { format: newCollection.format, source: 'save-transient-request', entryPoint: 'save-transient-request' }));
-      toast.success('Collection created!');
+      toast.success(i18n.t('TOASTS.COLLECTION_CREATED'));
       handleCancelNewCollection();
     } catch (err) {
-      toast.error(err?.message || 'An error occurred while creating the collection');
+      toast.error(err?.message || i18n.t('TOASTS.ERROR_CREATING_COLLECTION'));
     }
   };
 
@@ -393,7 +394,7 @@ const SaveTransientRequest = ({ item: itemProp, collection: collectionProp, isOp
         title={isSelectingCollection ? 'Select Collection' : 'Save Request'}
         handleCancel={handleCancel}
         handleConfirm={handleConfirm}
-        confirmText="Save"
+        confirmText={i18n.t('UI.SAVE')}
         cancelText="Cancel"
         hideFooter={true}
         dataTestId="save-transient-request-modal"
@@ -478,7 +479,7 @@ const SaveTransientRequest = ({ item: itemProp, collection: collectionProp, isOp
                             ref={(node) => node?.focus()}
                             type="text"
                             className="new-collection-input"
-                            placeholder="Enter collection name"
+                            placeholder={i18n.t('UI.ENTER_COLLECTION_NAME')}
                             value={newCollection.name}
                             onChange={(e) => setNewCollection((prev) => ({ ...prev, name: e.target.value }))}
                             onKeyDown={(e) => {
@@ -510,7 +511,7 @@ const SaveTransientRequest = ({ item: itemProp, collection: collectionProp, isOp
                             <input
                               type="text"
                               className="new-collection-input cursor-pointer"
-                              placeholder="Select location"
+                              placeholder={i18n.t('UI.SELECT_LOCATION_PH')}
                               value={newCollection.location}
                               readOnly
                               onClick={handleBrowseCollectionLocation}
@@ -610,7 +611,7 @@ const SaveTransientRequest = ({ item: itemProp, collection: collectionProp, isOp
                   <SearchInput
                     searchText={searchText}
                     setSearchText={setSearchText}
-                    placeholder="Search for folder"
+                    placeholder={i18n.t('UI.SEARCH_FOR_FOLDER')}
                     autoFocus={false}
                   />
                 </div>
@@ -644,7 +645,7 @@ const SaveTransientRequest = ({ item: itemProp, collection: collectionProp, isOp
                               ref={(node) => node?.focus()}
                               type="text"
                               className="new-folder-input"
-                              placeholder="Untitled new folder"
+                              placeholder={i18n.t('UI.UNTITLED_NEW_FOLDER')}
                               value={newFolderName}
                               onChange={(e) => handleNewFolderNameChange(e.target.value)}
                               onKeyDown={(e) => {
@@ -663,7 +664,7 @@ const SaveTransientRequest = ({ item: itemProp, collection: collectionProp, isOp
                                 type="button"
                                 className="new-folder-action-btn"
                                 onClick={handleCancelNewFolder}
-                                title="Cancel"
+                                title={i18n.t('UI.CANCEL')}
                               >
                                 <IconX size={16} strokeWidth={1.5} />
                               </button>
@@ -671,7 +672,7 @@ const SaveTransientRequest = ({ item: itemProp, collection: collectionProp, isOp
                                 type="button"
                                 className="new-folder-action-btn"
                                 onClick={handleCreateNewFolder}
-                                title="Create folder"
+                                title={i18n.t('UI.CREATE_FOLDER')}
                               >
                                 <IconCheck size={16} strokeWidth={1.5} />
                               </button>
@@ -710,7 +711,7 @@ const SaveTransientRequest = ({ item: itemProp, collection: collectionProp, isOp
                                   <input
                                     type="text"
                                     className="block textbox mt-2 w-full"
-                                    placeholder="Folder Name"
+                                    placeholder={i18n.t('UI.FOLDER_NAME')}
                                     value={newFolderDirectoryName}
                                     autoComplete="off"
                                     autoCorrect="off"

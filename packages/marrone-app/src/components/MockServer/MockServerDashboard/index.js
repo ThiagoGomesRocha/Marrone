@@ -29,6 +29,7 @@ import ActionIcon from 'ui/ActionIcon';
 import Button from 'ui/Button';
 import { resolveMockResponseLocation, countMockRoutes } from 'utils/mock-server/mock-responses';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../i18n';
 
 const MockServerLogCount = ({ mockServerUid }) => {
   const logCount = useSelector((state) => (state.mockServer.requestLogs[mockServerUid] || []).length);
@@ -141,9 +142,9 @@ const MockServerDashboard = ({ instance, collection }) => {
       const result = await dispatch(startMockServer(payload)).unwrap();
       await dispatch(syncMockServerState(location));
 
-      toast.success(`Mock server started at ${result.baseUrl}`);
+      toast.success(i18n.t('TOASTS.MOCK_STARTED_AT', { url: result.baseUrl }));
     } catch (err) {
-      toast.error(err.message || 'Failed to start mock server');
+      toast.error(err.message || i18n.t('TOASTS.FAILED_START_MOCK_SERVER'));
     }
   };
 
@@ -151,9 +152,9 @@ const MockServerDashboard = ({ instance, collection }) => {
     try {
       await dispatch(stopMockServer({ mockServerUid })).unwrap();
       await dispatch(syncMockServerState(location));
-      toast.success('Mock server stopped');
+      toast.success(i18n.t('TOASTS.MOCK_SERVER_STOPPED'));
     } catch (err) {
-      toast.error(err.message || 'Failed to stop mock server');
+      toast.error(err.message || i18n.t('TOASTS.FAILED_STOP_MOCK_SERVER'));
     }
   };
 
@@ -163,7 +164,7 @@ const MockServerDashboard = ({ instance, collection }) => {
       const { responses } = await dispatch(loadMockResponses(location)).unwrap();
       toast.success(`Routes refreshed: ${countMockRoutes(responses)} routes, ${responses.length} responses`);
     } catch (err) {
-      toast.error(err.message || 'Failed to refresh routes');
+      toast.error(err.message || i18n.t('TOASTS.FAILED_REFRESH_ROUTES'));
     }
   };
 
@@ -196,7 +197,7 @@ const MockServerDashboard = ({ instance, collection }) => {
     }
 
     if (isMockServerNameTaken(workspaceInstances, trimmedName, storedInstance.uid)) {
-      toast.error('A mock server with this name already exists');
+      toast.error(i18n.t('TOASTS.MOCK_SERVER_NAME_EXISTS'));
       setNameDraft(null);
       return;
     }
@@ -204,7 +205,7 @@ const MockServerDashboard = ({ instance, collection }) => {
     try {
       await persistInstance({ name: trimmedName });
     } catch {
-      toast.error('Failed to save mock server name');
+      toast.error(i18n.t('TOASTS.FAILED_SAVE_MOCK_SERVER_NAME'));
     } finally {
       setNameDraft(null);
     }
@@ -225,7 +226,7 @@ const MockServerDashboard = ({ instance, collection }) => {
     try {
       await persistInstance({ globalDelay: newDelay });
     } catch (err) {
-      toast.error(err.message || 'Failed to update delay');
+      toast.error(err.message || i18n.t('TOASTS.FAILED_UPDATE_DELAY'));
     } finally {
       setDelayDraft(null);
     }
@@ -238,7 +239,7 @@ const MockServerDashboard = ({ instance, collection }) => {
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
     } catch {
-      toast.error('Failed to copy URL');
+      toast.error(i18n.t('TOASTS.FAILED_COPY_URL'));
     }
   };
 
@@ -306,7 +307,7 @@ const MockServerDashboard = ({ instance, collection }) => {
           <input
             type="text"
             className="mock-server-name-input"
-            aria-label="Mock server name"
+            aria-label={i18n.t('UI.MOCK_SERVER_NAME')}
             value={nameValue}
             onChange={(event) => setNameDraft(event.target.value)}
             onBlur={handleNameBlur}
@@ -338,7 +339,7 @@ const MockServerDashboard = ({ instance, collection }) => {
           </div>
 
           {isRunning && baseUrl && (
-            <button className="copy-url-btn" onClick={handleCopyUrl} title="Copy mock server URL" data-testid="mock-server-copy-url">
+            <button className="copy-url-btn" onClick={handleCopyUrl} title={i18n.t('UI.COPY_MOCK_SERVER_URL')} data-testid="mock-server-copy-url">
               {copied ? <IconCheck size={13} strokeWidth={2} /> : <IconCopy size={13} strokeWidth={1.5} />}
               <span className="url-text">{baseUrl}</span>
             </button>

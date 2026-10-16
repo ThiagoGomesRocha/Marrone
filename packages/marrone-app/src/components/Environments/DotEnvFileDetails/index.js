@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { IconTrash } from '@tabler/icons';
 import DeleteDotEnvFile from 'components/Environments/EnvironmentSettings/DeleteDotEnvFile';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../i18n';
 
 const DotEnvFileDetails = ({
   title,
@@ -30,7 +31,7 @@ const DotEnvFileDetails = ({
         <div className="actions">
           {dotEnvExists && (
             <>
-              <div className="view-toggle" role="group" aria-label="View mode">
+              <div className="view-toggle" role="group" aria-label={i18n.t('UI.VIEW_MODE')}>
                 <button
                   type="button"
                   className={`toggle-btn ${viewMode === 'table' ? 'active' : ''}`}
@@ -49,7 +50,7 @@ const DotEnvFileDetails = ({
                   Raw
                 </button>
               </div>
-              <button type="button" onClick={handleDeleteClick} title="Delete .env file" className="action-btn delete-btn">
+              <button type="button" onClick={handleDeleteClick} title={i18n.t('UI.DELETE_DOTENV')} className="action-btn delete-btn">
                 <IconTrash size={15} strokeWidth={1.5} />
               </button>
             </>

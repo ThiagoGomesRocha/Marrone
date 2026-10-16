@@ -21,6 +21,8 @@ import {
   saveMockServerInstance,
   suggestAvailableMockServerPort
 } from 'utils/mock-server/mock-server-instances';
+import { useTranslation } from 'react-i18next';
+import i18n from '../../../i18n';
 
 const CloneMockServerModal = ({
   instance,
@@ -29,6 +31,7 @@ const CloneMockServerModal = ({
   activeWorkspace,
   onClose
 }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const inputRef = useRef();
   const activeWorkspaceUid = useSelector((state) => state.workspaces.activeWorkspaceUid);
@@ -44,14 +47,14 @@ const CloneMockServerModal = ({
     validationSchema: Yup.object({
       name: Yup.string()
         .trim()
-        .min(1, 'Must be at least 1 character')
-        .max(255, 'Must be 255 characters or less')
+        .min(1, () => i18n.t('VALIDATION.MIN_1_CHAR'))
+        .max(255, () => i18n.t('VALIDATION.MAX_255_CHARS'))
         .test('is-valid-name', function (value) {
           const error = getMockServerNameError(value);
           return error ? this.createError({ message: error }) : true;
         })
-        .required('Name is required')
-        .test('duplicate-name', 'A mock server with this name already exists', (value) => (
+        .required(() => i18n.t('VALIDATION.NAME_REQUIRED'))
+        .test('duplicate-name', () => i18n.t('VALIDATION.MOCK_SERVER_NAME_EXISTS'), (value) => (
           !isMockServerNameTaken(existingInstances, value)
         )),
       port: Yup.mixed()
@@ -59,7 +62,7 @@ const CloneMockServerModal = ({
           const error = getMockServerPortRangeError(value);
           return error ? this.createError({ message: error }) : true;
         })
-        .test('duplicate-port', 'This port is already used by another mock server', (value) => {
+        .test('duplicate-port', () => i18n.t('VALIDATION.PORT_IN_USE'), (value) => {
           const normalizedPort = Number(value);
           if (!normalizedPort) {
             return true;
@@ -70,7 +73,7 @@ const CloneMockServerModal = ({
     }),
     onSubmit: async (values, { setFieldError }) => {
       if (!workspacePath) {
-        toast.error('Workspace path is required to clone mock responses');
+        toast.error(i18n.t('TOASTS.WORKSPACE_PATH_REQUIRED'));
         return;
       }
 
@@ -119,10 +122,10 @@ const CloneMockServerModal = ({
         });
 
         dispatch(openMockServerDashboard(savedInstance, tabCollectionUid));
-        toast.success('Mock server cloned');
+        toast.success(i18n.t('TOASTS.MOCK_SERVER_CLONED'));
         onClose();
       } catch (err) {
-        toast.error(err.message || 'Failed to clone mock server');
+        toast.error(err.message || i18n.t('TOASTS.FAILED_CLONE_MOCK_SERVER'));
       }
     }
   });
@@ -152,8 +155,8 @@ const CloneMockServerModal = ({
     <Portal>
       <Modal
         size="md"
-        title="Clone Mock Server"
-        confirmText="Clone"
+        title={t('MODALS.CLONE_MOCK_SERVER.TITLE')}
+        confirmText={t('MODALS.COMMON.CLONE')}
         handleConfirm={async () => {
           const errors = await formik.validateForm();
           if (Object.keys(errors).length > 0) {
@@ -172,7 +175,7 @@ const CloneMockServerModal = ({
         <form className="marrone-form" onSubmit={(event) => event.preventDefault()}>
           <div>
             <label htmlFor="mock-server-clone-name" className="block font-medium">
-              Name
+              {t('MODALS.COMMON.NAME')}
             </label>
             <input
               id="mock-server-clone-name"
@@ -196,7 +199,7 @@ const CloneMockServerModal = ({
 
           <div className="mt-4">
             <label htmlFor="mock-server-clone-port" className="block font-medium">
-              Port
+              {t('MODALS.COMMON.PORT')}
             </label>
             <input
               id="mock-server-clone-port"
@@ -221,7 +224,7 @@ const CloneMockServerModal = ({
           </div>
 
           <p className="text-xs opacity-70 mt-4">
-            Clones mock responses and server settings. The clone starts stopped.
+            {t('MODALS.CLONE_MOCK_SERVER.CLONE_HINT')}
           </p>
         </form>
       </Modal>

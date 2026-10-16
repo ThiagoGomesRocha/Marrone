@@ -6,8 +6,11 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { renameWorkspaceAction } from 'providers/ReduxStore/slices/workspaces/actions';
+import { useTranslation } from 'react-i18next';
+import i18n from '../../../i18n';
 
 const RenameWorkspace = ({ onClose, workspace }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const inputRef = useRef();
 
@@ -19,9 +22,9 @@ const RenameWorkspace = ({ onClose, workspace }) => {
     validationSchema: Yup.object({
       name: Yup.string()
         .trim()
-        .min(1, 'must be at least 1 character')
-        .max(255, 'must be 255 characters or less')
-        .required('name is required')
+        .min(1, () => i18n.t('VALIDATION.MIN_1_CHAR'))
+        .max(255, () => i18n.t('VALIDATION.MAX_255_CHARS'))
+        .required(() => i18n.t('VALIDATION.NAME_REQUIRED'))
     }),
     onSubmit: (values) => {
       const name = values.name.trim();
@@ -34,7 +37,7 @@ const RenameWorkspace = ({ onClose, workspace }) => {
           onClose();
         })
         .catch((error) => {
-          toast.error(error?.message || 'An error occurred while renaming the workspace');
+          toast.error(error?.message || i18n.t('TOASTS.ERROR_RENAMING_WORKSPACE'));
         });
     }
   });
@@ -54,8 +57,8 @@ const RenameWorkspace = ({ onClose, workspace }) => {
     <Portal>
       <Modal
         size="md"
-        title="Rename Workspace"
-        confirmText="Rename"
+        title={t('MODALS.RENAME_WORKSPACE.TITLE')}
+        confirmText={t('MODALS.COMMON.RENAME')}
         handleConfirm={onSubmit}
         handleCancel={onClose}
         dataTestId="rename-workspace-modal"
@@ -63,7 +66,7 @@ const RenameWorkspace = ({ onClose, workspace }) => {
         <form className="marrone-form" onSubmit={(e) => e.preventDefault()}>
           <div>
             <label htmlFor="workspace-name" className="block font-semibold">
-              Workspace Name
+              {t('MODALS.RENAME_WORKSPACE.WORKSPACE_NAME')}
             </label>
             <input
               id="workspace-name"

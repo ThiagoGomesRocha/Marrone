@@ -13,6 +13,7 @@ import { formatIpcError } from 'utils/common/error';
 import StatusBadge from 'ui/StatusBadge';
 import Help from 'components/Help';
 import EndpointVisualDiff from './EndpointVisualDiff';
+import i18n from '../../../i18n';
 
 // Expandable row - can be used with or without decision buttons
 const ExpandableEndpointRow = ({ endpoint, decision, onDecisionChange, collectionPath, newSpec, showDecisions = true, decisionLabels, diffLeftLabel, diffRightLabel, swapDiffSides, collectionUid, actions, preserveValues = true }) => {
@@ -140,14 +141,14 @@ const ExpandableEndpointRow = ({ endpoint, decision, onDecisionChange, collectio
             <button
               className={`decision-btn keep ${decision === 'keep-mine' ? 'selected' : ''}`}
               onClick={() => onDecisionChange('keep-mine')}
-              title="Keep your local version"
+              title={i18n.t('UI.KEEP_LOCAL_VERSION')}
             >
               <IconX size={12} /> {decisionLabels?.keep || 'Keep Mine'}
             </button>
             <button
               className={`decision-btn accept ${decision === 'accept-incoming' ? 'selected' : ''}`}
               onClick={() => onDecisionChange('accept-incoming')}
-              title="Accept the spec version"
+              title={i18n.t('UI.ACCEPT_SPEC_VERSION')}
             >
               <IconCheck size={12} /> {decisionLabels?.accept || 'Accept Spec'}
             </button>

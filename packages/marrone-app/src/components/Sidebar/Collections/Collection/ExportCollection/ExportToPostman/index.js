@@ -7,15 +7,18 @@ import { IconCaretDown } from '@tabler/icons';
 import toast from 'react-hot-toast';
 import { sanitizeName, validateName, validateNameError } from 'utils/common/regex';
 import Portal from 'components/Portal';
+import { useTranslation } from 'react-i18next';
 import Modal from 'components/Modal';
 import Dropdown from 'components/Dropdown';
 import { browseDirectory, exportCollectionToPostman } from 'providers/ReduxStore/slices/collections/actions';
 import { exportPostmanCollection } from 'utils/exporters/postman-collection';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../../../../i18n';
 
 const FILE_EXISTS_ERROR = 'Name already exists in this location.';
 
 const ExportToPostman = ({ onClose, onExported, collection }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const inputRef = useRef();
   const [preserveScripts, setPreserveScripts] = useState(false);
@@ -33,15 +36,15 @@ const ExportToPostman = ({ onClose, onExported, collection }) => {
     validationSchema: Yup.object({
       fileName: Yup.string()
         .trim()
-        .min(1, 'must be at least 1 character')
-        .max(255, 'must be 255 characters or less')
+        .min(1, () => i18n.t('VALIDATION.MIN_1_CHAR'))
+        .max(255, () => i18n.t('VALIDATION.MAX_255_CHARS'))
         .test('is-valid-name', function (value) {
           if (!value) return true;
           const isValid = validateName(value);
           return isValid ? true : this.createError({ message: validateNameError(value) });
         })
-        .required('Name is required'),
-      location: Yup.string().min(1, 'Location is required').required('Location is required')
+        .required(() => i18n.t('VALIDATION.NAME_REQUIRED')),
+      location: Yup.string().min(1, () => i18n.t('VALIDATION.LOCATION_REQUIRED')).required(() => i18n.t('VALIDATION.LOCATION_REQUIRED'))
     }),
     onSubmit: (values) => handleExport(values, false)
   });
@@ -56,7 +59,7 @@ const ExportToPostman = ({ onClose, onExported, collection }) => {
     try {
       const content = exportPostmanCollection(cloneDeep(collection), { preserveScripts });
       await dispatch(exportCollectionToPostman(values.location, `${values.fileName.trim()}.json`, content, overwrite));
-      toast.success('Collection exported successfully');
+      toast.success(i18n.t('TOASTS.COLLECTION_EXPORTED'));
       onExported();
     } catch (error) {
       const message = error?.message || String(error);
@@ -66,7 +69,7 @@ const ExportToPostman = ({ onClose, onExported, collection }) => {
         formik.setFieldError('fileName', FILE_EXISTS_ERROR);
         return;
       }
-      toast.error('Failed to export collection: ' + message);
+      toast.error(i18n.t('TOASTS.FAILED_EXPORT_COLLECTION') + ': ' + message);
     } finally {
       setIsExporting(false);
     }
@@ -98,7 +101,7 @@ const ExportToPostman = ({ onClose, onExported, collection }) => {
     return (
       <div ref={ref} className="flex items-center text-link cursor-pointer">
         <button className="btn-advanced" type="button">
-          Options
+          {t('MODALS.COMMON.OPTIONS')}
         </button>
         <IconCaretDown className="caret ml-1" size={14} strokeWidth={2} />
       </div>
@@ -110,9 +113,9 @@ const ExportToPostman = ({ onClose, onExported, collection }) => {
       <StyledWrapper>
         <Modal
           size="md"
-          title="Export to Postman"
+          title={t('MODALS.EXPORT_TO_POSTMAN.TITLE')}
           dataTestId="export-to-postman-modal"
-          confirmText={fileExists ? 'Replace' : 'Export'}
+          confirmText={fileExists ? t('MODALS.COMMON.REPLACE') : t('MODALS.COMMON.EXPORT')}
           confirmButtonColor={fileExists ? 'danger' : 'primary'}
           confirmDisabled={isExporting}
           handleConfirm={() => (fileExists ? handleReplace() : formik.handleSubmit())}
@@ -128,7 +131,7 @@ const ExportToPostman = ({ onClose, onExported, collection }) => {
                     setShowAdvancedOptions(!showAdvancedOptions);
                   }}
                 >
-                  {showAdvancedOptions ? 'Hide Advanced Options' : 'Show Advanced Options'}
+                  {showAdvancedOptions ? t('MODALS.COMMON.HIDE_ADVANCED_OPTIONS') : t('MODALS.COMMON.SHOW_ADVANCED_OPTIONS')}
                 </div>
               </Dropdown>
             </div>
@@ -136,7 +139,7 @@ const ExportToPostman = ({ onClose, onExported, collection }) => {
         >
           <form className="marrone-form" onSubmit={(e) => e.preventDefault()}>
             <label htmlFor="fileName" className="block font-medium">
-              Name
+              {t('MODALS.COMMON.NAME')}
             </label>
             <div className="relative">
               <input
@@ -159,7 +162,7 @@ const ExportToPostman = ({ onClose, onExported, collection }) => {
             ) : null}
 
             <label htmlFor="location" className="block font-medium mt-4">
-              Location
+              {t('MODALS.COMMON.LOCATION')}
             </label>
             <input
               id="location"
@@ -179,7 +182,7 @@ const ExportToPostman = ({ onClose, onExported, collection }) => {
             ) : null}
             <div className="mt-1">
               <span className="text-link cursor-pointer hover:underline" onClick={browse}>
-                Browse
+                {t('MODALS.COMMON.BROWSE')}
               </span>
             </div>
 
@@ -193,9 +196,9 @@ const ExportToPostman = ({ onClose, onExported, collection }) => {
                   data-testid="preserve-scripts-toggle"
                 />
                 <div>
-                  <span className="preserve-scripts-label">Preserve scripts</span>
+                  <span className="preserve-scripts-label">{t('MODALS.EXPORT_TO_POSTMAN.PRESERVE_SCRIPTS')}</span>
                   <p className="preserve-scripts-description">
-                    Export Marrone scripts without translating them.
+                    {t('MODALS.EXPORT_TO_POSTMAN.PRESERVE_SCRIPTS_DESC')}
                   </p>
                 </div>
               </label>

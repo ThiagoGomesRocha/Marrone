@@ -1,5 +1,6 @@
 import { IconSearch, IconX } from '@tabler/icons';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../../i18n';
 
 const CollectionSearch = ({ searchText, setSearchText }) => {
   return (
@@ -9,7 +10,7 @@ const CollectionSearch = ({ searchText, setSearchText }) => {
         type="text"
         name="search"
         data-testid="sidebar-search-input"
-        placeholder="Search requests..."
+        placeholder={i18n.t('UI.SEARCH_REQUESTS')}
         id="search"
         autoComplete="off"
         autoCorrect="off"

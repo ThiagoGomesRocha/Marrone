@@ -1,5 +1,6 @@
 import PromptVariablesModal from 'components/RequestPane/PromptVariables/PromptVariablesModal';
 import React, { createContext, useCallback, useState } from 'react';
+import i18n from '../../i18n';
 
 const PromptVariablesContext = createContext();
 
@@ -39,7 +40,7 @@ export function PromptVariablesProvider({ children }) {
       {children}
       {modalState.open && (
         <PromptVariablesModal
-          title="Input Required"
+          title={i18n.t('UI.INPUT_REQUIRED')}
           prompts={modalState.prompts}
           onSubmit={handleSubmit}
           onCancel={handleCancel}

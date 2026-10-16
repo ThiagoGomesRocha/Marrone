@@ -7,6 +7,7 @@ import { Tooltip } from 'react-tooltip';
 import IconAlertTriangleFilled from 'components/Icons/IconAlertTriangleFilled';
 import useMissingFileCheck from 'hooks/useMissingFileCheck';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../i18n';
 
 /**
  * FilePickerEditor component for selecting files
@@ -120,7 +121,7 @@ const FilePickerEditor = ({
             <button
               className="clear-btn"
               onClick={clear}
-              title="Remove file"
+              title={i18n.t('UI.REMOVE_FILE')}
               type="button"
             >
               <IconX size={16} />

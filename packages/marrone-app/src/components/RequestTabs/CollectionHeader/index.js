@@ -50,6 +50,7 @@ import { useTheme } from 'providers/Theme';
 import { useBetaFeature, BETA_FEATURES } from 'utils/beta-features';
 import CreateMockServerModal from 'components/MockServer/CreateMockServerModal';
 import { getMockServerInstances, openMockServerDashboard } from 'utils/mock-server/mock-server-instances';
+import i18n from '../../../i18n';
 
 const readDismissedCollections = () => {
   try {
@@ -349,7 +350,7 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
   const handleCloseWorkspaceClick = () => {
     workspaceActionsRef.current?.hide();
     if (currentWorkspace?.type === 'default') {
-      toast.error('Cannot close the default workspace');
+      toast.error(i18n.t('TOASTS.CANNOT_CLOSE_DEFAULT_WORKSPACE'));
       return;
     }
     setCloseWorkspaceModalOpen(true);
@@ -360,7 +361,7 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
     const pathname = currentWorkspace?.pathname;
     if (pathname) {
       dispatch(showInFolder(pathname)).catch(() => {
-        toast.error('Error opening the folder');
+        toast.error(i18n.t('TOASTS.ERROR_OPENING_FOLDER'));
       });
     }
   };
@@ -373,21 +374,21 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
     dispatch(exportWorkspaceAction(uid))
       .then((result) => {
         if (!result?.canceled) {
-          toast.success('Workspace exported successfully');
+          toast.success(i18n.t('TOASTS.WORKSPACE_EXPORTED'));
         }
       })
       .catch((error) => {
-        toast.error(error?.message || 'Error exporting workspace');
+        toast.error(error?.message || i18n.t('TOASTS.ERROR_EXPORTING_WORKSPACE'));
       });
   };
 
   const validateWorkspaceName = (name) => {
     const trimmed = name?.trim();
     if (!trimmed) {
-      return 'Name is required';
+      return i18n.t('VALIDATION.NAME_REQUIRED');
     }
     if (trimmed.length > 255) {
-      return 'Must be 255 characters or less';
+      return i18n.t('VALIDATION.MAX_255_CHARS');
     }
     return null;
   };
@@ -405,7 +406,7 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
         dispatch(cancelWorkspaceCreation(currentWorkspace.uid));
         return;
       }
-      setWorkspaceNameError('Name is required');
+      setWorkspaceNameError(i18n.t('VALIDATION.NAME_REQUIRED'));
       return;
     }
 
@@ -429,10 +430,10 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
           setIsRenamingWorkspace(false);
           setWorkspaceNameInput('');
           setWorkspaceNameError('');
-          toast.success('Workspace created!');
+          toast.success(i18n.t('TOASTS.WORKSPACE_CREATED'));
         })
         .catch((err) => {
-          toast.error(err?.message || 'An error occurred while creating the workspace');
+          toast.error(err?.message || i18n.t('TOASTS.ERROR_CREATING_WORKSPACE'));
         })
         .finally(() => {
           isSavingRef.current = false;
@@ -440,13 +441,13 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
     } else {
       dispatch(renameWorkspaceAction(uid, workspaceNameInput))
         .then(() => {
-          toast.success('Workspace renamed!');
+          toast.success(i18n.t('TOASTS.WORKSPACE_RENAMED'));
           setIsRenamingWorkspace(false);
           setWorkspaceNameInput('');
           setWorkspaceNameError('');
         })
         .catch((err) => {
-          toast.error(err?.message || 'An error occurred while renaming the workspace');
+          toast.error(err?.message || i18n.t('TOASTS.ERROR_RENAMING_WORKSPACE'));
           setWorkspaceNameError(err?.message || 'Failed to rename workspace');
         })
         .finally(() => {
@@ -556,7 +557,7 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
                     className="cog-btn"
                     onMouseDown={(e) => e.preventDefault()}
                     onClick={handleOpenAdvancedCreate}
-                    title="Advanced options"
+                    title={i18n.t('UI.ADVANCED_OPTIONS')}
                   >
                     <IconSettings size={13} strokeWidth={1.5} />
                   </button>
@@ -575,7 +576,7 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
                   className="inline-action-btn cancel"
                   onClick={handleCancelWorkspaceRename}
                   onMouseDown={(e) => e.preventDefault()}
-                  title="Cancel"
+                  title={i18n.t('UI.CANCEL')}
                 >
                   <IconX size={14} strokeWidth={2} />
                 </button>
@@ -697,7 +698,7 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
                     <button
                       type="button"
                       data-testid="view-mode-request"
-                      aria-label="Request view"
+                      aria-label={i18n.t('UI.REQUEST_VIEW')}
                       className={`mode-btn ${!appEnabled && !collection.fileMode ? 'active' : ''}`}
                       onClick={() => {
                         if (collection.fileMode) handleFileModeClick();
@@ -711,7 +712,7 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
                     <button
                       type="button"
                       data-testid="view-mode-app"
-                      aria-label="App view"
+                      aria-label={i18n.t('UI.APP_VIEW')}
                       className={`mode-btn ${appEnabled && !collection.fileMode ? 'active' : ''}`}
                       onClick={() => {
                         if (collection.fileMode) handleFileModeClick();
@@ -725,7 +726,7 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
                     <button
                       type="button"
                       data-testid="view-mode-file"
-                      aria-label="File view"
+                      aria-label={i18n.t('UI.FILE_VIEW')}
                       className={`mode-btn ${collection.fileMode ? 'active' : ''}`}
                       onClick={() => {
                         if (appEnabled) handleToggleAppMode(false);
@@ -741,7 +742,7 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
                 <ToolHint text="AI Assistant" toolhintId="AiAssistantToolhintId" place="bottom">
                   <ActionIcon
                     onClick={() => dispatch(toggleAiSidebar())}
-                    aria-label="AI Assistant"
+                    aria-label={i18n.t('UI.AI_ASSISTANT')}
                     size="sm"
                     data-testid="ai-assistant"
                     className={isAiSidebarOpen ? 'active' : ''}
@@ -754,7 +755,7 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
                 <div
                   className="migrate-yml-pill"
                   data-testid="migrate-yml-pill"
-                  title="Migrate this collection to YML"
+                  title={i18n.t('UI.MIGRATE_TO_YML')}
                 >
                   <button
                     type="button"
@@ -768,7 +769,7 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
                     type="button"
                     className="pill-dismiss"
                     onClick={dismissMigratePill}
-                    aria-label="Dismiss"
+                    aria-label={i18n.t('UI.DISMISS')}
                     data-testid="migrate-yml-pill-dismiss"
                   >
                     <IconX size={12} strokeWidth={2} />
@@ -782,7 +783,7 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
                   toolhintId="OpenApiSyncToolhintId"
                   place="bottom"
                 >
-                  <ActionIcon onClick={viewOpenApiSync} aria-label="OpenAPI" size="sm" className="relative">
+                  <ActionIcon onClick={viewOpenApiSync} aria-label={i18n.t('UI.OPENAPI')} size="sm" className="relative">
                     <OpenAPISyncIcon size={15} />
                     {(hasOpenApiUpdates || hasOpenApiError) && (
                       <span className="absolute top-0 right-0 w-1.5 h-1.5 rounded-full" style={{ backgroundColor: hasOpenApiError ? theme.status.danger.text : theme.status.warning.text }} />
@@ -792,7 +793,7 @@ const CollectionHeader = ({ collection, isScratchCollection }) => {
               )}
               {/* Runner - always visible */}
               <ToolHint text="Runner" toolhintId="RunnerToolhintId" place="bottom">
-                <ActionIcon onClick={handleRun} aria-label="Runner" size="sm" data-testid="runner">
+                <ActionIcon onClick={handleRun} aria-label={i18n.t('UI.RUNNER')} size="sm" data-testid="runner">
                   <IconRun size={16} strokeWidth={1.5} />
                 </ActionIcon>
               </ToolHint>

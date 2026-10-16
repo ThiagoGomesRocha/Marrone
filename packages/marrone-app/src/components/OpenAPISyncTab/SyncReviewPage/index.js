@@ -16,6 +16,7 @@ import ConfirmSyncModal from '../ConfirmSyncModal';
 import SpecDiffModal from '../SpecDiffModal';
 import Help from 'components/Help';
 import { setReviewDecision, setReviewDecisions } from 'providers/ReduxStore/slices/openapi-sync';
+import i18n from '../../../i18n';
 
 /**
  * Categorize remoteDrift endpoints using three-way merge.
@@ -250,7 +251,7 @@ const SyncReviewPage = ({
                   >
                     <span className="preserve-toggle-knob" />
                   </button>
-                  <span className="preserve-values-label">Preserve values</span>
+                  <span className="preserve-values-label">{i18n.t('UI.PRESERVE_VALUES')}</span>
                   <Help icon="info" size={12} placement="top" width={260}>
                     When enabled, your edited values are preserved during sync. When disabled, all values are updated to match the OpenAPI spec.
                   </Help>
@@ -315,12 +316,12 @@ const SyncReviewPage = ({
               <div className="review-group">
 
                 <EndpointChangeSection
-                  title="Updated in Spec"
+                  title={i18n.t('UI.UPDATED_IN_SPEC')}
                   type="spec-modified"
                   endpoints={specUpdatedEndpoints}
                   defaultExpanded={true}
                   expandableLayout
-                  subtitle="The spec has updates for these endpoints"
+                  subtitle={i18n.t('UI.SPEC_UPDATES_FOR')}
                   headerExtra={conflictCount > 0 ? (
                     <StatusBadge
                       status="danger"
@@ -352,12 +353,12 @@ const SyncReviewPage = ({
                 />
 
                 <EndpointChangeSection
-                  title="New in Spec"
+                  title={i18n.t('UI.NEW_IN_SPEC')}
                   type="added"
                   endpoints={specAddedEndpoints}
                   defaultExpanded={true}
                   expandableLayout
-                  subtitle="New endpoints from the spec"
+                  subtitle={i18n.t('UI.NEW_ENDPOINTS_FROM_SPEC')}
                   collectionUid={collectionUid}
                   sectionKey="review-added"
                   renderItem={(endpoint, idx) => (
@@ -377,12 +378,12 @@ const SyncReviewPage = ({
                 />
 
                 <EndpointChangeSection
-                  title="Removed from Spec"
+                  title={i18n.t('UI.REMOVED_FROM_SPEC')}
                   type="removed"
                   endpoints={specRemovedEndpoints}
                   defaultExpanded={true}
                   expandableLayout
-                  subtitle="These endpoints are in your collection but not in the spec"
+                  subtitle={i18n.t('UI.ENDPOINTS_NOT_IN_SPEC')}
                   collectionUid={collectionUid}
                   sectionKey="review-removed"
                   renderItem={(endpoint, idx) => (

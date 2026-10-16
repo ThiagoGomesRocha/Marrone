@@ -4,6 +4,7 @@ import { IconTrash } from '@tabler/icons';
 import MultiLineEditor from 'components/MultiLineEditor/index';
 import DotEnvErrorMessage from './DotEnvErrorMessage';
 import { MIN_TABLE_HEIGHT } from './utils';
+import i18n from '../../../i18n';
 
 const TableRow = React.memo(({ children, item }) => (
   <tr key={item.uid} data-testid={`dotenv-var-row-${item.name}`}>{children}</tr>
@@ -84,7 +85,7 @@ const DotEnvTableView = ({
           {!isLastEmptyRow && (
             <button
               type="button"
-              aria-label="Delete variable"
+              aria-label={i18n.t('UI.DELETE_VARIABLE')}
               onClick={() => onRemoveVar(variable.uid)}
             >
               <IconTrash strokeWidth={1.5} size={18} />

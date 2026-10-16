@@ -4,6 +4,7 @@ import SidebarSection from 'components/Sidebar/SidebarSection';
 import MockServers from 'components/MockServer/Sidebar/MockServers';
 import CreateMockServerModal from 'components/MockServer/CreateMockServerModal';
 import ActionIcon from 'ui/ActionIcon';
+import i18n from '../../../../i18n';
 
 const MockServersSection = () => {
   const [createModalOpen, setCreateModalOpen] = useState(false);
@@ -25,7 +26,7 @@ const MockServersSection = () => {
       )}
       <SidebarSection
         id="mock-servers"
-        title="Mock Servers"
+        title={i18n.t('UI.MOCK_SERVERS')}
         icon={IconServer}
         actions={sectionActions}
         className="mock-servers-section"

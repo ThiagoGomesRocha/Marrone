@@ -1,3 +1,4 @@
+import i18n from '../../../../i18n';
 import React, { useState, useRef } from 'react';
 import StyledWrapper from './StyledWrapper';
 import { usePersistedState } from 'hooks/usePersistedState';
@@ -37,9 +38,9 @@ const ResultIcon = ({ status }) => (
     className={`inline-flex items-center ${status === 'pass' ? 'test-success' : 'test-failure'}`}
   >
     {status === 'pass' ? (
-      <IconCircleCheck size={14} className="mr-1" aria-label="Test passed" />
+      <IconCircleCheck size={14} className="mr-1" aria-label={i18n.t('UI.TEST_PASSED')} />
     ) : (
-      <IconCircleX size={14} className="mr-1" aria-label="Test failed" />
+      <IconCircleX size={14} className="mr-1" aria-label={i18n.t('UI.TEST_FAILED')} />
     )}
   </span>
 );

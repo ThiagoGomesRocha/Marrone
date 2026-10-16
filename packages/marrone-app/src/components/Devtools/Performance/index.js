@@ -1,3 +1,4 @@
+import i18n from '../../../i18n';
 import React, { useEffect, useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import StyledWrapper from './StyledWrapper';
@@ -119,33 +120,33 @@ const Performance = () => {
       <div className="resource-cards">
         <SystemResourceCard
           icon={IconCpu}
-          title="CPU Usage"
+          title={i18n.t('UI.CPU_USAGE')}
           value={`${systemResources.cpu.toFixed(1)}%`}
-          subtitle="Total CPU usage"
+          subtitle={i18n.t('UI.TOTAL_CPU_USAGE')}
           color={systemResources.cpu > 80 ? 'danger' : systemResources.cpu > 60 ? 'warning' : 'success'}
         />
 
         <SystemResourceCard
           icon={IconDatabase}
-          title="Memory Usage"
+          title={i18n.t('UI.MEMORY_USAGE')}
           value={formatBytes(systemResources.memory)}
-          subtitle="Total memory usage"
+          subtitle={i18n.t('UI.TOTAL_MEMORY_USAGE')}
           color={systemResources.memory > (500 * 1024 * 1024) ? 'danger' : 'default'}
         />
 
         <SystemResourceCard
           icon={IconClock}
-          title="Uptime"
+          title={i18n.t('UI.UPTIME')}
           value={formatUptime(systemResources.uptime)}
-          subtitle="Process runtime"
+          subtitle={i18n.t('UI.PROCESS_RUNTIME')}
           color="info"
         />
 
         <SystemResourceCard
           icon={IconServer}
-          title="Process ID"
+          title={i18n.t('UI.PROCESS_ID')}
           value={systemResources.pid || 'N/A'}
-          subtitle="Main process PID"
+          subtitle={i18n.t('UI.MAIN_PROCESS_PID')}
           color="default"
         />
       </div>
@@ -166,33 +167,33 @@ const Performance = () => {
         <div className="resource-cards">
           <SystemResourceCard
             icon={IconCpu}
-            title="CPU Usage"
+            title={i18n.t('UI.CPU_USAGE')}
             value={`${process.cpu.toFixed(1)}%`}
-            subtitle="Current CPU usage"
+            subtitle={i18n.t('UI.CURRENT_CPU_USAGE')}
             color={process.cpu > 80 ? 'danger' : process.cpu > 60 ? 'warning' : 'success'}
           />
 
           <SystemResourceCard
             icon={IconDatabase}
-            title="Memory Usage"
+            title={i18n.t('UI.MEMORY_USAGE')}
             value={formatBytes(process.memory)}
-            subtitle="Current memory usage"
+            subtitle={i18n.t('UI.CURRENT_MEMORY_USAGE')}
             color={process.memory > (500 * 1024 * 1024) ? 'danger' : 'default'}
           />
 
           <SystemResourceCard
             icon={IconClock}
-            title="Uptime"
+            title={i18n.t('UI.UPTIME')}
             value={formatUptime(processUptime)}
-            subtitle="Process runtime"
+            subtitle={i18n.t('UI.PROCESS_RUNTIME')}
             color="info"
           />
 
           <SystemResourceCard
             icon={IconServer}
-            title="Process ID"
+            title={i18n.t('UI.PROCESS_ID')}
             value={process.pid}
-            subtitle="Process PID"
+            subtitle={i18n.t('UI.PROCESS_PID')}
             color="default"
           />
         </div>

@@ -33,6 +33,7 @@ import { hydrateMockServerInstances } from 'utils/mock-server/mock-server-instan
 import { hydrateTabs, getActiveTabFromSnapshot, hydrateSnapshotLookups, getCollectionSnapshotFromLookups, WORKSPACE_TAB_UID_SUFFIX_BY_TYPE } from 'utils/snapshot';
 import toast from 'react-hot-toast';
 import { closeAiSidebar } from '../chat';
+import i18n from '../../../../i18n';
 
 const { ipcRenderer } = window;
 let snapshotHydrationTimer = null;
@@ -274,7 +275,7 @@ export const connectCollectionToGit = ({ workspaceUid, collectionPath, remoteUrl
     try {
       const workspace = getState().workspaces.workspaces.find((w) => w.uid === workspaceUid);
       if (!workspace) {
-        throw new Error('Workspace not found');
+        throw new Error(i18n.t('TOASTS.WORKSPACE_NOT_FOUND'));
       }
 
       await ipcRenderer.invoke(
@@ -286,7 +287,7 @@ export const connectCollectionToGit = ({ workspaceUid, collectionPath, remoteUrl
 
       return true;
     } catch (error) {
-      toast.error(error.message || 'Failed to connect Git remote');
+      toast.error(error.message || i18n.t('TOASTS.FAILED_CONNECT_GIT_REMOTE'));
       throw error;
     }
   };
@@ -297,7 +298,7 @@ export const disconnectCollectionFromGit = ({ workspaceUid, collectionPath }) =>
     try {
       const workspace = getState().workspaces.workspaces.find((w) => w.uid === workspaceUid);
       if (!workspace) {
-        throw new Error('Workspace not found');
+        throw new Error(i18n.t('TOASTS.WORKSPACE_NOT_FOUND'));
       }
 
       await ipcRenderer.invoke(
@@ -308,7 +309,7 @@ export const disconnectCollectionFromGit = ({ workspaceUid, collectionPath }) =>
 
       return true;
     } catch (error) {
-      toast.error(error.message || 'Failed to remove Git remote');
+      toast.error(error.message || i18n.t('TOASTS.FAILED_REMOVE_GIT_REMOTE'));
       throw error;
     }
   };
@@ -323,7 +324,7 @@ export const removeCollectionFromWorkspaceAction = (workspaceUid, collectionPath
       const workspace = workspacesState.workspaces.find((w) => w.uid === workspaceUid);
 
       if (!workspace) {
-        throw new Error('Workspace not found');
+        throw new Error(i18n.t('TOASTS.WORKSPACE_NOT_FOUND'));
       }
 
       const normalizedCollectionPath = normalizePath(collectionPath);
@@ -825,7 +826,7 @@ export const loadWorkspaceCollections = (workspaceUid, force = false) => {
     try {
       const workspace = getState().workspaces.workspaces.find((w) => w.uid === workspaceUid);
       if (!workspace) {
-        throw new Error('Workspace not found');
+        throw new Error(i18n.t('TOASTS.WORKSPACE_NOT_FOUND'));
       }
 
       const hasProcessedCollections = workspace.collections
@@ -1074,11 +1075,11 @@ export const saveWorkspaceDocs = (workspaceUid, docs) => {
     try {
       const workspace = getState().workspaces.workspaces.find((w) => w.uid === workspaceUid);
       if (!workspace) {
-        throw new Error('Workspace not found');
+        throw new Error(i18n.t('TOASTS.WORKSPACE_NOT_FOUND'));
       }
 
       if (!workspace.pathname) {
-        throw new Error('Workspace path not found');
+        throw new Error(i18n.t('TOASTS.WORKSPACE_PATH_NOT_FOUND'));
       }
 
       await ipcRenderer.invoke('renderer:save-workspace-docs', workspace.pathname, docs || '');
@@ -1099,7 +1100,7 @@ export const createCollectionInWorkspace = (collectionName, collectionFolderName
   return async (dispatch, getState) => {
     const currentWorkspace = getState().workspaces.workspaces.find((w) => w.uid === workspaceUid);
     if (!currentWorkspace) {
-      throw new Error('Workspace not found');
+      throw new Error(i18n.t('TOASTS.WORKSPACE_NOT_FOUND'));
     }
 
     const projectCollectionLocation = path.join(currentWorkspace.pathname, 'collections');
@@ -1128,7 +1129,7 @@ export const renameWorkspaceAction = (workspaceUid, newName) => {
       const workspace = workspaces.find((w) => w.uid === workspaceUid);
 
       if (!workspace) {
-        throw new Error('Workspace not found');
+        throw new Error(i18n.t('TOASTS.WORKSPACE_NOT_FOUND'));
       }
 
       await handleWorkspaceAction((...args) => ipcRenderer.invoke('renderer:rename-workspace', ...args),
@@ -1152,7 +1153,7 @@ export const closeWorkspaceAction = (workspaceUid) => {
       const workspace = workspaces.find((w) => w.uid === workspaceUid);
 
       if (!workspace) {
-        throw new Error('Workspace not found');
+        throw new Error(i18n.t('TOASTS.WORKSPACE_NOT_FOUND'));
       }
 
       await ipcRenderer.invoke('renderer:close-workspace', workspace.pathname);
@@ -1171,7 +1172,7 @@ export const closeWorkspaceAction = (workspaceUid) => {
         }
       }
     } catch (error) {
-      toast.error(error.message || 'Failed to close workspace');
+      toast.error(error.message || i18n.t('TOASTS.FAILED_CLOSE_WORKSPACE'));
       throw error;
     }
   };
@@ -1182,7 +1183,7 @@ export const importCollectionInWorkspace = (collection, workspaceUid, collection
     const currentWorkspace = getState().workspaces.workspaces.find((w) => w.uid === workspaceUid);
 
     if (!currentWorkspace) {
-      throw new Error('Workspace not found');
+      throw new Error(i18n.t('TOASTS.WORKSPACE_NOT_FOUND'));
     }
 
     const location = collectionLocation || path.join(currentWorkspace.pathname, 'collections');
@@ -1205,7 +1206,7 @@ export const loadWorkspaceEnvironments = (workspaceUid) => {
     try {
       const workspace = getState().workspaces.workspaces.find((w) => w.uid === workspaceUid);
       if (!workspace) {
-        throw new Error('Workspace not found');
+        throw new Error(i18n.t('TOASTS.WORKSPACE_NOT_FOUND'));
       }
 
       const environments = await ipcRenderer.invoke('renderer:load-workspace-environments', workspace.pathname);
@@ -1227,7 +1228,7 @@ export const createWorkspaceEnvironment = (workspaceUid, environmentName) => {
     try {
       const workspace = getState().workspaces.workspaces.find((w) => w.uid === workspaceUid);
       if (!workspace) {
-        throw new Error('Workspace not found');
+        throw new Error(i18n.t('TOASTS.WORKSPACE_NOT_FOUND'));
       }
 
       const environment = await ipcRenderer.invoke('renderer:create-workspace-environment', workspace.pathname, environmentName);
@@ -1246,7 +1247,7 @@ export const deleteWorkspaceEnvironment = (workspaceUid, environmentUid) => {
     try {
       const workspace = getState().workspaces.workspaces.find((w) => w.uid === workspaceUid);
       if (!workspace) {
-        throw new Error('Workspace not found');
+        throw new Error(i18n.t('TOASTS.WORKSPACE_NOT_FOUND'));
       }
 
       await ipcRenderer.invoke('renderer:delete-workspace-environment', workspace.pathname, environmentUid);
@@ -1265,7 +1266,7 @@ export const importWorkspaceEnvironment = (workspaceUid, environmentData) => {
     try {
       const workspace = getState().workspaces.workspaces.find((w) => w.uid === workspaceUid);
       if (!workspace) {
-        throw new Error('Workspace not found');
+        throw new Error(i18n.t('TOASTS.WORKSPACE_NOT_FOUND'));
       }
 
       const environment = await ipcRenderer.invoke('renderer:import-workspace-environment', workspace.pathname, environmentData);
@@ -1284,7 +1285,7 @@ export const updateWorkspaceEnvironment = (workspaceUid, environmentUid, environ
     try {
       const workspace = getState().workspaces.workspaces.find((w) => w.uid === workspaceUid);
       if (!workspace) {
-        throw new Error('Workspace not found');
+        throw new Error(i18n.t('TOASTS.WORKSPACE_NOT_FOUND'));
       }
 
       await ipcRenderer.invoke('renderer:update-workspace-environment', workspace.pathname, environmentUid, environmentData);
@@ -1303,7 +1304,7 @@ export const renameWorkspaceEnvironment = (workspaceUid, environmentUid, newName
     try {
       const workspace = getState().workspaces.workspaces.find((w) => w.uid === workspaceUid);
       if (!workspace) {
-        throw new Error('Workspace not found');
+        throw new Error(i18n.t('TOASTS.WORKSPACE_NOT_FOUND'));
       }
 
       await ipcRenderer.invoke('renderer:rename-workspace-environment', workspace.pathname, environmentUid, newName);
@@ -1322,7 +1323,7 @@ export const copyWorkspaceEnvironment = (workspaceUid, environmentUid, newName) 
     try {
       const workspace = getState().workspaces.workspaces.find((w) => w.uid === workspaceUid);
       if (!workspace) {
-        throw new Error('Workspace not found');
+        throw new Error(i18n.t('TOASTS.WORKSPACE_NOT_FOUND'));
       }
 
       const newEnvironment = await ipcRenderer.invoke('renderer:copy-workspace-environment', workspace.pathname, environmentUid, newName);
@@ -1343,11 +1344,11 @@ export const exportWorkspaceAction = (workspaceUid) => {
       const workspace = workspaces.find((w) => w.uid === workspaceUid);
 
       if (!workspace) {
-        throw new Error('Workspace not found');
+        throw new Error(i18n.t('TOASTS.WORKSPACE_NOT_FOUND'));
       }
 
       if (!workspace.pathname) {
-        throw new Error('Workspace path not found');
+        throw new Error(i18n.t('TOASTS.WORKSPACE_PATH_NOT_FOUND'));
       }
 
       const result = await ipcRenderer.invoke('renderer:export-workspace', workspace.pathname, workspace.name);
@@ -1391,11 +1392,11 @@ export const saveWorkspaceDotEnvVariables = (workspaceUid, variables, filename =
     const workspace = state.workspaces.workspaces.find((w) => w.uid === workspaceUid);
 
     if (!workspace) {
-      return reject(new Error('Workspace not found'));
+      return reject(new Error(i18n.t('TOASTS.WORKSPACE_NOT_FOUND')));
     }
 
     if (!workspace.pathname) {
-      return reject(new Error('Workspace path not found'));
+      return reject(new Error(i18n.t('TOASTS.WORKSPACE_PATH_NOT_FOUND')));
     }
 
     ipcRenderer
@@ -1411,11 +1412,11 @@ export const saveWorkspaceDotEnvRaw = (workspaceUid, content, filename = '.env')
     const workspace = state.workspaces.workspaces.find((w) => w.uid === workspaceUid);
 
     if (!workspace) {
-      return reject(new Error('Workspace not found'));
+      return reject(new Error(i18n.t('TOASTS.WORKSPACE_NOT_FOUND')));
     }
 
     if (!workspace.pathname) {
-      return reject(new Error('Workspace path not found'));
+      return reject(new Error(i18n.t('TOASTS.WORKSPACE_PATH_NOT_FOUND')));
     }
 
     ipcRenderer
@@ -1431,11 +1432,11 @@ export const createWorkspaceDotEnvFile = (workspaceUid, filename = '.env') => (d
     const workspace = state.workspaces.workspaces.find((w) => w.uid === workspaceUid);
 
     if (!workspace) {
-      return reject(new Error('Workspace not found'));
+      return reject(new Error(i18n.t('TOASTS.WORKSPACE_NOT_FOUND')));
     }
 
     if (!workspace.pathname) {
-      return reject(new Error('Workspace path not found'));
+      return reject(new Error(i18n.t('TOASTS.WORKSPACE_PATH_NOT_FOUND')));
     }
 
     ipcRenderer
@@ -1451,11 +1452,11 @@ export const deleteWorkspaceDotEnvFile = (workspaceUid, filename = '.env') => (d
     const workspace = state.workspaces.workspaces.find((w) => w.uid === workspaceUid);
 
     if (!workspace) {
-      return reject(new Error('Workspace not found'));
+      return reject(new Error(i18n.t('TOASTS.WORKSPACE_NOT_FOUND')));
     }
 
     if (!workspace.pathname) {
-      return reject(new Error('Workspace path not found'));
+      return reject(new Error(i18n.t('TOASTS.WORKSPACE_PATH_NOT_FOUND')));
     }
 
     ipcRenderer

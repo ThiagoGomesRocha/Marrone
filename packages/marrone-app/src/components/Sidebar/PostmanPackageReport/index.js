@@ -18,6 +18,7 @@ import Button from 'ui/Button';
 import { saveCollectionSecurityConfig } from 'providers/ReduxStore/slices/collections/actions';
 import { findCollectionByPathname } from 'utils/collections';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../i18n';
 
 const PackageList = ({ items }) => (
   <ul className="pkg-list">
@@ -107,7 +108,7 @@ const PostmanPackageReport = ({ report, collectionPath, onClose }) => {
 
   const handleInstall = async () => {
     if (!collectionPath) {
-      toast.error('Cannot install: collection path not available.');
+      toast.error(i18n.t('TOASTS.CANNOT_INSTALL_NO_PATH'));
       return;
     }
     if (needsInstall.length === 0) return;
@@ -126,12 +127,12 @@ const PostmanPackageReport = ({ report, collectionPath, onClose }) => {
           `Installed ${needsInstall.length} package${needsInstall.length === 1 ? '' : 's'}`
         );
       } else {
-        toast.error('npm install failed. See details below.');
+        toast.error(i18n.t('TOASTS.NPM_INSTALL_FAILED'));
       }
     } catch (err) {
       console.error('Install failed:', err);
       setInstallResult({ success: false, stderr: err?.message || String(err), exitCode: -1 });
-      toast.error('Failed to start npm install');
+      toast.error(i18n.t('TOASTS.FAILED_START_NPM_INSTALL'));
     } finally {
       setInstalling(false);
     }
@@ -139,15 +140,15 @@ const PostmanPackageReport = ({ report, collectionPath, onClose }) => {
 
   const handleSwitchToDeveloperMode = () => {
     if (!collection?.uid) {
-      toast.error('Could not locate the imported collection to switch modes.');
+      toast.error(i18n.t('TOASTS.COULD_NOT_LOCATE_COLLECTION'));
       return;
     }
     setSwitchingMode(true);
     dispatch(saveCollectionSecurityConfig(collection.uid, { jsSandboxMode: 'developer' }))
-      .then(() => toast.success('Developer Mode enabled'))
+      .then(() => toast.success(i18n.t('TOASTS.DEVELOPER_MODE_ENABLED')))
       .catch((err) => {
         console.error(err);
-        toast.error('Failed to switch sandbox mode');
+        toast.error(i18n.t('TOASTS.FAILED_SWITCH_SANDBOX'));
       })
       .finally(() => setSwitchingMode(false));
   };
@@ -158,7 +159,7 @@ const PostmanPackageReport = ({ report, collectionPath, onClose }) => {
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
     } catch {
-      toast.error('Could not copy to clipboard');
+      toast.error(i18n.t('TOASTS.COULD_NOT_COPY'));
     }
   };
 
@@ -176,7 +177,7 @@ const PostmanPackageReport = ({ report, collectionPath, onClose }) => {
     <StyledWrapper>
       <Modal
         size="md"
-        title="Install packages"
+        title={i18n.t('UI.INSTALL_PACKAGES')}
         confirmText={confirmText}
         cancelText="Skip"
         hideCancel={installDone || (needsInstall.length === 0 && !installFailed)}
@@ -213,7 +214,7 @@ const PostmanPackageReport = ({ report, collectionPath, onClose }) => {
                     type="button"
                     className="pkg-cmd-copy"
                     onClick={handleCopyCommand}
-                    aria-label="Copy command"
+                    aria-label={i18n.t('UI.COPY_COMMAND')}
                   >
                     {copied ? <IconCheck size={14} strokeWidth={1.75} /> : <IconCopy size={14} strokeWidth={1.5} />}
                   </button>

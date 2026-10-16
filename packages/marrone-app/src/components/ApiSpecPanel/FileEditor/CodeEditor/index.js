@@ -8,6 +8,7 @@
 import React from 'react';
 import StyledWrapper from './StyledWrapper';
 import yamlPlugin from './Plugins/Yaml/index';
+import i18n from '../../../../i18n';
 
 let CodeMirror;
 const SERVER_RENDERED = typeof window === 'undefined' || global['PREVENT_CODEMIRROR_RENDER'] === true;
@@ -117,7 +118,7 @@ export default class CodeEditor extends React.Component {
     return (
       <StyledWrapper
         className="h-full w-full graphiql-container"
-        aria-label="Code Editor"
+        aria-label={i18n.t('UI.CODE_EDITOR')}
         font={this.props.font}
         ref={(node) => {
           this._node = node;

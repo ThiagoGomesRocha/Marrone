@@ -6,6 +6,7 @@ import {
   getMockResponseNameInputError,
   isMockResponseNameTaken
 } from 'utils/mock-server/mock-responses';
+import { useTranslation } from 'react-i18next';
 
 const RenameMockResponseModal = ({
   response,
@@ -14,6 +15,7 @@ const RenameMockResponseModal = ({
   onConfirm,
   isSaving = false
 }) => {
+  const { t } = useTranslation();
   const inputRef = useRef();
   const [name, setName] = useState(response?.name || '');
   const [submitError, setSubmitError] = useState('');
@@ -51,9 +53,9 @@ const RenameMockResponseModal = ({
     <Portal>
       <Modal
         size="sm"
-        title="Rename Mock Response"
-        confirmText={isSaving ? 'Renaming...' : 'Rename'}
-        cancelText="Cancel"
+        title={t('MODALS.RENAME_MOCK_RESPONSE.TITLE')}
+        confirmText={isSaving ? t('MODALS.RENAME_MOCK_RESPONSE.RENAMING') : t('MODALS.COMMON.RENAME')}
+        cancelText={t('MODALS.COMMON.CANCEL')}
         handleConfirm={handleConfirm}
         handleCancel={onClose}
         confirmDisabled={isSaving || !trimmedName || Boolean(inputNameError)}
@@ -61,7 +63,7 @@ const RenameMockResponseModal = ({
       >
         <div>
           <label htmlFor="mock-response-rename-name" className="block font-medium">
-            Name
+            {t('MODALS.COMMON.NAME')}
           </label>
           <input
             id="mock-response-rename-name"

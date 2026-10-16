@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import toast from 'react-hot-toast';
 import { clearCollectionUpdate } from 'providers/ReduxStore/slices/openapi-sync';
 import { formatIpcError } from 'utils/common/error';
+import i18n from '../../../i18n';
 
 const useSyncFlow = ({
   collection, specDrift, remoteDrift, collectionDrift,
@@ -79,9 +80,9 @@ const useSyncFlow = ({
 
       dispatch(clearCollectionUpdate({ collectionUid: collection.uid }));
       toast.success(
-        mode === 'spec-only' ? 'Spec updated successfully'
-          : mode === 'reset' ? 'Collection reset to spec successfully'
-            : 'Collection synced successfully'
+        mode === 'spec-only' ? i18n.t('TOASTS.SPEC_UPDATED')
+          : mode === 'reset' ? i18n.t('TOASTS.COLLECTION_RESET_TO_SPEC')
+            : i18n.t('TOASTS.COLLECTION_SYNCED')
       );
 
       // Re-check to show "up to date" state

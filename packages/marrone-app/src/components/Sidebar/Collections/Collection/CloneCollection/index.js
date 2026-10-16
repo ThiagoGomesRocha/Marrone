@@ -14,8 +14,11 @@ import { useState } from 'react';
 import { IconArrowBackUp, IconEdit } from '@tabler/icons';
 import { findCollectionByUid } from 'utils/collections/index';
 import get from 'lodash/get';
+import { useTranslation } from 'react-i18next';
+import i18n from '../../../../../i18n';
 
 const CloneCollection = ({ onClose, collectionUid }) => {
+  const { t } = useTranslation();
   const inputRef = useRef();
   const dispatch = useDispatch();
   const [isEditing, toggleEditing] = useState(false);
@@ -40,18 +43,18 @@ const CloneCollection = ({ onClose, collectionUid }) => {
     },
     validationSchema: Yup.object({
       collectionName: Yup.string()
-        .min(1, 'must be at least 1 character')
-        .max(255, 'must be 255 characters or less')
-        .required('collection name is required'),
+        .min(1, () => i18n.t('VALIDATION.MIN_1_CHAR'))
+        .max(255, () => i18n.t('VALIDATION.MAX_255_CHARS'))
+        .required(() => i18n.t('VALIDATION.COLLECTION_NAME_REQUIRED')),
       collectionFolderName: Yup.string()
-        .min(1, 'must be at least 1 character')
-        .max(255, 'must be 255 characters or less')
+        .min(1, () => i18n.t('VALIDATION.MIN_1_CHAR'))
+        .max(255, () => i18n.t('VALIDATION.MAX_255_CHARS'))
         .test('is-valid-collection-name', function (value) {
           const isValid = validateName(value);
           return isValid ? true : this.createError({ message: validateNameError(value) });
         })
-        .required('folder name is required'),
-      collectionLocation: Yup.string().min(1, 'location is required').required('location is required')
+        .required(() => i18n.t('VALIDATION.FOLDER_NAME_REQUIRED')),
+      collectionLocation: Yup.string().min(1, () => i18n.t('VALIDATION.LOCATION_REQUIRED')).required(() => i18n.t('VALIDATION.LOCATION_REQUIRED'))
     }),
     onSubmit: (values) => {
       dispatch(
@@ -63,10 +66,10 @@ const CloneCollection = ({ onClose, collectionUid }) => {
         )
       )
         .then(() => {
-          toast.success('Collection created!');
+          toast.success(i18n.t('TOASTS.COLLECTION_CREATED'));
           onClose();
         })
-        .catch((e) => toast.error('An error occurred while creating the collection - ' + e));
+        .catch((e) => toast.error(i18n.t('TOASTS.ERROR_CREATING_COLLECTION') + ' - ' + e));
     }
   });
 
@@ -93,11 +96,11 @@ const CloneCollection = ({ onClose, collectionUid }) => {
   const onSubmit = () => formik.handleSubmit();
 
   return (
-    <Modal size="md" title="Clone Collection" confirmText="Create" handleConfirm={onSubmit} handleCancel={onClose}>
+    <Modal size="md" title={t('MODALS.CLONE_COLLECTION.TITLE')} confirmText={t('MODALS.COMMON.CREATE')} handleConfirm={onSubmit} handleCancel={onClose}>
       <form className="marrone-form" onSubmit={(e) => e.preventDefault()}>
         <div>
           <label htmlFor="collection-name" className="flex items-center font-medium">
-            Name
+            {t('MODALS.COMMON.NAME')}
           </label>
           <input
             id="collection-name"
@@ -120,7 +123,7 @@ const CloneCollection = ({ onClose, collectionUid }) => {
           ) : null}
 
           <label htmlFor="collection-location" className="block font-medium mt-3">
-            Location
+            {t('MODALS.COMMON.LOCATION')}
           </label>
           <input
             id="collection-location"
@@ -143,20 +146,20 @@ const CloneCollection = ({ onClose, collectionUid }) => {
               className="text-link cursor-pointer hover:underline"
               onClick={browse}
             >
-              Browse
+              {t('MODALS.COMMON.BROWSE')}
             </span>
           </div>
 
           <div className="mt-4">
             <div className="flex items-center justify-between">
               <label htmlFor="filename" className="flex items-center font-medium">
-                Folder Name
+                {t('MODALS.COMMON.FOLDER_NAME')}
                 <Help width="300">
                   <p>
-                    The name of the folder used to store the collection.
+                    {t('MODALS.COMMON.FOLDER_NAME_HELP_1')}
                   </p>
                   <p className="mt-2">
-                    You can choose a folder name different from your collection's name or one compatible with filesystem rules.
+                    {t('MODALS.COMMON.FOLDER_NAME_HELP_2')}
                   </p>
                 </Help>
               </label>

@@ -10,6 +10,7 @@ import { transformCollectionToSaveToExportAsFile } from 'utils/collections/index
 import { useSelector } from 'react-redux';
 import { findCollectionByUid, areItemsLoading } from 'utils/collections/index';
 import toast from 'react-hot-toast';
+import i18n from '../../i18n';
 
 const EXPORT_FORMATS = {
   ZIP: 'zip',
@@ -51,10 +52,10 @@ const ShareCollection = ({ onClose, collectionUid }) => {
       const { ipcRenderer } = window;
       const result = await ipcRenderer.invoke('renderer:export-collection-zip', collection.pathname, collection.name);
       if (result.success) {
-        toast.success('Collection exported successfully');
+        toast.success(i18n.t('TOASTS.COLLECTION_EXPORTED'));
       }
     } catch (error) {
-      toast.error('Failed to export collection: ' + error.message);
+      toast.error(i18n.t('TOASTS.FAILED_EXPORT_COLLECTION') + ': ' + error.message);
     }
   };
 
@@ -108,7 +109,7 @@ const ShareCollection = ({ onClose, collectionUid }) => {
 
   return (
     <>
-      <Modal size="lg" title="Share Collection" handleCancel={onClose} hideFooter>
+      <Modal size="lg" title={i18n.t('UI.SHARE_COLLECTION')} handleCancel={onClose} hideFooter>
         <StyledWrapper className="flex flex-col">
           <p className="text-sm mb-4">
             Marrone uses{' '}

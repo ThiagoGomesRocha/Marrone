@@ -1,3 +1,4 @@
+import i18n from '../../i18n';
 /**
  *  Copyright (c) 2021 GraphQL Contributors.
  *
@@ -644,7 +645,7 @@ class CodeEditor extends React.Component {
     return (
       <StyledWrapper
         className={`h-full w-full flex flex-col ${this.props.readOnly ? 'read-only' : ''} ${this.state.searchBarVisible ? 'search-bar-visible' : ''}`}
-        aria-label="Code Editor"
+        aria-label={i18n.t('UI.CODE_EDITOR')}
         data-testid={this.props.testId}
         font={this.props.font}
         fontSize={this.props.fontSize}

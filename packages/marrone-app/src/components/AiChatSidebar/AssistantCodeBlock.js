@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { IconCopy, IconCheck } from '@tabler/icons';
+import i18n from '../../i18n';
 
 const AssistantCodeBlock = ({ content, language, isOpen, isStreaming, isLast }) => {
   const [isCopied, setIsCopied] = useState(false);
@@ -28,7 +29,7 @@ const AssistantCodeBlock = ({ content, language, isOpen, isStreaming, isLast }) 
           <span className="assistant-code-block__lang">{language || 'code'}</span>
           {isOpen && <span className="assistant-code-block__spinner" />}
         </div>
-        <button className="assistant-code-block__btn" onClick={handleCopy} title="Copy">
+        <button className="assistant-code-block__btn" onClick={handleCopy} title={i18n.t('UI.COPY')}>
           {isCopied ? <IconCheck size={12} /> : <IconCopy size={12} />}
           {isCopied ? 'Copied' : 'Copy'}
         </button>

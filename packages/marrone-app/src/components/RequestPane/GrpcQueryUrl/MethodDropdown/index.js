@@ -11,6 +11,7 @@ import { search } from 'fast-fuzzy';
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { useTheme } from 'providers/Theme';
 import StyledWrapper from './StyledWrapper';
+import i18n from '../../../../i18n';
 
 const MethodDropdown = ({
   grpcMethods,
@@ -148,7 +149,7 @@ const MethodDropdown = ({
           <SearchInput
             searchText={searchText}
             setSearchText={setSearchText}
-            placeholder="Search"
+            placeholder={i18n.t('UI.SEARCH')}
             ref={searchInputRef}
             onKeyDown={handleKeyDown}
             onBlur={focusSearchInput}

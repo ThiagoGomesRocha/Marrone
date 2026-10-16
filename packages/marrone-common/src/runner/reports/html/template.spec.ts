@@ -74,3 +74,45 @@ describe('generateHtmlReport', () => {
     });
   });
 });
+
+describe('generateHtmlReport i18n', () => {
+  const minimalResult = {
+    path: 'Create User',
+    status: 'pass',
+    request: { method: 'POST', url: 'https://api.example.com/users' },
+    response: { status: 200, responseTime: 12 },
+    runDuration: 0.012
+  };
+
+  const minimalInput = () => ({
+    runnerResults: [{ iterationIndex: 0, results: [minimalResult], summary: { totalRequests: 1 } }] as any
+  });
+
+  it('renders pt-BR labels when lang is pt-BR', () => {
+    const html = generateHtmlReport({ ...minimalInput(), lang: 'pt-BR' });
+
+    expect(html).toContain('Data e Hora');
+    expect(html).toContain('Duração Total da Execução');
+    expect(html).not.toContain('Date & Time');
+  });
+
+  it('renders English labels by default', () => {
+    const html = generateHtmlReport(minimalInput());
+
+    expect(html).toContain('Date & Time');
+    expect(html).not.toContain('Data e Hora');
+  });
+
+  it('falls back to English for an unknown lang', () => {
+    const html = generateHtmlReport({ ...minimalInput(), lang: 'xx-XX' });
+
+    expect(html).toContain('Date & Time');
+  });
+
+  it('translates the database operations section in pt-BR', () => {
+    const html = generateHtmlReport({ ...minimalInput(), lang: 'pt-BR' });
+
+    expect(html).toContain('Operações de Banco de Dados');
+    expect(html).toContain('Operações de banco executadas pelos scripts');
+  });
+});

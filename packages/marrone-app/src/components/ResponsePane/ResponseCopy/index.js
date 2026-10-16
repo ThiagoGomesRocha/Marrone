@@ -5,6 +5,7 @@ import { IconCopy, IconCheck } from '@tabler/icons';
 import classnames from 'classnames';
 import ActionIcon from 'ui/ActionIcon/index';
 import { formatResponse } from 'utils/common';
+import i18n from '../../../i18n';
 
 // Helper function to get text to copy
 const getTextToCopy = (selectedTab, selectedFormat, data, dataBuffer) => {
@@ -36,10 +37,10 @@ export const useResponseCopy = (item, selectedFormat, selectedTab, data, dataBuf
     try {
       const textToCopy = getTextToCopy(selectedTab, selectedFormat, data, dataBuffer);
       await navigator.clipboard.writeText(textToCopy);
-      toast.success('Response copied to clipboard');
+      toast.success(i18n.t('TOASTS.RESPONSE_COPIED'));
       setCopied(true);
     } catch (error) {
-      toast.error('Failed to copy response');
+      toast.error(i18n.t('TOASTS.FAILED_COPY_RESPONSE'));
     }
   }, [selectedTab, selectedFormat, data, dataBuffer]);
 

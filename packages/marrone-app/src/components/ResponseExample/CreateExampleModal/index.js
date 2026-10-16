@@ -1,8 +1,12 @@
 import { useState, useEffect } from 'react';
 import Modal from 'components/Modal';
 import Portal from 'components/Portal';
+import { useTranslation } from 'react-i18next';
 
-const CreateExampleModal = ({ isOpen, onClose, onSave, title = 'Create Response Example', initialName = '', confirmText = 'Create Example' }) => {
+const CreateExampleModal = ({ isOpen, onClose, onSave, title, initialName = '', confirmText }) => {
+  const { t } = useTranslation();
+  const resolvedTitle = title ?? t('MODALS.CREATE_EXAMPLE.TITLE');
+  const resolvedConfirmText = confirmText ?? t('MODALS.CREATE_EXAMPLE.CONFIRM');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [nameError, setNameError] = useState('');
@@ -51,18 +55,18 @@ const CreateExampleModal = ({ isOpen, onClose, onSave, title = 'Create Response 
     <Portal>
       <Modal
         size="md"
-        title={title}
+        title={resolvedTitle}
         handleCancel={handleClose}
         handleConfirm={handleConfirm}
-        confirmText={confirmText}
-        cancelText="Cancel"
+        confirmText={resolvedConfirmText}
+        cancelText={t('MODALS.COMMON.CANCEL')}
         isOpen={isOpen}
         dataTestId="create-example-modal"
       >
         <div className="space-y-4">
           <div>
             <label htmlFor="exampleName" className="block font-medium">
-              Example Name<span className="text-red-600">*</span>
+              {t('MODALS.CREATE_EXAMPLE.EXAMPLE_NAME')}<span className="text-red-600">*</span>
             </label>
             <input
               id="exampleName"
@@ -83,7 +87,7 @@ const CreateExampleModal = ({ isOpen, onClose, onSave, title = 'Create Response 
 
           <div>
             <label htmlFor="exampleDescription" className="block font-medium">
-              Description
+              {t('MODALS.COMMON.DESCRIPTION')}
             </label>
             <textarea
               id="exampleDescription"

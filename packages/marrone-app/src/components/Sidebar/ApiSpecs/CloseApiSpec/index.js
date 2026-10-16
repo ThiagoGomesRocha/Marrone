@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { IconAlertTriangle, IconFileCode } from '@tabler/icons';
 import { closeApiSpecFile } from 'providers/ReduxStore/slices/apiSpec';
 import { hasUnsavedApiSpecChanges } from 'utils/api-specs';
+import i18n from '../../../../i18n';
 
 const CloseApiSpec = ({ onClose, apiSpec }) => {
   const dispatch = useDispatch();
@@ -14,14 +15,14 @@ const CloseApiSpec = ({ onClose, apiSpec }) => {
   const onConfirm = () => {
     dispatch(closeApiSpecFile({ uid: apiSpec.uid }))
       .then(() => {
-        toast.success('API Spec closed');
+        toast.success(i18n.t('TOASTS.API_SPEC_CLOSED'));
         onClose();
       })
-      .catch(() => toast.error('An error occurred while closing the API Spec'));
+      .catch(() => toast.error(i18n.t('TOASTS.ERROR_CLOSING_API_SPEC')));
   };
 
   return (
-    <Modal size="sm" title="Close Api Spec" confirmText="Close" handleConfirm={onConfirm} handleCancel={onClose}>
+    <Modal size="sm" title={i18n.t('UI.CLOSE_API_SPEC')} confirmText={i18n.t('UI.CLOSE')} handleConfirm={onConfirm} handleCancel={onClose}>
       <div className="flex items-center">
         <IconFileCode size={18} strokeWidth={1.5} />
         <span className="ml-2 mr-4 font-semibold">{apiSpec.name}</span>

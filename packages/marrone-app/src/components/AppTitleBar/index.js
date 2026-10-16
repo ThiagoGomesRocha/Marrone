@@ -25,6 +25,7 @@ import StyledWrapper from './StyledWrapper';
 import ResponseLayoutToggle from 'components/ResponsePane/ResponseLayoutToggle';
 import { isMacOS, isWindowsOS, isLinuxOS } from 'utils/common/platform';
 import classNames from 'classnames';
+import i18n from '../../i18n';
 
 const getOsClass = () => {
   if (isMacOS()) return 'os-mac';
@@ -150,17 +151,17 @@ const AppTitleBar = () => {
     if (workspaceUid === activeWorkspaceUid) return;
 
     dispatch(switchWorkspace(workspaceUid));
-    toast.success(`Switched to ${getWorkspaceDisplayName(workspaces.find((w) => w.uid === workspaceUid)?.name)}`);
+    toast.success(i18n.t('TOASTS.SWITCHED_TO', { name: getWorkspaceDisplayName(workspaces.find((w) => w.uid === workspaceUid)?.name) }));
   };
 
   const handleOpenWorkspace = async () => {
     try {
       const result = await dispatch(openWorkspaceDialog());
       if (result) {
-        toast.success('Workspace opened successfully');
+        toast.success(i18n.t('TOASTS.WORKSPACE_OPENED'));
       }
     } catch (error) {
-      toast.error(error.message || 'Failed to open workspace');
+      toast.error(error.message || i18n.t('TOASTS.FAILED_OPEN_WORKSPACE'));
     }
   };
 
@@ -174,7 +175,7 @@ const AppTitleBar = () => {
     try {
       await dispatch(createWorkspaceWithUniqueName(defaultLocation));
     } catch (error) {
-      toast.error(error?.message || 'Failed to create workspace');
+      toast.error(error?.message || i18n.t('TOASTS.FAILED_CREATE_WORKSPACE'));
     }
   }, [preferences, dispatch]);
 
@@ -332,7 +333,7 @@ const AppTitleBar = () => {
               <button
                 className="window-control-btn minimize"
                 onClick={handleMinimize}
-                aria-label="Minimize"
+                aria-label={i18n.t('UI.MINIMIZE')}
               >
                 <IconMinus size={16} stroke={1} />
               </button>
@@ -346,7 +347,7 @@ const AppTitleBar = () => {
               <button
                 className="window-control-btn close"
                 onClick={handleClose}
-                aria-label="Close"
+                aria-label={i18n.t('UI.CLOSE')}
               >
                 <IconX size={16} stroke={1} />
               </button>
