@@ -44,6 +44,24 @@ const requireMessage = (message, label = 'Mensagem') => {
   return text;
 };
 
+const HASH_RE = /^[0-9a-f]{4,40}$/i;
+
+const requireHash = (hash) => {
+  if (typeof hash !== 'string' || !HASH_RE.test(hash)) {
+    throw new Error('Commit inválido');
+  }
+  return hash;
+};
+
+// Caminho relativo à raiz do repositório, sem '..' e sem começar com '-' (evita virar opção do git).
+const requireRelPath = (file) => {
+  const text = typeof file === 'string' ? file.trim() : '';
+  if (!text || text.startsWith('-') || path.isAbsolute(text) || text.split(/[\\/]/).includes('..')) {
+    throw new Error('Caminho de arquivo inválido');
+  }
+  return text.replace(/\\/g, '/');
+};
+
 const absolutePaths = (root, files) => {
   if (!Array.isArray(files) || files.length === 0) {
     throw new Error('Nenhum arquivo selecionado');
@@ -191,6 +209,44 @@ const createGitOpsHandlers = (mainWindow) => {
         strategy
       });
       return getStatus(collectionPath);
+    },
+
+    // Histórico: grafo de commits da branch atual (paginado por limite).
+    history: async (collectionPath, limit = 50) => {
+      const root = requireRepo(collectionPath);
+      const status = await getStatus(collectionPath);
+      if (!status.hasCommits) {
+        return { commits: [], branches: [], hasMore: false };
+      }
+      const size = Math.min(Math.max(Number(limit) || 50, 1), 500);
+      return gitUtils.getGitGraph(root, status.branch || 'HEAD', size);
+    },
+
+    commitFiles: async (collectionPath, hash) => {
+      const root = requireRepo(collectionPath);
+      return gitUtils.getCommitFiles(root, requireHash(hash));
+    },
+
+    // Diff de um arquivo no commit (comparado com o pai).
+    commitDiff: async (collectionPath, hash, file) => {
+      const root = requireRepo(collectionPath);
+      return gitUtils.getCommitFileDiff(root, requireHash(hash), requireRelPath(file));
+    },
+
+    // Commits que tocaram um arquivo (histórico por arquivo).
+    fileHistory: async (collectionPath, file) => {
+      const root = requireRepo(collectionPath);
+      return gitUtils.getFileGitHistory(root, requireRelPath(file));
+    },
+
+    stashFiles: async (collectionPath, index) => {
+      const root = requireRepo(collectionPath);
+      return gitUtils.getStashFiles(root, Number(index));
+    },
+
+    stashDiff: async (collectionPath, index, file, untracked = false) => {
+      const root = requireRepo(collectionPath);
+      return gitUtils.getStashFileDiff(root, Number(index), requireRelPath(file), Boolean(untracked));
     },
 
     stashCreate: async (collectionPath, message) => {

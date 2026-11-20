@@ -94,6 +94,64 @@ const StyledWrapper = styled.div`
     white-space: pre-wrap;
   }
 
+  .gp-diff {
+    max-height: 22rem;
+    overflow: auto;
+    margin: 0;
+    padding: 0.5rem;
+    border: 1px solid ${(props) => props.theme.input.border};
+    border-radius: ${(props) => props.theme.border.radius.sm};
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: ${(props) => props.theme.font.size.sm};
+    white-space: pre;
+  }
+
+  .gp-diff-add {
+    background: rgba(22, 163, 74, 0.15);
+    color: #4ade80;
+  }
+
+  .gp-diff-del {
+    background: rgba(220, 38, 38, 0.15);
+    color: #f87171;
+  }
+
+  .gp-diff-hunk {
+    color: ${(props) => props.theme.text};
+    opacity: 0.7;
+  }
+
+  .gp-diff-meta {
+    opacity: 0.6;
+  }
+
+  .gp-history-grid {
+    display: grid;
+    grid-template-columns: minmax(14rem, 1fr) minmax(0, 2fr);
+    gap: 0.75rem;
+  }
+
+  .gp-history-list,
+  .gp-history-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 0;
+  }
+
+  .gp-commit {
+    cursor: pointer;
+
+    &:hover {
+      border-color: ${(props) => props.theme.input.focusBorder};
+    }
+  }
+
+  .gp-commit-active {
+    border-color: ${(props) => props.theme.input.focusBorder} !important;
+    background: rgba(127, 127, 127, 0.12);
+  }
+
   .gp-notice {
     padding: 0.5rem;
     border-radius: ${(props) => props.theme.border.radius.sm};

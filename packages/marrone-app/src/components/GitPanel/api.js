@@ -25,5 +25,11 @@ export const gitApi = {
   resolveConflict: (collectionPath, file, side) => call('resolveConflict', collectionPath, file, side),
   completeMerge: (collectionPath, message) => call('completeMerge', collectionPath, message),
   abortMerge: (collectionPath) => call('abortMerge', collectionPath),
-  publish: (collectionPath, remoteUrl, remote) => call('publish', collectionPath, remoteUrl, remote)
+  publish: (collectionPath, remoteUrl, remote) => call('publish', collectionPath, remoteUrl, remote),
+  history: (collectionPath, limit) => call('history', collectionPath, limit),
+  commitFiles: (collectionPath, hash) => call('commitFiles', collectionPath, hash),
+  commitDiff: (collectionPath, hash, file) => call('commitDiff', collectionPath, hash, file),
+  fileHistory: (collectionPath, file) => call('fileHistory', collectionPath, file),
+  stashFiles: (collectionPath, index) => call('stashFiles', collectionPath, index),
+  stashDiff: (collectionPath, index, file, untracked) => call('stashDiff', collectionPath, index, file, untracked)
 };

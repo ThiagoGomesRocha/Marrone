@@ -4,6 +4,8 @@ import Button from 'ui/Button';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from 'components/Tabs';
 import { gitApi } from './api';
 import StyledWrapper from './StyledWrapper';
+import HistoryView from './HistoryView';
+import DiffView from './DiffView';
 
 const fileList = (files) => (files || []).map((f) => f.path);
 
@@ -29,6 +31,7 @@ const GitPanel = ({ collection, onClose }) => {
   const [stashMessage, setStashMessage] = useState('');
   const [mergeMessage, setMergeMessage] = useState('');
   const [publishUrl, setPublishUrl] = useState('');
+  const [stashView, setStashView] = useState(null);
 
   // Executa uma operação: mostra o erro do main ou a confirmação, e atualiza o status.
   const run = async (label, fn) => {
@@ -114,6 +117,25 @@ const GitPanel = ({ collection, onClose }) => {
     const ok = window.confirm('Apagar este stash? Não dá para desfazer.');
     if (!ok) return;
     await run('Stash apagado', () => gitApi.stashDrop(collectionPath, index));
+  };
+
+  const viewStash = async (index) => {
+    setError(null);
+    try {
+      const list = await gitApi.stashFiles(collectionPath, index);
+      setStashView({ index, files: list || [], file: null, diff: '' });
+    } catch (err) {
+      setError(err?.message || String(err));
+    }
+  };
+
+  const showStashFile = async (file) => {
+    try {
+      const diff = await gitApi.stashDiff(collectionPath, stashView.index, file.path, file.untracked || false);
+      setStashView((prev) => ({ ...prev, file: file.path, diff: diff || '' }));
+    } catch (err) {
+      setError(err?.message || String(err));
+    }
   };
 
   const completeMerge = async () => {
@@ -216,6 +238,7 @@ const GitPanel = ({ collection, onClose }) => {
             <Tabs value={tab} onValueChange={setTab}>
               <TabsList>
                 <TabsTrigger value="changes">Alterações</TabsTrigger>
+                <TabsTrigger value="history">Histórico</TabsTrigger>
                 <TabsTrigger value="branches">Branches</TabsTrigger>
                 <TabsTrigger value="remotes">Remotos</TabsTrigger>
                 <TabsTrigger value="stash">Stash</TabsTrigger>
@@ -278,6 +301,10 @@ const GitPanel = ({ collection, onClose }) => {
                     </Button>
                   </div>
                 </div>
+              </TabsContent>
+
+              <TabsContent value="history">
+                <HistoryView collectionPath={collectionPath} />
               </TabsContent>
 
               <TabsContent value="branches">
@@ -366,6 +393,9 @@ const GitPanel = ({ collection, onClose }) => {
                           >
                             Aplicar
                           </Button>
+                          <Button size="xs" variant="ghost" onClick={() => viewStash(s.index)} disabled={busy}>
+                            Ver
+                          </Button>
                           <Button size="xs" variant="ghost" onClick={() => stashDrop(s.index)} disabled={busy}>
                             Apagar
                           </Button>
@@ -374,6 +404,27 @@ const GitPanel = ({ collection, onClose }) => {
                     ))}
                     {(status.stashes || []).length === 0 && <li className="gp-muted">Nenhum stash.</li>}
                   </ul>
+                  {stashView && (
+                    <div className="gp-section">
+                      <h4>Stash {stashView.index}: alterações guardadas</h4>
+                      <ul className="gp-list">
+                        {stashView.files.map((f) => (
+                          <li key={f.path}>
+                            <span>{f.path}</span>
+                            <Button
+                              size="xs"
+                              variant="ghost"
+                              onClick={() => showStashFile(f)}
+                              disabled={busy}
+                            >
+                              Ver diff
+                            </Button>
+                          </li>
+                        ))}
+                      </ul>
+                      {stashView.file && <DiffView diff={stashView.diff} emptyText="Sem alterações de conteúdo." />}
+                    </div>
+                  )}
                   <div className="gp-row">
                     <input
                       aria-label="Mensagem do stash"

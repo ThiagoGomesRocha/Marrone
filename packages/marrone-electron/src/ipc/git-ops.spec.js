@@ -265,3 +265,74 @@ describe('git-ops: conflito de merge', () => {
     await ops.abortMerge(coll);
   });
 });
+
+describe('git-ops: histórico, diff e stash', () => {
+  let coll;
+  const hashes = {};
+
+  beforeAll(async () => {
+    coll = newDir('colecao-historico');
+    await ops.init(coll);
+    fs.writeFileSync(path.join(coll, 'a.bru'), 'url: v1\n');
+    await ops.stage(coll, ['a.bru']);
+    await ops.commit(coll, 'cria a');
+
+    fs.writeFileSync(path.join(coll, 'a.bru'), 'url: v2\n');
+    fs.writeFileSync(path.join(coll, 'b.bru'), 'novo\n');
+    await ops.stage(coll, ['a.bru', 'b.bru']);
+    await ops.commit(coll, 'altera a e cria b');
+
+    hashes.first = git(coll, ['rev-parse', 'HEAD~1']);
+    hashes.second = git(coll, ['rev-parse', 'HEAD']);
+  });
+
+  test('history devolve os commits da branch em ordem', async () => {
+    const graph = await ops.history(coll, 10);
+    const messages = graph.commits.map((c) => c.message);
+    expect(messages.slice(0, 2)).toEqual(['altera a e cria b', 'cria a']);
+    expect(graph.commits[0].hash).toBe(hashes.second);
+  });
+
+  test('history de repositório sem commits devolve lista vazia', async () => {
+    const empty = newDir('historico-vazio');
+    await ops.init(empty);
+    const graph = await ops.history(empty, 10);
+    expect(graph.commits).toEqual([]);
+  });
+
+  test('commitFiles lista os arquivos do commit com o status', async () => {
+    const files = await ops.commitFiles(coll, hashes.second);
+    const byPath = Object.fromEntries(files.map((f) => [f.path, f.status]));
+    expect(byPath['a.bru']).toBe('modified');
+    expect(byPath['b.bru']).toBe('added');
+  });
+
+  test('commitDiff traz as linhas removidas e adicionadas do arquivo', async () => {
+    const diff = await ops.commitDiff(coll, hashes.second, 'a.bru');
+    expect(diff).toMatch(/^-url: v1$/m);
+    expect(diff).toMatch(/^\+url: v2$/m);
+  });
+
+  test('fileHistory lista os commits que tocaram o arquivo', async () => {
+    const history = await ops.fileHistory(coll, 'a.bru');
+    expect(history.map((c) => c.message)).toEqual(['altera a e cria b', 'cria a']);
+  });
+
+  test('stashDiff mostra a alteração guardada no stash', async () => {
+    fs.writeFileSync(path.join(coll, 'a.bru'), 'url: em-stash\n');
+    await ops.stashCreate(coll, 'wip diff');
+
+    const files = await ops.stashFiles(coll, 0);
+    expect(files.map((f) => f.path)).toContain('a.bru');
+
+    const diff = await ops.stashDiff(coll, 0, 'a.bru', false);
+    expect(diff).toMatch(/^\+url: em-stash$/m);
+    await ops.stashDrop(coll, 0);
+  });
+
+  test('hash inválido e caminho com .. ou começando com - são recusados', async () => {
+    await expect(ops.commitFiles(coll, 'HEAD; rm -rf /')).rejects.toThrow('Commit inválido');
+    await expect(ops.commitDiff(coll, hashes.second, '../fora.bru')).rejects.toThrow('Caminho de arquivo inválido');
+    await expect(ops.fileHistory(coll, '--output=x')).rejects.toThrow('Caminho de arquivo inválido');
+  });
+});
