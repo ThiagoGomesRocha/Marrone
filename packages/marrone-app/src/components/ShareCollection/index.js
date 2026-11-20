@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import { findCollectionByUid, areItemsLoading } from 'utils/collections/index';
 import toast from 'react-hot-toast';
 import i18n from '../../i18n';
+import { gitApi } from 'components/GitPanel/api';
 
 const EXPORT_FORMATS = {
   ZIP: 'zip',
@@ -24,6 +25,24 @@ const ShareCollection = ({ onClose, collectionUid }) => {
   const [selectedFormat, setSelectedFormat] = useState(EXPORT_FORMATS.ZIP);
   const [isExporting, setIsExporting] = useState(false);
   const [showPostmanExportModal, setShowPostmanExportModal] = useState(false);
+  const [gitUrl, setGitUrl] = useState('');
+  const [gitBusy, setGitBusy] = useState(false);
+  const [gitError, setGitError] = useState(null);
+
+  // Publica a pasta da coleção num repositório remoto (cria o Git se preciso, faz commit e push).
+  const handleShareWithGit = async () => {
+    setGitBusy(true);
+    setGitError(null);
+    try {
+      await gitApi.publish(collection.pathname, gitUrl.trim(), 'origin');
+      toast.success('Coleção enviada para o repositório Git');
+      onClose();
+    } catch (err) {
+      setGitError(err?.message || String(err));
+    } finally {
+      setGitBusy(false);
+    }
+  };
 
   const hasNonExportableRequestTypes = useMemo(() => {
     let types = new Set();
@@ -202,6 +221,35 @@ const ShareCollection = ({ onClose, collectionUid }) => {
               </span>
             </div>
           )}
+
+          <div className="mt-6 pt-4 border-t" data-testid="share-git-section">
+            <h4 className="text-sm font-medium mb-1">Compartilhar com Git</h4>
+            <p className="text-xs opacity-70 mb-2">
+              Envia a pasta desta coleção para um repositório (GitHub, GitLab, Bitbucket ou outro). Se a pasta
+              ainda não for um repositório, ele é criado. Alterações ainda não salvas não são enviadas.
+            </p>
+            <div className="flex gap-2 items-center">
+              <input
+                aria-label="URL do repositório remoto"
+                className="flex-grow p-1 rounded border text-sm"
+                placeholder="https://github.com/usuario/repositorio.git"
+                value={gitUrl}
+                onChange={(e) => setGitUrl(e.target.value)}
+              />
+              <Button
+                onClick={handleShareWithGit}
+                disabled={gitBusy || !gitUrl.trim() || !collection?.pathname || isCollectionLoading}
+                loading={gitBusy}
+              >
+                Compartilhar
+              </Button>
+            </div>
+            {gitError && (
+              <div className="mt-2 text-xs whitespace-pre-wrap" role="alert" style={{ color: '#f87171' }}>
+                {gitError}
+              </div>
+            )}
+          </div>
 
           <div className="modal-footer">
             <Button

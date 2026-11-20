@@ -1,6 +1,20 @@
 import styled from 'styled-components';
 
 const StyledWrapper = styled.div`
+  color: ${(props) => props.theme.text};
+
+  input[type='text'] {
+    color: ${(props) => props.theme.text};
+    background: ${(props) => props.theme.input.bg};
+    border: 1px solid ${(props) => props.theme.input.border};
+    border-radius: ${(props) => props.theme.border.radius.sm};
+    outline: none;
+
+    &:focus {
+      border-color: ${(props) => props.theme.input.focusBorder};
+    }
+  }
+
   .tabs {
     .tab {
       padding: 6px 0px;
