@@ -305,10 +305,13 @@ const createGitOpsHandlers = (mainWindow) => {
      */
     publish: async (collectionPath, remoteUrl, remote = 'origin') => {
       const url = requireMessage(remoteUrl, 'URL do remote');
-      let root = findRepoRoot(collectionPath);
+      // Só usa um repositório que esteja DENTRO da pasta da coleção. Um .git de pasta pai
+      // (coleção dentro de outro repo) não pode ser tocado: o add -A entraria no repo alheio.
+      const own = path.resolve(collectionPath);
+      let root = fs.existsSync(path.join(own, '.git')) ? own : null;
       if (!root) {
         await init(collectionPath);
-        root = path.resolve(collectionPath);
+        root = own;
       }
 
       const existing = (await gitUtils.fetchRemotes(root)).find((r) => r.name === remote);

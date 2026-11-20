@@ -339,3 +339,29 @@ describe('git-ops: histórico, diff e stash', () => {
     await expect(ops.fileHistory(coll, '--output=x')).rejects.toThrow('Caminho de arquivo inválido');
   });
 });
+
+describe('git-ops: publicar coleção dentro de outro repositório', () => {
+  test('não toca no repositório pai e cria o próprio Git na coleção', async () => {
+    const parent = newDir('repo-pai');
+    git(parent, ['init', '-q', '-b', 'main']);
+    fs.writeFileSync(path.join(parent, 'readme.md'), 'pai\n');
+    git(parent, ['add', 'readme.md']);
+    git(parent, ['commit', '-q', '-m', 'pai inicial']);
+    const parentCommits = git(parent, ['rev-list', '--count', 'HEAD']);
+
+    const coll = newDir('repo-pai/colecao-aninhada');
+    fs.writeFileSync(path.join(coll, 'x.bru'), 'x\n');
+    const bare = newDir('remoto-aninhado.git');
+    git(bare, ['init', '--bare', '-q']);
+
+    const status = await ops.publish(coll, bare);
+
+    expect(fs.existsSync(path.join(coll, '.git'))).toBe(true);
+    expect(status.gitRootPath).toBe(path.resolve(coll));
+    expect(git(parent, ['rev-list', '--count', 'HEAD'])).toBe(parentCommits);
+    expect(git(parent, ['remote'])).toBe('');
+    // O repo aninhado aparece no pai só como pasta não rastreada; nada staged ou modificado.
+    expect(git(parent, ['status', '--porcelain'])).toBe('?? colecao-aninhada/');
+    expect(git(bare, ['ls-tree', '--name-only', 'main'])).toContain('x.bru');
+  });
+});
