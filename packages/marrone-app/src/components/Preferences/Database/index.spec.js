@@ -1,6 +1,16 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { ThemeProvider } from 'styled-components';
+import darkTheme from 'themes/dark/dark';
 import Database from './index';
+
+// O app sempre monta o ThemeProvider; o StyledWrapper da aba depende de theme.input/font.
+const renderDatabase = () =>
+  render(
+    <ThemeProvider theme={darkTheme}>
+      <Database />
+    </ThemeProvider>
+  );
 
 /**
  * Estes testes cobrem o aceite do F4 ("o componente renderiza sem erro; campos controlados")
@@ -43,7 +53,7 @@ describe('Preferences > Database (F4 / F5)', () => {
   });
 
   test('renderiza o formulário e o painel de exemplos', async () => {
-    render(<Database />);
+    renderDatabase();
 
     expect(await screen.findByLabelText('Banco de dados')).toBeInTheDocument();
     expect(screen.getByLabelText('Usuário')).toBeInTheDocument();
@@ -52,7 +62,7 @@ describe('Preferences > Database (F4 / F5)', () => {
   });
 
   test('lista os 5 SGBDs no select', async () => {
-    render(<Database />);
+    renderDatabase();
 
     const select = await screen.findByLabelText('Banco de dados');
 
@@ -62,7 +72,7 @@ describe('Preferences > Database (F4 / F5)', () => {
   });
 
   test('o campo de senha é do tipo password e o botão Mostrar alterna', async () => {
-    render(<Database />);
+    renderDatabase();
 
     const password = await screen.findByLabelText('Senha');
     expect(password).toHaveAttribute('type', 'password');
@@ -72,7 +82,7 @@ describe('Preferences > Database (F4 / F5)', () => {
   });
 
   test('os campos são controlados (digitar reflete no valor)', async () => {
-    render(<Database />);
+    renderDatabase();
 
     const username = await screen.findByLabelText('Usuário');
     fireEvent.change(username, { target: { value: 'joao' } });
@@ -81,7 +91,7 @@ describe('Preferences > Database (F4 / F5)', () => {
   });
 
   test('trocar o SGBD troca o exemplo e a string de conexão sugerida', async () => {
-    render(<Database />);
+    renderDatabase();
 
     const select = await screen.findByLabelText('Banco de dados');
     expect(screen.getByText('postgres://localhost:5432/mydb')).toBeInTheDocument();
@@ -98,7 +108,7 @@ describe('Preferences > Database (F4 / F5)', () => {
     const mock = createIpcMock();
     window.ipcRenderer = { invoke: mock.invoke };
 
-    render(<Database />);
+    renderDatabase();
 
     fireEvent.change(await screen.findByLabelText('Usuário'), { target: { value: 'joao' } });
     fireEvent.change(screen.getByLabelText('Senha'), { target: { value: 'segredo' } });
@@ -128,7 +138,7 @@ describe('Preferences > Database (F4 / F5)', () => {
     });
     window.ipcRenderer = { invoke: mock.invoke };
 
-    render(<Database />);
+    renderDatabase();
 
     const password = await screen.findByLabelText('Senha');
     expect(password).toHaveValue('');
@@ -143,7 +153,7 @@ describe('Preferences > Database (F4 / F5)', () => {
     const failing = createIpcMock({ testResult: { ok: false, error: { message: 'SQL30081N', code: '-30081' } } });
     window.ipcRenderer = { invoke: failing.invoke };
 
-    render(<Database />);
+    renderDatabase();
     fireEvent.click(await screen.findByText('Testar conexão'));
 
     expect(await screen.findByRole('alert')).toHaveTextContent('SQL30081N');
@@ -155,7 +165,7 @@ describe('Preferences > Database (F4 / F5)', () => {
     });
     window.ipcRenderer = { invoke: mock.invoke };
 
-    render(<Database />);
+    renderDatabase();
 
     expect(await screen.findByText(/Catálogo indisponível/)).toBeInTheDocument();
     // cai para a lista local e continua funcional
@@ -178,7 +188,7 @@ describe('Preferences > Database (F4 / F5)', () => {
     };
 
     test('o seletor de autenticação NÃO aparece em bancos que não são SQL Server', async () => {
-      render(<Database />);
+      renderDatabase();
 
       expect(await screen.findByLabelText('Banco de dados')).toBeInTheDocument();
       expect(screen.queryByText('Tipo de autenticação')).not.toBeInTheDocument();
@@ -186,7 +196,7 @@ describe('Preferences > Database (F4 / F5)', () => {
     });
 
     test('no SQL Server o seletor aparece e o domínio começa escondido', async () => {
-      render(<Database />);
+      renderDatabase();
       await selectDatabase('mssql');
 
       expect(await screen.findByText('Tipo de autenticação')).toBeInTheDocument();
@@ -196,7 +206,7 @@ describe('Preferences > Database (F4 / F5)', () => {
     });
 
     test('escolher Windows Authentication revela o campo de domínio', async () => {
-      render(<Database />);
+      renderDatabase();
       await selectDatabase('mssql');
 
       fireEvent.click(screen.getByRole('radio', { name: /Windows Authentication/ }));
@@ -209,7 +219,7 @@ describe('Preferences > Database (F4 / F5)', () => {
       const mock = createIpcMock();
       window.ipcRenderer = { invoke: mock.invoke };
 
-      render(<Database />);
+      renderDatabase();
       await selectDatabase('mssql');
 
       fireEvent.click(screen.getByRole('radio', { name: /Windows Authentication/ }));
@@ -236,7 +246,7 @@ describe('Preferences > Database (F4 / F5)', () => {
       const mock = createIpcMock();
       window.ipcRenderer = { invoke: mock.invoke };
 
-      render(<Database />);
+      renderDatabase();
       await selectDatabase('mssql');
 
       fireEvent.click(screen.getByRole('radio', { name: /Windows Authentication/ }));
@@ -259,7 +269,7 @@ describe('Preferences > Database (F4 / F5)', () => {
       });
       window.ipcRenderer = { invoke: mock.invoke };
 
-      render(<Database />);
+      renderDatabase();
       await selectDatabase('mssql');
 
       expect(await screen.findByRole('radio', { name: /Windows Authentication/ })).toBeChecked();
@@ -273,7 +283,7 @@ describe('Preferences > Database (F4 / F5)', () => {
       });
       window.ipcRenderer = { invoke: mock.invoke };
 
-      render(<Database />);
+      renderDatabase();
       await selectDatabase('mssql');
 
       fireEvent.change(await screen.findByLabelText('Usuário'), { target: { value: 'joao' } });
@@ -287,5 +297,26 @@ describe('Preferences > Database (F4 / F5)', () => {
         expect(saved[0][1]).not.toHaveProperty('password');
       });
     });
+  });
+});
+
+describe('Preferences > Database — tema dos controles', () => {
+  test('inputs e blocos de código usam a cor e o fundo do tema (não o padrão do navegador)', async () => {
+    const mock = createIpcMock({});
+    window.ipcRenderer = { invoke: mock.invoke };
+
+    const { container } = renderDatabase();
+    const input = await screen.findByLabelText('Usuário');
+    const code = container.querySelector('.db-code');
+
+    // Cor esperada, resolvida pelo próprio navegador/jsdom a partir do tema escuro.
+    const probe = document.createElement('div');
+    probe.style.color = darkTheme.text;
+    document.body.appendChild(probe);
+    const expectedColor = getComputedStyle(probe).color;
+    probe.remove();
+
+    expect(getComputedStyle(input).color).toBe(expectedColor);
+    expect(getComputedStyle(code).color).toBe(expectedColor);
   });
 });

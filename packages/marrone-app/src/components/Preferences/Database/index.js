@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import CredentialsForm from './CredentialsForm';
 import ExamplesPanel from './ExamplesPanel';
 import { FALLBACK_DATABASE_IDS } from './constants';
+import StyledWrapper from './StyledWrapper';
 
 /**
  * Aba Settings > Database.
@@ -51,7 +52,7 @@ const Database = () => {
   }, []);
 
   return (
-    <div className="h-full overflow-y-auto">
+    <StyledWrapper className="h-full overflow-y-auto">
       {catalogWarning && (
         <div className="p-2 rounded text-xs mb-3" style={{ background: 'rgba(217,119,6,0.12)' }}>
           {catalogWarning}
@@ -67,7 +68,7 @@ const Database = () => {
       <hr className="my-5 opacity-20" />
 
       <ExamplesPanel currentDatabase={currentDatabase} />
-    </div>
+    </StyledWrapper>
   );
 };
 

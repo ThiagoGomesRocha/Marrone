@@ -39,7 +39,7 @@ const ExamplesPanel = ({ currentDatabase }) => {
 
       <div className="mb-3">
         <div className="text-xs font-medium mb-1">String de conexão (sem credenciais)</div>
-        <pre className="p-2 rounded text-xs overflow-x-auto" style={{ background: 'rgba(0,0,0,0.15)' }}>
+        <pre className="db-code p-2 rounded text-xs overflow-x-auto">
           {example.connectionString}
         </pre>
       </div>
@@ -52,7 +52,7 @@ const ExamplesPanel = ({ currentDatabase }) => {
 
       <div>
         <div className="text-xs font-medium mb-1">Script completo (bloco tests)</div>
-        <pre className="p-2 rounded text-xs overflow-x-auto" style={{ background: 'rgba(0,0,0,0.15)' }}>
+        <pre className="db-code p-2 rounded text-xs overflow-x-auto">
           {buildScriptExample(currentDatabase)}
         </pre>
       </div>
