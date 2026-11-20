@@ -9,6 +9,7 @@ import StyledWrapper from './StyledWrapper';
 import useOpenAPISyncPolling from './useOpenAPISyncPolling';
 import useChangelogOnUpdate from './useChangelogOnUpdate';
 import { version } from '../../../package.json';
+import UpdateNotice from 'components/UpdateNotice';
 import { checkpoint, startBenchmarkFlush, stopBenchmarkFlush, flushEvents } from 'utils/benchmark';
 
 export const AppContext = React.createContext();
@@ -78,6 +79,7 @@ export const AppProvider = (props) => {
     <AppContext.Provider {...props} value={{ version }}>
       <StyledWrapper>
         <ConfirmAppClose />
+        <UpdateNotice version={version} />
         <MigrateCollectionToYmlModal />
         {props.children}
       </StyledWrapper>

@@ -55,6 +55,7 @@ const registerApiSpecIpc = require('./ipc/apiSpec');
 const registerGitIpc = require('./ipc/git');
 const registerGitOpsIpc = require('./ipc/git-ops');
 const registerGithubImportIpc = require('./ipc/github-import');
+const registerAppUpdateIpc = require('./ipc/app-update');
 const registerOpenAPISyncIpc = require('./ipc/openapi-sync');
 const registerMockServerIpc = require('./ipc/mock-server');
 const registerAiIpc = require('./ipc/ai');
@@ -548,6 +549,7 @@ app.on('ready', async () => {
   registerGitIpc(mainWindow);
   registerGitOpsIpc(mainWindow);
   registerGithubImportIpc();
+  registerAppUpdateIpc();
   registerOpenAPISyncIpc(mainWindow);
   registerMockServerIpc(mainWindow);
   registerAiIpc(mainWindow);
