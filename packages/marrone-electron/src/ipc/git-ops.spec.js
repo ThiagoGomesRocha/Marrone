@@ -2,6 +2,9 @@
 // Não mocka o Git. Só o `electron` (ipcMain) e a janela (win.webContents.send).
 jest.mock('electron', () => ({ ipcMain: { handle: jest.fn() } }));
 
+// Testes fazem Git real (push, clone, merge) em disco; no Windows passam de 5 s com frequência.
+jest.setTimeout(60000);
+
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
