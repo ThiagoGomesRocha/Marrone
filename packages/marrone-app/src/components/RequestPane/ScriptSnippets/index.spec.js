@@ -86,3 +86,21 @@ describe('insertSnippetAtCursor', () => {
     expect(() => insertSnippetAtCursor(null, 'x')).not.toThrow();
   });
 });
+
+describe('ScriptSnippets — opções seguem o menu suspenso do tema', () => {
+  test('opções usam dropdown.bg e dropdown.color do tema', () => {
+    renderSnippets({ groups: ['tests'], onInsert: jest.fn() });
+    const option = screen.getByLabelText('Inserir trecho de código').querySelector('option[value="test-status-200"]');
+
+    const probe = document.createElement('div');
+    probe.style.background = darkTheme.dropdown.bg;
+    probe.style.color = darkTheme.dropdown.color;
+    document.body.appendChild(probe);
+    const expectedBg = getComputedStyle(probe).backgroundColor;
+    const expectedColor = getComputedStyle(probe).color;
+    probe.remove();
+
+    expect(getComputedStyle(option).backgroundColor).toBe(expectedBg);
+    expect(getComputedStyle(option).color).toBe(expectedColor);
+  });
+});

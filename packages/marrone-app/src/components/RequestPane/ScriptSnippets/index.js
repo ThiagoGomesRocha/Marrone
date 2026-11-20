@@ -26,8 +26,8 @@ const StyledWrapper = styled.div`
 
     option,
     optgroup {
-      color: ${(props) => props.theme.text};
-      background: ${(props) => props.theme.input.bg};
+      color: ${(props) => props.theme.dropdown.color};
+      background: ${(props) => props.theme.dropdown.bg};
     }
   }
 `;

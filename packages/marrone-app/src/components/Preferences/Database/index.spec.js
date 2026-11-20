@@ -320,3 +320,25 @@ describe('Preferences > Database — tema dos controles', () => {
     expect(getComputedStyle(code).color).toBe(expectedColor);
   });
 });
+
+describe('Preferences > Database — opções do select seguem o menu suspenso do tema', () => {
+  test('opção do SGBD usa dropdown.bg e dropdown.color do tema', async () => {
+    const mock = createIpcMock({});
+    window.ipcRenderer = { invoke: mock.invoke };
+
+    renderDatabase();
+    await screen.findByLabelText('Usuário');
+    const option = document.getElementById('database-sgbd').querySelector('option');
+
+    const probe = document.createElement('div');
+    probe.style.background = darkTheme.dropdown.bg;
+    probe.style.color = darkTheme.dropdown.color;
+    document.body.appendChild(probe);
+    const expectedBg = getComputedStyle(probe).backgroundColor;
+    const expectedColor = getComputedStyle(probe).color;
+    probe.remove();
+
+    expect(getComputedStyle(option).backgroundColor).toBe(expectedBg);
+    expect(getComputedStyle(option).color).toBe(expectedColor);
+  });
+});

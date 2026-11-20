@@ -39,9 +39,10 @@ const StyledWrapper = styled.div`
     }
   }
 
-  select option {
-    color: ${(props) => props.theme.text};
-    background: ${(props) => props.theme.input.bg};
+  select option,
+  select optgroup {
+    color: ${(props) => props.theme.dropdown.color};
+    background: ${(props) => props.theme.dropdown.bg};
   }
 
   input[type='radio'],
