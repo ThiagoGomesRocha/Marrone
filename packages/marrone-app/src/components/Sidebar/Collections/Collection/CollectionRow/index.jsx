@@ -14,6 +14,7 @@ import {
   IconPlayerPlay,
   IconEdit,
   IconShare,
+  IconGitBranch,
   IconFoldDown,
   IconX,
   IconSettings,
@@ -45,6 +46,7 @@ import RenameCollection from '../RenameCollection';
 import StyledWrapper from './StyledWrapper';
 import CloneCollection from '../CloneCollection';
 import ShareCollection from 'components/ShareCollection/index';
+import GitPanel from 'components/GitPanel';
 import GenerateDocumentation from '../GenerateDocumentation';
 import { getRevealInFolderLabel } from 'utils/common/platform';
 import { openDevtoolsAndSwitchToTerminal } from 'utils/terminal';
@@ -69,6 +71,7 @@ const CollectionRow = ({ collection, searchText, openBulkMenu, children, isColle
   const [showRenameCollectionModal, setShowRenameCollectionModal] = useState(false);
   const [showCloneCollectionModalOpen, setShowCloneCollectionModalOpen] = useState(false);
   const [showShareCollectionModal, setShowShareCollectionModal] = useState(false);
+  const [showGitPanel, setShowGitPanel] = useState(false);
   const [showGenerateDocumentationModal, setShowGenerateDocumentationModal] = useState(false);
   const [showRemoveCollectionModal, setShowRemoveCollectionModal] = useState(false);
   const [showMoveToWorkspaceModal, setShowMoveToWorkspaceModal] = useState(false);
@@ -456,6 +459,14 @@ const CollectionRow = ({ collection, searchText, openBulkMenu, children, isColle
       }
     },
     {
+      id: 'git',
+      leftSection: IconGitBranch,
+      label: 'Git',
+      onClick: () => {
+        setShowGitPanel(true);
+      }
+    },
+    {
       id: 'share',
       leftSection: IconShare,
       label: 'Share',
@@ -558,6 +569,7 @@ const CollectionRow = ({ collection, searchText, openBulkMenu, children, isColle
       {showShareCollectionModal && (
         <ShareCollection collectionUid={collection.uid} onClose={() => setShowShareCollectionModal(false)} />
       )}
+      {showGitPanel && <GitPanel collection={collection} onClose={() => setShowGitPanel(false)} />}
       {showGenerateDocumentationModal && (
         <GenerateDocumentation collectionUid={collection.uid} onClose={() => setShowGenerateDocumentationModal(false)} />
       )}
