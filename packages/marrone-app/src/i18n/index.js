@@ -16,7 +16,8 @@ i18n
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({
     resources,
-    lng: 'en', // Use "en" as the default language. "cimode" can be used to debug / show translation placeholder
+    lng: 'pt-BR', // Idioma padrão do Marrone; "cimode" serve para depurar chaves de tradução
+    fallbackLng: 'en', // Chaves ausentes no pt-BR caem para o inglês
 
     ns: 'translation', // Use translation as the default Namespace that will be loaded by default
 

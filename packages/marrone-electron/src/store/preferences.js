@@ -65,7 +65,7 @@ const defaultPreferences = {
   general: {
     defaultLocation: '',
     defaultWorkspacePath: '',
-    language: 'en'
+    language: 'pt-BR'
   },
   autoSave: {
     enabled: false,

@@ -58,7 +58,7 @@ const initialState = {
     },
     general: {
       defaultLocation: '',
-      language: 'en'
+      language: 'pt-BR'
     },
     report: {
       logo: '',
