@@ -7,6 +7,7 @@ import { sendRequest, saveRequest } from 'providers/ReduxStore/slices/collection
 import { useTheme } from 'providers/Theme';
 import { usePersistedState } from 'hooks/usePersistedState';
 import { useFocusErrorLine } from 'hooks/useFocusErrorLine';
+import ScriptSnippets, { insertSnippetAtCursor } from 'components/RequestPane/ScriptSnippets';
 
 const Tests = ({ item, collection }) => {
   const dispatch = useDispatch();
@@ -38,6 +39,10 @@ const Tests = ({ item, collection }) => {
 
   return (
     <div data-testid="test-script-editor" className="relative h-full">
+      <ScriptSnippets
+        groups={['tests', 'db']}
+        onInsert={(code) => insertSnippetAtCursor(testsEditorRef.current?.editor, code)}
+      />
       <CodeEditor
         ref={testsEditorRef}
         collection={collection}

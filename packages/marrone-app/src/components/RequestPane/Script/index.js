@@ -12,6 +12,7 @@ import StatusDot from 'components/StatusDot';
 import { usePersistedState } from 'hooks/usePersistedState';
 import { useFocusErrorLine } from 'hooks/useFocusErrorLine';
 import { getActiveScriptTab } from 'utils/tabs';
+import ScriptSnippets, { insertSnippetAtCursor } from 'components/RequestPane/ScriptSnippets';
 
 const Script = ({ item, collection }) => {
   const dispatch = useDispatch();
@@ -116,6 +117,10 @@ const Script = ({ item, collection }) => {
         </TabsList>
 
         <TabsContent value="pre-request" className="mt-2" dataTestId="pre-request-script-editor">
+          <ScriptSnippets
+            groups={['prerequest', 'db']}
+            onInsert={(code) => insertSnippetAtCursor(preRequestEditorRef.current?.editor, code)}
+          />
           <div className="relative h-full">
             <CodeEditor
               ref={preRequestEditorRef}
@@ -139,6 +144,10 @@ const Script = ({ item, collection }) => {
         </TabsContent>
 
         <TabsContent value="post-response" className="mt-2" dataTestId="post-response-script-editor">
+          <ScriptSnippets
+            groups={['postresponse', 'tests', 'db']}
+            onInsert={(code) => insertSnippetAtCursor(postResponseEditorRef.current?.editor, code)}
+          />
           <div className="relative h-full">
             <CodeEditor
               ref={postResponseEditorRef}
