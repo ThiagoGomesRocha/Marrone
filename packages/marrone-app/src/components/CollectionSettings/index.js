@@ -14,6 +14,7 @@ import Protobuf from './Protobuf';
 import StyledWrapper from './StyledWrapper';
 import Vars from './Vars/index';
 import StatusDot from 'components/StatusDot';
+import GitPanel from 'components/GitPanel';
 import Overview from './Overview/index';
 import SettingsAiAssist from 'components/SettingsAiAssist';
 import DocsAction from 'components/Documentation/DocsAction';
@@ -101,6 +102,9 @@ const CollectionSettings = ({ collection }) => {
       case 'protobuf': {
         return <Protobuf collection={collection} />;
       }
+      case 'git': {
+        return <GitPanel collection={collection} embedded />;
+      }
     }
   };
 
@@ -152,6 +156,9 @@ const CollectionSettings = ({ collection }) => {
           <div className={getTabClassname('protobuf')} role="tab" data-testid="collection-settings-tab-protobuf" onClick={() => setTab('protobuf')}>
             Protobuf
             {protobufConfig.protoFiles && protobufConfig.protoFiles.length > 0 && <StatusDot />}
+          </div>
+          <div className={getTabClassname('git')} role="tab" data-testid="collection-settings-tab-git" onClick={() => setTab('git')}>
+            Git
           </div>
         </div>
         {AI_TABS.includes(tab) && (

@@ -117,3 +117,18 @@ describe('GitPanel', () => {
     expect(invoke).not.toHaveBeenCalledWith('renderer:git-remove-remote', expect.anything(), expect.anything());
   });
 });
+
+describe('GitPanel embutido (aba Git das configurações)', () => {
+  test('embedded renderiza o conteúdo sem modal', async () => {
+    const invoke = jest.fn().mockResolvedValue({ isRepo: false, collectionPath: collection.pathname });
+    window.ipcRenderer = { invoke };
+    render(
+      <ThemeProvider theme={darkTheme}>
+        <GitPanel collection={collection} embedded />
+      </ThemeProvider>
+    );
+
+    expect(await screen.findByText('Inicializar Git')).toBeInTheDocument();
+    expect(screen.queryByTestId('git-panel')).toBeNull();
+  });
+});

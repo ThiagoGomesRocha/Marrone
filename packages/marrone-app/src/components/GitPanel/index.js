@@ -14,7 +14,7 @@ const fileList = (files) => (files || []).map((f) => f.path);
  * push/pull/fetch, stash, resolução de conflitos e publicação.
  * Toda operação passa pelo main (ipc/git-ops.js), que resolve o repositório a partir da coleção.
  */
-const GitPanel = ({ collection, onClose }) => {
+const GitPanel = ({ collection, onClose, embedded = false }) => {
   const collectionPath = collection.pathname;
 
   const [status, setStatus] = useState(null);
@@ -171,343 +171,350 @@ const GitPanel = ({ collection, onClose }) => {
   const unstaged = fileList(status?.unstaged);
   const staged = fileList(status?.staged);
 
-  return (
-    <Modal size="lg" title="Git" handleCancel={onClose} hideFooter dataTestId="git-panel">
-      <StyledWrapper>
-        {status === null && <div className="gp-muted">Carregando status do Git…</div>}
+  const content = (
+    <StyledWrapper>
+      {status === null && <div className="gp-muted">Carregando status do Git…</div>}
 
-        {status && !isRepo && (
-          <div className="gp-section">
-            <p className="gp-muted">Esta coleção ainda não está em um repositório Git.</p>
-            <div className="gp-row">
-              <Button size="sm" onClick={init} disabled={busy}>
-                Inicializar Git
-              </Button>
+      {status && !isRepo && (
+        <div className="gp-section">
+          <p className="gp-muted">Esta coleção ainda não está em um repositório Git.</p>
+          <div className="gp-row">
+            <Button size="sm" onClick={init} disabled={busy}>
+              Inicializar Git
+            </Button>
+          </div>
+          <h4>Compartilhar com Git</h4>
+          <p className="gp-muted">
+            Cria o repositório (se preciso), adiciona o remote, faz o commit e envia a branch.
+          </p>
+          <div className="gp-row">
+            <input
+              aria-label="URL do repositório remoto"
+              placeholder="https://github.com/usuario/repositorio.git"
+              value={publishUrl}
+              onChange={(e) => setPublishUrl(e.target.value)}
+            />
+            <Button size="sm" onClick={publish} disabled={busy || !publishUrl.trim()}>
+              Compartilhar
+            </Button>
+          </div>
+        </div>
+      )}
+
+      {status && isRepo && (
+        <>
+          <div className="gp-header">
+            <div>
+              <strong>Branch:</strong> {status.branch || '(sem branch)'}
+              {status.tracking && <span className="gp-muted"> → {status.tracking}</span>}
+              {(status.ahead > 0 || status.behind > 0) && (
+                <span className="gp-muted">
+                  {' '}
+                  (↑{status.ahead} ↓{status.behind})
+                </span>
+              )}
+              {!status.hasCommits && <span className="gp-muted"> · sem commits ainda</span>}
             </div>
-            <h4>Compartilhar com Git</h4>
-            <p className="gp-muted">
-              Cria o repositório (se preciso), adiciona o remote, faz o commit e envia a branch.
-            </p>
             <div className="gp-row">
-              <input
-                aria-label="URL do repositório remoto"
-                placeholder="https://github.com/usuario/repositorio.git"
-                value={publishUrl}
-                onChange={(e) => setPublishUrl(e.target.value)}
-              />
-              <Button size="sm" onClick={publish} disabled={busy || !publishUrl.trim()}>
-                Compartilhar
+              <Button size="sm" variant="outline" onClick={refresh} disabled={busy}>
+                Atualizar
+              </Button>
+              <Button size="sm" variant="outline" onClick={fetchRemote} disabled={busy}>
+                Buscar
+              </Button>
+              <Button size="sm" variant="outline" onClick={pullBranch} disabled={busy}>
+                Pull
+              </Button>
+              <Button size="sm" onClick={pushBranch} disabled={busy || !status.hasCommits}>
+                Push
               </Button>
             </div>
           </div>
-        )}
 
-        {status && isRepo && (
-          <>
-            <div className="gp-header">
-              <div>
-                <strong>Branch:</strong> {status.branch || '(sem branch)'}
-                {status.tracking && <span className="gp-muted"> → {status.tracking}</span>}
-                {(status.ahead > 0 || status.behind > 0) && (
-                  <span className="gp-muted">
-                    {' '}
-                    (↑{status.ahead} ↓{status.behind})
-                  </span>
-                )}
-                {!status.hasCommits && <span className="gp-muted"> · sem commits ainda</span>}
+          {error && <div className="gp-error">{error}</div>}
+          {notice && !error && <div className="gp-notice">{notice}</div>}
+
+          <Tabs value={tab} onValueChange={setTab}>
+            <TabsList>
+              <TabsTrigger value="changes">Alterações</TabsTrigger>
+              <TabsTrigger value="history">Histórico</TabsTrigger>
+              <TabsTrigger value="branches">Branches</TabsTrigger>
+              <TabsTrigger value="remotes">Remotos</TabsTrigger>
+              <TabsTrigger value="stash">Stash</TabsTrigger>
+              {hasConflicts && <TabsTrigger value="conflicts">Conflitos</TabsTrigger>}
+            </TabsList>
+
+            <TabsContent value="changes">
+              <div className="gp-section">
+                <h4>Não preparadas ({unstaged.length})</h4>
+                <ul className="gp-list">
+                  {unstaged.map((p) => (
+                    <li key={p}>
+                      <label>
+                        <input type="checkbox" checked={selected.includes(p)} onChange={() => toggleSelected(p)} />{' '}
+                        {p}
+                      </label>
+                      <Button size="xs" variant="ghost" onClick={() => discardFiles([p])} disabled={busy}>
+                        Descartar
+                      </Button>
+                    </li>
+                  ))}
+                </ul>
+                <div className="gp-row">
+                  <Button size="sm" onClick={stageSelected} disabled={busy || selected.length === 0}>
+                    Adicionar ao stage ({selected.length})
+                  </Button>
+                </div>
+
+                <h4>Preparadas ({staged.length})</h4>
+                <ul className="gp-list">
+                  {staged.map((p) => (
+                    <li key={p}>
+                      <span>{p}</span>
+                      <Button
+                        size="xs"
+                        variant="ghost"
+                        onClick={() => run('Removido do stage', () => gitApi.unstage(collectionPath, [p]))}
+                        disabled={busy}
+                      >
+                        Tirar do stage
+                      </Button>
+                    </li>
+                  ))}
+                </ul>
+
+                <textarea
+                  aria-label="Mensagem do commit"
+                  placeholder="Mensagem do commit"
+                  value={commitMessage}
+                  onChange={(e) => setCommitMessage(e.target.value)}
+                  rows={3}
+                />
+                <div className="gp-row">
+                  <Button
+                    size="sm"
+                    onClick={commit}
+                    disabled={busy || staged.length === 0 || !commitMessage.trim()}
+                  >
+                    Commit
+                  </Button>
+                </div>
               </div>
-              <div className="gp-row">
-                <Button size="sm" variant="outline" onClick={refresh} disabled={busy}>
-                  Atualizar
-                </Button>
-                <Button size="sm" variant="outline" onClick={fetchRemote} disabled={busy}>
-                  Buscar
-                </Button>
-                <Button size="sm" variant="outline" onClick={pullBranch} disabled={busy}>
-                  Pull
-                </Button>
-                <Button size="sm" onClick={pushBranch} disabled={busy || !status.hasCommits}>
-                  Push
-                </Button>
-              </div>
-            </div>
+            </TabsContent>
 
-            {error && <div className="gp-error">{error}</div>}
-            {notice && !error && <div className="gp-notice">{notice}</div>}
+            <TabsContent value="history">
+              <HistoryView collectionPath={collectionPath} />
+            </TabsContent>
 
-            <Tabs value={tab} onValueChange={setTab}>
-              <TabsList>
-                <TabsTrigger value="changes">Alterações</TabsTrigger>
-                <TabsTrigger value="history">Histórico</TabsTrigger>
-                <TabsTrigger value="branches">Branches</TabsTrigger>
-                <TabsTrigger value="remotes">Remotos</TabsTrigger>
-                <TabsTrigger value="stash">Stash</TabsTrigger>
-                {hasConflicts && <TabsTrigger value="conflicts">Conflitos</TabsTrigger>}
-              </TabsList>
-
-              <TabsContent value="changes">
-                <div className="gp-section">
-                  <h4>Não preparadas ({unstaged.length})</h4>
-                  <ul className="gp-list">
-                    {unstaged.map((p) => (
-                      <li key={p}>
-                        <label>
-                          <input type="checkbox" checked={selected.includes(p)} onChange={() => toggleSelected(p)} />{' '}
-                          {p}
-                        </label>
-                        <Button size="xs" variant="ghost" onClick={() => discardFiles([p])} disabled={busy}>
-                          Descartar
+            <TabsContent value="branches">
+              <div className="gp-section">
+                <ul className="gp-list">
+                  {(status.branches || []).map((name) => (
+                    <li key={name}>
+                      <span>
+                        {name === status.branch ? <strong>● {name}</strong> : name}
+                      </span>
+                      {name !== status.branch && (
+                        <Button size="xs" variant="ghost" onClick={() => checkout(name)} disabled={busy}>
+                          Trocar
                         </Button>
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="gp-row">
-                    <Button size="sm" onClick={stageSelected} disabled={busy || selected.length === 0}>
-                      Adicionar ao stage ({selected.length})
-                    </Button>
-                  </div>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+                <h4>Nova branch</h4>
+                <div className="gp-row">
+                  <input
+                    aria-label="Nome da nova branch"
+                    placeholder="feature/minha-mudanca"
+                    value={newBranch}
+                    onChange={(e) => setNewBranch(e.target.value)}
+                  />
+                  <Button size="sm" onClick={createBranch} disabled={busy || !newBranch.trim()}>
+                    Criar e trocar
+                  </Button>
+                </div>
+              </div>
+            </TabsContent>
 
-                  <h4>Preparadas ({staged.length})</h4>
-                  <ul className="gp-list">
-                    {staged.map((p) => (
-                      <li key={p}>
-                        <span>{p}</span>
+            <TabsContent value="remotes">
+              <div className="gp-section">
+                <ul className="gp-list">
+                  {status.remotes.map((r) => (
+                    <li key={r.name}>
+                      <span>
+                        <strong>{r.name}</strong> <span className="gp-muted">{r.url}</span>
+                      </span>
+                      <Button size="xs" variant="ghost" onClick={() => removeRemote(r.name)} disabled={busy}>
+                        Remover
+                      </Button>
+                    </li>
+                  ))}
+                  {status.remotes.length === 0 && <li className="gp-muted">Nenhum remote configurado.</li>}
+                </ul>
+                <h4>Adicionar remote</h4>
+                <div className="gp-row">
+                  <input
+                    aria-label="Nome do remote"
+                    value={remoteName}
+                    onChange={(e) => setRemoteName(e.target.value)}
+                    style={{ maxWidth: '8rem' }}
+                  />
+                  <input
+                    aria-label="URL do remote"
+                    placeholder="https://… ou caminho local"
+                    value={remoteUrl}
+                    onChange={(e) => setRemoteUrl(e.target.value)}
+                  />
+                  <Button size="sm" onClick={addRemote} disabled={busy || !remoteName.trim() || !remoteUrl.trim()}>
+                    Adicionar
+                  </Button>
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="stash">
+              <div className="gp-section">
+                <ul className="gp-list">
+                  {(status.stashes || []).map((s) => (
+                    <li key={s.index}>
+                      <span>
+                        stash@{'{'}
+                        {s.index}
+                        {'}'} — {s.message}
+                      </span>
+                      <span className="gp-row">
                         <Button
                           size="xs"
                           variant="ghost"
-                          onClick={() => run('Removido do stage', () => gitApi.unstage(collectionPath, [p]))}
+                          onClick={() => run('Stash aplicado', () => gitApi.stashApply(collectionPath, s.index))}
                           disabled={busy}
                         >
-                          Tirar do stage
+                          Aplicar
                         </Button>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <textarea
-                    aria-label="Mensagem do commit"
-                    placeholder="Mensagem do commit"
-                    value={commitMessage}
-                    onChange={(e) => setCommitMessage(e.target.value)}
-                    rows={3}
-                  />
-                  <div className="gp-row">
-                    <Button
-                      size="sm"
-                      onClick={commit}
-                      disabled={busy || staged.length === 0 || !commitMessage.trim()}
-                    >
-                      Commit
-                    </Button>
-                  </div>
-                </div>
-              </TabsContent>
-
-              <TabsContent value="history">
-                <HistoryView collectionPath={collectionPath} />
-              </TabsContent>
-
-              <TabsContent value="branches">
-                <div className="gp-section">
-                  <ul className="gp-list">
-                    {(status.branches || []).map((name) => (
-                      <li key={name}>
-                        <span>
-                          {name === status.branch ? <strong>● {name}</strong> : name}
-                        </span>
-                        {name !== status.branch && (
-                          <Button size="xs" variant="ghost" onClick={() => checkout(name)} disabled={busy}>
-                            Trocar
-                          </Button>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                  <h4>Nova branch</h4>
-                  <div className="gp-row">
-                    <input
-                      aria-label="Nome da nova branch"
-                      placeholder="feature/minha-mudanca"
-                      value={newBranch}
-                      onChange={(e) => setNewBranch(e.target.value)}
-                    />
-                    <Button size="sm" onClick={createBranch} disabled={busy || !newBranch.trim()}>
-                      Criar e trocar
-                    </Button>
-                  </div>
-                </div>
-              </TabsContent>
-
-              <TabsContent value="remotes">
-                <div className="gp-section">
-                  <ul className="gp-list">
-                    {status.remotes.map((r) => (
-                      <li key={r.name}>
-                        <span>
-                          <strong>{r.name}</strong> <span className="gp-muted">{r.url}</span>
-                        </span>
-                        <Button size="xs" variant="ghost" onClick={() => removeRemote(r.name)} disabled={busy}>
-                          Remover
+                        <Button size="xs" variant="ghost" onClick={() => viewStash(s.index)} disabled={busy}>
+                          Ver
                         </Button>
-                      </li>
-                    ))}
-                    {status.remotes.length === 0 && <li className="gp-muted">Nenhum remote configurado.</li>}
-                  </ul>
-                  <h4>Adicionar remote</h4>
-                  <div className="gp-row">
-                    <input
-                      aria-label="Nome do remote"
-                      value={remoteName}
-                      onChange={(e) => setRemoteName(e.target.value)}
-                      style={{ maxWidth: '8rem' }}
-                    />
-                    <input
-                      aria-label="URL do remote"
-                      placeholder="https://… ou caminho local"
-                      value={remoteUrl}
-                      onChange={(e) => setRemoteUrl(e.target.value)}
-                    />
-                    <Button size="sm" onClick={addRemote} disabled={busy || !remoteName.trim() || !remoteUrl.trim()}>
-                      Adicionar
-                    </Button>
-                  </div>
-                </div>
-              </TabsContent>
-
-              <TabsContent value="stash">
-                <div className="gp-section">
-                  <ul className="gp-list">
-                    {(status.stashes || []).map((s) => (
-                      <li key={s.index}>
-                        <span>
-                          stash@{'{'}
-                          {s.index}
-                          {'}'} — {s.message}
-                        </span>
-                        <span className="gp-row">
+                        <Button size="xs" variant="ghost" onClick={() => stashDrop(s.index)} disabled={busy}>
+                          Apagar
+                        </Button>
+                      </span>
+                    </li>
+                  ))}
+                  {(status.stashes || []).length === 0 && <li className="gp-muted">Nenhum stash.</li>}
+                </ul>
+                {stashView && (
+                  <div className="gp-section">
+                    <h4>Stash {stashView.index}: alterações guardadas</h4>
+                    <ul className="gp-list">
+                      {stashView.files.map((f) => (
+                        <li key={f.path}>
+                          <span>{f.path}</span>
                           <Button
                             size="xs"
                             variant="ghost"
-                            onClick={() => run('Stash aplicado', () => gitApi.stashApply(collectionPath, s.index))}
+                            onClick={() => showStashFile(f)}
                             disabled={busy}
                           >
-                            Aplicar
+                            Ver diff
                           </Button>
-                          <Button size="xs" variant="ghost" onClick={() => viewStash(s.index)} disabled={busy}>
-                            Ver
-                          </Button>
-                          <Button size="xs" variant="ghost" onClick={() => stashDrop(s.index)} disabled={busy}>
-                            Apagar
-                          </Button>
-                        </span>
-                      </li>
-                    ))}
-                    {(status.stashes || []).length === 0 && <li className="gp-muted">Nenhum stash.</li>}
-                  </ul>
-                  {stashView && (
-                    <div className="gp-section">
-                      <h4>Stash {stashView.index}: alterações guardadas</h4>
-                      <ul className="gp-list">
-                        {stashView.files.map((f) => (
-                          <li key={f.path}>
-                            <span>{f.path}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    {stashView.file && <DiffView diff={stashView.diff} emptyText="Sem alterações de conteúdo." />}
+                  </div>
+                )}
+                <div className="gp-row">
+                  <input
+                    aria-label="Mensagem do stash"
+                    placeholder="Guardar alterações como…"
+                    value={stashMessage}
+                    onChange={(e) => setStashMessage(e.target.value)}
+                  />
+                  <Button size="sm" onClick={stashCreate} disabled={busy || !stashMessage.trim()}>
+                    Guardar
+                  </Button>
+                </div>
+              </div>
+            </TabsContent>
+
+            {hasConflicts && (
+              <TabsContent value="conflicts">
+                <div className="gp-section">
+                  {status.conflicted.length > 0 ? (
+                    <ul className="gp-list">
+                      {status.conflicted.map((f) => (
+                        <li key={f.path}>
+                          <span>{f.path}</span>
+                          <span className="gp-row">
                             <Button
                               size="xs"
                               variant="ghost"
-                              onClick={() => showStashFile(f)}
+                              onClick={() =>
+                                run('Conflito resolvido com a sua versão', () =>
+                                  gitApi.resolveConflict(collectionPath, f.path, 'ours')
+                                )}
                               disabled={busy}
                             >
-                              Ver diff
+                              Minha versão
                             </Button>
-                          </li>
-                        ))}
-                      </ul>
-                      {stashView.file && <DiffView diff={stashView.diff} emptyText="Sem alterações de conteúdo." />}
-                    </div>
+                            <Button
+                              size="xs"
+                              variant="ghost"
+                              onClick={() =>
+                                run('Conflito resolvido com a versão recebida', () =>
+                                  gitApi.resolveConflict(collectionPath, f.path, 'theirs')
+                                )}
+                              disabled={busy}
+                            >
+                              Versão recebida
+                            </Button>
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="gp-muted">Nenhum arquivo em conflito.</p>
                   )}
-                  <div className="gp-row">
-                    <input
-                      aria-label="Mensagem do stash"
-                      placeholder="Guardar alterações como…"
-                      value={stashMessage}
-                      onChange={(e) => setStashMessage(e.target.value)}
-                    />
-                    <Button size="sm" onClick={stashCreate} disabled={busy || !stashMessage.trim()}>
-                      Guardar
-                    </Button>
-                  </div>
+
+                  {status.mergeInProgress && (
+                    <>
+                      <textarea
+                        aria-label="Mensagem do merge"
+                        placeholder="Mensagem do commit de merge"
+                        value={mergeMessage}
+                        onChange={(e) => setMergeMessage(e.target.value)}
+                        rows={2}
+                      />
+                      <div className="gp-row">
+                        <Button
+                          size="sm"
+                          onClick={completeMerge}
+                          disabled={busy || status.conflicted.length > 0 || !mergeMessage.trim()}
+                        >
+                          Concluir merge
+                        </Button>
+                        <Button size="sm" variant="outline" onClick={abortMerge} disabled={busy}>
+                          Abortar merge
+                        </Button>
+                      </div>
+                    </>
+                  )}
                 </div>
               </TabsContent>
+            )}
+          </Tabs>
+        </>
+      )}
+    </StyledWrapper>
+  );
 
-              {hasConflicts && (
-                <TabsContent value="conflicts">
-                  <div className="gp-section">
-                    {status.conflicted.length > 0 ? (
-                      <ul className="gp-list">
-                        {status.conflicted.map((f) => (
-                          <li key={f.path}>
-                            <span>{f.path}</span>
-                            <span className="gp-row">
-                              <Button
-                                size="xs"
-                                variant="ghost"
-                                onClick={() =>
-                                  run('Conflito resolvido com a sua versão', () =>
-                                    gitApi.resolveConflict(collectionPath, f.path, 'ours')
-                                  )}
-                                disabled={busy}
-                              >
-                                Minha versão
-                              </Button>
-                              <Button
-                                size="xs"
-                                variant="ghost"
-                                onClick={() =>
-                                  run('Conflito resolvido com a versão recebida', () =>
-                                    gitApi.resolveConflict(collectionPath, f.path, 'theirs')
-                                  )}
-                                disabled={busy}
-                              >
-                                Versão recebida
-                              </Button>
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p className="gp-muted">Nenhum arquivo em conflito.</p>
-                    )}
+  // Dentro das configurações da coleção (aba Git) o conteúdo fica na própria página, sem modal.
+  if (embedded) return content;
 
-                    {status.mergeInProgress && (
-                      <>
-                        <textarea
-                          aria-label="Mensagem do merge"
-                          placeholder="Mensagem do commit de merge"
-                          value={mergeMessage}
-                          onChange={(e) => setMergeMessage(e.target.value)}
-                          rows={2}
-                        />
-                        <div className="gp-row">
-                          <Button
-                            size="sm"
-                            onClick={completeMerge}
-                            disabled={busy || status.conflicted.length > 0 || !mergeMessage.trim()}
-                          >
-                            Concluir merge
-                          </Button>
-                          <Button size="sm" variant="outline" onClick={abortMerge} disabled={busy}>
-                            Abortar merge
-                          </Button>
-                        </div>
-                      </>
-                    )}
-                  </div>
-                </TabsContent>
-              )}
-            </Tabs>
-          </>
-        )}
-      </StyledWrapper>
+  return (
+    <Modal size="lg" title="Git" handleCancel={onClose} hideFooter dataTestId="git-panel">
+      {content}
     </Modal>
   );
 };

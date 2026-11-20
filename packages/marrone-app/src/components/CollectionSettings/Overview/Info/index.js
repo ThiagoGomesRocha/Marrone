@@ -2,15 +2,58 @@ import React from 'react';
 import { getTotalRequestCountInCollection } from 'utils/collections/';
 import { IconFolder, IconWorld, IconApi, IconShare, IconBook, IconTag } from '@tabler/icons';
 import { areItemsLoading, getItemsLoadStats, getCollectionVersion } from 'utils/collections/index';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { IconBrandGit } from '@tabler/icons';
+import { gitApi } from 'components/GitPanel/api';
 import { useSelector, useDispatch } from 'react-redux';
 import ShareCollection from 'components/ShareCollection/index';
 import GenerateDocumentation from 'components/Sidebar/Collections/Collection/GenerateDocumentation';
 import ChangeCollectionVersion from 'components/Sidebar/Collections/Collection/ChangeCollectionVersion';
 import ToolHint from 'components/ToolHint';
 import { addTab } from 'providers/ReduxStore/slices/tabs';
+import { updateSettingsSelectedTab } from 'providers/ReduxStore/slices/collections';
 import StyledWrapper from './StyledWrapper';
 import Migration from '../Migration';
+
+const GitBranchRow = ({ collectionPath, onOpenGit }) => {
+  const [state, setState] = useState({ loading: true, isRepo: false, branch: null, error: null });
+
+  useEffect(() => {
+    let cancelled = false;
+    if (!collectionPath) return undefined;
+    gitApi
+      .status(collectionPath)
+      .then((status) => {
+        if (cancelled) return;
+        setState({ loading: false, isRepo: Boolean(status?.isRepo), branch: status?.branch || null, error: null });
+      })
+      .catch((err) => {
+        if (!cancelled) setState({ loading: false, isRepo: false, branch: null, error: err?.message || String(err) });
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [collectionPath]);
+
+  let text = 'Verificando…';
+  if (!state.loading) {
+    if (state.error) text = 'Não foi possível ler o Git';
+    else if (!state.isRepo) text = 'Pasta sem Git (abrir para criar)';
+    else text = `Branch: ${state.branch || '(sem branch)'}`;
+  }
+
+  return (
+    <div className="flex items-start group cursor-pointer" onClick={onOpenGit} data-testid="info-git-row">
+      <div className="icon-box flex-shrink-0 p-3 rounded-lg">
+        <IconBrandGit className="w-5 h-5" stroke={1.5} />
+      </div>
+      <div className="ml-4 h-full flex flex-col justify-start">
+        <div className="font-medium h-fit my-auto">Git</div>
+        <div className="group-hover:underline text-link" data-testid="info-git-branch">{text}</div>
+      </div>
+    </div>
+  );
+};
 
 const Info = ({ collection }) => {
   const dispatch = useDispatch();
@@ -162,6 +205,8 @@ const Info = ({ collection }) => {
           </div>
           {showShareCollectionModal && <ShareCollection collectionUid={collection.uid} onClose={handleToggleShowShareCollectionModal(false)} />}
 
+          <GitBranchRow collectionPath={collection.pathname} onOpenGit={() => dispatch(updateSettingsSelectedTab({ collectionUid: collection.uid, tab: 'git' }))} />
+
           <div className="flex items-start group cursor-pointer" onClick={() => setShowGenerateDocumentationModal(true)}>
             <div className="icon-box generate-docs flex-shrink-0 p-3 rounded-lg">
               <IconBook className="w-5 h-5" stroke={1.5} />
@@ -183,3 +228,4 @@ const Info = ({ collection }) => {
 };
 
 export default Info;
+export { GitBranchRow };
