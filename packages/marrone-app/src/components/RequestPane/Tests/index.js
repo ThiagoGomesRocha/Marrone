@@ -40,7 +40,7 @@ const Tests = ({ item, collection }) => {
   return (
     <div data-testid="test-script-editor" className="relative h-full">
       <ScriptSnippets
-        groups={['tests', 'db']}
+        groups={['tests', 'variables', 'db']}
         onInsert={(code) => insertSnippetAtCursor(testsEditorRef.current?.editor, code)}
       />
       <CodeEditor

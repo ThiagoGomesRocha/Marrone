@@ -118,7 +118,7 @@ const Script = ({ item, collection }) => {
 
         <TabsContent value="pre-request" className="mt-2" dataTestId="pre-request-script-editor">
           <ScriptSnippets
-            groups={['prerequest', 'db']}
+            groups={['prerequest', 'variables', 'db']}
             onInsert={(code) => insertSnippetAtCursor(preRequestEditorRef.current?.editor, code)}
           />
           <div className="relative h-full">
@@ -145,7 +145,7 @@ const Script = ({ item, collection }) => {
 
         <TabsContent value="post-response" className="mt-2" dataTestId="post-response-script-editor">
           <ScriptSnippets
-            groups={['postresponse', 'tests', 'db']}
+            groups={['postresponse', 'variables', 'tests', 'db']}
             onInsert={(code) => insertSnippetAtCursor(postResponseEditorRef.current?.editor, code)}
           />
           <div className="relative h-full">

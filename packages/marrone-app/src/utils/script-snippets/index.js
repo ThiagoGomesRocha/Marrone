@@ -18,6 +18,7 @@ import { DATABASE_EXAMPLES } from 'components/Preferences/Database/constants';
 
 export const SNIPPET_GROUPS = {
   tests: 'Testes',
+  variables: 'Variáveis e requisição',
   prerequest: 'Pre Request',
   postresponse: 'Post Response',
   db: 'Banco de dados'
@@ -162,6 +163,158 @@ test('resposta criou o recurso', function () {
   expect(res.getStatus()).to.equal(201);
   expect(res.getBody().id).to.be.a('number');
 });`
+  }
+];
+
+/* -------------------------------------------------------------------------- */
+/* Variáveis, ambiente e objetos req/res                                       */
+/* -------------------------------------------------------------------------- */
+
+const VARIABLE_SNIPPETS = [
+  {
+    id: 'var-runtime-set-get',
+    group: 'variables',
+    label: 'Variável de runtime: definir e ler',
+    code: `// Variável de runtime: existe só durante a execução da requisição (ou da coleção).
+bru.setVar('token', 'abc123');
+const token = bru.getVar('token');`
+  },
+  {
+    id: 'var-runtime-has-delete',
+    group: 'variables',
+    label: 'Variável de runtime: verificar e apagar',
+    code: `// Verifica antes de usar e apaga quando não precisar mais.
+if (bru.hasVar('token')) {
+  bru.deleteVar('token');
+}`
+  },
+  {
+    id: 'var-env-get-set',
+    group: 'variables',
+    label: 'Variável de ambiente: ler e definir',
+    code: `// Variável do ambiente ativo (ex.: Local, Homologação). Persiste no arquivo do ambiente.
+const baseUrl = bru.getEnvVar('baseUrl');
+bru.setEnvVar('ultimoUsuario', 'joao.silva');
+console.log('ambiente ativo:', bru.getEnvName());`
+  },
+  {
+    id: 'var-env-delete',
+    group: 'variables',
+    label: 'Variável de ambiente: apagar',
+    code: `// Remove uma variável do ambiente ativo.
+bru.deleteEnvVar('ultimoUsuario');`
+  },
+  {
+    id: 'var-global-get-set',
+    group: 'variables',
+    label: 'Variável global: ler, definir e apagar',
+    code: `// Variável global: vale para todas as coleções e ambientes.
+if (!bru.hasGlobalEnvVar('apiKey')) {
+  bru.setGlobalEnvVar('apiKey', 'chave-de-exemplo');
+}
+const apiKey = bru.getGlobalEnvVar('apiKey');
+bru.deleteGlobalEnvVar('apiKey');`
+  },
+  {
+    id: 'var-collection-get-set',
+    group: 'variables',
+    label: 'Variável de coleção: ler, definir e apagar',
+    code: `// Variável da coleção: compartilhada entre as requisições desta coleção.
+bru.setCollectionVar('tenant', 'empresa-x');
+const tenant = bru.getCollectionVar('tenant');
+if (bru.hasCollectionVar('tenant')) {
+  bru.deleteCollectionVar('tenant');
+}`
+  },
+  {
+    id: 'var-request-read',
+    group: 'variables',
+    label: 'Variável de requisição: ler',
+    code: `// Lê uma variável definida no escopo da requisição (somente leitura).
+const pagina = bru.getRequestVar('pagina');`
+  },
+  {
+    id: 'var-interpolate',
+    group: 'variables',
+    label: 'Resolver {{variáveis}} em uma string',
+    code: `// Resolve {{baseUrl}}, {{token}} etc. usando todas as variáveis disponíveis.
+const url = bru.interpolate('{{baseUrl}}/usuarios/{{usuarioId}}');`
+  },
+  {
+    id: 'var-process-env',
+    group: 'variables',
+    label: 'Variável do sistema (process.env)',
+    code: `// Lê uma variável de ambiente do sistema operacional (somente leitura).
+const home = bru.getProcessEnv('HOME');`
+  },
+  {
+    id: 'req-url-method',
+    group: 'variables',
+    label: 'Pre Request: alterar URL e método',
+    code: `// Pre Request: ajusta a requisição antes do envio.
+req.setUrl(req.getUrl() + '?versao=2');
+req.setMethod('GET');`
+  },
+  {
+    id: 'req-headers-read-write',
+    group: 'variables',
+    label: 'Pre Request: ler, definir e remover header',
+    code: `// Pre Request: manipula headers da requisição.
+const tipo = req.getHeader('Content-Type');
+req.setHeader('X-Origem', 'marrone');
+req.deleteHeader('X-Temporario');`
+  },
+  {
+    id: 'req-body-json',
+    group: 'variables',
+    label: 'Pre Request: alterar o corpo JSON',
+    code: `// Pre Request: lê o corpo atual e envia um novo objeto.
+const corpo = req.getBody();
+req.setBody(Object.assign({}, corpo, { origem: 'marrone', criadoEm: Date.now() }));`
+  },
+  {
+    id: 'res-status-headers',
+    group: 'variables',
+    label: 'Post Response: status e headers',
+    code: `// Post Response: lê o status e os headers da resposta.
+const status = res.getStatus();
+const textoStatus = res.getStatusText();
+const tipo = res.getHeader('content-type');
+const todos = res.getHeaders();`
+  },
+  {
+    id: 'res-body-read',
+    group: 'variables',
+    label: 'Post Response: ler o corpo e o tempo',
+    code: `// Post Response: corpo, tempo de resposta e tamanho.
+const corpo = res.getBody();
+const tempoMs = res.getResponseTime();
+const bytes = res.getSize();`
+  },
+  {
+    id: 'res-body-replace',
+    group: 'variables',
+    label: 'Post Response: substituir o corpo',
+    code: `// Post Response: troca o corpo que os próximos testes e a interface enxergam.
+const corpo = res.getBody();
+res.setBody(Object.assign({}, corpo, { normalizado: true }));`
+  },
+  {
+    id: 'flow-next-request',
+    group: 'variables',
+    label: 'Post Response: definir a próxima requisição',
+    code: `// Post Response: indica qual requisição executar em seguida (no runner).
+if (res.getStatus() === 401) {
+  bru.setNextRequest('Login');
+}`
+  },
+  {
+    id: 'flow-info',
+    group: 'variables',
+    label: 'Informações da execução',
+    code: `// Nome da coleção e da requisição atual, útil em logs e relatórios.
+console.log('coleção:', bru.getCollectionName());
+console.log('requisição:', req.getName());`
   }
 ];
 
@@ -317,7 +470,7 @@ test('rollback não deixa dados no banco', async function () {
  * @param {{ group?: string, sgbdId?: string }} options
  */
 export const getSnippets = ({ group, sgbdId = 'postgres' } = {}) => {
-  const all = [...TEST_SNIPPETS, ...SCRIPT_SNIPPETS, ...dbSnippets(sgbdId)];
+  const all = [...TEST_SNIPPETS, ...SCRIPT_SNIPPETS, ...VARIABLE_SNIPPETS, ...dbSnippets(sgbdId)];
   return group ? all.filter((s) => s.group === group) : all;
 };
 

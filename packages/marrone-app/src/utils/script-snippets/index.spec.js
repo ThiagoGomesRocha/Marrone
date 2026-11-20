@@ -1,13 +1,43 @@
+import fs from 'fs';
+import path from 'path';
 import { getSnippets, placeholderFor, SNIPPET_GROUPS } from './index';
 
 // Membros reais do runtime (marrone-js). Se o runtime mudar, este spec quebra antes do usuário.
-const ALLOWED_BRU = ['setVar', 'getVar', 'setEnvVar', 'getEnvVar', 'sleep', 'db'];
+const ALLOWED_BRU = [
+  'setVar', 'getVar', 'hasVar', 'deleteVar',
+  'getEnvVar', 'setEnvVar', 'deleteEnvVar', 'getEnvName', 'getProcessEnv',
+  'getGlobalEnvVar', 'setGlobalEnvVar', 'hasGlobalEnvVar', 'deleteGlobalEnvVar',
+  'getCollectionVar', 'setCollectionVar', 'hasCollectionVar', 'deleteCollectionVar', 'getCollectionName',
+  'getRequestVar', 'interpolate', 'setNextRequest', 'sleep', 'db'
+];
 const ALLOWED_BRU_DB = ['connect', 'query', 'execute', 'disconnect', 'begin', 'commit', 'rollback'];
-const ALLOWED_RES = ['getStatus', 'getBody', 'getHeader', 'getResponseTime'];
-const ALLOWED_REQ = ['setHeader'];
+const ALLOWED_RES = ['getStatus', 'getStatusText', 'getHeader', 'getHeaders', 'getBody', 'getResponseTime', 'getSize', 'setBody'];
+const ALLOWED_REQ = ['getUrl', 'setUrl', 'getMethod', 'setMethod', 'getHeader', 'setHeader', 'deleteHeader', 'getBody', 'setBody', 'getName'];
 const SGBDS = ['postgres', 'mysql', 'mssql', 'oracle', 'db2'];
 
 const members = (code, pattern) => [...code.matchAll(pattern)].map((m) => m[1]);
+
+// Fonte de verdade: o próprio runtime. A lista acima precisa refletir o que ele define.
+// eslint-disable-next-line no-undef -- Jest executa em CJS: __dirname existe
+const RUNTIME_SRC = path.resolve(__dirname, '../../../../marrone-js/src');
+const readRuntime = (file) => fs.readFileSync(path.join(RUNTIME_SRC, file), 'utf8');
+const definesMethod = (source, name) =>
+  new RegExp('\\n\\s+(async\\s+)?' + name + '\\s*\\(|\\n\\s+' + name + '\\s*[=:]').test(source);
+
+describe('membros usados existem no runtime (marrone-js)', () => {
+  test('bru', () => {
+    const src = readRuntime('bru.js');
+    ALLOWED_BRU.filter((m) => m !== 'db').forEach((m) => expect([m, definesMethod(src, m)]).toEqual([m, true]));
+  });
+  test('req', () => {
+    const src = readRuntime('bruno-request.js');
+    ALLOWED_REQ.forEach((m) => expect([m, definesMethod(src, m)]).toEqual([m, true]));
+  });
+  test('res', () => {
+    const src = readRuntime('bruno-response.js');
+    ALLOWED_RES.forEach((m) => expect([m, definesMethod(src, m)]).toEqual([m, true]));
+  });
+});
 
 describe('script snippets', () => {
   const all = getSnippets({ sgbdId: 'postgres' });
