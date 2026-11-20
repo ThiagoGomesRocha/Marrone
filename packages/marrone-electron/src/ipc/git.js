@@ -11,7 +11,7 @@ const getCollectionGitRemoteUrl = async (collectionPath) => {
   }
 };
 
-const handleListRemoteBranches = async (event, { url }) => {
+const handleListRemoteBranches = async (event, { url, authToken }) => {
   const repositoryUrl = typeof url === 'string' ? url.trim() : '';
   if (!repositoryUrl) {
     throw new Error('Repository URL is required');
@@ -21,16 +21,16 @@ const handleListRemoteBranches = async (event, { url }) => {
     throw new Error('Repository URL is not valid');
   }
 
-  return listBranchesForRemoteUrl({ url: repositoryUrl });
+  return listBranchesForRemoteUrl({ url: repositoryUrl, authToken });
 };
 
 const registerGitIpc = (mainWindow) => {
-  ipcMain.handle('renderer:clone-git-repository', async (event, { url, path, processUid, branch }) => {
+  ipcMain.handle('renderer:clone-git-repository', async (event, { url, path, processUid, branch, authToken }) => {
     let directoryCreated = false;
     try {
       await createDirectory(path);
       directoryCreated = true;
-      await cloneGitRepository(mainWindow, { url, path, processUid, branch });
+      await cloneGitRepository(mainWindow, { url, path, processUid, branch, authToken });
       return 'Repository cloned successfully';
     } catch (error) {
       if (directoryCreated) {

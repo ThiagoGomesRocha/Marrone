@@ -3611,9 +3611,9 @@ export const cloneGitRepository = (data) => (dispatch, getState) => {
   });
 };
 
-export const fetchBranchesForRepositoryUrl = (url) => (dispatch, getState) => {
+export const fetchBranchesForRepositoryUrl = (url, authToken) => (dispatch, getState) => {
   const { ipcRenderer } = window;
-  return ipcRenderer.invoke('renderer:list-remote-branches-for-url', { url });
+  return ipcRenderer.invoke('renderer:list-remote-branches-for-url', { url, authToken });
 };
 
 export const scanForMarroneFiles = (dir) => (dispatch, getState) => {

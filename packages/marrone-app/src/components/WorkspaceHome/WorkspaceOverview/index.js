@@ -9,6 +9,7 @@ import ImportCollection from 'components/Sidebar/ImportCollection';
 import ImportCollectionLocation from 'components/Sidebar/ImportCollectionLocation';
 import BulkImportCollectionLocation from 'components/Sidebar/BulkImportCollectionLocation';
 import CloneGitRepository from 'components/Sidebar/CloneGitRespository';
+import OpenLocalGitFolder from 'components/Sidebar/OpenLocalGitFolder';
 import PostmanPackageReport from 'components/Sidebar/PostmanPackageReport';
 import usePostmanPackagePrompt from 'hooks/usePostmanPackagePrompt';
 import Button from 'ui/Button';
@@ -27,6 +28,9 @@ const WorkspaceOverview = ({ workspace }) => {
   const [importData, setImportData] = useState(null);
   const [showCloneGitModal, setShowCloneGitModal] = useState(false);
   const [gitRepositoryUrl, setGitRepositoryUrl] = useState(null);
+  const [gitAuthToken, setGitAuthToken] = useState(null);
+  const [showOpenLocalGitModal, setShowOpenLocalGitModal] = useState(false);
+  const [localGitFolderPath, setLocalGitFolderPath] = useState(null);
   const { postmanPackagePrompt, clearPostmanPackagePrompt, handleImportResolved } = usePostmanPackagePrompt();
 
   const workspaceCollectionsCount = workspace?.collections?.length || 0;
@@ -70,7 +74,14 @@ const WorkspaceOverview = ({ workspace }) => {
 
     if (type === 'git-repository') {
       setGitRepositoryUrl(repositoryUrl);
+      setGitAuthToken(rest.authToken || null);
       setShowCloneGitModal(true);
+      return;
+    }
+
+    if (type === 'local-git-folder') {
+      setLocalGitFolderPath(rest.folderPath);
+      setShowOpenLocalGitModal(true);
       return;
     }
 
@@ -94,6 +105,12 @@ const WorkspaceOverview = ({ workspace }) => {
   const handleCloseGitModal = () => {
     setShowCloneGitModal(false);
     setGitRepositoryUrl(null);
+    setGitAuthToken(null);
+  };
+
+  const handleCloseOpenLocalGitModal = () => {
+    setShowOpenLocalGitModal(false);
+    setLocalGitFolderPath(null);
   };
 
   return (
@@ -128,6 +145,14 @@ const WorkspaceOverview = ({ workspace }) => {
           onClose={handleCloseGitModal}
           onFinish={handleCloseGitModal}
           collectionRepositoryUrl={gitRepositoryUrl}
+          authToken={gitAuthToken}
+        />
+      )}
+      {showOpenLocalGitModal && (
+        <OpenLocalGitFolder
+          folderPath={localGitFolderPath}
+          onClose={handleCloseOpenLocalGitModal}
+          onFinish={handleCloseOpenLocalGitModal}
         />
       )}
       {postmanPackagePrompt && (

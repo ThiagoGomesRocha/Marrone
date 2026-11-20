@@ -30,6 +30,7 @@ import ImportCollection from 'components/Sidebar/ImportCollection';
 import ImportCollectionLocation from 'components/Sidebar/ImportCollectionLocation';
 import BulkImportCollectionLocation from 'components/Sidebar/BulkImportCollectionLocation';
 import CloneGitRepository from 'components/Sidebar/CloneGitRespository';
+import OpenLocalGitFolder from 'components/Sidebar/OpenLocalGitFolder';
 import RemoveCollections from 'components/Sidebar/Collections/Collection/RemoveCollections/index';
 import CreateCollection from 'components/Sidebar/CreateCollection';
 import PostmanPackageReport from 'components/Sidebar/PostmanPackageReport';
@@ -62,6 +63,9 @@ const CollectionsSection = () => {
   const [importCollectionLocationModalOpen, setImportCollectionLocationModalOpen] = useState(false);
   const [showCloneGitModal, setShowCloneGitModal] = useState(false);
   const [gitRepositoryUrl, setGitRepositoryUrl] = useState(null);
+  const [gitAuthToken, setGitAuthToken] = useState(null);
+  const [showOpenLocalGitModal, setShowOpenLocalGitModal] = useState(false);
+  const [localGitFolderPath, setLocalGitFolderPath] = useState(null);
   const { postmanPackagePrompt, clearPostmanPackagePrompt, handleImportResolved } = usePostmanPackagePrompt();
 
   // Import collection shortcut
@@ -107,7 +111,14 @@ const CollectionsSection = () => {
 
     if (type === 'git-repository') {
       setGitRepositoryUrl(repositoryUrl);
+      setGitAuthToken(rest.authToken || null);
       setShowCloneGitModal(true);
+      return;
+    }
+
+    if (type === 'local-git-folder') {
+      setLocalGitFolderPath(rest.folderPath);
+      setShowOpenLocalGitModal(true);
       return;
     }
 
@@ -131,6 +142,12 @@ const CollectionsSection = () => {
   const handleCloseGitModal = () => {
     setShowCloneGitModal(false);
     setGitRepositoryUrl(null);
+    setGitAuthToken(null);
+  };
+
+  const handleCloseOpenLocalGitModal = () => {
+    setShowOpenLocalGitModal(false);
+    setLocalGitFolderPath(null);
   };
 
   const handleToggleSearch = () => {
@@ -395,6 +412,14 @@ const CollectionsSection = () => {
           onClose={handleCloseGitModal}
           onFinish={handleCloseGitModal}
           collectionRepositoryUrl={gitRepositoryUrl}
+          authToken={gitAuthToken}
+        />
+      )}
+      {showOpenLocalGitModal && (
+        <OpenLocalGitFolder
+          folderPath={localGitFolderPath}
+          onClose={handleCloseOpenLocalGitModal}
+          onFinish={handleCloseOpenLocalGitModal}
         />
       )}
       {postmanPackagePrompt && (

@@ -30,7 +30,7 @@ import i18n from '../../../i18n';
 
 const EMPTY_BRANCH_LISTING = { branches: [], defaultBranch: '', loading: false, failed: false };
 
-const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null }) => {
+const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null, authToken = null }) => {
   const { t } = useTranslation();
   const CONFIRM_TEXT_KEYS = { Clone: 'MODALS.COMMON.CLONE', Close: 'MODALS.COMMON.CLOSE', Open: 'MODALS.COMMON.OPEN' };
   const [collectionPaths, setCollectionPaths] = useState([]);
@@ -68,7 +68,7 @@ const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null 
   const loadBranches = async (url) => {
     setBranchListing({ ...EMPTY_BRANCH_LISTING, loading: true });
     try {
-      const { branches, defaultBranch } = await dispatch(fetchBranchesForRepositoryUrl(url));
+      const { branches, defaultBranch } = await dispatch(fetchBranchesForRepositoryUrl(url, authToken));
       setBranchListing({ branches, defaultBranch: defaultBranch || '', loading: false, failed: false });
     } catch (error) {
       console.error(error);
@@ -162,7 +162,8 @@ const CloneGitRepository = ({ onClose, onFinish, collectionRepositoryUrl = null 
             url: repositoryUrl,
             path: targetPath,
             processUid,
-            branch: branch || branchListing.defaultBranch
+            branch: branch || branchListing.defaultBranch,
+            authToken: authToken || undefined
           })
         );
 

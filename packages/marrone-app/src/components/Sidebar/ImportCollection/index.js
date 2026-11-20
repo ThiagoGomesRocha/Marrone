@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { IconFileImport, IconBrandGit, IconUnlink, IconX } from '@tabler/icons';
+import { IconFileImport, IconBrandGit, IconUnlink, IconX, IconKey, IconFolder } from '@tabler/icons';
 import Modal from 'components/Modal';
 import Portal from 'components/Portal';
 import classnames from 'classnames';
 import StyledWrapper from './StyledWrapper';
 import FileTab from './FileTab';
 import GitHubTab from './GitHubTab';
+import GitHubTokenTab from './GitHubTokenTab';
+import LocalGitFolderTab from './LocalGitFolderTab';
 import UrlTab from './UrlTab';
 import FullscreenLoader from './FullscreenLoader/index';
 import { useTranslation } from 'react-i18next';
@@ -14,6 +16,8 @@ import { useTheme } from 'providers/Theme';
 const IMPORT_TABS = {
   FILE: 'file',
   GITHUB: 'github',
+  GITHUB_TOKEN: 'github-token',
+  LOCAL_FOLDER: 'local-folder',
   URL: 'url'
 };
 
@@ -60,6 +64,22 @@ const ImportCollection = ({ onClose, handleSubmit }) => {
               >
                 <IconBrandGit size={18} strokeWidth={1.5} className="mr-2" />
                 {t('MODALS.IMPORT_COLLECTION.TAB_GIT_REPOSITORY')}
+              </div>
+              <div
+                className={getTabClassname(IMPORT_TABS.GITHUB_TOKEN)}
+                onClick={handleTabSelect(IMPORT_TABS.GITHUB_TOKEN)}
+                data-testid="github-token-tab-button"
+              >
+                <IconKey size={18} strokeWidth={1.5} className="mr-2" />
+                GitHub (token)
+              </div>
+              <div
+                className={getTabClassname(IMPORT_TABS.LOCAL_FOLDER)}
+                onClick={handleTabSelect(IMPORT_TABS.LOCAL_FOLDER)}
+                data-testid="local-folder-tab-button"
+              >
+                <IconFolder size={18} strokeWidth={1.5} className="mr-2" />
+                Pasta local
               </div>
               <div
                 className={getTabClassname(IMPORT_TABS.URL)}
@@ -111,6 +131,12 @@ const ImportCollection = ({ onClose, handleSubmit }) => {
               handleSubmit={handleSubmit}
               setErrorMessage={setErrorMessage}
             />
+          )}
+          {tab === IMPORT_TABS.GITHUB_TOKEN && (
+            <GitHubTokenTab handleSubmit={handleSubmit} setErrorMessage={setErrorMessage} />
+          )}
+          {tab === IMPORT_TABS.LOCAL_FOLDER && (
+            <LocalGitFolderTab handleSubmit={handleSubmit} setErrorMessage={setErrorMessage} />
           )}
           {tab === IMPORT_TABS.URL && (
             <UrlTab

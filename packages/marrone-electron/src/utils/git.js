@@ -709,16 +709,36 @@ const getCollectionGitData = async (gitRootPath, collectionPath) => {
   };
 };
 
+/**
+ * Ambiente que injeta o cabeçalho de autenticação HTTP só nesta execução do git.
+ * GIT_CONFIG_COUNT/KEY/VALUE (git >= 2.31) não gravam nada no .git/config.
+ */
+const authEnv = (token) => {
+  const basic = Buffer.from(`x-access-token:${token}`).toString('base64');
+  return {
+    ...process.env,
+    GIT_TERMINAL_PROMPT: '0',
+    GIT_CONFIG_COUNT: '1',
+    GIT_CONFIG_KEY_0: 'http.extraHeader',
+    GIT_CONFIG_VALUE_0: `AUTHORIZATION: basic ${basic}`
+  };
+};
+
+// Remove o token de qualquer mensagem de erro antes de mostrar ao usuário.
+const redact = (message, token) => (token ? String(message).split(token).join('***') : String(message));
+
 const cloneGitRepository = async (win, data) => {
   return new Promise((resolve, reject) => {
-    const { url, path, processUid, branch } = data;
-    const git = getSimpleGitInstanceForPath(path);
+    const { url, path, processUid, branch, authToken } = data;
+    // Instância nova (não a cacheada por caminho): o env de autenticação não pode vazar
+    // para outras operações do mesmo repositório.
+    const git = authToken ? simpleGit().env(authEnv(authToken)) : getSimpleGitInstanceForPath(path);
     const cloneOptions = branch ? ['--progress', '--branch', branch] : ['--progress'];
 
     git.outputHandler(handleGitOutput({ win, processUid, sendStdout: true }));
     git.clone(url, path, cloneOptions, (err, res) => {
       if (err) {
-        reject(err);
+        reject(authToken ? new Error(redact(err.message, authToken)) : err);
         return;
       }
       resolve(res);
@@ -751,19 +771,20 @@ const parseRemoteBranches = (lsRemoteOutput) => {
   return { branches, defaultBranch };
 };
 
-const listBranchesForRemoteUrl = async ({ url }) => {
+const listBranchesForRemoteUrl = async ({ url, authToken }) => {
   try {
+    const env = authToken ? authEnv(authToken) : { ...process.env, GIT_TERMINAL_PROMPT: '0' };
     const output = await simpleGit({
       baseDir: os.tmpdir(),
       timeout: { block: REMOTE_BRANCH_LISTING_TIMEOUT_MS, stdOut: false, stdErr: false }
     })
-      .env({ ...process.env, GIT_TERMINAL_PROMPT: '0' })
+      .env(env)
       .listRemote(['--symref', url, 'HEAD', 'refs/heads/*']);
 
     return parseRemoteBranches(output);
   } catch (error) {
     console.error('Error listing remote branches:', error);
-    throw error;
+    throw authToken ? new Error(redact(error.message, authToken)) : error;
   }
 };
 
@@ -1807,6 +1828,8 @@ const getGitGraph = async (gitRootPath, branchName, limit = 50) => {
 };
 
 module.exports = {
+  authEnv,
+  redact,
   getCollectionGitRootPath,
   getCollectionGitRepoUrl,
   stageChanges,
