@@ -1,3 +1,32 @@
+## What's New in Marrone v1.3.0
+
+Versão stable com melhorias de Git, importação, banco de dados e atualização.
+
+### Git no estilo da versão paga
+
+* **Compartilhar com Git** no modal Share: publica a coleção num repositório remoto (cria o Git se preciso, faz commit e push).
+* **Aba Git** nas configurações da coleção, e item Git no menu da coleção.
+* **Painel Git:** alterações, commit, branches, remotos, stash, conflitos, pull/push e histórico com diff por arquivo.
+* **Overview** mostra a branch atual da coleção.
+
+### Importação
+
+* **GitHub (token):** lista seus repositórios (próprios, de colaboração e de organizações) e importa. O token não é salvo.
+* **Pasta local:** abre coleções de um repositório que já está no disco, sem clonar.
+* **Repositório Git** aceita qualquer URL remota (GitHub, GitLab, Bitbucket, servidor próprio ou ssh).
+
+### Banco de dados e scripts
+
+* Aba Database com campos e blocos de código seguindo o tema.
+* Trechos de código para scripts e testes (pré-requisição, pós-resposta e `tests`), com exemplos de insert, update e delete.
+
+### Geral
+
+* Telemetria removida.
+* Aviso de nova versão stable, com opções de baixar o instalador ou abrir o changelog.
+
+---
+
 ## What's New in Marrone v1.2.0
 
 O Marrone agora fala português. Suporte completo a pt-BR na interface e nos relatórios,
